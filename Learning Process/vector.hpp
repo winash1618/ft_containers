@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/06 17:29:34 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/06 17:33:49 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,14 @@ namespace ft
 			// typedef T ValueType;
 
 			// constructors - specify size and an initial value
-			Vector  (){}                      // vector of size = 0 and capacity = defaultCapacity
+			Vector()                      // vector of size = 0 and capacity = defaultCapacity
+			{
+				
+			}
 			// explicit Vector (size_t sz){}     // vector of size = capacity = sz ...
 			// Vector  (size_t sz, const T& t){} // ... and all elements = t
 			// Vector  (const Vector<T>&){}     // copy constructor
 			// virtual ~Vector (){}              // destructor
-			void say_hi()
-			{
-				std::cout << "hello world" << std::endl;
-			}
 
 			// // member operators
 			// Vector<T>& operator =  (const Vector<T>&); // assignment operator

@@ -2,6 +2,19 @@
 	"files.associations": {
 		"stack": "cpp",
 		"array": "cpp",
-		"vector": "cpp"
+		"vector": "cpp",
+		"__functional_base": "cpp",
+		"__locale": "cpp",
+		"__node_handle": "cpp",
+		"__split_buffer": "cpp",
+		"bitset": "cpp",
+		"deque": "cpp",
+		"iosfwd": "cpp",
+		"istream": "cpp",
+		"list": "cpp",
+		"ostream": "cpp",
+		"sstream": "cpp",
+		"string": "cpp",
+		"unordered_map": "cpp"
 	}
 }
