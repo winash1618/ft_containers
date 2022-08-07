@@ -16,6 +16,13 @@
 		"sstream": "cpp",
 		"string": "cpp",
 		"unordered_map": "cpp",
-		"memory": "cpp"
+		"memory": "cpp",
+		"__bit_reference": "cpp",
+		"__hash_table": "cpp",
+		"initializer_list": "cpp",
+		"iterator": "cpp",
+		"string_view": "cpp",
+		"type_traits": "cpp",
+		"__config": "cpp"
 	}
 }

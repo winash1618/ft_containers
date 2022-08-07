@@ -7,3 +7,6 @@
 - https://codereview.stackexchange.com/questions/255149/stdvector-allocator-aware-implementation
 - https://en.wikipedia.org/wiki/Allocator_(C%2B%2B) Explains what is allocator
 - https://en.cppreference.com/w/cpp/memory/allocator Explain what is allocator with an example
+- https://www.ibm.com/docs/en/zos/2.2.0?topic=only-class-templates-c Explain what is template<class T>
+
+

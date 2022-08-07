@@ -2,7 +2,7 @@
 
 int main()
 {
-	ft::Vector<int> a;
-	a.say_hi();
+	ft::vector<int> a;
+	a.say();
 
 }
