@@ -5,3 +5,5 @@
 - https://www.cs.fsu.edu/~lacher/courses/COP5517/lectures/vectors/toc.html - custom vector
 - https://www.geeksforgeeks.org/how-to-implement-our-own-vector-class-in-c/
 - https://codereview.stackexchange.com/questions/255149/stdvector-allocator-aware-implementation
+- https://en.wikipedia.org/wiki/Allocator_(C%2B%2B) Explains what is allocator
+- https://en.cppreference.com/w/cpp/memory/allocator Explain what is allocator with an example
