@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/07 16:26:56 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/07 16:28:18 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,12 @@ namespace ft
 			{
 				// say();
 			}
-			// template <class InputIterator>
-			// vector (InputIterator first, InputIterator last,
-			// 		const allocator_type& alloc = allocator_type()) // range constructor
-			// {
-			// 	say();
-			// }
+			template <class InputIterator>
+			vector (InputIterator first, InputIterator last,
+					const allocator_type& alloc = allocator_type()) // range constructor
+			{
+				say();
+			}
 			// vector (const vector& x);
 			// // Destructor
 			// ~vector ();
