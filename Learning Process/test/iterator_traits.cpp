@@ -38,12 +38,13 @@ typedef iterator_traits<vector<double>::iterator>::iterator_category catp;
 typedef iterator_traits<array<string, 5>::iterator>::iterator_category catk;
 
 typedef iterator_traits<list<char>::iterator>::iterator_category catlst;
-
+int i;
  
 
 // both are random-access iterators
 
 cout<<"The type of iterator for vector<int> is identified by the tag: "<<" "<<typeid(cati).name()<<endl;
+cout<<"The type of iterator for vector<int> is identified by the tag: "<<" "<<typeid(i).name()<<endl;
 
 cout<<"The type of iterator for vector<char> is identified by the tag: "<<" "<<typeid(catc).name()<<"\n";
 
