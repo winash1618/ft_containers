@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/11 09:11:01 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/12 18:05:52 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,11 @@ namespace ft
 	class vector
 	{
 		public:
-			void say(void)
-			{
-				std::cout << "hello world" << std::endl;
-			}
+			
+			// void say(void)
+			// {
+			// 	std::cout << "hello world" << std::endl;
+			// }
 			// /*--------------------------------------------------------------------*/
 			// /*-------------------------member type--------------------------------*/
 			// /*--------------------------------------------------------------------*/
@@ -40,48 +41,81 @@ namespace ft
 			typedef Allocator											allocator_type;
 			typedef typename allocator_type::reference					reference;
 			typedef typename allocator_type::const_reference			const_reference;
-			typedef ft::iterator										iterator;
-			typedef ft::iterator										const_iterator;
+			// typedef ft::iterator										iterator;
+			// typedef ft::iterator										const_iterator;
 			typedef typename allocator_type::size_type					size_type;
 			typedef typename allocator_type::difference_type			difference_type;
 			typedef typename allocator_type::pointer					pointer;
 			typedef typename allocator_type::const_pointer			const_pointer;
-			typedef ft::reverse_iterator<iterator>					reverse_iterator;
-    		typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
+			// typedef ft::reverse_iterator<iterator>					reverse_iterator;
+			// typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
 			// /*--------------------------------------------------------------------*/
 			// /*-------------------------member functions---------------------------*/
 			// /*--------------------------------------------------------------------*/
 			// // Constructor
-			explicit vector (const allocator_type& alloc = allocator_type()) : _vector(nullptr) // empty container constructor
+			void allocate(std::size_t capacity) {
+				_cap = capacity;
+				_vec = std::allocator<allocator_type>::allocate(capacity, 0);
+			}
+
+			void deallocate(std::size_t capacity) {
+				std::allocator<allocator_type>::deallocate(_vec, capacity);
+				_cap = 0;
+				_size = 0;
+			}
+
+			void reallocate(std::size_t old_cap, std::size_t new_cap) {
+				deallocate(old_cap);
+				allocate(new_cap);
+			}
+
+			void construct(std::size_t size, const value_type& value) {
+				_size = size;
+				for (std::size_t index = 0; index < size; ++index)
+					std::allocator<allocator_type>::construct(_vec, value);
+			}
+
+			void destruct(std::size_t size) {
+				for (std::size_t index = 0; index < size; ++index)
+					std::allocator<allocator_type>::destroy(_vec + index);
+				_size = 0;
+			}
+			void allocate_and_copy_construct(std::size_t capacity, std::size_t size, const value_type& value = value_type())
+			{
+				allocate(capacity);
+				construct(size, value);
+			}
+			explicit vector (const allocator_type& alloc = allocator_type())  : _alloc(alloc), _vec(nullptr) // empty container constructor
 			{
 				// say();
 			}
-			explicit vector (size_type n, const value_type& val = value_type(),
-				const allocator_type& alloc = allocator_type()) // fill constructor
+			explicit vector (size_type len, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
+			 : _alloc(alloc) // fill constructor
 			{
 				// say();
+				allocate_and_copy_construct(len, len, val);
 			}
-			template <class InputIterator>
-			vector (InputIterator first, InputIterator last,
-					const allocator_type& alloc = allocator_type()) // range constructor
-			{
-				say();
-			}
-			vector (const vector& x)
-			{
+			// template <class InputIterator>
+			// vector (InputIterator first, InputIterator last,
+			// 		const allocator_type& alloc = allocator_type()) // range constructor
+			// {
+			// 	say();
+			// }
+			// vector (const vector& x)
+			// {
 				
-			}
+			// }
 			// Destructor
 			~vector (){}
 			// Iterators
-			iterator	begin() noexcept
-			{
-				return (*_vector);
-			}
-			const_iterator         begin()   const noexcept
-			{
-				return (*_vector);
-			}
+			// iterator	begin() noexcept
+			// {
+			// 	return (*_vec);
+			// }
+			// const_iterator         begin()   const noexcept
+			// {
+			// 	return (*_vec);
+			// }
 			// iterator               end() noexcept;
 			// const_iterator         end()     const noexcept;
 			
@@ -107,11 +141,13 @@ namespace ft
 			// const_reference front() const;
 			// reference       back();
 			// const_reference back() const;
+			
 		private:
-			Type* _vector;
-			std::size_t _capacity{};
-			std::size_t _size{};
-			Allocator _allocator;
+			T* _vec; // 
+			std::size_t _cap;// Capacity 
+			std::size_t _size;
+			Allocator _alloc; // std::allocator
+
 			
 	} ;
 #include "vector.cpp" // include separate implementation file inside namespace
