@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/13 11:54:36 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/13 12:58:50 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,9 @@ namespace ft
 			
 			template <class InputIterator>
 			vector (InputIterator first, InputIterator last,
-					const allocator_type& alloc = allocator_type()) // range constructor
+					const allocator_type& alloc = allocator_type()) : _size(0), _cap(0)// range constructor
 			{
 				say();
-				_size = 0;
 				std::size_t size = std::distance(first, last);
 				std::cout << size << std::endl;
 				allocate(size);
@@ -90,13 +89,15 @@ namespace ft
 				std::cout << _size << std::endl;
 			}
 			
-			vector (const vector& x)
+			vector (const vector& x) : _size(0)  // Copy constructor
 			{
+				std::cout << "I am in copy constructor" << std::endl;
 				*this = x;
-				for (std::size_t index = 0; index < _size; ++index)
-				{
-					std::cout << this->_vec[index] << std::endl;
-				}
+				std::cout << "I am here again" << std::endl;
+				// for (std::size_t index = 0; index < _size; ++index)
+				// {
+				// 	std::cout << this->_vec[index] << std::endl;
+				// }
 			}
 			
 			// Destructor
@@ -116,25 +117,28 @@ namespace ft
 				
 				if (x._vec)
 				{
-					// std::cout << x.size() << " " << _size << std::endl;
+					
 					// if ()
 					// {
 					// 	this->_alloc = x.get_allocator();
 					// }
 					this->_alloc = x.get_allocator();
-					if (x.size() > this->capacity()) {
+					if (x.size() > this->capacity())
+					{
 						reallocate(this->capacity(), x.size());
 					}
+					std::cout << x.size() << " " << _size << std::endl;
 					uninitialized_alloc_copy(x);
 				}
-				else {
+				else
+				{
 					_vec = nullptr;
 					_size = 0;
 				}
-				for (std::size_t index = 0; index < _size; ++index)
-				{
-					std::cout << this->_vec[index] << std::endl;
-				}
+				// for (std::size_t index = 0; index < _size; ++index)
+				// {
+				// 	std::cout << this->_vec[index] << std::endl;
+				// }
 				return *this;
 			}
 			allocator_type get_allocator() const
@@ -233,11 +237,14 @@ namespace ft
 			}
 			void uninitialized_alloc_copy(const vector& other)
 			{
-				_size = other._size;
+				_size = other.size();
+				std::cout << _size << "i am in unin"  << std::endl;
 				for (size_type index=0; index < _size; ++index)
 				{
-					_alloc.construct(_vec + index, *(other._vec + index));
+					std::cout << *(other._vec + index)  << std::endl;
+					this->_alloc.construct(this->_vec + index, *(other._vec + index));
 				}
+				std::cout << "i am going out" << std::endl;
 			}
 		} ;
 // #include "vector.cpp" // include separate implementation file inside namespace
