@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/13 08:43:07 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/13 09:04:35 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,16 @@ namespace ft
 			// {
 			// 	// say();
 			// }
-			void allocate_and_copy_construct(std::size_t capacity, std::size_t size, const value_type& value = value_type())
-			{
-				allocate(capacity);
-				construct(size, value);
-			}
+			
 			explicit vector (size_type len, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
 			 : _alloc(alloc) // fill constructor
 			{
 				say();
 				allocate_and_copy_construct(len, len, val);
+				for (std::size_t index = 0; index < _size; ++index)
+				{
+					std::cout << this->_vec[index];
+				}
 				// std::cout << typeid(allocator_type).name();
 			}
 			// template <class InputIterator>
@@ -132,7 +132,7 @@ namespace ft
 
 			void deallocate(std::size_t capacity)
 			{
-				allocatordeallocate(_vec, capacity);
+				_alloc.deallocate(_vec, capacity);
 				_cap = 0;
 				_size = 0;
 			}
@@ -155,7 +155,16 @@ namespace ft
 					_alloc.destroy(_vec + index);
 				_size = 0;
 			}
-
+			void allocate_and_copy_construct(std::size_t capacity, std::size_t size, const value_type& value = value_type())
+			{
+				allocate(capacity);
+				construct(size, value);
+			}
+			void deallocate_and_destruct(std::size_t capacity, std::size_t size)
+			{
+				destruct(size);
+				deallocate(capacity);
+			}
 	} ;
 // #include "vector.cpp" // include separate implementation file inside namespace
 }
