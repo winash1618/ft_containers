@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/13 09:32:11 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/13 10:15:25 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,10 @@ namespace ft
 			typedef typename allocator_type::size_type					size_type;
 			typedef typename allocator_type::difference_type			difference_type;
 			typedef typename allocator_type::pointer					pointer;
-			typedef typename allocator_type::const_pointer			const_pointer;
+			typedef typename allocator_type::const_pointer				const_pointer;
 			// typedef ft::reverse_iterator<iterator>					reverse_iterator;
 			// typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
+			typedef size_type											std::size_t;
 			// /*--------------------------------------------------------------------*/
 			// /*-------------------------member functions---------------------------*/
 			// /*--------------------------------------------------------------------*/
@@ -90,11 +91,36 @@ namespace ft
 			
 			vector (const vector& x)
 			{
-				
+				*this = x;
 			}
 			
 			// Destructor
 			~vector (){}
+
+			// Assignment operator
+			vector& operator=(const vector& x)
+			{
+				if (this == &other) 
+				{
+					return *this;
+				}
+				destruct(size());
+				if (other._vec)
+				{
+					// if constexpr (std::allocator_traits<allocator_type>::propagate_on_container_copy_assignment::value) {
+					// 	m_allocator = other.get_allocator();
+					// }
+					if (other.size() > this->capacity()) {
+						reallocate(this->capacity(), other.size());
+					}
+					uninitialized_alloc_copy(other);
+				}
+				else {
+					m_vector = nullptr;
+					m_size = 0;
+				}
+				return *this;
+			}
 			// Iterators
 			// iterator	begin() noexcept
 			// {
@@ -130,6 +156,15 @@ namespace ft
 			// reference       back();
 			// const_reference back() const;
 			
+
+			size_type size() const
+			{
+				return (this->_size); 
+			}
+			size_type capacity() const
+			{
+				return (this->_cap);
+			}
 		private:
 			T* _vec; // 
 			std::size_t _cap;// Capacity 
@@ -176,7 +211,15 @@ namespace ft
 				destruct(size);
 				deallocate(capacity);
 			}
-	} ;
+			void uninitialized_alloc_copy(const vector& other)
+			{
+				_size = other._size;
+				for (size_type index=0; index < _size; ++index)
+				{
+					_alloc.construct(_vec + index, *(other._vec + index));
+				}
+			}
+		} ;
 // #include "vector.cpp" // include separate implementation file inside namespace
 }
 #endif
