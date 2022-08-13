@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/13 13:07:30 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/13 14:40:35 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ namespace ft
 			// Destructor
 			~vector ()
 			{
-				
+				deallocate_and_destruct(_cap, _size);
 			}
 
 			// Assignment operator
@@ -165,25 +165,7 @@ namespace ft
 			// reverse_iterator       rend() noexcept;
 			// const_reverse_iterator rend()    const noexcept;
 			
-			// // Capacity
-			// size_type size() const noexcept;
-			// size_type max_size() const noexcept;
-			// size_type capacity() const noexcept;
-			// bool empty() const noexcept;
-			// void reserve(size_type n);
-
-			// // Modifiers
-			// reference       operator[](size_type n);
-			// const_reference operator[](size_type n) const;
-			// reference       at(size_type n);
-			// const_reference at(size_type n) const;
-
-			// reference       front();
-			// const_reference front() const;
-			// reference       back();
-			// const_reference back() const;
-			
-
+			// Capacity based functions
 			size_type size() const
 			{
 				return (this->_size); 
@@ -192,6 +174,58 @@ namespace ft
 			{
 				return (this->_cap);
 			}
+			size_type max_size() const
+			{
+				return (std::numeric_limits<difference_type>::max()); 
+			}
+			bool empty() const
+			{
+				if (_size)
+					return (false);
+				return (true);
+			}
+			void reserve(size_type n)
+			{
+				if (n > max_size())
+					throw std::length_error("Capacity allocated exceeds max_size()");
+				else if (n > _cap)
+					reallocate(_cap, n);
+			}
+
+			// Modifiers functions
+			reference       operator[](size_type index)
+			{
+				assert(index < size() && "Index out of range");
+				return m_vector[index]; 
+			}
+			const_reference operator[](size_type index) const
+			{
+				assert(index < size() && "Index out of range");
+				return m_vector[index]; 
+			}
+			reference       at(size_type n)
+			{
+				return (index < size() ? _vec[index] : throw std::out_of_range("Index out of range"));
+			}
+			const_reference at(size_type n) const;
+			{
+				return (index < size() ? _vec[index] : throw std::out_of_range("Index out of range"));
+			}
+			void clear()
+			{
+				 destruct(_size); 
+			}
+			void pop_back()
+			{
+				_alloc.destroy(_vec + size() - 1);
+				_size -= 1;
+			}
+			// reference       front();
+			// const_reference front() const;
+			// reference       back();
+			// const_reference back() const;
+			
+			
 		private:
 			T* _vec; // 
 			std::size_t _cap;// Capacity 
