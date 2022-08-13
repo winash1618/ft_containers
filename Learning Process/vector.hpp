@@ -6,12 +6,13 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/12 18:05:52 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/13 08:43:07 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
+#include <iostream>
 # include <exception>
 # include <stdexcept>
 # include <algorithm>
@@ -30,10 +31,10 @@ namespace ft
 	{
 		public:
 			
-			// void say(void)
-			// {
-			// 	std::cout << "hello world" << std::endl;
-			// }
+			void say(void)
+			{
+				std::cout << "hello world" << std::endl;
+			}
 			// /*--------------------------------------------------------------------*/
 			// /*-------------------------member type--------------------------------*/
 			// /*--------------------------------------------------------------------*/
@@ -53,47 +54,22 @@ namespace ft
 			// /*-------------------------member functions---------------------------*/
 			// /*--------------------------------------------------------------------*/
 			// // Constructor
-			void allocate(std::size_t capacity) {
-				_cap = capacity;
-				_vec = std::allocator<allocator_type>::allocate(capacity, 0);
-			}
-
-			void deallocate(std::size_t capacity) {
-				std::allocator<allocator_type>::deallocate(_vec, capacity);
-				_cap = 0;
-				_size = 0;
-			}
-
-			void reallocate(std::size_t old_cap, std::size_t new_cap) {
-				deallocate(old_cap);
-				allocate(new_cap);
-			}
-
-			void construct(std::size_t size, const value_type& value) {
-				_size = size;
-				for (std::size_t index = 0; index < size; ++index)
-					std::allocator<allocator_type>::construct(_vec, value);
-			}
-
-			void destruct(std::size_t size) {
-				for (std::size_t index = 0; index < size; ++index)
-					std::allocator<allocator_type>::destroy(_vec + index);
-				_size = 0;
-			}
+			
+			// explicit vector (const allocator_type& alloc = allocator_type())  : _alloc(alloc), _vec(nullptr) // empty container constructor
+			// {
+			// 	// say();
+			// }
 			void allocate_and_copy_construct(std::size_t capacity, std::size_t size, const value_type& value = value_type())
 			{
 				allocate(capacity);
 				construct(size, value);
 			}
-			explicit vector (const allocator_type& alloc = allocator_type())  : _alloc(alloc), _vec(nullptr) // empty container constructor
-			{
-				// say();
-			}
 			explicit vector (size_type len, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
 			 : _alloc(alloc) // fill constructor
 			{
-				// say();
+				say();
 				allocate_and_copy_construct(len, len, val);
+				// std::cout << typeid(allocator_type).name();
 			}
 			// template <class InputIterator>
 			// vector (InputIterator first, InputIterator last,
@@ -105,6 +81,7 @@ namespace ft
 			// {
 				
 			// }
+			
 			// Destructor
 			~vector (){}
 			// Iterators
@@ -147,9 +124,39 @@ namespace ft
 			std::size_t _cap;// Capacity 
 			std::size_t _size;
 			Allocator _alloc; // std::allocator
+			void allocate(std::size_t capacity)
+			{
+				_cap = capacity;
+				_vec = _alloc.allocate(capacity, 0);
+			}
 
-			
+			void deallocate(std::size_t capacity)
+			{
+				allocatordeallocate(_vec, capacity);
+				_cap = 0;
+				_size = 0;
+			}
+
+			void reallocate(std::size_t old_cap, std::size_t new_cap) {
+				deallocate(old_cap);
+				allocate(new_cap);
+			}
+
+			void construct(std::size_t size, const value_type& value)
+			{
+				_size = size;
+				for (std::size_t index = 0; index < size; ++index)
+					_alloc.construct(_vec, value);
+			}
+
+			void destruct(std::size_t size)
+			{
+				for (std::size_t index = 0; index < size; ++index)
+					_alloc.destroy(_vec + index);
+				_size = 0;
+			}
+
 	} ;
-#include "vector.cpp" // include separate implementation file inside namespace
+// #include "vector.cpp" // include separate implementation file inside namespace
 }
 #endif

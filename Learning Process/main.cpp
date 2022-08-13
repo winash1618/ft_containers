@@ -4,7 +4,7 @@
 using namespace std;
 int main()
 {
-	ft::vector<int> a;
+	ft::vector<int> a(5);
 	// vector<int> v1;
 	//  v1.assign (7,100);  
     // Declaring an iterator
