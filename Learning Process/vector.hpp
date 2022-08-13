@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/13 09:04:35 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/13 09:23:46 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ namespace ft
 			// /*--------------------------------------------------------------------*/
 			// // Constructor
 			
-			// explicit vector (const allocator_type& alloc = allocator_type())  : _alloc(alloc), _vec(nullptr) // empty container constructor
-			// {
-			// 	// say();
-			// }
+			explicit vector (const allocator_type& alloc = allocator_type())  : _alloc(alloc), _vec(nullptr) // empty container constructor
+			{
+				// say();
+			}
 			
 			explicit vector (size_type len, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
 			 : _alloc(alloc) // fill constructor
@@ -71,16 +71,25 @@ namespace ft
 				}
 				// std::cout << typeid(allocator_type).name();
 			}
+			
 			// template <class InputIterator>
 			// vector (InputIterator first, InputIterator last,
 			// 		const allocator_type& alloc = allocator_type()) // range constructor
 			// {
 			// 	say();
+			// 	std::size_t size = std::distance(last, first);
+			// 	allocate(size);
+			// 	for (size_type index = 0; index < size; ++index)
+			// 	{
+			// 		_alloc.construct(_vec + index, *(first + index));
+			// 		++_size;
+			// 	}
 			// }
-			// vector (const vector& x)
-			// {
+			
+			vector (const vector& x)
+			{
 				
-			// }
+			}
 			
 			// Destructor
 			~vector (){}
@@ -146,7 +155,7 @@ namespace ft
 			{
 				_size = size;
 				for (std::size_t index = 0; index < size; ++index)
-					_alloc.construct(_vec, value);
+					_alloc.construct(_vec + index, value);
 			}
 
 			void destruct(std::size_t size)
