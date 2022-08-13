@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/13 10:15:25 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/13 11:54:36 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,12 @@ namespace ft
 			typedef typename allocator_type::const_pointer				const_pointer;
 			// typedef ft::reverse_iterator<iterator>					reverse_iterator;
 			// typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
-			typedef size_type											std::size_t;
 			// /*--------------------------------------------------------------------*/
 			// /*-------------------------member functions---------------------------*/
 			// /*--------------------------------------------------------------------*/
 			// // Constructor
 			
-			explicit vector (const allocator_type& alloc = allocator_type())  : _alloc(alloc), _vec(nullptr) // empty container constructor
+			explicit vector (const allocator_type& alloc = allocator_type())  : _alloc(alloc), _vec(nullptr), _size(0), _cap(0) // empty container constructor
 			{
 				// say();
 			}
@@ -68,7 +67,7 @@ namespace ft
 				allocate_and_copy_construct(len, len, val);
 				for (std::size_t index = 0; index < _size; ++index)
 				{
-					std::cout << this->_vec[index];
+					std::cout << this->_vec[index] << std::endl;
 				}
 				// std::cout << typeid(allocator_type).name();
 			}
@@ -78,48 +77,69 @@ namespace ft
 					const allocator_type& alloc = allocator_type()) // range constructor
 			{
 				say();
+				_size = 0;
 				std::size_t size = std::distance(first, last);
 				std::cout << size << std::endl;
 				allocate(size);
 				for (size_type index = 0; index < size; ++index)
 				{
 					_alloc.construct(_vec + index, *(first + index));
-					std::cout << this->_vec[index];
+					std::cout << this->_vec[index] << std::endl;
 					++_size;
 				}
+				std::cout << _size << std::endl;
 			}
 			
 			vector (const vector& x)
 			{
 				*this = x;
+				for (std::size_t index = 0; index < _size; ++index)
+				{
+					std::cout << this->_vec[index] << std::endl;
+				}
 			}
 			
 			// Destructor
-			~vector (){}
+			~vector ()
+			{
+				
+			}
 
 			// Assignment operator
 			vector& operator=(const vector& x)
 			{
-				if (this == &other) 
+				if (this == &x) 
 				{
 					return *this;
 				}
 				destruct(size());
-				if (other._vec)
+				
+				if (x._vec)
 				{
-					// if constexpr (std::allocator_traits<allocator_type>::propagate_on_container_copy_assignment::value) {
-					// 	m_allocator = other.get_allocator();
+					// std::cout << x.size() << " " << _size << std::endl;
+					// if ()
+					// {
+					// 	this->_alloc = x.get_allocator();
 					// }
-					if (other.size() > this->capacity()) {
-						reallocate(this->capacity(), other.size());
+					this->_alloc = x.get_allocator();
+					if (x.size() > this->capacity()) {
+						reallocate(this->capacity(), x.size());
 					}
-					uninitialized_alloc_copy(other);
+					uninitialized_alloc_copy(x);
 				}
 				else {
-					m_vector = nullptr;
-					m_size = 0;
+					_vec = nullptr;
+					_size = 0;
+				}
+				for (std::size_t index = 0; index < _size; ++index)
+				{
+					std::cout << this->_vec[index] << std::endl;
 				}
 				return *this;
+			}
+			allocator_type get_allocator() const
+			{
+				return (this->_alloc);
 			}
 			// Iterators
 			// iterator	begin() noexcept

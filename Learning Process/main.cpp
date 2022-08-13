@@ -10,6 +10,9 @@ int main()
     // Declaring an iterator
     vector<int>::iterator i1;
 	ft::vector<int> a(v1.begin(), v1.end());
+	ft::vector<int> b;
+	b = a;
+	// std::cout << b.size();
 	// a.say();
 	// container::vector<int> a();
 
