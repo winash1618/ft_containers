@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/13 12:58:50 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/13 13:07:30 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,15 @@ namespace ft
 			vector (const vector& x) : _size(0)  // Copy constructor
 			{
 				std::cout << "I am in copy constructor" << std::endl;
-				*this = x;
-				std::cout << "I am here again" << std::endl;
-				// for (std::size_t index = 0; index < _size; ++index)
-				// {
-				// 	std::cout << this->_vec[index] << std::endl;
-				// }
+				// *this = x;
+				_alloc = x.get_allocator();
+				copy(x);
+				std::cout << "I am back in copy again" << std::endl;
+				for (std::size_t index = 0; index < _size; ++index)
+				{
+					std::cout << this->_vec[index] << std::endl;
+				}
+				std::cout << "End of copy constructor" << std::endl;
 			}
 			
 			// Destructor
@@ -245,6 +248,15 @@ namespace ft
 					this->_alloc.construct(this->_vec + index, *(other._vec + index));
 				}
 				std::cout << "i am going out" << std::endl;
+			}
+			void copy(const vector& other)
+			{
+				if (other._vec) {
+					allocate(other._size);
+					uninitialized_alloc_copy(other);
+				}
+				else
+					_vec = nullptr;
 			}
 		} ;
 // #include "vector.cpp" // include separate implementation file inside namespace
