@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/13 14:40:35 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/13 15:35:31 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,10 +144,13 @@ namespace ft
 				// }
 				return *this;
 			}
+			
+			// Allocator based function
 			allocator_type get_allocator() const
 			{
 				return (this->_alloc);
 			}
+			
 			// Iterators
 			// iterator	begin() noexcept
 			// {
@@ -196,18 +199,18 @@ namespace ft
 			reference       operator[](size_type index)
 			{
 				assert(index < size() && "Index out of range");
-				return m_vector[index]; 
+				return _vec[index]; 
 			}
 			const_reference operator[](size_type index) const
 			{
 				assert(index < size() && "Index out of range");
-				return m_vector[index]; 
+				return _vec[index]; 
 			}
 			reference       at(size_type n)
 			{
 				return (index < size() ? _vec[index] : throw std::out_of_range("Index out of range"));
 			}
-			const_reference at(size_type n) const;
+			const_reference at(size_type n) const
 			{
 				return (index < size() ? _vec[index] : throw std::out_of_range("Index out of range"));
 			}
@@ -215,16 +218,90 @@ namespace ft
 			{
 				 destruct(_size); 
 			}
+
+			// // assign functions:
+			// template <class InputIterator>
+			// void assign (InputIterator first, InputIterator last)
+			// {
+				
+			// }
+			// void assign (size_type n, const value_type& val)
+			// {
+				
+			// }
+
+			// // insert functions
+			// iterator insert (iterator position, const value_type& val) // single element insert
+			// {
+				
+			// }
+			// void insert (iterator position, size_type n, const value_type& val) // fill n index starting from iterator position
+			// {
+				
+			// }
+			// template <class InputIterator>
+			// void insert (iterator position, InputIterator first, InputIterator last)
+			// {
+				
+			// }
+			// popback and pushback
 			void pop_back()
 			{
 				_alloc.destroy(_vec + size() - 1);
 				_size -= 1;
 			}
+			// void push_back (const value_type& val);
+			// {
+			// 	if(_size + 1 > _cap)
+			// 	{
+			// 		T* temp;
+			// 		temp = 
+			// 	}
+			// }
 			// reference       front();
 			// const_reference front() const;
 			// reference       back();
 			// const_reference back() const;
+
+
+
 			
+			// Non-member function overloads
+			// template <class T, class Alloc>
+			// void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
+			// {
+				
+			// }
+			// template <class T, class Alloc>
+			// bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+			// {
+				
+			// }
+			// template <class T, class Alloc>
+			// bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+			// {
+				
+			// }
+			// template <class T, class Alloc>
+			// bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+			// {
+				
+			// }
+			// template <class T, class Alloc>
+			// bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+			// {
+				
+			// }
+			// template <class T, class Alloc>
+			// bool operator>  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+			// {
+				
+			// }
+			// template <class T, class Alloc>
+			// bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+			// {
+				
+			// }
 			
 		private:
 			T* _vec; // 
