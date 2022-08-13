@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/13 09:23:46 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/13 09:32:11 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,19 +72,21 @@ namespace ft
 				// std::cout << typeid(allocator_type).name();
 			}
 			
-			// template <class InputIterator>
-			// vector (InputIterator first, InputIterator last,
-			// 		const allocator_type& alloc = allocator_type()) // range constructor
-			// {
-			// 	say();
-			// 	std::size_t size = std::distance(last, first);
-			// 	allocate(size);
-			// 	for (size_type index = 0; index < size; ++index)
-			// 	{
-			// 		_alloc.construct(_vec + index, *(first + index));
-			// 		++_size;
-			// 	}
-			// }
+			template <class InputIterator>
+			vector (InputIterator first, InputIterator last,
+					const allocator_type& alloc = allocator_type()) // range constructor
+			{
+				say();
+				std::size_t size = std::distance(first, last);
+				std::cout << size << std::endl;
+				allocate(size);
+				for (size_type index = 0; index < size; ++index)
+				{
+					_alloc.construct(_vec + index, *(first + index));
+					std::cout << this->_vec[index];
+					++_size;
+				}
+			}
 			
 			vector (const vector& x)
 			{
