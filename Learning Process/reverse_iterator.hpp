@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:27:34 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/14 16:18:30 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/14 18:09:29 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,25 @@ namespace ft
 		typedef typename ft::iterator_traits<Iterator>::reference       reference;
 		typedef typename ft::iterator_traits<Iterator>::pointer         pointer;
 
-		reverse_iterator(): _iter(), current() {}
-		explicit reverse_iterator(Iterator x);
+		reverse_iterator(): _iter(nullptr), current(nullptr){}
+		explicit reverse_iterator(Iterator x) : _iter(x), current(x) {}
 		template <class U> 
 		reverse_iterator(const reverse_iterator<U>& u);
 		template <class U> 
 		reverse_iterator& operator=(const reverse_iterator<U>& u);//c++11
-		Iterator base() const;
-		reference operator*() const;
-		pointer   operator->() const;
+		Iterator base() const
+		{
+			return current;
+		}
+		reference operator*() const
+		{
+			Iterator tmp = current;
+			return *(--tmp);
+		}
+		pointer   operator->() const
+		{
+			
+		}
 		reverse_iterator& operator++();
 		reverse_iterator  operator++(int);
 		reverse_iterator& operator--();
@@ -53,7 +63,10 @@ namespace ft
 		reverse_iterator& operator+=(difference_type n);
 		reverse_iterator  operator- (difference_type n) const;
 		reverse_iterator& operator-=(difference_type n);
-		reference         operator[](difference_type n) const;
+		reference         operator[](difference_type n) const
+		{
+			return(_iter[n - 1]);
+		}
 	};
 	
 	// Non member functions

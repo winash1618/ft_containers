@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 10:50:33 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/14 16:18:23 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/14 17:15:41 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,10 @@ namespace ft
 			T* _iterator;
 
 		public:
-			// typedef T											value_type;
-			// typedef T*											pointer;
-			// typedef T&											reference;
-			// typedef typename std::ptrdiff_t						difference_type;
-			// typedef typename std::random_access_iterator_tag		iterator_category;
-			
-			My_iterator(T* iter = nullptr) : _iterator( iter ) {}
+			My_iterator(T* iter = nullptr) : _iterator( iter )
+			{
+				
+			}
 
 			reference operator*() const { 
 				return *_iterator; 

@@ -6,14 +6,14 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/14 16:18:43 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/14 17:51:11 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 #include <iostream>
-
+#include <iterator>
 #include "iterator.hpp"
 #include "iterator_traits.hpp"
 #include "reverse_iterator.hpp"
@@ -162,22 +162,22 @@ namespace ft
 				return (_vec + size()); 
 			}
 			
-			// reverse_iterator       rbegin()
-			// {
-				
-			// }
-			// const_reverse_iterator rbegin()  const
-			// {
-				
-			// }
-			// reverse_iterator       rend()
-			// {
-				
-			// }
-			// const_reverse_iterator rend()    const
-			// {
-				
-			// }
+			reverse_iterator       rbegin()
+			{
+				return reverse_iterator(_vec + size()); 
+			}
+			const_reverse_iterator rbegin()  const
+			{
+				return reverse_iterator(_vec + size()); 
+			}
+			reverse_iterator       rend()
+			{
+				return reverse_iterator(_vec); 
+			}
+			const_reverse_iterator rend()    const
+			{
+				return reverse_iterator(_vec); 
+			}
 			
 			// Capacity based functions
 			size_type size() const

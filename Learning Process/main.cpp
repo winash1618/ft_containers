@@ -1,5 +1,6 @@
 #include "vector.hpp"
-#include "iterator.hpp"
+// #include "iterator.hpp"
+#include "reverse_iterator.hpp"
 
 #include <vector>
 using namespace std;
@@ -41,5 +42,8 @@ int main()
 		// container::vector<int> a();
 		ft::vector<int>::iterator a1;
 		a1 = a.begin();
-		std::cout << a1[7];
+		std::cout << a1[7] << std::endl;
+		ft::vector<int>::reverse_iterator a2;
+		a2 = a.rbegin();
+		std::cout << a2[0];
 }
