@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 10:50:33 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/14 15:03:16 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/14 15:09:28 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # include <type_traits>
 # include <utility>
 #include "iterator_traits.hpp"
-#include "reverse_iterator.hpp"
 namespace ft
 {
 	// template <class Category, class T, class Distance = ptrdiff_t,
@@ -41,7 +40,6 @@ namespace ft
 	class Pointer = T*, class Reference = T&>
 	struct iterator
 	{
-		public:
 			typedef T         value_type;
 			typedef Distance  difference_type;
 			typedef Pointer   pointer;
