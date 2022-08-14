@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/14 13:16:39 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/14 13:26:14 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ namespace ft
 			typedef typename allocator_type::difference_type			difference_type;
 			typedef typename allocator_type::pointer					pointer;
 			typedef typename allocator_type::const_pointer				const_pointer;
-			// typedef ft::reverse_iterator<iterator>					reverse_iterator;
-			// typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
+			typedef ft::reverse_iterator<iterator>					reverse_iterator;
+			typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
 			// /*--------------------------------------------------------------------*/
 			// /*-------------------------member functions---------------------------*/
 			// /*--------------------------------------------------------------------*/
@@ -161,14 +161,14 @@ namespace ft
 			{
 				return (_vec);
 			}
-			// iterator               end()
-			// {
-				
-			// }
-			// const_iterator         end()     const
-			// {
-				
-			// }
+			iterator               end()
+			{
+				return (_vec + size()); 
+			}
+			const_iterator         end()     const
+			{
+				return (_vec + size()); 
+			}
 			
 			// reverse_iterator       rbegin()
 			// {
