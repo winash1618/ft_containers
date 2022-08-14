@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/13 15:35:31 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/14 13:16:39 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <type_traits>
 # include <utility>
 
+#include "iterator.hpp"
 namespace ft
 {
 	template <class T, class Allocator = std::allocator<T> >
@@ -42,8 +43,8 @@ namespace ft
 			typedef Allocator											allocator_type;
 			typedef typename allocator_type::reference					reference;
 			typedef typename allocator_type::const_reference			const_reference;
-			// typedef ft::iterator										iterator;
-			// typedef ft::iterator										const_iterator;
+			typedef ft::iterator<value_type>							iterator;
+			typedef ft::iterator<value_type>							const_iterator;
 			typedef typename allocator_type::size_type					size_type;
 			typedef typename allocator_type::difference_type			difference_type;
 			typedef typename allocator_type::pointer					pointer;
@@ -152,21 +153,39 @@ namespace ft
 			}
 			
 			// Iterators
-			// iterator	begin() noexcept
+			iterator	begin()
+			{
+				return (_vec);
+			}
+			const_iterator         begin()   const
+			{
+				return (_vec);
+			}
+			// iterator               end()
 			// {
-			// 	return (*_vec);
+				
 			// }
-			// const_iterator         begin()   const noexcept
+			// const_iterator         end()     const
 			// {
-			// 	return (*_vec);
+				
 			// }
-			// iterator               end() noexcept;
-			// const_iterator         end()     const noexcept;
 			
-			// reverse_iterator       rbegin() noexcept;
-			// const_reverse_iterator rbegin()  const noexcept;
-			// reverse_iterator       rend() noexcept;
-			// const_reverse_iterator rend()    const noexcept;
+			// reverse_iterator       rbegin()
+			// {
+				
+			// }
+			// const_reverse_iterator rbegin()  const
+			// {
+				
+			// }
+			// reverse_iterator       rend()
+			// {
+				
+			// }
+			// const_reverse_iterator rend()    const
+			// {
+				
+			// }
 			
 			// Capacity based functions
 			size_type size() const
@@ -370,6 +389,7 @@ namespace ft
 					_vec = nullptr;
 			}
 		} ;
+		
 // #include "vector.cpp" // include separate implementation file inside namespace
 }
 #endif
