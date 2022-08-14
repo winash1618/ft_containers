@@ -6,23 +6,23 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/14 14:53:12 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/14 15:49:47 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 #include <iostream>
-# include <exception>
-# include <stdexcept>
-# include <algorithm>
-# include <cassert>
-# include <initializer_list>
-# include <iterator>
-# include <limits>
-# include <memory>
-# include <type_traits>
-# include <utility>
+// # include <exception>
+// # include <stdexcept>
+// # include <algorithm>
+// # include <cassert>
+// # include <initializer_list>
+// # include <iterator>
+// # include <limits>
+// # include <memory>
+// # include <type_traits>
+// # include <utility>
 
 #include "iterator.hpp"
 #include "iterator_traits.hpp"

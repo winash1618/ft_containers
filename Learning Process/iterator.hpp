@@ -6,22 +6,21 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 10:50:33 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/14 15:09:28 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/14 15:50:30 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ITERATOR_HPP
 # define ITERATOR_HPP
-# include <exception>
-# include <stdexcept>
-# include <algorithm>
-# include <cassert>
-# include <initializer_list>
-# include <iterator>
-# include <limits>
-# include <memory>
-# include <type_traits>
-# include <utility>
+// # include <exception>
+// # include <stdexcept>
+// # include <algorithm>
+// # include <cassert>
+// # include <initializer_list>
+// # include <limits>
+// # include <memory>
+// # include <type_traits>
+// # include <utility>
 #include "iterator_traits.hpp"
 namespace ft
 {
@@ -58,7 +57,7 @@ namespace ft
 			// typedef T*											pointer;
 			// typedef T&											reference;
 			// typedef typename std::ptrdiff_t						difference_type;
-			// typedef typename std::random_access_iterator_tag	iterator_category;
+			// typedef typename std::random_access_iterator_tag		iterator_category;
 			
 			My_iterator(T* iter = nullptr) : _iterator( iter ) {}
 
