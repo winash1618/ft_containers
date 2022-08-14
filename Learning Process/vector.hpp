@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/14 13:26:14 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/14 14:53:12 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # include <utility>
 
 #include "iterator.hpp"
+#include "iterator_traits.hpp"
+#include "reverse_iterator.hpp"
 namespace ft
 {
 	template <class T, class Allocator = std::allocator<T> >
@@ -43,8 +45,8 @@ namespace ft
 			typedef Allocator											allocator_type;
 			typedef typename allocator_type::reference					reference;
 			typedef typename allocator_type::const_reference			const_reference;
-			typedef ft::iterator<value_type>							iterator;
-			typedef ft::iterator<value_type>							const_iterator;
+			typedef ft::My_iterator<value_type>							iterator;
+			typedef ft::My_iterator<value_type>							const_iterator;
 			typedef typename allocator_type::size_type					size_type;
 			typedef typename allocator_type::difference_type			difference_type;
 			typedef typename allocator_type::pointer					pointer;

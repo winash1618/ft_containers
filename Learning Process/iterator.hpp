@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 10:50:33 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/14 11:17:33 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/14 15:03:16 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@
 # include <memory>
 # include <type_traits>
 # include <utility>
-
+#include "iterator_traits.hpp"
+#include "reverse_iterator.hpp"
 namespace ft
 {
 	// template <class Category, class T, class Distance = ptrdiff_t,
@@ -35,20 +36,33 @@ namespace ft
 	// 	typedef Reference	reference;
 	// 	typedef Category	iterator_category;
 	// };
+
+	template<class Category, class T, class Distance = ptrdiff_t,
+	class Pointer = T*, class Reference = T&>
+	struct iterator
+	{
+		public:
+			typedef T         value_type;
+			typedef Distance  difference_type;
+			typedef Pointer   pointer;
+			typedef Reference reference;
+			typedef Category  iterator_category;
+	};
+	
 	template<typename T>
-	class iterator
+	class My_iterator : public ft::iterator<ft::random_access_iterator_tag, int>
 	{
 		private:
 			T* _iterator;
 
 		public:
-			typedef T											value_type;
-			typedef T*											pointer;
-			typedef T&											reference;
-			typedef typename std::ptrdiff_t						difference_type;
-			typedef typename std::random_access_iterator_tag	iterator_category;
+			// typedef T											value_type;
+			// typedef T*											pointer;
+			// typedef T&											reference;
+			// typedef typename std::ptrdiff_t						difference_type;
+			// typedef typename std::random_access_iterator_tag	iterator_category;
 			
-			iterator(T* iter = nullptr) : _iterator( iter ) {}
+			My_iterator(T* iter = nullptr) : _iterator( iter ) {}
 
 			reference operator*() const { 
 				return *_iterator; 
@@ -89,7 +103,7 @@ namespace ft
 				return *this;
 			}
 			
-			difference_type operator-(const iterator& other) const { 
+			difference_type operator-(const My_iterator& other) const { 
 				return std::distance(_iterator, other._iterator); 
 			}
 			
