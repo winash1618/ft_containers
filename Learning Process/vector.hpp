@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/14 17:51:11 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/15 14:12:24 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,13 +230,35 @@ namespace ft
 				 destruct(_size); 
 			}
 
-			// // assign functions:
+			// assign functions:
 			// template <class InputIterator>
 			// void assign (InputIterator first, InputIterator last)
 			// {
-				
+			// 	size_type new_size = static_cast<size_type>(_VSTD::distance(first, last));
+			// 	if (new_size <= capacity())
+			// 	{
+			// 		InputIterator mid = last;
+			// 		bool growing = false;
+			// 		if (new_size > size())
+			// 		{
+			// 			growing = true;
+			// 			mid =  first;
+			// 			ft::advance(mid, size());
+			// 		}
+			// 		pointer __m = _VSTD::copy(first, mid, this->__begin_);
+			// 		if (growing)
+			// 			construct_at_end(mid, last, new_size - size());
+			// 		else
+			// 			this->__destruct_at_end(__m);
+			// 	}
+			// 	else
+			// 	{
+			// 		deallocate();
+			// 		allocate(__recommend(__new_size));
+			// 		construct_at_end(first, last, __new_size);
+			// 	}
 			// }
-			// void assign (size_type n, const value_type& val)
+			// // void assign (size_type n, const value_type& val)
 			// {
 				
 			// }
@@ -269,10 +291,26 @@ namespace ft
 			// 		temp = 
 			// 	}
 			// }
-			// reference       front();
-			// const_reference front() const;
-			// reference       back();
-			// const_reference back() const;
+			reference       front()
+			{
+				assert(!empty() && "front() called for empty vector");
+				return *this->begin();
+			}
+			const_reference front() const
+			{
+				assert(!empty() && "front() called for empty vector");
+				return *this->__begin_;
+			}
+			reference       back()
+			{
+				assert(!empty() && "back() called for empty vector");
+				return *(this->end() - 1);
+			}
+			const_reference back() const
+			{
+				assert(!empty() && "back() called for empty vector");
+				return *(this->end() - 1);
+			}
 
 
 
