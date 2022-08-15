@@ -6,14 +6,15 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/15 14:12:24 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/15 15:28:14 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 #include <iostream>
-#include <iterator>
+// #include <iterator>
+#include <algorithm>
 #include "iterator.hpp"
 #include "iterator_traits.hpp"
 #include "reverse_iterator.hpp"
@@ -234,7 +235,7 @@ namespace ft
 			// template <class InputIterator>
 			// void assign (InputIterator first, InputIterator last)
 			// {
-			// 	size_type new_size = static_cast<size_type>(_VSTD::distance(first, last));
+			// 	size_type new_size = static_cast<size_type>(ft::distance(first, last));
 			// 	if (new_size <= capacity())
 			// 	{
 			// 		InputIterator mid = last;
@@ -245,17 +246,17 @@ namespace ft
 			// 			mid =  first;
 			// 			ft::advance(mid, size());
 			// 		}
-			// 		pointer __m = _VSTD::copy(first, mid, this->__begin_);
+			// 		pointer m = std::copy(first, mid, this->begin());
 			// 		if (growing)
 			// 			construct_at_end(mid, last, new_size - size());
 			// 		else
-			// 			this->__destruct_at_end(__m);
+			// 			this->__destruct_at_end(m);
 			// 	}
 			// 	else
 			// 	{
 			// 		deallocate();
-			// 		allocate(__recommend(__new_size));
-			// 		construct_at_end(first, last, __new_size);
+			// 		allocate(recommend(__new_size));
+			// 		construct_at_end(first, last, new_size);
 			// 	}
 			// }
 			// // void assign (size_type n, const value_type& val)
@@ -299,7 +300,7 @@ namespace ft
 			const_reference front() const
 			{
 				assert(!empty() && "front() called for empty vector");
-				return *this->__begin_;
+				return *this->begin();
 			}
 			reference       back()
 			{
@@ -312,51 +313,11 @@ namespace ft
 				return *(this->end() - 1);
 			}
 
-
-
-			
-			// Non-member function overloads
-			// template <class T, class Alloc>
-			// void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
-			// {
-				
-			// }
-			// template <class T, class Alloc>
-			// bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
-			// {
-				
-			// }
-			// template <class T, class Alloc>
-			// bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
-			// {
-				
-			// }
-			// template <class T, class Alloc>
-			// bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
-			// {
-				
-			// }
-			// template <class T, class Alloc>
-			// bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
-			// {
-				
-			// }
-			// template <class T, class Alloc>
-			// bool operator>  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
-			// {
-				
-			// }
-			// template <class T, class Alloc>
-			// bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
-			// {
-				
-			// }
-			
 		private:
 			T* _vec; // 
 			std::size_t _cap;// Capacity 
 			std::size_t _size;
-			Allocator _alloc; // std::allocator
+			Allocator 	_alloc; // std::allocator
 			void allocate(std::size_t capacity)
 			{
 				_cap = capacity;
@@ -418,7 +379,60 @@ namespace ft
 				else
 					_vec = nullptr;
 			}
+			size_type recommend(size_type new_size) const
+			{
+				const size_type ms = max_size();
+				if (new_size > ms)
+					this->__throw_length_error();
+				const size_type cap = capacity();
+				if (cap >= ms / 2)
+					return ms;
+				return std::max<size_type>(2*cap, new_size);
+			}
+			// destruct_at_end(pointer __new_last) _NOEXCEPT
+			// {
+			// 	pointer __soon_to_be_end = end();
+			// 	while (__new_last != __soon_to_be_end)
+			// 		__alloc_traits::destroy(__alloc(), _VSTD::__to_address(--__soon_to_be_end));
+			// }
 		} ;
+		// Non-member function overloads
+		// template <class T, class Alloc>
+		// void swap (vector<T,Alloc>& x, vector<T,Alloc>& y)
+		// {
+			
+		// }
+		// template <class T, class Alloc>
+		// bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+		// {
+			
+		// }
+		// template <class T, class Alloc>
+		// bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+		// {
+			
+		// }
+		// template <class T, class Alloc>
+		// bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+		// {
+			
+		// }
+		// template <class T, class Alloc>
+		// bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+		// {
+			
+		// }
+		// template <class T, class Alloc>
+		// bool operator>  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+		// {
+			
+		// }
+		// template <class T, class Alloc>
+		// bool operator>= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+		// {
+			
+		// }
+			
 		
 // #include "vector.cpp" // include separate implementation file inside namespace
 }

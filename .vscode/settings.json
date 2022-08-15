@@ -63,6 +63,7 @@
 		"tuple": "cpp",
 		"typeinfo": "cpp",
 		"utility": "cpp",
-		"compare": "cpp"
+		"compare": "cpp",
+		"__functional_03": "cpp"
 	}
 }
