@@ -41,7 +41,7 @@ int main()
 		//  v1.push_back(206);  
 		//  v1.push_back(207);  
 	    // Declaring an iterator
-		vector<int> v1(5, 100);
+		ft::vector<int> v1(5, 100);
 		// ft::vector<int> v1(5);
 		// v1[0] = 100;
 		// std::cout << v1[0] << std::endl;

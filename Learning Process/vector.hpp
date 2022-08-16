@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/16 07:54:40 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/16 09:20:11 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,111 @@
 #include "reverse_iterator.hpp"
 namespace ft
 {
+	// template <bool>
+	// class __vector_base_common
+	// {
+	// protected:
+	// 	__vector_base_common() {}
+	// 	void __throw_length_error() const;
+	// 	void __throw_out_of_range() const;
+	// };
+	
+	// template <class _Tp, class _Allocator>
+	// class __vector_base
+	// 	: protected __vector_base_common<true>
+	// {
+	// 	public:
+	// 		typedef _Allocator                               allocator_type;
+	// 		typedef allocator_traits<allocator_type>         __alloc_traits;
+	// 		typedef typename __alloc_traits::size_type       size_type;
+	// 	protected:
+	// 		typedef _Tp                                      value_type;
+	// 		typedef value_type&                              reference;
+	// 		typedef const value_type&                        const_reference;
+	// 		typedef typename __alloc_traits::difference_type difference_type;
+	// 		typedef typename __alloc_traits::pointer         pointer;
+	// 		typedef typename __alloc_traits::const_pointer   const_pointer;
+	// 		typedef pointer                                  iterator;
+	// 		typedef const_pointer                            const_iterator;
+
+	// 		pointer                                         __begin_;
+	// 		pointer                                         __end_;
+	// 		// __compressed_pair<pointer, allocator_type> __end_cap_;
+
+	// 		// allocator_type& __alloc()
+	// 		// 	{return __end_cap_.second();}
+	// 		// const allocator_type& __alloc() const
+	// 		// 	{return __end_cap_.second();}
+	// 		// pointer& __end_cap()
+	// 		// 	{return __end_cap_.first();}
+	// 		// const pointer& __end_cap() const
+	// 		// 	{return __end_cap_.first();}
+
+	// 		__vector_base();
+	// 		__vector_base(const allocator_type& __a);
+	// 		~__vector_base();
+
+	// 		void clear()
+	// 		{
+	// 			__destruct_at_end(__begin_);
+	// 		}
+	// 		size_type capacity() const
+	// 		{
+	// 			return static_cast<size_type>(__end_cap() - __begin_);
+	// 		}
+
+	// 		void __destruct_at_end(pointer __new_last)
+	// 		{
+	// 			pointer __soon_to_be_end = __end_;
+	// 			while (__new_last != __soon_to_be_end)
+	// 				__alloc_traits::destroy(__alloc(), _VSTD::__to_address(--__soon_to_be_end));
+	// 			__end_ = __new_last;
+	// 		}
+
+	// 		void __copy_assign_alloc(const __vector_base& __c)
+	// 		{
+	// 			__copy_assign_alloc(__c, integral_constant<bool,
+	// 			__alloc_traits::propagate_on_container_copy_assignment::value>());
+	// 		}
+
+	// 		void __move_assign_alloc(__vector_base& __c)
+	// 		_(
+	// 				!__alloc_traits::propagate_on_container_move_assignment::value ||
+	// 				is_nothrow_move_assignable<allocator_type>::value)
+	// 			{__move_assign_alloc(__c, integral_constant<bool,
+	// 						__alloc_traits::propagate_on_container_move_assignment::value>());}
+	// 	private:
+	// 		void __copy_assign_alloc(const __vector_base& __c, true_type)
+	// 		{
+	// 			if (__alloc() != __c.__alloc())
+	// 			{
+	// 				clear();
+	// 				__alloc_traits::deallocate(__alloc(), __begin_, capacity());
+	// 				__begin_ = __end_ = __end_cap() = nullptr;
+	// 			}
+	// 			__alloc() = __c.__alloc();
+	// 		}
+
+	// 		void __copy_assign_alloc(const __vector_base&, false_type)
+	// 		{}
+
+	// 		void __move_assign_alloc(__vector_base& __c, true_type)
+	// 		_(is_nothrow_move_assignable<allocator_type>::value)
+	// 			{
+	// 				__alloc() = _VSTD::move(__c.__alloc());
+	// 			}
+
+	// 		void __move_assign_alloc(__vector_base&, false_type)
+			
+	// 			{}
+	// };
+
+
+
+
+
+
+	
 	template <class T, class Allocator = std::allocator<T> >
 	class vector
 	{
@@ -58,7 +163,11 @@ namespace ft
 			 : _alloc(alloc) // fill constructor
 			{
 				say();
-				allocate_and_copy_construct(len, len, val);
+				if (len > 0)
+				{
+					allocate(len);
+					construct_at_end(len, val);
+				}
 				for (std::size_t index = 0; index < _size; ++index)
 				{
 					std::cout << this->_vec[index] << std::endl;
@@ -68,20 +177,26 @@ namespace ft
 			
 			template <class InputIterator>
 			vector (InputIterator first, InputIterator last,
-					const allocator_type& alloc = allocator_type()) : _size(0), _cap(0)// range constructor
+					const allocator_type& alloc = allocator_type())  : _alloc(alloc), _size(0), _cap(0)// range constructor
 			{
 				say();
 				// std::size_t size = 5;
 				size_type size = ft::distance(first, last);
-				std::cout << size << std::endl;
+				// std::cout << size << std::endl;
 				allocate(size);
-				for (size_type index = 0; index < size; ++index)
+				// for (size_type index = 0; index < size; ++index)
+				// {
+				// 	_alloc.construct(_vec + index, *(first + index));
+				// 	std::cout << this->_vec[index] << std::endl;
+				// 	++_size;
+				// }
+				// std::cout << _size << std::endl;
+				std::size_t index = 0;
+				for (; first != last; ++first)
 				{
-					_alloc.construct(_vec + index, *(first + index));
-					std::cout << this->_vec[index] << std::endl;
-					++_size;
+					_alloc.construct(_vec + index, *(first));
+					index++;
 				}
-				std::cout << _size << std::endl;
 			}
 			
 			vector (const vector& x) : _size(0)  // Copy constructor
@@ -239,13 +354,18 @@ namespace ft
 				deallocate_and_destruct(_cap, _size);
 				size_type size = static_cast<size_type>(ft::distance(first, last));
 				allocate(size);
-				for (std::size_t index = 0; index < size; ++index)
+				// for (std::size_t index = 0; index < size; ++index)
+				// {
+				// 	_alloc.construct(_vec + index, *(first + index));
+				// 	std::cout << _vec[index] << std::endl;
+				// 	++_size;
+				// }
+				std::size_t index = 0;
+				for (; first != last; ++first)
 				{
-					_alloc.construct(_vec + index, *(first + index));
-					std::cout << _vec[index] << std::endl;
-					++_size;
+					_alloc.construct(_vec + index, *(first));
+					index++;
 				}
-				
 				
 				// if (new_size <= capacity())
 				// {
@@ -343,11 +463,18 @@ namespace ft
 			std::size_t _cap;// Capacity 
 			std::size_t _size;
 			Allocator 	_alloc; // std::allocator
-			void allocate(std::size_t capacity)
+			void allocate(size_type capacity)
 			{
+				if (capacity > max_size())
+					throw std::length_error("new size to allocate exceeds max_size()");
 				_cap = capacity;
 				_vec = _alloc.allocate(capacity, 0);
 			}
+			// void allocate(std::size_t capacity)
+			// {
+			// 	_cap = capacity;
+			// 	_vec = _alloc.allocate(capacity, 0);
+			// }
 
 			void deallocate(std::size_t capacity)
 			{
@@ -368,7 +495,7 @@ namespace ft
 					_alloc.construct(_vec + index, value);
 			}
 
-			void construct_at_end(std::size_t size, const value_type& value)
+			void construct_at_end(size_type size, const value_type& value)
 			{
 				_size = size;
 				for (std::size_t index = 0; index < size; ++index)
@@ -420,7 +547,7 @@ namespace ft
 					return ms;
 				return std::max<size_type>(2*cap, new_size);
 			}
-			// destruct_at_end(pointer __new_last) _NOEXCEPT
+			// destruct_at_end(pointer __new_last)
 			// {
 			// 	pointer __soon_to_be_end = end();
 			// 	while (__new_last != __soon_to_be_end)

@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 10:50:33 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/16 07:46:29 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/16 09:31:27 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ namespace ft
 	class __wrap_iter
 	{
 		public:
-			typedef _Iter                                                      iterator_type;
+			typedef _Iter          iterator_type;
 			typedef typename iterator_traits<iterator_type>::iterator_category iterator_category;
 			typedef typename iterator_traits<iterator_type>::value_type        value_type;
 			typedef typename iterator_traits<iterator_type>::difference_type   difference_type;
@@ -210,6 +210,10 @@ namespace ft
 	// 		}
 	// };
 	
+
+
+
+	
 	// //-------------distance function-----------------------------------//
 
 	template <class _RandIter>
@@ -217,7 +221,11 @@ namespace ft
 	__distance(_RandIter first, _RandIter last, ft::random_access_iterator_tag)
 	{
 		// std::cout << last - first << " : distance" << std::endl;
-		return last - first;
+		// return last - first;
+		typename ft::iterator_traits<_RandIter>::difference_type r(0);
+		for (; first != last; ++first)
+			++r;
+		return r;
 	}
 	template<class _InputIter>
 	typename ft::iterator_traits<_InputIter>::difference_type
