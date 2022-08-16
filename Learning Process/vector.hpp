@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/15 15:28:14 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/16 07:21:16 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ namespace ft
 			typedef Allocator											allocator_type;
 			typedef typename allocator_type::reference					reference;
 			typedef typename allocator_type::const_reference			const_reference;
-			typedef ft::My_iterator<value_type>							iterator;
-			typedef ft::My_iterator<value_type>							const_iterator;
+			typedef ft::My_iterator<pointer>							iterator;
+			typedef ft::My_iterator<const_pointer>						const_iterator;
 			typedef typename allocator_type::size_type					size_type;
 			typedef typename allocator_type::difference_type			difference_type;
 			typedef typename allocator_type::pointer					pointer;
@@ -71,7 +71,8 @@ namespace ft
 					const allocator_type& alloc = allocator_type()) : _size(0), _cap(0)// range constructor
 			{
 				say();
-				std::size_t size = std::distance(first, last);
+				// std::size_t size = 5;
+				size_type size = ft::distance(first, last);
 				std::cout << size << std::endl;
 				allocate(size);
 				for (size_type index = 0; index < size; ++index)
@@ -232,33 +233,57 @@ namespace ft
 			}
 
 			// assign functions:
-			// template <class InputIterator>
-			// void assign (InputIterator first, InputIterator last)
-			// {
-			// 	size_type new_size = static_cast<size_type>(ft::distance(first, last));
-			// 	if (new_size <= capacity())
-			// 	{
-			// 		InputIterator mid = last;
-			// 		bool growing = false;
-			// 		if (new_size > size())
-			// 		{
-			// 			growing = true;
-			// 			mid =  first;
-			// 			ft::advance(mid, size());
-			// 		}
-			// 		pointer m = std::copy(first, mid, this->begin());
-			// 		if (growing)
-			// 			construct_at_end(mid, last, new_size - size());
-			// 		else
-			// 			this->__destruct_at_end(m);
-			// 	}
-			// 	else
-			// 	{
-			// 		deallocate();
-			// 		allocate(recommend(__new_size));
-			// 		construct_at_end(first, last, new_size);
-			// 	}
-			// }
+			template <class InputIterator>
+			void assign (InputIterator first, InputIterator last)
+			{
+				deallocate_and_destruct(_cap, _size);
+				size_type size = static_cast<size_type>(ft::distance(first, last));
+				allocate(size);
+				for (std::size_t index = 0; index < size; ++index)
+				{
+					_alloc.construct(_vec + index, *(first + index));
+					std::cout << _vec[index] << std::endl;
+					++_size;
+				}
+				
+				
+				// if (new_size <= capacity())
+				// {
+				// 	InputIterator mid = last;
+				// 	bool growing = false;
+				// 	if (new_size > size())
+				// 	{
+				// 		growing = true;
+				// 		mid =  first;
+				// 		ft::advance(mid, size());
+				// 	}
+				// 	pointer m = std::copy(first, mid, this->begin());
+				// 	if (growing)
+				// 	{
+				// 		_size = new_size;
+				// 		for (std::size_t index = 0; index < size; ++index)
+				// 		{
+				// 			_alloc.construct(_vec + index, *mid);
+				// 			mid++;
+				// 		}
+				// 	}
+				// 	else
+				// 	{
+				// 		for (std::size_t index = 0; index < size; ++index)
+				// 		{
+				// 			_alloc.destroy(_vec + index);
+							
+				// 		}
+				// 		_size = 0;
+				// 	}
+				// }
+				// else
+				// {
+				// 	deallocate();
+				// 	allocate(recommend(new_size));
+				// 	construct_at_end(first, last, new_size);
+				// }
+			}
 			// // void assign (size_type n, const value_type& val)
 			// {
 				
@@ -343,6 +368,12 @@ namespace ft
 					_alloc.construct(_vec + index, value);
 			}
 
+			void construct_at_end(std::size_t size, const value_type& value)
+			{
+				_size = size;
+				for (std::size_t index = 0; index < size; ++index)
+					_alloc.construct(_vec + index, value);
+			}
 			void destruct(std::size_t size)
 			{
 				for (std::size_t index = 0; index < size; ++index)
@@ -383,7 +414,7 @@ namespace ft
 			{
 				const size_type ms = max_size();
 				if (new_size > ms)
-					this->__throw_length_error();
+					throw std::length_error("new size to allocate exceeds max_size()");
 				const size_type cap = capacity();
 				if (cap >= ms / 2)
 					return ms;
