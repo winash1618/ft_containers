@@ -6,14 +6,14 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/16 09:20:11 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/16 10:35:52 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 #include <iostream>
-// #include <iterator>
+#include <iterator>
 #include <algorithm>
 #include "iterator.hpp"
 #include "iterator_traits.hpp"
@@ -163,9 +163,11 @@ namespace ft
 			 : _alloc(alloc) // fill constructor
 			{
 				say();
+				
 				if (len > 0)
 				{
 					allocate(len);
+					
 					construct_at_end(len, val);
 				}
 				for (std::size_t index = 0; index < _size; ++index)
@@ -180,8 +182,9 @@ namespace ft
 					const allocator_type& alloc = allocator_type())  : _alloc(alloc), _size(0), _cap(0)// range constructor
 			{
 				say();
-				// std::size_t size = 5;
-				size_type size = ft::distance(first, last);
+				std::cout << "hello i am here" << std::endl;
+				std::size_t size = 5;
+				// size_type size = std::distance(first, last);
 				// std::cout << size << std::endl;
 				allocate(size);
 				// for (size_type index = 0; index < size; ++index)
@@ -194,7 +197,8 @@ namespace ft
 				std::size_t index = 0;
 				for (; first != last; ++first)
 				{
-					_alloc.construct(_vec + index, *(first));
+					_alloc.construct(_vec + index, (first));
+					std::cout << this->_vec[index] << std::endl;
 					index++;
 				}
 			}

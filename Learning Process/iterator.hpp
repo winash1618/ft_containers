@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 10:50:33 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/16 09:31:27 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/16 10:23:25 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,9 +124,6 @@ namespace ft
 			{
 				return __i;
 			}
-
-			
-			
 	};
 
 
@@ -278,6 +275,95 @@ namespace ft
 	{
 		assert(n >= 0 && "Attempt to advance(it, -n) on a non-bidi iterator");
 		__advance(i, n, typename ft::iterator_traits<_InputIter>::iterator_category());
+	}
+
+
+
+	template <class _Iter1, class _Iter2>
+	bool
+	operator==(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter2>& __y) 
+	{
+		return __x.base() == __y.base();
+	}
+
+	template <class _Iter1, class _Iter2>
+	bool
+	operator<(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter2>& __y) 
+	{
+		return __x.base() < __y.base();
+	}
+
+	template <class _Iter1, class _Iter2>
+	bool
+	operator!=(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter2>& __y) 
+	{
+		return !(__x == __y);
+	}
+
+	template <class _Iter1, class _Iter2>
+	bool
+	operator>(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter2>& __y) 
+	{
+		return __y < __x;
+	}
+
+	template <class _Iter1, class _Iter2>
+	bool
+	operator>=(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter2>& __y) 
+	{
+		return !(__x < __y);
+	}
+
+	template <class _Iter1, class _Iter2>
+	bool
+	operator<=(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter2>& __y) 
+	{
+		return !(__y < __x);
+	}
+
+	template <class _Iter1>
+	bool
+	operator!=(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter1>& __y) 
+	{
+		return !(__x == __y);
+	}
+
+	template <class _Iter1>
+	bool
+	operator>(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter1>& __y) 
+	{
+		return __y < __x;
+	}
+
+	template <class _Iter1>
+	bool
+	operator>=(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter1>& __y) 
+	{
+		return !(__x < __y);
+	}
+
+	template <class _Iter1>
+	bool
+	operator<=(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter1>& __y) 
+	{
+		return !(__y < __x);
+	}
+
+	
+	template <class _Iter1, class _Iter2>
+	typename __wrap_iter<_Iter1>::difference_type
+	operator-(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter2>& __y) 
+	{
+		return __x.base() - __y.base();
+	}
+
+	template <class _Iter>
+	__wrap_iter<_Iter>
+	operator+(typename __wrap_iter<_Iter>::difference_type __n,
+			__wrap_iter<_Iter> __x) 
+	{
+		__x += __n;
+		return __x;
 	}
 }
 #endif
