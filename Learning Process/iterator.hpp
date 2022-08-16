@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 10:50:33 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/16 07:27:33 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/16 07:46:29 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,81 @@ namespace ft
 		private:
 			iterator_type __i;
 		public:
-			__wrap_iter() : __i{}
+			__wrap_iter() : __i(){}
+			template <class _Up>
+			__wrap_iter(const __wrap_iter<_Up>& __u)
+				: __i(__u.base())
+				{}
+			reference operator*() const
+			{
+				return *__i;
+			}
+			
+			pointer  operator->() const
+			{
+				std::addressof(*__i);
+			}
+			
+			__wrap_iter& operator++()
+			{
+				++__i;
+				return *this;
+			}
+			
+			__wrap_iter  operator++(int)
+			{
+				__wrap_iter __tmp(*this);
+				++(*this);
+				return __tmp;
+			}
+			
+			__wrap_iter& operator--()
+			{
+				--__i;
+				return *this;
+			}
+			
+			__wrap_iter  operator--(int)
+			{
+				__wrap_iter __tmp(*this);
+				--(*this);
+				return __tmp;
+			}
+			
+			__wrap_iter  operator+ (difference_type __n) const
+			{
+				__wrap_iter __w(*this);
+				__w += __n;
+				return __w;
+			}
+
+			__wrap_iter& operator+=(difference_type __n)
+			{
+				 __i += __n;
+				return *this;
+			}
+
+			 __wrap_iter  operator- (difference_type __n) const
+			{
+				return *this + (-__n);
+			}
+			
+			__wrap_iter& operator-=(difference_type __n)
+			{
+				*this += -__n;
+				return *this;
+			}
+			reference    operator[](difference_type __n) const
+			{
+				return __i[__n];
+			}
+
+			iterator_type base() const
+			{
+				return __i;
+			}
+
+			
 			
 	};
 
@@ -138,64 +212,64 @@ namespace ft
 	
 	// //-------------distance function-----------------------------------//
 
-	// template <class _RandIter>
-	// typename ft::iterator_traits<_RandIter>::difference_type
-	// __distance(_RandIter first, _RandIter last, ft::random_access_iterator_tag)
-	// {
-	// 	// std::cout << last - first << " : distance" << std::endl;
-	// 	return last - first;
-	// }
-	// template<class _InputIter>
-	// typename ft::iterator_traits<_InputIter>::difference_type
-	// __distance (_InputIter first, _InputIter last, ft::input_iterator_tag)
-	// {
-	// 	typename ft::iterator_traits<_InputIter>::difference_type r(0);
-	// 	for (; first != last; ++first)
-	// 		++r;
-	// 	return r;
-	// }
-	// template <class InputIter>
-	// typename ft::iterator_traits<InputIter>::difference_type
-	// distance(InputIter first, InputIter last)
-	// {
-	// 	return __distance(first, last, typename ft::iterator_traits<InputIter>::iterator_category());
-	// }
-	// //--------------------------------------------------------------------//
+	template <class _RandIter>
+	typename ft::iterator_traits<_RandIter>::difference_type
+	__distance(_RandIter first, _RandIter last, ft::random_access_iterator_tag)
+	{
+		// std::cout << last - first << " : distance" << std::endl;
+		return last - first;
+	}
+	template<class _InputIter>
+	typename ft::iterator_traits<_InputIter>::difference_type
+	__distance (_InputIter first, _InputIter last, ft::input_iterator_tag)
+	{
+		typename ft::iterator_traits<_InputIter>::difference_type r(0);
+		for (; first != last; ++first)
+			++r;
+		return r;
+	}
+	template <class InputIter>
+	typename ft::iterator_traits<InputIter>::difference_type
+	distance(InputIter first, InputIter last)
+	{
+		return __distance(first, last, typename ft::iterator_traits<InputIter>::iterator_category());
+	}
+	//--------------------------------------------------------------------//
 
-	// //----------------iterator function----------------------------------//
-	// template <class _InputIter>
-	// void __advance(_InputIter& i,
-	// 			typename ft::iterator_traits<_InputIter>::difference_type n, input_iterator_tag)
-	// {
-	// 	for (; n > 0; --n)
-	// 		++i;
-	// }
+	//----------------iterator function----------------------------------//
+	template <class _InputIter>
+	void __advance(_InputIter& i,
+				typename ft::iterator_traits<_InputIter>::difference_type n, input_iterator_tag)
+	{
+		for (; n > 0; --n)
+			++i;
+	}
 
-	// template <class _BiDirIter>
-	// void __advance(_BiDirIter& i,
-	// 			typename ft::iterator_traits<_BiDirIter>::difference_type n, bidirectional_iterator_tag)
-	// {
-	// 	if (n >= 0)
-	// 		for (; n > 0; --n)
-	// 			++i;
-	// 	else
-	// 		for (; n < 0; ++n)
-	// 			--i;
-	// }
+	template <class _BiDirIter>
+	void __advance(_BiDirIter& i,
+				typename ft::iterator_traits<_BiDirIter>::difference_type n, bidirectional_iterator_tag)
+	{
+		if (n >= 0)
+			for (; n > 0; --n)
+				++i;
+		else
+			for (; n < 0; ++n)
+				--i;
+	}
 
-	// template <class _RandIter>
-	// void __advance(_RandIter& i,
-	// 			typename ft::iterator_traits<_RandIter>::difference_type n, random_access_iterator_tag)
-	// {
-	// 	i += n;
-	// }
+	template <class _RandIter>
+	void __advance(_RandIter& i,
+				typename ft::iterator_traits<_RandIter>::difference_type n, random_access_iterator_tag)
+	{
+		i += n;
+	}
 
-	// template <class _InputIter>
-	// void advance(_InputIter& i,
-	// 			typename ft::iterator_traits<_InputIter>::difference_type n)
-	// {
-	// 	assert(n >= 0 && "Attempt to advance(it, -n) on a non-bidi iterator");
-	// 	__advance(i, n, typename ft::iterator_traits<_InputIter>::iterator_category());
-	// }
+	template <class _InputIter>
+	void advance(_InputIter& i,
+				typename ft::iterator_traits<_InputIter>::difference_type n)
+	{
+		assert(n >= 0 && "Attempt to advance(it, -n) on a non-bidi iterator");
+		__advance(i, n, typename ft::iterator_traits<_InputIter>::iterator_category());
+	}
 }
 #endif

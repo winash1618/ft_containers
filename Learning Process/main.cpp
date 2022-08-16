@@ -47,7 +47,7 @@ int main()
 		// std::cout << v1[0] << std::endl;
 	    // vector<int>::iterator i1;
 		ft::vector<int> a(v1.begin(), v1.end());
-		// ft::vector<int> b(a);
+		ft::vector<int> b(a);
 		// std::cout << "try to run operator[] : " << b[7] << std::endl;
 		// b.pop_back();
 		// std::cout << "size = " << b.size() << std::endl;
