@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/17 13:04:13 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/17 15:05:35 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,9 +134,9 @@ namespace ft
 			{
 				std::cout << "hello world" << std::endl;
 			}
-			// /*--------------------------------------------------------------------*/
-			// /*-------------------------member type--------------------------------*/
-			// /*--------------------------------------------------------------------*/
+			/*--------------------------------------------------------------------*/
+			/*-------------------------member type--------------------------------*/
+			/*--------------------------------------------------------------------*/
 			typedef T													value_type;
 			typedef Allocator											allocator_type;
 			typedef typename allocator_type::reference					reference;
@@ -149,10 +149,10 @@ namespace ft
 			typedef typename allocator_type::difference_type			difference_type;
 			typedef ft::reverse_iterator<iterator>					reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
-			// /*--------------------------------------------------------------------*/
-			// /*-------------------------member functions---------------------------*/
-			// /*--------------------------------------------------------------------*/
-			// // Constructor
+			/*--------------------------------------------------------------------*/
+			/*-------------------------member functions---------------------------*/
+			/*--------------------------------------------------------------------*/
+			// Constructor
 			
 			explicit vector (const allocator_type& alloc = allocator_type())  : _alloc(alloc), _vec(nullptr), _size(0), _cap(0) // empty container constructor
 			{
@@ -169,7 +169,7 @@ namespace ft
 				
 				if (len > 0)
 				{
-					allocate(len);
+					allocate(len * 2);
 					
 					construct_at_end(len, val);
 				}
@@ -186,9 +186,9 @@ namespace ft
 			{
 				say();
 				std::cout << "hello i am here" << std::endl;
-				std::size_t size = 5;
-				// size_type size = std::distance(first, last);
-				// std::cout << size << std::endl;
+				// std::size_t size = 5;
+				size_type size = ft::distance(first, last);
+				std::cout << size << std::endl;
 				allocate(size);
 				// for (size_type index = 0; index < size; ++index)
 				// {
@@ -200,7 +200,7 @@ namespace ft
 				std::size_t index = 0;
 				for (; first != last; ++first)
 				{
-					_alloc.construct(_vec + index, (first));
+					_alloc.construct(_vec + index, *(first));
 					std::cout << this->_vec[index] << std::endl;
 					index++;
 				}
@@ -271,7 +271,7 @@ namespace ft
 			// Iterators
 			iterator	begin()
 			{
-				return (_vec);
+				return iterator(_vec);
 			}
 			const_iterator         begin()   const
 			{
@@ -333,12 +333,12 @@ namespace ft
 			// Modifiers functions
 			reference       operator[](size_type index)
 			{
-				assert(index < size() && "Index out of range");
+				assert(index < size() && "Index out of range1");
 				return _vec[index]; 
 			}
 			const_reference operator[](size_type index) const
 			{
-				assert(index < size() && "Index out of range");
+				assert(index < size() && "Index out of range2");
 				return _vec[index]; 
 			}
 			reference       at(size_type n)
