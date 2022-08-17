@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/16 10:35:52 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/17 13:04:13 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,9 +159,12 @@ namespace ft
 				// say();
 			}
 			
+		
+			
 			explicit vector (size_type len, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
 			 : _alloc(alloc) // fill constructor
 			{
+				std::cout << "hi" << std::endl;
 				say();
 				
 				if (len > 0)
@@ -178,7 +181,7 @@ namespace ft
 			}
 			
 			template <class InputIterator>
-			vector (InputIterator first, InputIterator last,
+			vector ( InputIterator first, InputIterator last,
 					const allocator_type& alloc = allocator_type())  : _alloc(alloc), _size(0), _cap(0)// range constructor
 			{
 				say();
@@ -430,8 +433,11 @@ namespace ft
 			// popback and pushback
 			void pop_back()
 			{
-				_alloc.destroy(_vec + size() - 1);
-				_size -= 1;
+				if (_size  == 0)
+					throw std::out_of_range("can");
+				_alloc.destroy(&_vec[_size-- - 1]);
+				// _alloc.destroy(_vec + size() - 1);
+				// _size -= 1;
 			}
 			// void push_back (const value_type& val);
 			// {
@@ -463,7 +469,7 @@ namespace ft
 			}
 
 		private:
-			T* _vec; // 
+			pointer _vec; // 
 			std::size_t _cap;// Capacity 
 			std::size_t _size;
 			Allocator 	_alloc; // std::allocator

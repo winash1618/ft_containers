@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 10:50:33 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/16 10:23:25 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/17 10:12:05 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ namespace ft
 	{
 		public:
 			typedef _Iter          iterator_type;
-			typedef typename iterator_traits<iterator_type>::iterator_category iterator_category;
-			typedef typename iterator_traits<iterator_type>::value_type        value_type;
-			typedef typename iterator_traits<iterator_type>::difference_type   difference_type;
-			typedef typename iterator_traits<iterator_type>::pointer           pointer;
-			typedef typename iterator_traits<iterator_type>::reference         reference;
+			typedef typename ft::iterator_traits<iterator_type>::iterator_category iterator_category;
+			typedef typename ft::iterator_traits<iterator_type>::value_type        value_type;
+			typedef typename ft::iterator_traits<iterator_type>::difference_type   difference_type;
+			typedef typename ft::iterator_traits<iterator_type>::pointer           pointer;
+			typedef typename ft::iterator_traits<iterator_type>::reference         reference;
 		private:
 			iterator_type __i;
 		public:
@@ -143,13 +143,13 @@ namespace ft
 
 	
 	// template<typename T>
-	// class My_iterator : public ft::iterator<ft::random_access_iterator_tag, int>
+	// class __wrap_iter : public ft::iterator<ft::random_access_iterator_tag, int>
 	// {
 	// 	private:
 	// 		T* _iterator;
 
 	// 	public:
-	// 		My_iterator(T* iter) : _iterator( iter )
+	// 		__wrap_iter(T* iter) : _iterator( iter )
 	// 		{
 				
 	// 		}
@@ -193,7 +193,7 @@ namespace ft
 	// 			return *this;
 	// 		}
 			
-	// 		difference_type operator-(const My_iterator& other) const { 
+	// 		difference_type operator-(const __wrap_iter& other) const { 
 	// 			return std::distance(_iterator, other._iterator); 
 	// 		}
 			
@@ -211,7 +211,7 @@ namespace ft
 
 
 	
-	// //-------------distance function-----------------------------------//
+	//-------------distance function-----------------------------------//
 
 	template <class _RandIter>
 	typename ft::iterator_traits<_RandIter>::difference_type
