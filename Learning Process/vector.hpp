@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/17 15:05:35 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/17 17:31:08 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,9 +120,28 @@ namespace ft
 	// };
 
 
+	/* enable_if definitions */
+	template<bool B, class T>
+	struct enable_if {};
+
+	template<class T>
+	struct enable_if<true, T> {typedef T type;};
+
+	/* True type and False type*/
+	struct true_type {
+		static const bool value = true;
+	};
+
+	struct false_type {
+		static const bool value = false;
+	};
 
 
+	template<typename T>
+	struct is_iterator : false_type {};
 
+	template<>
+	struct is_iterator<ft::iterator_traits::iterator_category> : true_type {};
 
 	
 	template <class T, class Allocator = std::allocator<T> >
@@ -182,14 +201,16 @@ namespace ft
 			
 			template <class InputIterator>
 			vector ( InputIterator first, InputIterator last,
-					const allocator_type& alloc = allocator_type())  : _alloc(alloc), _size(0), _cap(0)// range constructor
+					const allocator_type& alloc = allocator_type(),
+					typename ft::enable_if<is_iterator<InputIterator>::value, InputIterator>::type* = 0
+					)  : _alloc(alloc), _size(0), _cap(0)// range constructor
 			{
 				say();
 				std::cout << "hello i am here" << std::endl;
 				// std::size_t size = 5;
 				size_type size = ft::distance(first, last);
 				std::cout << size << std::endl;
-				allocate(size);
+				// allocate(size);
 				// for (size_type index = 0; index < size; ++index)
 				// {
 				// 	_alloc.construct(_vec + index, *(first + index));
@@ -197,13 +218,13 @@ namespace ft
 				// 	++_size;
 				// }
 				// std::cout << _size << std::endl;
-				std::size_t index = 0;
-				for (; first != last; ++first)
-				{
-					_alloc.construct(_vec + index, *(first));
-					std::cout << this->_vec[index] << std::endl;
-					index++;
-				}
+				// std::size_t index = 0;
+				// for (; first != last; ++first)
+				// {
+				// 	_alloc.construct(_vec + index, *(first));
+				// 	std::cout << this->_vec[index] << std::endl;
+				// 	index++;
+				// }
 			}
 			
 			vector (const vector& x) : _size(0)  // Copy constructor
@@ -271,7 +292,7 @@ namespace ft
 			// Iterators
 			iterator	begin()
 			{
-				return iterator(_vec);
+				return (_vec);
 			}
 			const_iterator         begin()   const
 			{

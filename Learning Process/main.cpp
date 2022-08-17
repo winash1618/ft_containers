@@ -27,28 +27,28 @@ using namespace std;
 int main()
 {
 		// ft::vector<int> a(5, 4);
-		vector<int> v1;
-		 v1.assign (1,100);
-		 v1.push_back(2);  
-		 v1.push_back(20);  
-		 v1.push_back(10);  
-		 v1.push_back(201);  
-		 v1.push_back(203);  
-		 v1.push_back(204);  
-		 v1.push_back(202);  
-		 v1.push_back(208);  
-		 v1.push_back(209);  
-		 v1.push_back(206);  
-		 v1.push_back(207);  
+		// vector<int> v1;
+		//  v1.assign (1,100);
+		//  v1.push_back(2);  
+		//  v1.push_back(20);  
+		//  v1.push_back(10);  
+		//  v1.push_back(201);  
+		//  v1.push_back(203);  
+		//  v1.push_back(204);  
+		//  v1.push_back(202);  
+		//  v1.push_back(208);  
+		//  v1.push_back(209);  
+		//  v1.push_back(206);  
+		//  v1.push_back(207);  
 	    // Declaring an iterator
-		// ft::vector<int> v1(5, 100);
+		ft::vector<int> v1(5, 100);
 		// ft::vector<int> v1(1, 100);
 
 		// v1[0] = 100;
 		// std::cout << v1[0] << std::endl;
 	    // vector<int>::iterator i1;
 		ft::vector<int> a(v1.begin(), v1.end());
-		// ft::vector<int> b(a);
+		// ft::vector<int> b(v1);
 		// std::cout << "try to run operator[] : " << b[7] << std::endl;
 		// v1.pop_back();
 		// v1.pop_back();
