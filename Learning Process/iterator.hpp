@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 10:50:33 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/18 08:29:58 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/18 09:17:04 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,10 @@ namespace ft
 			reference operator[](std::size_t index) const { 
 				return _iterator[index]; 
 			}
+			T* base() const
+			{
+				return _iterator;
+			}
 	};
 	
 
@@ -360,12 +364,12 @@ namespace ft
 	}
 
 	template <class _Iter>
-	__wrap_iter<_Iter>
-	operator+(typename __wrap_iter<_Iter>::difference_type __n,
-			__wrap_iter<_Iter> __x) 
+	_Iter
+	operator+(_Iter __n,
+			std::size_t __x) 
 	{
-		__x += __n;
-		return __x;
+		__n += __x;
+		return __n;
 	}
 }
 #endif

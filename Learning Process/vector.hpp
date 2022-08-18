@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/18 08:31:15 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/18 09:12:48 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ namespace ft
 
 
 	// template<typename T>
-	// ft::enable_if<T> : false_type {};
+	// struct ft::enable_if<T> : false_type {};
 
 	// template<typename T>
 	// struct ft::enable_if<std::is_same<T, ft::iterator_traits<iterator_type>::iterator_category>, T>::type : true_type {};
@@ -217,20 +217,20 @@ namespace ft
 			{
 				say();
 				std::cout << "hello i am here" << std::endl;
-				std::size_t size = 5;
-				// size_type size = ft::distance(first, last); // this will cause error because i am not using enable_if so it is passing int also
+				// std::size_t size = 5;
+				size_type size = ft::distance(first, last); // this will cause error because i am not using enable_if so it is passing int also
 				std::cout << size << std::endl;
 				// std::cout << std::is_same<int, InputIterator>::value << std::endl;
 				std::cout << std::is_same<iterator, InputIterator>::value << std::endl;
 				std::cout << typeid(iterator).name() << std::endl;
 				std::cout << typeid(InputIterator).name() << std::endl;
-				// allocate(size);
-				// for (size_type index = 0; index < size; ++index)
-				// {
-				// 	_alloc.construct(_vec + index, *(first + index));
-				// 	std::cout << this->_vec[index] << std::endl;
-				// 	++_size;
-				// }
+				allocate(size);
+				for (size_type index = 0; index < size; ++index)
+				{
+					_alloc.construct(_vec + index, *(first + index));
+					std::cout << this->_vec[index] << std::endl;
+					++_size;
+				}
 				// std::cout << _size << std::endl;
 				// std::size_t index = 0;
 				// for (; first != last; ++first)

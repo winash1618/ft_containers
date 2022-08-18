@@ -48,6 +48,8 @@ int main()
 		// std::cout << v1[0] << std::endl;
 	    // vector<int>::iterator i1;
 		ft::vector<int> a(v1.begin(), v1.end());
+		std::cout << "Hi " << a[0] << std::endl;
+		std::cout << a.front() << std::endl;
 		ft::vector<int> b(a.begin(), a.end());
 		// ft::vector<int> b(v1);
 		// std::cout << "try to run operator[] : " << b[7] << std::endl;
