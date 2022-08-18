@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/18 18:15:04 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/18 18:34:12 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -455,24 +455,24 @@ template<class T, T v>
 			}
 
 			// assign functions:
-			template <class InputIterator>
+			template <class InputIterator, typename = typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type>
 			void assign (InputIterator first, InputIterator last)
 			{
-				deallocate_and_destruct(_cap, _size);
+				// deallocate_and_destruct(_cap, _size);
 				size_type size = ft::distance(first, last);
 				allocate(size);
-				// for (std::size_t index = 0; index < size; ++index)
-				// {
-				// 	_alloc.construct(_vec + index, *(first + index));
-				// 	std::cout << _vec[index] << std::endl;
-				// 	++_size;
-				// }
-				std::size_t index = 0;
-				for (; first != last; ++first)
+				for (std::size_t index = 0; index < size; ++index)
 				{
-					_alloc.construct(_vec + index, *(first));
-					index++;
+					_alloc.construct(_vec + index, *(first + index));
+					//std::cout << _vec[index] << std::endl;
+					++_size;
 				}
+				// std::size_t index = 0;
+				// for (; first != last; ++first)
+				// {
+				// 	_alloc.construct(_vec + index, *(first));
+				// 	index++;
+				// }
 				
 				// if (new_size <= capacity())
 				// {

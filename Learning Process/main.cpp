@@ -27,8 +27,7 @@ using namespace std;
 int main()
 {
 		// ft::vector<int> a(5, 4);
-		// vector<int> v1;
-		//  v1.assign (1,100);
+		ft::vector<int> v1(5 ,100);
 		//  v1.push_back(2);  
 		//  v1.push_back(20);  
 		//  v1.push_back(10);  
@@ -40,15 +39,18 @@ int main()
 		//  v1.push_back(209);  
 		//  v1.push_back(206);  
 		//  v1.push_back(207);  
+		ft::vector<int> a;
+		a.assign(v1.begin(), v1.end());
+
 	    // Declaring an iterator
 		// vector<int> v1(5, 100);
-		ft::vector<int> v1(5, 50);
+		// ft::vector<int> v1(5, 50);
 		
-		std::cout << "std::is_integral<int>::value: " << ft::is_integral<double>::value << std::endl;
+		// std::cout << "std::is_integral<int>::value: " << ft::is_integral<double>::value << std::endl;
 		// v1[0] = 100;
 		// std::cout << v1[0] << std::endl;
 	    // vector<int>::iterator i1;
-		ft::vector<int> a(v1.begin(), v1.end());
+		// ft::vector<int> a(v1.begin(), v1.end());
 		// std::cout << "Hi " << a[0] << std::endl;
 		// std::cout << a.front() << std::endl;
 		// ft::vector<int> b(a.begin(), a.end());
@@ -57,7 +59,7 @@ int main()
 		// v1.pop_back();
 		// v1.pop_back();
 		// std::cout << "size = " << v1.size() << std::endl;
-		// // std::cout << b.size();
+		std::cout << a.size();
 		// // a.say();
 		// // container::vector<int> a();
 		// ft::vector<int>::iterator a1;
