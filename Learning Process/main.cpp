@@ -1,5 +1,5 @@
 #include "vector.hpp"
-// #include "iterator.hpp"
+#include "iterator.hpp"
 #include "reverse_iterator.hpp"
 #include <iterator>
 #include <vector>
@@ -42,8 +42,9 @@ int main()
 		//  v1.push_back(207);  
 	    // Declaring an iterator
 		// vector<int> v1(5, 100);
-		ft::vector<int> v1(5, 100);
-
+		ft::vector<int> v1(5, 50);
+		
+		std::cout << "std::is_integral<int>::value: " << ft::is_integral<double>::value << std::endl;
 		// v1[0] = 100;
 		// std::cout << v1[0] << std::endl;
 	    // vector<int>::iterator i1;

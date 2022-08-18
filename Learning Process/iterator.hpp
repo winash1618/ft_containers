@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 10:50:33 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/18 09:17:04 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/18 14:36:12 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "iterator_traits.hpp"
 namespace ft
 {
-	template <class Category, class T, class Distance = ptrdiff_t,
+	template <class Category, class T, class Distance = std::ptrdiff_t,
 	class Pointer = T*, class Reference = T&>
 	struct iterator 
 	{
@@ -207,6 +207,7 @@ namespace ft
 			reference operator[](std::size_t index) const { 
 				return _iterator[index]; 
 			}
+			
 			T* base() const
 			{
 				return _iterator;

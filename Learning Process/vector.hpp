@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/18 12:22:10 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/18 18:15:04 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,59 +122,58 @@ namespace ft
 /*---------------std::is_integral----------------------------------------*/
 
 template<class T, T v>
-	struct integral_constant 
-	{
-		static constexpr T value = v;
-		typedef T value_type;
-		typedef integral_constant type;
-		constexpr operator value_type() const noexcept { return value; }
-		constexpr value_type operator()() const noexcept { return value; } //since c++14
-	};
+  	struct integral_constant {
+      const static T value = v;
+      typedef T value_type;
+      typedef integral_constant type;
+      operator value_type() const { return value; }
+      value_type operator()() const { return value; } //since c++14
+  };
 
-	typedef integral_constant<bool, true> true_type;
-	typedef integral_constant<bool, false> false_type;
+	typedef integral_constant<bool, true> true_type1;
+	typedef integral_constant<bool, false> false_type1;
 
 	template <class T>
-	struct is_integral : public false_type{};
+	struct is_integral : public false_type1{};
 
 	template <>
-	struct is_integral<bool> : public true_type{};
+	struct is_integral<bool> : public true_type1{};
 
 	template <>
-	struct is_integral<char> : public true_type{};
+	struct is_integral<char> : public true_type1{};
 
 	template <>
-	struct is_integral<signed char> : public true_type{};
+	struct is_integral<signed char> : public true_type1{};
 
 	template <>
-	struct is_integral<unsigned char> : public true_type{};
+	struct is_integral<unsigned char> : public true_type1{};
 
 	template <>
-	struct is_integral<wchar_t> : public true_type{};
+	struct is_integral<wchar_t> : public true_type1{};
 
 	template <>
-	struct is_integral<short> : public true_type{};
+	struct is_integral<short> : public true_type1{};
 
 	template <>
-	struct is_integral<int> : public true_type{};
+	struct is_integral<int> : public true_type1{};
 
 	template <>
-	struct is_integral<long> : public true_type{};
+	struct is_integral<long> : public true_type1{};
 
 	template <>
-	struct is_integral<long long> : public true_type{};
+	struct is_integral<long long> : public true_type1{};
 
 	template <>
-	struct is_integral<unsigned short> : public true_type{};
+	struct is_integral<unsigned short> : public true_type1{};
 
 	template <>
-	struct is_integral<unsigned int> : public true_type{};
+	struct is_integral<unsigned int> : public true_type1{};
 
 	template <>
-	struct is_integral<unsigned long> : public true_type{};
+	struct is_integral<unsigned long> : public true_type1{};
 
 	template <>
-	struct is_integral<unsigned long long> : public true_type{};
+	struct is_integral<unsigned long long> : public true_type1{};
 
 
 
@@ -196,7 +195,15 @@ template<class T, T v>
 		static const bool value = false;
 	};
 
-	
+	template<typename T>
+	int is_int() {
+	return false;
+	}
+
+	template<>
+	int is_int<int>() {
+	return true;
+}
 	// template<typename T>
 	// struct ft::enable_if<> : false_type {};
 
@@ -232,11 +239,11 @@ template<class T, T v>
 			typedef typename allocator_type::pointer					pointer;
 			typedef typename allocator_type::const_pointer				const_pointer;
 			typedef ft::__wrap_iter<value_type>							iterator;
-			typedef ft::__wrap_iter<value_type>						const_iterator;
+			typedef ft::__wrap_iter<value_type>							const_iterator;
 			typedef typename allocator_type::size_type					size_type;
 			typedef typename allocator_type::difference_type			difference_type;
-			typedef ft::reverse_iterator<iterator>					reverse_iterator;
-			typedef ft::reverse_iterator<const_iterator>			const_reverse_iterator;
+			typedef ft::reverse_iterator<iterator>						reverse_iterator;
+			typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
 			/*--------------------------------------------------------------------*/
 			/*-------------------------member functions---------------------------*/
 			/*--------------------------------------------------------------------*/
@@ -268,18 +275,18 @@ template<class T, T v>
 				// std::cout << typeid(allocator_type).name();
 			}
 			
-			template <class InputIterator>
-			vector ( InputIterator first, InputIterator last,
+			template <class InputIterator, typename = typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type>
+			vector (InputIterator first, InputIterator last,
 					const allocator_type& alloc = allocator_type()
-					)  : _alloc(alloc), _size(0), _cap(0)// range constructor
+					) : _alloc(alloc), _size(0), _cap(0)// range constructor
 			{
 				say();
 				std::cout << "hello i am here" << std::endl;
 				// std::size_t size = 5;
 				size_type size = ft::distance(first, last); // this will cause error because i am not using enable_if so it is passing int also
-				std::cout << size << std::endl;
+				// std::cout << size << std::endl;
 				// std::cout << std::is_same<int, InputIterator>::value << std::endl;
-				std::cout << std::is_same<iterator, InputIterator>::value << std::endl;
+				// std::cout << std::is_same<iterator, InputIterator>::value << std::endl;
 				std::cout << typeid(iterator).name() << std::endl;
 				std::cout << typeid(InputIterator).name() << std::endl;
 				allocate(size);
@@ -452,7 +459,7 @@ template<class T, T v>
 			void assign (InputIterator first, InputIterator last)
 			{
 				deallocate_and_destruct(_cap, _size);
-				size_type size = static_cast<size_type>(ft::distance(first, last));
+				size_type size = ft::distance(first, last);
 				allocate(size);
 				// for (std::size_t index = 0; index < size; ++index)
 				// {
