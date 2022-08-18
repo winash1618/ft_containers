@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/18 09:12:48 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/18 12:22:10 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,64 @@ namespace ft
 	// 			{}
 	// };
 
+/*---------------std::is_integral----------------------------------------*/
+
+template<class T, T v>
+	struct integral_constant 
+	{
+		static constexpr T value = v;
+		typedef T value_type;
+		typedef integral_constant type;
+		constexpr operator value_type() const noexcept { return value; }
+		constexpr value_type operator()() const noexcept { return value; } //since c++14
+	};
+
+	typedef integral_constant<bool, true> true_type;
+	typedef integral_constant<bool, false> false_type;
+
+	template <class T>
+	struct is_integral : public false_type{};
+
+	template <>
+	struct is_integral<bool> : public true_type{};
+
+	template <>
+	struct is_integral<char> : public true_type{};
+
+	template <>
+	struct is_integral<signed char> : public true_type{};
+
+	template <>
+	struct is_integral<unsigned char> : public true_type{};
+
+	template <>
+	struct is_integral<wchar_t> : public true_type{};
+
+	template <>
+	struct is_integral<short> : public true_type{};
+
+	template <>
+	struct is_integral<int> : public true_type{};
+
+	template <>
+	struct is_integral<long> : public true_type{};
+
+	template <>
+	struct is_integral<long long> : public true_type{};
+
+	template <>
+	struct is_integral<unsigned short> : public true_type{};
+
+	template <>
+	struct is_integral<unsigned int> : public true_type{};
+
+	template <>
+	struct is_integral<unsigned long> : public true_type{};
+
+	template <>
+	struct is_integral<unsigned long long> : public true_type{};
+
+
 
 
 /*--------------implementation 1 of enable if-----------------------------*/
@@ -129,18 +187,18 @@ namespace ft
 	template<class T>
 	struct enable_if<true, T> {typedef T type;};
 
-	// /* True type and False type*/
-	// struct true_type {
-	// 	static const bool value = true;
-	// };
+	/* True type and False type*/
+	struct true_type {
+		static const bool value = true;
+	};
 
-	// struct false_type {
-	// 	static const bool value = false;
-	// };
+	struct false_type {
+		static const bool value = false;
+	};
 
-
+	
 	// template<typename T>
-	// struct ft::enable_if<T> : false_type {};
+	// struct ft::enable_if<> : false_type {};
 
 	// template<typename T>
 	// struct ft::enable_if<std::is_same<T, ft::iterator_traits<iterator_type>::iterator_category>, T>::type : true_type {};
