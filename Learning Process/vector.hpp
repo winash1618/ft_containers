@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/17 17:31:08 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/18 06:37:34 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,29 +120,40 @@ namespace ft
 	// };
 
 
-	/* enable_if definitions */
-	template<bool B, class T>
-	struct enable_if {};
 
-	template<class T>
-	struct enable_if<true, T> {typedef T type;};
+/*--------------implementation 1 of enable if-----------------------------*/
+	// /* enable_if definitions */
+	// template<bool B, class T>
+	// struct enable_if {};
 
-	/* True type and False type*/
-	struct true_type {
-		static const bool value = true;
-	};
+	// template<class T>
+	// struct enable_if<true, T> {typedef T type;};
 
-	struct false_type {
-		static const bool value = false;
-	};
+	// /* True type and False type*/
+	// struct true_type {
+	// 	static const bool value = true;
+	// };
+
+	// struct false_type {
+	// 	static const bool value = false;
+	// };
 
 
-	template<typename T>
-	struct is_iterator : false_type {};
+	// template<typename T>
+	// struct is_iterator : false_type {};
 
-	template<>
-	struct is_iterator<ft::iterator_traits::iterator_category> : true_type {};
+	// template<>
+	// struct is_iterator<ft::iterator_traits::iterator_category> : true_type {};
 
+/*--------------implementation 2 of enable if-----------------------------*/
+// template <class Iter>
+// using iter_cat_t = typename iterator_traits<Iter>::iterator_category;
+
+// template <class T, class = void>
+// constexpr bool is_iterator_v = false;
+
+// template <class T>
+// constexpr bool is_iterator_v<T, std::void_t<iter_cat_t<T>>> = true;
 	
 	template <class T, class Allocator = std::allocator<T> >
 	class vector
@@ -201,14 +212,13 @@ namespace ft
 			
 			template <class InputIterator>
 			vector ( InputIterator first, InputIterator last,
-					const allocator_type& alloc = allocator_type(),
-					typename ft::enable_if<is_iterator<InputIterator>::value, InputIterator>::type* = 0
+					const allocator_type& alloc = allocator_type()
 					)  : _alloc(alloc), _size(0), _cap(0)// range constructor
 			{
 				say();
 				std::cout << "hello i am here" << std::endl;
 				// std::size_t size = 5;
-				size_type size = ft::distance(first, last);
+				size_type size = ft::distance(first, last); // this will cause error because i am not using enable_if so it is passing int also
 				std::cout << size << std::endl;
 				// allocate(size);
 				// for (size_type index = 0; index < size; ++index)
