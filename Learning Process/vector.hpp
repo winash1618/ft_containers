@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/18 06:37:34 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/18 08:31:15 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,12 +122,12 @@ namespace ft
 
 
 /*--------------implementation 1 of enable if-----------------------------*/
-	// /* enable_if definitions */
-	// template<bool B, class T>
-	// struct enable_if {};
+	/* enable_if definitions */
+	template<bool B, class T>
+	struct enable_if {};
 
-	// template<class T>
-	// struct enable_if<true, T> {typedef T type;};
+	template<class T>
+	struct enable_if<true, T> {typedef T type;};
 
 	// /* True type and False type*/
 	// struct true_type {
@@ -140,10 +140,10 @@ namespace ft
 
 
 	// template<typename T>
-	// struct is_iterator : false_type {};
+	// ft::enable_if<T> : false_type {};
 
-	// template<>
-	// struct is_iterator<ft::iterator_traits::iterator_category> : true_type {};
+	// template<typename T>
+	// struct ft::enable_if<std::is_same<T, ft::iterator_traits<iterator_type>::iterator_category>, T>::type : true_type {};
 
 /*--------------implementation 2 of enable if-----------------------------*/
 // template <class Iter>
@@ -173,8 +173,8 @@ namespace ft
 			typedef typename allocator_type::const_reference			const_reference;
 			typedef typename allocator_type::pointer					pointer;
 			typedef typename allocator_type::const_pointer				const_pointer;
-			typedef ft::__wrap_iter<pointer>							iterator;
-			typedef ft::__wrap_iter<const_pointer>						const_iterator;
+			typedef ft::__wrap_iter<value_type>							iterator;
+			typedef ft::__wrap_iter<value_type>						const_iterator;
 			typedef typename allocator_type::size_type					size_type;
 			typedef typename allocator_type::difference_type			difference_type;
 			typedef ft::reverse_iterator<iterator>					reverse_iterator;
@@ -217,9 +217,13 @@ namespace ft
 			{
 				say();
 				std::cout << "hello i am here" << std::endl;
-				// std::size_t size = 5;
-				size_type size = ft::distance(first, last); // this will cause error because i am not using enable_if so it is passing int also
+				std::size_t size = 5;
+				// size_type size = ft::distance(first, last); // this will cause error because i am not using enable_if so it is passing int also
 				std::cout << size << std::endl;
+				// std::cout << std::is_same<int, InputIterator>::value << std::endl;
+				std::cout << std::is_same<iterator, InputIterator>::value << std::endl;
+				std::cout << typeid(iterator).name() << std::endl;
+				std::cout << typeid(InputIterator).name() << std::endl;
 				// allocate(size);
 				// for (size_type index = 0; index < size; ++index)
 				// {

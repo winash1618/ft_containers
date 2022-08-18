@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 10:50:33 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/17 20:12:14 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/18 08:29:58 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,196 +16,198 @@
 #include "iterator_traits.hpp"
 namespace ft
 {
-	// template <class Category, class T, class Distance = ptrdiff_t,
-	// class Pointer = T*, class Reference = T&>
-	// struct iterator 
-	// {
-	// 	typedef T			value_type;
-	// 	typedef Distance	difference_type;
-	// 	typedef Pointer		pointer;
-	// 	typedef Reference	reference;
-	// 	typedef Category	iterator_category;
-	// };
-
-	template<class Category, class T, class Distance = ptrdiff_t,
+	template <class Category, class T, class Distance = ptrdiff_t,
 	class Pointer = T*, class Reference = T&>
-	struct iterator
+	struct iterator 
 	{
-			typedef T         value_type;
-			typedef Distance  difference_type;
-			typedef Pointer   pointer;
-			typedef Reference reference;
-			typedef Category  iterator_category;
-	};
-	
-	template <class _Iter>
-	class __wrap_iter
-	{
-		public:
-			typedef _Iter          iterator_type;
-			typedef typename ft::iterator_traits<iterator_type>::iterator_category iterator_category;
-			typedef typename ft::iterator_traits<iterator_type>::value_type        value_type;
-			typedef typename ft::iterator_traits<iterator_type>::difference_type   difference_type;
-			typedef typename ft::iterator_traits<iterator_type>::pointer           pointer;
-			typedef typename ft::iterator_traits<iterator_type>::reference         reference;
-		private:
-			iterator_type __i;
-		public:
-			__wrap_iter() : __i(){}
-			template <class _Up>
-			__wrap_iter(const __wrap_iter<_Up>& __u)
-				: __i(__u.base())
-				{}
-			reference operator*() const
-			{
-				return *__i;
-			}
-			
-			pointer  operator->() const
-			{
-				std::addressof(*__i);
-			}
-			
-			__wrap_iter& operator++()
-			{
-				++__i;
-				return *this;
-			}
-			
-			__wrap_iter  operator++(int)
-			{
-				__wrap_iter __tmp(*this);
-				++(*this);
-				return __tmp;
-			}
-			
-			__wrap_iter& operator--()
-			{
-				--__i;
-				return *this;
-			}
-			
-			__wrap_iter  operator--(int)
-			{
-				__wrap_iter __tmp(*this);
-				--(*this);
-				return __tmp;
-			}
-			
-			__wrap_iter  operator+ (difference_type __n) const
-			{
-				__wrap_iter __w(*this);
-				__w += __n;
-				return __w;
-			}
-
-			__wrap_iter& operator+=(difference_type __n)
-			{
-				 __i += __n;
-				return *this;
-			}
-
-			 __wrap_iter  operator- (difference_type __n) const
-			{
-				return *this + (-__n);
-			}
-			
-			__wrap_iter& operator-=(difference_type __n)
-			{
-				*this += -__n;
-				return *this;
-			}
-			reference    operator[](difference_type __n) const
-			{
-				return __i[__n];
-			}
-
-			iterator_type base() const
-			{
-				return __i;
-			}
+		typedef T			value_type;
+		typedef Distance	difference_type;
+		typedef Pointer		pointer;
+		typedef Reference	reference;
+		typedef Category	iterator_category;
 	};
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-	// template<typename T>
-	// class __wrap_iter : public ft::iterator<ft::random_access_iterator_tag, int>
+	// template<class Category, class T, class Distance = ptrdiff_t,
+	// class Pointer = T*, class Reference = T&>
+	// struct iterator
 	// {
-	// 	private:
-	// 		T* _iterator;
-
+	// 		typedef T         value_type;
+	// 		typedef Distance  difference_type;
+	// 		typedef Pointer   pointer;
+	// 		typedef Reference reference;
+	// 		typedef Category  iterator_category;
+	// };
+	
+	// template <class _Iter>
+	// class __wrap_iter
+	// {
 	// 	public:
-	// 		__wrap_iter(T* iter) : _iterator( iter )
+	// 		typedef _Iter          iterator_type;
+	// 		typedef typename ft::iterator_traits<iterator_type>::iterator_category iterator_category;
+	// 		typedef typename ft::iterator_traits<iterator_type>::value_type        value_type;
+	// 		typedef typename ft::iterator_traits<iterator_type>::difference_type   difference_type;
+	// 		typedef typename ft::iterator_traits<iterator_type>::pointer           pointer;
+	// 		typedef typename ft::iterator_traits<iterator_type>::reference         reference;
+	// 	private:
+	// 		iterator_type __i;
+	// 	public:
+	// 		__wrap_iter() : __i(){}
+	// 		template <class _Up>
+	// 		__wrap_iter(const __wrap_iter<_Up>& __u)
+	// 			: __i(__u.base())
+	// 			{
+	// 				std::cout << "hi i am in iterator" << std::endl;
+	// 			}
+	// 		reference operator*() const
 	// 		{
-				
+	// 			return *__i;
+	// 		}
+			
+	// 		pointer  operator->() const
+	// 		{
+	// 			std::addressof(*__i);
+	// 		}
+			
+	// 		__wrap_iter& operator++()
+	// 		{
+	// 			++__i;
+	// 			return *this;
+	// 		}
+			
+	// 		__wrap_iter  operator++(int)
+	// 		{
+	// 			__wrap_iter __tmp(*this);
+	// 			++(*this);
+	// 			return __tmp;
+	// 		}
+			
+	// 		__wrap_iter& operator--()
+	// 		{
+	// 			--__i;
+	// 			return *this;
+	// 		}
+			
+	// 		__wrap_iter  operator--(int)
+	// 		{
+	// 			__wrap_iter __tmp(*this);
+	// 			--(*this);
+	// 			return __tmp;
+	// 		}
+			
+	// 		__wrap_iter  operator+ (difference_type __n) const
+	// 		{
+	// 			__wrap_iter __w(*this);
+	// 			__w += __n;
+	// 			return __w;
 	// 		}
 
-	// 		reference operator*() const { 
-	// 			return *_iterator; 
-	// 		}
-			
-	// 		pointer operator->() const { 
-	// 			return _iterator; 
-	// 		}
-			
-	// 		iterator& operator++() { 
-	// 			++_iterator; 
-	// 			return *this; 
-	// 		}
-			
-	// 		iterator operator++(int) { 
-	// 			iterator tmp(*this); ++(*this); 
-	// 			return tmp; 
-	// 		}
-			
-	// 		iterator& operator--() { 
-	// 			--_iterator;
+	// 		__wrap_iter& operator+=(difference_type __n)
+	// 		{
+	// 			 __i += __n;
 	// 			return *this;
 	// 		}
-			
-	// 		iterator operator--(int) { 
-	// 			iterator tmp(*this); 
-	// 			--(*this); 
-	// 			return tmp;
+
+	// 		 __wrap_iter  operator- (difference_type __n) const
+	// 		{
+	// 			return *this + (-__n);
 	// 		}
 			
-	// 		iterator& operator+=(const difference_type other) { 
-	// 			_iterator += other; 
-	// 			return *this; 
-	// 		}
-			
-	// 		iterator& operator-=(const difference_type other) { 
-	// 			_iterator -= other; 
+	// 		__wrap_iter& operator-=(difference_type __n)
+	// 		{
+	// 			*this += -__n;
 	// 			return *this;
 	// 		}
-			
-	// 		difference_type operator-(const __wrap_iter& other) const { 
-	// 			return std::distance(_iterator, other._iterator); 
+	// 		reference    operator[](difference_type __n) const
+	// 		{
+	// 			return __i[__n];
 	// 		}
-			
-	// 		// iterator*  operator+ (difference_type n) const
-	// 		// {
-	// 		// 	return My_iterator(_iterator - n);
-	// 		// }
-			
-	// 		reference operator[](std::size_t index) const { 
-	// 			return _iterator[index]; 
+
+	// 		iterator_type base() const
+	// 		{
+	// 			return __i;
 	// 		}
 	// };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	template<typename T>
+	class __wrap_iter : public ft::iterator<ft::random_access_iterator_tag, int>
+	{
+		private:
+			T* _iterator;
+
+		public:
+			__wrap_iter(T* iter) : _iterator( iter )
+			{
+				
+			}
+
+			reference operator*() const { 
+				return *_iterator; 
+			}
+			
+			pointer operator->() const { 
+				return _iterator; 
+			}
+			
+			iterator& operator++() { 
+				++_iterator; 
+				return *this; 
+			}
+			
+			iterator operator++(int) { 
+				iterator tmp(*this); ++(*this); 
+				return tmp; 
+			}
+			
+			iterator& operator--() { 
+				--_iterator;
+				return *this;
+			}
+			
+			iterator operator--(int) { 
+				iterator tmp(*this); 
+				--(*this); 
+				return tmp;
+			}
+			
+			iterator& operator+=(const difference_type other) { 
+				_iterator += other; 
+				return *this; 
+			}
+			
+			iterator& operator-=(const difference_type other) { 
+				_iterator -= other; 
+				return *this;
+			}
+			
+			difference_type operator-(const __wrap_iter& other) const { 
+				return std::distance(_iterator, other._iterator); 
+			}
+			
+			// iterator*  operator+ (difference_type n) const
+			// {
+			// 	return My_iterator(_iterator - n);
+			// }
+			
+			reference operator[](std::size_t index) const { 
+				return _iterator[index]; 
+			}
+	};
 	
 
 

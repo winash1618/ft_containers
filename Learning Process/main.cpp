@@ -41,13 +41,14 @@ int main()
 		//  v1.push_back(206);  
 		//  v1.push_back(207);  
 	    // Declaring an iterator
-		ft::vector<int> v1(5, 100);
+		vector<int> v1(5, 100);
 		// ft::vector<int> v1(1, 100);
 
 		// v1[0] = 100;
 		// std::cout << v1[0] << std::endl;
 	    // vector<int>::iterator i1;
-		// ft::vector<int> a(v1.begin(), v1.end());
+		ft::vector<int> a(v1.begin(), v1.end());
+		ft::vector<int> b(a.begin(), a.end());
 		// ft::vector<int> b(v1);
 		// std::cout << "try to run operator[] : " << b[7] << std::endl;
 		// v1.pop_back();
