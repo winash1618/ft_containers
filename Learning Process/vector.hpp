@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/18 18:34:12 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/18 21:32:07 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -368,6 +368,19 @@ template<class T, T v>
 				return (this->_alloc);
 			}
 			
+			void push_back (const value_type& val)
+			{
+				pointer temp;
+				temp = _vec;
+				
+				for (size_type index = 0; index < _size; ++index)
+				{
+					temp++;
+				}
+				_alloc.construct(temp, val);
+				
+				_size += 1;
+			}
 			// Iterators
 			iterator	begin()
 			{
@@ -539,14 +552,6 @@ template<class T, T v>
 				// _alloc.destroy(_vec + size() - 1);
 				// _size -= 1;
 			}
-			// void push_back (const value_type& val);
-			// {
-			// 	if(_size + 1 > _cap)
-			// 	{
-			// 		T* temp;
-			// 		temp = 
-			// 	}
-			// }
 			reference       front()
 			{
 				assert(!empty() && "front() called for empty vector");
