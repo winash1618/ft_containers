@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/18 21:32:07 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/22 15:30:12 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,7 +257,7 @@ template<class T, T v>
 		
 			
 			explicit vector (size_type len, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
-			 : _alloc(alloc) // fill constructor
+			 : _alloc(alloc), t_alloc(alloc) // fill constructor
 			{
 				std::cout << "hi" << std::endl;
 				say();
@@ -265,7 +265,6 @@ template<class T, T v>
 				if (len > 0)
 				{
 					allocate(len * 2);
-					
 					construct_at_end(len, val);
 				}
 				for (std::size_t index = 0; index < _size; ++index)
@@ -370,16 +369,36 @@ template<class T, T v>
 			
 			void push_back (const value_type& val)
 			{
-				pointer temp;
-				temp = _vec;
-				
-				for (size_type index = 0; index < _size; ++index)
+				std::cout << _cap << std::endl;
+				if (_size + 1 > _cap)
 				{
-					temp++;
+					std::cout << "HI I am inside overflow handler" << std::endl;
+					temp = t_alloc.allocate(_size * 2, 0);
+					for (_index = 0; _index < _size; ++_index)
+					{
+						t_alloc.construct(temp + _index, _vec[_index]);
+					}
+					t_alloc.construct(temp + _index, val);
+					_alloc.deallocate(_vec, _cap);
+					for (_index = 0; _index < _size; ++_index)
+						_alloc.destroy(_vec + _index);
+					_alloc = t_alloc;
+					_vec = temp;
+					_cap = _size * 2;
+					_size++;
 				}
-				_alloc.construct(temp, val);
+				else
+				{
+					std::cout << "HI I am inside normal" << std::endl;
+					// for (size_type index = 0; index < _size; ++index)
+					// {
+					// 	temp++;
+					// }
+					_alloc.construct(_vec + _size, val);
+					
+					_size += 1;
+				}
 				
-				_size += 1;
 			}
 			// Iterators
 			iterator	begin()
@@ -419,6 +438,11 @@ template<class T, T v>
 			// Capacity based functions
 			size_type size() const
 			{
+				std::cout << "i am inside size " << std::endl;
+				for (std::size_t index = 0; index < _size; ++index)
+				{
+					std::cout << this->_vec[index] << std::endl;
+				}
 				return (this->_size); 
 			}
 			size_type capacity() const
@@ -574,7 +598,11 @@ template<class T, T v>
 			}
 
 		private:
+			pointer temp;
+			Allocator t_alloc;
+			value_type t_val;
 			pointer _vec; // 
+			std::size_t _index;
 			std::size_t _cap;// Capacity 
 			std::size_t _size;
 			Allocator 	_alloc; // std::allocator
