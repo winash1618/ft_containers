@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 10:50:33 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/23 10:28:02 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/23 19:25:29 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,8 @@ namespace ft
 			T* _iterator;
 
 		public:
+
+			__wrap_iter() : _iterator(){}
 			__wrap_iter(T* iter) : _iterator( iter )
 			{
 				
@@ -198,6 +200,9 @@ namespace ft
 			difference_type operator-(const __wrap_iter& other) const { 
 				return std::distance(_iterator, other._iterator); 
 			}
+			// difference_type operator-(const __wrap_iter& other) const { 
+			// 	return std::distance(_iterator, other._iterator); 
+			// }
 			
 			
 			// iterator*  operator- (difference_type n) const

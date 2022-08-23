@@ -4,6 +4,8 @@
 #include <iterator>
 #include "stack.hpp"
 #include <vector>
+#include <map>
+
 using namespace std;
 // int main()
 // {
@@ -27,15 +29,15 @@ using namespace std;
 // int main() for iterator
 int main()
 {
-		// ft::vector<int> a(5, 4);
-		// ft::vector<int> v1(5 ,100);
-		//  v1.push_back(2);  
-		//  v1.push_back(20);  
-		//  v1.push_back(10);  
-		//  v1.push_back(201);  
-		//  v1.push_back(203);  
-		//  v1.push_back(204);  
-		//  v1.push_back(202);  
+		// vector<int> v1(1, 100);
+		ft::vector<int> v1(1 ,100);
+		 v1.push_back(2);  
+		 v1.push_back(20);  
+		 v1.push_back(10);  
+		 v1.push_back(201);  
+		 v1.push_back(203);  
+		 v1.push_back(204);  
+		 v1.push_back(202);  
 		//  v1.push_back(208);  
 		//  v1.push_back(209);  
 		//  v1.push_back(206);  
@@ -82,20 +84,42 @@ int main()
 		// std::cout << ft::distance(a1, a3) << std::endl;
 		// b.assign(a1, a3);
 
-		ft::vector<int> b(3, 100);
-		ft::vector<int> c(5, 200);
-		b.print();
-		c.print();
-		b.swap(c);
-		b.print();
-		c.print();
+		// ft::vector<int> b(3, 100);
+		// ft::vector<int> c(5, 200);
+		// b.print();
+		// c.print();
+		// b.swap(c);
+		// b.print();
+		// c.print();
+
+		
+		v1.print();
+		// ft::vector<int>::iterator i1;
+		// ft::vector<int>::iterator i2;
+		ft::vector<int>::iterator i1;
+		ft::vector<int>::iterator i2;
+		// vector<int>::iterator b1;
+		// b1 = a.begin();
+		i1 = v1.begin() + 2;
+		i2 = v1.begin() + 5;
+
+
+		// std::cout << "position : " << *i1 << std::endl;
+		// std::cout << "position2 : " << b1[0] << std::endl;
+		// v1.erase(i1);
+		v1.erase(i1, i2);
+		v1.print();
+		// for(std::size_t i = 0;i < v1.size(); i++ )
+		// {
+		// 	std::cout << i << " th element " << v1[i] << std::endl;
+		// }
 		/*--------------------------------------------------------------*/
 		/*--------------------------stack tests-------------------------*/
 		/*--------------------------------------------------------------*/
-		ft::stack<int> a;
-		a.push(10);
-		std::cout << a.top() << std::endl;
-		a.pop();
-		std::cout << a.top() << std::endl;
+		// ft::stack<int> a;
+		// a.push(10);
+		// std::cout << a.top() << std::endl;
+		// a.pop();
+		// std::cout << a.top() << std::endl;
 
 }

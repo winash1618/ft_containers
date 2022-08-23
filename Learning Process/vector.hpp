@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/23 12:05:08 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/23 20:18:23 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -368,6 +368,39 @@ template<class T, T v>
 				return (this->_alloc);
 			}
 			
+
+			iterator erase (iterator position)
+			{
+				_alloc.destroy(_vec + (begin() - position));
+				std::cout << (*position) << std::endl;
+				for(_index = begin() - position; _index < _size - 1; _index++)
+				{
+					std::cout << "hi i am here" << std::endl;
+					_alloc.construct(_vec + _index, *(_vec + _index + 1));
+				}
+				_size--;
+				return (position);
+			}
+			iterator erase (iterator first, iterator last)
+			{
+				size_type j = 0;
+				iterator t_end = end();
+				_size = begin() - first;
+				std::cout << " size : " << _size << std::endl;
+				for (iterator i = first; i != last; i++)
+				{
+					if (last + j != t_end)
+					std::cout << "f " << *(last + j) << std::endl;
+					*i = *(last + j);
+					j++;
+					
+					_size++;
+						
+				}
+				return (first);
+				
+			}
+
 			void push_back (const value_type& val)
 			{
 				std::cout << _cap << std::endl;
@@ -448,11 +481,11 @@ template<class T, T v>
 			// Capacity based functions
 			size_type size() const
 			{
-				std::cout << "i am inside size " << std::endl;
-				for (std::size_t index = 0; index < _size; ++index)
-				{
-					std::cout << this->_vec[index] << std::endl;
-				}
+				// std::cout << "i am inside size " << std::endl;
+				// for (std::size_t index = 0; index < _size; ++index)
+				// {
+				// 	std::cout << this->_vec[index] << std::endl;
+				// }
 				return (this->_size); 
 			}
 			size_type capacity() const
@@ -473,8 +506,21 @@ template<class T, T v>
 			{
 				if (n > max_size())
 					throw std::length_error("Capacity allocated exceeds max_size()");
-				else if (n > _cap)
-					reallocate(_cap, n);
+				else if (n > _cap && n >= _size)
+				{
+						temp = t_alloc.allocate(n, 0);
+						for (_index = 0; _index < _size; ++_index)
+						{
+							t_alloc.construct(temp + _index, _vec[_index]);
+						}
+						_alloc.deallocate(_vec, _cap);
+						for (_index = 0; _index < _size; ++_index)
+							_alloc.destroy(_vec + _index);
+						_alloc = t_alloc;
+						_vec = temp;
+						_cap = n;
+				}	
+					
 			}
 
 			// Modifiers functions
