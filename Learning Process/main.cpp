@@ -27,18 +27,18 @@ using namespace std;
 int main()
 {
 		// ft::vector<int> a(5, 4);
-		ft::vector<int> v1(5 ,100);
-		 v1.push_back(2);  
-		 v1.push_back(20);  
-		 v1.push_back(10);  
-		 v1.push_back(201);  
-		 v1.push_back(203);  
-		 v1.push_back(204);  
-		 v1.push_back(202);  
-		 v1.push_back(208);  
-		 v1.push_back(209);  
-		 v1.push_back(206);  
-		 v1.push_back(207);  
+		// ft::vector<int> v1(5 ,100);
+		//  v1.push_back(2);  
+		//  v1.push_back(20);  
+		//  v1.push_back(10);  
+		//  v1.push_back(201);  
+		//  v1.push_back(203);  
+		//  v1.push_back(204);  
+		//  v1.push_back(202);  
+		//  v1.push_back(208);  
+		//  v1.push_back(209);  
+		//  v1.push_back(206);  
+		//  v1.push_back(207);  
 		// ft::vector<int> a;
 		// a.assign(v1.begin(), v1.end());
 
@@ -48,9 +48,9 @@ int main()
 		
 		// std::cout << "std::is_integral<int>::value: " << ft::is_integral<double>::value << std::endl;
 		// v1[0] = 100;
-		std::cout << v1[5] << std::endl;
-		std::cout << v1.size() << std::endl;
-		
+		// std::cout << v1[5] << std::endl;
+		// std::cout << v1.size() << std::endl;
+
 	    // vector<int>::iterator i1;
 		// ft::vector<int> a(v1.begin(), v1.end());
 		// std::cout << "Hi " << a[0] << std::endl;
@@ -71,7 +71,8 @@ int main()
 		// std::cout << "begin() : " << v1.front() << std::endl;
 		// std::cout << a1[7] << std::endl;
 		// ft::vector<int>::reverse_iterator a2;
-		// a2 = a.rbegin();
+		// a2 = v1.rbegin();
+		// std::cout << "begining is the end" << std::endl;
 		// std::cout << a2[0] << std::endl;
 		// // ft::advance(a1, 5);
 		// std::cout << *a1 << std::endl;
@@ -79,4 +80,11 @@ int main()
 
 		// std::cout << ft::distance(a1, a3) << std::endl;
 		// b.assign(a1, a3);
+
+
+
+		/*--------------------------------------------------------------*/
+		/*--------------------------stack tests-------------------------*/
+		/*--------------------------------------------------------------*/
+		
 }

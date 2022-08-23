@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/22 15:30:12 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/23 08:03:12 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <iostream>
 #include <iterator>
 #include <algorithm>
+#include <cassert>
 #include "iterator.hpp"
 #include "iterator_traits.hpp"
 #include "reverse_iterator.hpp"
@@ -370,35 +371,44 @@ template<class T, T v>
 			void push_back (const value_type& val)
 			{
 				std::cout << _cap << std::endl;
-				if (_size + 1 > _cap)
+				if (!_cap)
 				{
-					std::cout << "HI I am inside overflow handler" << std::endl;
-					temp = t_alloc.allocate(_size * 2, 0);
-					for (_index = 0; _index < _size; ++_index)
-					{
-						t_alloc.construct(temp + _index, _vec[_index]);
-					}
-					t_alloc.construct(temp + _index, val);
-					_alloc.deallocate(_vec, _cap);
-					for (_index = 0; _index < _size; ++_index)
-						_alloc.destroy(_vec + _index);
-					_alloc = t_alloc;
-					_vec = temp;
-					_cap = _size * 2;
-					_size++;
+					_vec = _alloc.allocate(1, 0);
+					_alloc.construct(_vec, val);
+					_cap = 1;
+					_size = 1;
 				}
 				else
 				{
-					std::cout << "HI I am inside normal" << std::endl;
-					// for (size_type index = 0; index < _size; ++index)
-					// {
-					// 	temp++;
-					// }
-					_alloc.construct(_vec + _size, val);
-					
-					_size += 1;
+					if (_size + 1 > _cap)
+					{
+						std::cout << "HI I am inside overflow handler" << std::endl;
+						temp = t_alloc.allocate(_size * 2, 0);
+						for (_index = 0; _index < _size; ++_index)
+						{
+							t_alloc.construct(temp + _index, _vec[_index]);
+						}
+						t_alloc.construct(temp + _index, val);
+						_alloc.deallocate(_vec, _cap);
+						for (_index = 0; _index < _size; ++_index)
+							_alloc.destroy(_vec + _index);
+						_alloc = t_alloc;
+						_vec = temp;
+						_cap = _size * 2;
+						_size++;
+					}
+					else
+					{
+						std::cout << "HI I am inside normal" << std::endl;
+						// for (size_type index = 0; index < _size; ++index)
+						// {
+						// 	temp++;
+						// }
+						_alloc.construct(_vec + _size, val);
+						
+						_size += 1;
+					}
 				}
-				
 			}
 			// Iterators
 			iterator	begin()
@@ -480,11 +490,11 @@ template<class T, T v>
 			}
 			reference       at(size_type n)
 			{
-				return (index < size() ? _vec[index] : throw std::out_of_range("Index out of range"));
+				return (n < size() ? _vec[n] : throw std::out_of_range("Index out of range"));
 			}
 			const_reference at(size_type n) const
 			{
-				return (index < size() ? _vec[index] : throw std::out_of_range("Index out of range"));
+				return (n < size() ? _vec[n] : throw std::out_of_range("Index out of range"));
 			}
 			void clear()
 			{
@@ -599,13 +609,13 @@ template<class T, T v>
 
 		private:
 			pointer temp;
-			Allocator t_alloc;
-			value_type t_val;
 			pointer _vec; // 
+			Allocator t_alloc;
+			Allocator 	_alloc; // std::allocator
+			value_type t_val;
 			std::size_t _index;
 			std::size_t _cap;// Capacity 
 			std::size_t _size;
-			Allocator 	_alloc; // std::allocator
 			void allocate(size_type capacity)
 			{
 				if (capacity > max_size())
@@ -734,7 +744,26 @@ template<class T, T v>
 			
 		// }
 			
-		
-// #include "vector.cpp" // include separate implementation file inside namespace
+		template <class T, class Alloc = std::allocator<T> >
+		void swap (ft::vector<T,Alloc>& x, ft::vector<T,Alloc>& y)
+		{
+			Alloc t_alloc;
+			T* t_vec;
+			Alloc::size_type t_size;
+			Alloc::size_type t_cap;
+			t_alloc = x._alloc;
+			t_vec = x._vec;
+			t_size = x._size;
+			t_cap = x._cap;
+			x._alloc = y._alloc;
+			x._vec = y._vec;
+			x._cap = y._cap;
+			x._size = y._size;
+			y._alloc = t_alloc;
+			y._vec = t_vec;
+			y._size = t_size;
+			y._cap = t_cap;
+		}
+		// #include "vector.cpp" // include separate implementation file inside namespace
 }
 #endif
