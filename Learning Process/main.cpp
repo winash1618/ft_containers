@@ -2,6 +2,7 @@
 #include "iterator.hpp"
 #include "reverse_iterator.hpp"
 #include <iterator>
+#include "stack.hpp"
 #include <vector>
 using namespace std;
 // int main()
@@ -86,5 +87,10 @@ int main()
 		/*--------------------------------------------------------------*/
 		/*--------------------------stack tests-------------------------*/
 		/*--------------------------------------------------------------*/
-		
+		ft::stack<int> a;
+		a.push(10);
+		std::cout << a.top() << std::endl;
+		a.pop();
+		std::cout << a.top() << std::endl;
+
 }

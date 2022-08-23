@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/23 08:03:12 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/23 10:34:06 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -507,7 +507,7 @@ template<class T, T v>
 			{
 				// deallocate_and_destruct(_cap, _size);
 				size_type size = ft::distance(first, last);
-				allocate(size);
+				allocate(size * 2);
 				for (std::size_t index = 0; index < size; ++index)
 				{
 					_alloc.construct(_vec + index, *(first + index));
@@ -558,10 +558,16 @@ template<class T, T v>
 				// 	construct_at_end(first, last, new_size);
 				// }
 			}
-			// // void assign (size_type n, const value_type& val)
-			// {
-				
-			// }
+			void assign (size_type n, const value_type& val)
+			{
+				allocate(n * 2);
+				for (std::size_t index = 0; index < n; ++index)
+				{
+					_alloc.construct(_vec + index, val);
+					//std::cout << _vec[index] << std::endl;
+					++_size;
+				}
+			}
 
 			// // insert functions
 			// iterator insert (iterator position, const value_type& val) // single element insert
@@ -599,12 +605,12 @@ template<class T, T v>
 			reference       back()
 			{
 				assert(!empty() && "back() called for empty vector");
-				return *(this->end() - 1);
+				return *(_vec + size() - 1);
 			}
 			const_reference back() const
 			{
 				assert(!empty() && "back() called for empty vector");
-				return *(this->end() - 1);
+				return *(_vec + size() - 1);
 			}
 
 		private:
@@ -613,9 +619,9 @@ template<class T, T v>
 			Allocator t_alloc;
 			Allocator 	_alloc; // std::allocator
 			value_type t_val;
-			std::size_t _index;
-			std::size_t _cap;// Capacity 
-			std::size_t _size;
+			size_type _index;
+			size_type _cap;// Capacity 
+			size_type _size;
 			void allocate(size_type capacity)
 			{
 				if (capacity > max_size())
@@ -623,7 +629,7 @@ template<class T, T v>
 				_cap = capacity;
 				_vec = _alloc.allocate(capacity, 0);
 			}
-			// void allocate(std::size_t capacity)
+			// void allocate(size_type capacity)
 			// {
 			// 	_cap = capacity;
 			// 	_vec = _alloc.allocate(capacity, 0);
@@ -747,10 +753,12 @@ template<class T, T v>
 		template <class T, class Alloc = std::allocator<T> >
 		void swap (ft::vector<T,Alloc>& x, ft::vector<T,Alloc>& y)
 		{
-			Alloc t_alloc;
+			typedef Alloc allocator_type;
+			
+			allocator_type t_alloc;
 			T* t_vec;
-			Alloc::size_type t_size;
-			Alloc::size_type t_cap;
+			typename allocator_type::size_type t_size;
+			typename allocator_type::size_type t_cap;
 			t_alloc = x._alloc;
 			t_vec = x._vec;
 			t_size = x._size;

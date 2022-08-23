@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 10:50:33 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/18 14:36:12 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/23 10:28:02 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,9 +199,10 @@ namespace ft
 				return std::distance(_iterator, other._iterator); 
 			}
 			
-			// iterator*  operator+ (difference_type n) const
+			
+			// iterator*  operator- (difference_type n) const
 			// {
-			// 	return My_iterator(_iterator - n);
+			// 	return __wrap_iter(_iterator - n);
 			// }
 			
 			reference operator[](std::size_t index) const { 
