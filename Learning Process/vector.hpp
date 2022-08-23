@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/23 10:34:06 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/23 12:05:08 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -612,7 +612,33 @@ template<class T, T v>
 				assert(!empty() && "back() called for empty vector");
 				return *(_vec + size() - 1);
 			}
-
+			void swap (vector& x)
+			{
+				std::cout << "swap" << std::endl;
+				temp = x._vec;
+				t_alloc = x._alloc;
+				size_type t_size = x._size;
+				size_type t_cap = x._cap;
+				x._vec = _vec;
+				x._alloc = _alloc;
+				x._size = _size;
+				x._cap = _cap;
+				_vec = temp;
+				_alloc = t_alloc;
+				_size = t_size;
+				_cap = t_cap;
+			}
+			void print(void)
+			{
+				size_type i = 0;
+				std::cout << "Printing starts" << std::endl;
+				while (i < _size)
+				{
+					std::cout << i << " th element = " << _vec[i] << std::endl;
+					i++;
+				}
+				std::cout << "Printing ends" << std::endl;
+			}
 		private:
 			pointer temp;
 			pointer _vec; // 
@@ -750,28 +776,28 @@ template<class T, T v>
 			
 		// }
 			
-		template <class T, class Alloc = std::allocator<T> >
-		void swap (ft::vector<T,Alloc>& x, ft::vector<T,Alloc>& y)
-		{
-			typedef Alloc allocator_type;
+		// template <class T, class Alloc = std::allocator<T> >
+		// void swap (ft::vector<T,Alloc>& x, ft::vector<T,Alloc>& y)
+		// {
+		// 	typedef Alloc allocator_type;
 			
-			allocator_type t_alloc;
-			T* t_vec;
-			typename allocator_type::size_type t_size;
-			typename allocator_type::size_type t_cap;
-			t_alloc = x._alloc;
-			t_vec = x._vec;
-			t_size = x._size;
-			t_cap = x._cap;
-			x._alloc = y._alloc;
-			x._vec = y._vec;
-			x._cap = y._cap;
-			x._size = y._size;
-			y._alloc = t_alloc;
-			y._vec = t_vec;
-			y._size = t_size;
-			y._cap = t_cap;
-		}
+		// 	allocator_type t_alloc;
+		// 	T* t_vec;
+		// 	typename allocator_type::size_type t_size;
+		// 	typename allocator_type::size_type t_cap;
+		// 	t_alloc = x._alloc;
+		// 	t_vec = x._vec;
+		// 	t_size = x._size;
+		// 	t_cap = x._cap;
+		// 	x._alloc = y._alloc;
+		// 	x._vec = y._vec;
+		// 	x._cap = y._cap;
+		// 	x._size = y._size;
+		// 	y._alloc = t_alloc;
+		// 	y._vec = t_vec;
+		// 	y._size = t_size;
+		// 	y._cap = t_cap;
+		// }
 		// #include "vector.cpp" // include separate implementation file inside namespace
 }
 #endif
