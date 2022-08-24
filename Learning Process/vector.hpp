@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/23 21:02:02 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/24 16:22:31 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -506,7 +506,7 @@ template<class T, T v>
 			{
 				if (n > max_size())
 					throw std::length_error("Capacity allocated exceeds max_size()");
-				else if (n > _cap && n >= _size)
+				else if (n > _cap)
 				{
 						temp = t_alloc.allocate(n, 0);
 						for (_index = 0; _index < _size; ++_index)
@@ -615,6 +615,61 @@ template<class T, T v>
 				}
 			}
 
+			// resize
+			void resize (size_type n, value_type val = value_type())
+			{
+
+				if (n > max_size())
+				{
+					throw std::length_error("Fix it");
+				}
+				if (n < _size)
+				{
+					temp = t_alloc.allocate(n, 0);
+					for (_index = 0; _index < n; ++_index)
+					{
+						t_alloc.construct(temp + _index, *(_vec + _index));
+					}
+					for (_index = 0; _index < _size; ++_index)
+					{
+						destroy(_vec + _index);
+					}
+					_alloc.deallocate(_vec,_cap)
+					_alloc = t_alloc;
+					_vec = temp;
+					_size = n;
+				}
+				else if (n >= _size && n < _cap )
+				{
+					if (!val)
+						val = 0;
+					for(_index = _size; _index < n; _index++)
+					{
+						_alloc.construct(_vec + _index, val);
+					}
+				}
+				else
+				{
+					if (!val)
+						val = 0;
+					if (n > max_size())
+						throw std::length_error("Capacity allocated exceeds max_size()");
+
+					temp = t_alloc.allocate(n, 0);
+					for (_index = 0; _index < _size; ++_index)
+					{
+						t_alloc.construct(temp + _index, _vec[_index]);
+					}
+					_alloc.deallocate(_vec, _cap);
+					for (_index = 0; _index < _size; ++_index)
+						_alloc.destroy(_vec + _index);
+					_alloc = t_alloc;
+					_vec = temp;
+					_cap = n;
+
+				}
+			}
+			
 			// // insert functions
 			iterator insert (iterator position, const value_type& val) // single element insert
 			{
