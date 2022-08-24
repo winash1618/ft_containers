@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/23 20:18:23 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/23 21:02:02 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -616,14 +616,27 @@ template<class T, T v>
 			}
 
 			// // insert functions
-			// iterator insert (iterator position, const value_type& val) // single element insert
-			// {
-				
-			// }
-			// void insert (iterator position, size_type n, const value_type& val) // fill n index starting from iterator position
-			// {
-				
-			// }
+			iterator insert (iterator position, const value_type& val) // single element insert
+			{
+					*position = val;
+					return (position);
+			}
+			void insert (iterator position, size_type n, const value_type& val) // fill n index starting from iterator position
+			{
+				if ((begin() - position) + n <= _cap)
+				{
+					for (_index = 0; index < n; index++)
+					{
+						*position = val;
+						position++;
+					}
+				}
+				else
+				{
+					allocate((begin() - position) + n + 1, 0);
+					
+				}
+			}
 			// template <class InputIterator>
 			// void insert (iterator position, InputIterator first, InputIterator last)
 			// {
