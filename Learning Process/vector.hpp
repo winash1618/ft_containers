@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/24 16:22:31 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/25 15:30:01 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -554,7 +554,7 @@ template<class T, T v>
 				// deallocate_and_destruct(_cap, _size);
 				size_type size = ft::distance(first, last);
 				allocate(size * 2);
-				for (std::size_t index = 0; index < size; ++index)
+				for (size_type index = 0; index < size; ++index)
 				{
 					_alloc.construct(_vec + index, *(first + index));
 					//std::cout << _vec[index] << std::endl;
@@ -607,7 +607,7 @@ template<class T, T v>
 			void assign (size_type n, const value_type& val)
 			{
 				allocate(n * 2);
-				for (std::size_t index = 0; index < n; ++index)
+				for (size_type index = 0; index < n; ++index)
 				{
 					_alloc.construct(_vec + index, val);
 					//std::cout << _vec[index] << std::endl;
@@ -625,47 +625,58 @@ template<class T, T v>
 				}
 				if (n < _size)
 				{
-					temp = t_alloc.allocate(n, 0);
-					for (_index = 0; _index < n; ++_index)
-					{
-						t_alloc.construct(temp + _index, *(_vec + _index));
-					}
-					for (_index = 0; _index < _size; ++_index)
-					{
-						destroy(_vec + _index);
-					}
-					_alloc.deallocate(_vec,_cap)
-					_alloc = t_alloc;
-					_vec = temp;
+					std::cout << "i am inside if" << std::endl;
+					// temp = t_alloc.allocate(n, 0);
+					// for (_index = 0; _index < n; ++_index)
+					// {
+					// 	t_alloc.construct(temp + _index, *(_vec + _index));
+					// }
+					// for (_index = 0; _index < _size; ++_index)
+					// {
+					// 	_alloc.destroy(_vec + _index);
+					// }
+					// _alloc.deallocate(_vec,_cap);
+					// _alloc = t_alloc;
+					// _vec = temp;
 					_size = n;
 				}
 				else if (n >= _size && n < _cap )
 				{
+					std::cout << "i am inside else if" << std::endl;
 					if (!val)
 						val = 0;
-					for(_index = _size; _index < n; _index++)
+					for(size_type index = _size; index < n; index++)
 					{
-						_alloc.construct(_vec + _index, val);
+						_alloc.construct(_vec + index, val);
 					}
+					_size = n;
 				}
 				else
 				{
+					std::cout << "i am inside else" << std::endl;
 					if (!val)
 						val = 0;
 					if (n > max_size())
 						throw std::length_error("Capacity allocated exceeds max_size()");
 
-					temp = t_alloc.allocate(n, 0);
-					for (_index = 0; _index < _size; ++_index)
+					temp = t_alloc.allocate(n);
+					for (size_type index = 0; index < _size; ++index)
 					{
-						t_alloc.construct(temp + _index, _vec[_index]);
+						t_alloc.construct(temp + index, _vec[index]);
 					}
+					for (size_type index = _size; index < n; ++index)
+					{
+						t_alloc.construct(temp + index, val);
+					}
+					
+					for (size_type index = 0; index < _size; ++index)
+						_alloc.destroy(_vec + index);
 					_alloc.deallocate(_vec, _cap);
-					for (_index = 0; _index < _size; ++_index)
-						_alloc.destroy(_vec + _index);
 					_alloc = t_alloc;
 					_vec = temp;
-					_cap = n;
+					_cap = recommend(n);
+					// _cap = 1.9 * n;
+					_size = n;
 
 				}
 			}
@@ -673,23 +684,64 @@ template<class T, T v>
 			// // insert functions
 			iterator insert (iterator position, const value_type& val) // single element insert
 			{
-					*position = val;
-					return (position);
+				std::cout << "i am  in insert" << std::endl;
+				std::cout << begin() - position << std::endl;
+				push_back(val);
+				value_type temp1 = *position;
+				*position = back();
+				iterator temp2 = end();
+				temp2--;
+				*temp2= temp1;
+				return position;
 			}
 			void insert (iterator position, size_type n, const value_type& val) // fill n index starting from iterator position
 			{
-				if ((begin() - position) + n <= _cap)
+				
+				if (_size + n <= _cap)
 				{
-					for (_index = 0; index < n; index++)
+					iterator it;
+					it = end();
+					it--;
+					for (size_type index = 0; index < n; index++)
 					{
-						*position = val;
-						position++;
+						push_back(val);
 					}
+					for (size_type index = 0; index < n; index++)
+					{
+						value_type t_val = *position;
+						*position = *it;
+						*it = t_val;
+						
+						position++;
+						it++;
+						
+					}
+					
 				}
 				else
 				{
-					allocate((begin() - position) + n + 1, 0);
 					
+					std::cout << "hi iam good " << begin() - position << std::endl;
+					size_type i = begin() - position;
+					size_type j = begin() - end();
+					// resize(_size + n);
+					for (size_type index = 0; index < n; index++)
+					{
+						std::cout << "index " << index << " n value is " << n << std::endl;
+						push_back(val);
+					}
+					print();
+					position = begin() + i;
+					iterator it;
+					it = begin() + j;
+					for (_index = 0; _index < n; _index++)
+					{
+						value_type t_val = *position;
+						*position = *it;
+						*it = t_val;
+						it++;
+						position++;
+					}
 				}
 			}
 			// template <class InputIterator>
