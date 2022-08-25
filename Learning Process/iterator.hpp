@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 10:50:33 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/23 19:25:29 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/25 17:03:23 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -376,6 +376,14 @@ namespace ft
 			std::size_t __x) 
 	{
 		__n += __x;
+		return __n;
+	}
+	template <class _Iter>
+	_Iter
+	operator-(_Iter __n,
+			std::size_t __x) 
+	{
+		__n -= __x;
 		return __n;
 	}
 }

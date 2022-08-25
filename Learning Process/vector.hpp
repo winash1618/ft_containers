@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/25 15:30:01 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/25 19:33:43 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,7 +250,7 @@ template<class T, T v>
 			/*--------------------------------------------------------------------*/
 			// Constructor
 			
-			explicit vector (const allocator_type& alloc = allocator_type())  : _alloc(alloc), _vec(nullptr), _size(0), _cap(0) // empty container constructor
+			explicit vector (const allocator_type& alloc = allocator_type())  :  _vec(nullptr), _alloc(alloc), _cap(0), _size(0) // empty container constructor
 			{
 				// say();
 			}
@@ -258,42 +258,42 @@ template<class T, T v>
 		
 			
 			explicit vector (size_type len, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
-			 : _alloc(alloc), t_alloc(alloc) // fill constructor
+			 : _alloc(alloc) // fill constructor
 			{
-				std::cout << "hi" << std::endl;
-				say();
+				// std::cout << "hi" << std::endl;
+				// say();
 				
 				if (len > 0)
 				{
 					allocate(len * 2);
 					construct_at_end(len, val);
 				}
-				for (std::size_t index = 0; index < _size; ++index)
-				{
-					std::cout << this->_vec[index] << std::endl;
-				}
+				// for (std::size_t index = 0; index < _size; ++index)
+				// {
+				// 	std::cout << this->_vec[index] << std::endl;
+				// }
 				// std::cout << typeid(allocator_type).name();
 			}
 			
 			template <class InputIterator, typename = typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type>
 			vector (InputIterator first, InputIterator last,
-					const allocator_type& alloc = allocator_type()
-					) : _alloc(alloc), _size(0), _cap(0)// range constructor
+					const allocator_type& alloc = allocator_type()) : 
+					_alloc(alloc), _cap(0), _size(0)// range constructor
 			{
-				say();
-				std::cout << "hello i am here" << std::endl;
+				// say();
+				// std::cout << "hello i am here" << std::endl;
 				// std::size_t size = 5;
 				size_type size = ft::distance(first, last); // this will cause error because i am not using enable_if so it is passing int also
 				// std::cout << size << std::endl;
 				// std::cout << std::is_same<int, InputIterator>::value << std::endl;
 				// std::cout << std::is_same<iterator, InputIterator>::value << std::endl;
-				std::cout << typeid(iterator).name() << std::endl;
-				std::cout << typeid(InputIterator).name() << std::endl;
+				// std::cout << typeid(iterator).name() << std::endl;
+				// std::cout << typeid(InputIterator).name() << std::endl;
 				allocate(size);
 				for (size_type index = 0; index < size; ++index)
 				{
 					_alloc.construct(_vec + index, *(first + index));
-					std::cout << this->_vec[index] << std::endl;
+					// std::cout << this->_vec[index] << std::endl;
 					++_size;
 				}
 				// std::cout << _size << std::endl;
@@ -308,21 +308,22 @@ template<class T, T v>
 			
 			vector (const vector& x) : _size(0)  // Copy constructor
 			{
-				std::cout << "I am in copy constructor" << std::endl;
+				// std::cout << "I am in copy constructor" << std::endl;
 				// *this = x;
 				_alloc = x.get_allocator();
 				copy(x);
-				std::cout << "I am back in copy again" << std::endl;
-				for (std::size_t index = 0; index < _size; ++index)
-				{
-					std::cout << this->_vec[index] << std::endl;
-				}
-				std::cout << "End of copy constructor" << std::endl;
+				// std::cout << "I am back in copy again" << std::endl;
+				// for (std::size_t index = 0; index < _size; ++index)
+				// {
+				// 	std::cout << this->_vec[index] << std::endl;
+				// }
+				// std::cout << "End of copy constructor" << std::endl;
 			}
 			
 			// Destructor
 			~vector ()
 			{
+				// std::cout << "Destructor called" << std::endl;
 				deallocate_and_destruct(_cap, _size);
 			}
 
@@ -347,7 +348,7 @@ template<class T, T v>
 					{
 						reallocate(this->capacity(), x.size());
 					}
-					std::cout << x.size() << " " << _size << std::endl;
+					// std::cout << x.size() << " " << _size << std::endl;
 					uninitialized_alloc_copy(x);
 				}
 				else
@@ -375,7 +376,7 @@ template<class T, T v>
 				std::cout << (*position) << std::endl;
 				for(_index = begin() - position; _index < _size - 1; _index++)
 				{
-					std::cout << "hi i am here" << std::endl;
+					// std::cout << "hi i am here" << std::endl;
 					_alloc.construct(_vec + _index, *(_vec + _index + 1));
 				}
 				_size--;
@@ -386,11 +387,11 @@ template<class T, T v>
 				size_type j = 0;
 				iterator t_end = end();
 				_size = begin() - first;
-				std::cout << " size : " << _size << std::endl;
+				// std::cout << " size : " << _size << std::endl;
 				for (iterator i = first; i != last; i++)
 				{
 					if (last + j != t_end)
-					std::cout << "f " << *(last + j) << std::endl;
+					// std::cout << "f " << *(last + j) << std::endl;
 					*i = *(last + j);
 					j++;
 					
@@ -403,7 +404,7 @@ template<class T, T v>
 
 			void push_back (const value_type& val)
 			{
-				std::cout << _cap << std::endl;
+				// std::cout << _cap << std::endl;
 				if (!_cap)
 				{
 					_vec = _alloc.allocate(1, 0);
@@ -415,7 +416,7 @@ template<class T, T v>
 				{
 					if (_size + 1 > _cap)
 					{
-						std::cout << "HI I am inside overflow handler" << std::endl;
+						// std::cout << "HI I am inside overflow handler" << std::endl;
 						temp = t_alloc.allocate(_size * 2, 0);
 						for (_index = 0; _index < _size; ++_index)
 						{
@@ -432,7 +433,7 @@ template<class T, T v>
 					}
 					else
 					{
-						std::cout << "HI I am inside normal" << std::endl;
+						// std::cout << "HI I am inside normal" << std::endl;
 						// for (size_type index = 0; index < _size; ++index)
 						// {
 						// 	temp++;
@@ -871,13 +872,13 @@ template<class T, T v>
 			void uninitialized_alloc_copy(const vector& other)
 			{
 				_size = other.size();
-				std::cout << _size << "i am in unin"  << std::endl;
+				// std::cout << _size << "i am in unin"  << std::endl;
 				for (size_type index=0; index < _size; ++index)
 				{
-					std::cout << *(other._vec + index)  << std::endl;
+					// std::cout << *(other._vec + index)  << std::endl;
 					this->_alloc.construct(this->_vec + index, *(other._vec + index));
 				}
-				std::cout << "i am going out" << std::endl;
+				// std::cout << "i am going out" << std::endl;
 			}
 			void copy(const vector& other)
 			{

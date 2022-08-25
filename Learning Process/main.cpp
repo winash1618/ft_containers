@@ -9,7 +9,269 @@
 
 using namespace std;
 
+// int main()
+// {
+// 	std::cout << "-----------------------------------------------------------" << std::endl;
+// 	std::cout << "------------------------ Vector Tests ---------------------" << std::endl;
+// 	std::cout << "-----------------------------------------------------------" << std::endl;
 
+// 	std::cout << '\n';
+
+// 	std::cout << "-----------------------------------------------------------" << std::endl;
+// 	std::cout << "------------------ Constructor Tests Begin ----------------" << std::endl;
+// 	std::cout << "-----------------------------------------------------------" << std::endl;
+// 	{
+// 		std::cout << std::endl;
+// 		std::cout << ">>>>>>>>>>>>>>>std::vector<<<<<<<<<<<<<<<" << std::endl << std::endl;
+// 		std::vector<int> first;                                // empty vector of ints
+// 		std::cout << '\n';
+// 		std::cout << "The contents of first are:";
+// 		for (std::vector<int>::iterator it = first.begin(); it != first.end(); ++it)
+// 			std::cout << ' ' << *it;
+// 		std::vector<int> second (4,100);                       // four ints with value 100
+// 		std::cout << '\n';
+// 		std::cout << "The contents of second are:";
+// 		for (std::vector<int>::iterator it = second.begin(); it != second.end(); ++it)
+// 			std::cout << ' ' << *it;
+// 		std::vector<int> third (second.begin(),second.end());  // iterating through second
+// 		std::cout << '\n';
+// 		std::cout << "The contents of third are:";
+// 		for (std::vector<int>::iterator it = third.begin(); it != third.end(); ++it)
+// 			std::cout << ' ' << *it;
+// 		std::vector<int> fourth (third);                       // a copy of third
+// 		std::cout << '\n';
+// 		std::cout << "The contents of fourth are:";
+// 		for (std::vector<int>::iterator it = fourth.begin(); it != fourth.end(); ++it)
+// 			std::cout << ' ' << *it;
+
+// 		// the iterator constructor can also be used to construct from arrays:
+// 		int myints[] = {16,2,77,29};
+// 		std::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
+// 		std::cout << '\n';
+// 		std::cout << "The contents of fifth are:";
+// 		for (std::vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
+// 			std::cout << ' ' << *it;
+// 	}
+// 	std::cout << '\n';
+// 	std::cout << '\n';
+// 	{
+// 		std::cout << std::endl;
+// 		std::cout << ">>>>>>>>>>>>>>>ft::vector<<<<<<<<<<<<<<<" << std::endl << std::endl;
+// 		ft::vector<int> first;                                // empty vector of ints
+// 		std::cout << '\n';
+// 		std::cout << "The contents of first are:";
+// 		for (ft::vector<int>::iterator it = first.begin(); it != first.end(); ++it)
+// 			std::cout << ' ' << *it;
+// 		ft::vector<int> second (4,100);                       // four ints with value 100
+// 		std::cout << '\n';
+// 		std::cout << "The contents of second are:";
+// 		for (ft::vector<int>::iterator it = second.begin(); it != second.end(); ++it)
+// 			std::cout << ' ' << *it;
+// 		{
+// 		ft::vector<int> third (second.begin(),second.end());  // iterating through second
+// 		std::cout << '\n';
+// 		std::cout << "The contents of third are:";
+// 		for (ft::vector<int>::iterator it = third.begin(); it != third.end(); ++it)
+// 			std::cout << ' ' << *it;
+// 		ft::vector<int> fourth (third);                       // a copy of third
+// 		std::cout << '\n';
+// 		std::cout << "The contents of fourth are:";
+// 		for (ft::vector<int>::iterator it = fourth.begin(); it != fourth.end(); ++it)
+// 			std::cout << ' ' << *it;
+// 		}
+// 		// the iterator constructor can also be used to construct from arrays:
+// 		int myints[] = {16,2,77,29};
+// 		ft::vector<int> fifth (myints, myints + sizeof(myints) / sizeof(int) );
+// 		std::cout << '\n';
+// 		std::cout << "The contents of fifth are:";
+// 		for (ft::vector<int>::iterator it = fifth.begin(); it != fifth.end(); ++it)
+// 			std::cout << ' ' << *it;
+// 	}
+// 	std::cout << '\n';
+// 	std::cout << '\n';
+// 	std::cout << "-----------------------------------------------------------" << std::endl;
+// 	std::cout << "------------------- Constructor Tests Ends ----------------" << std::endl;
+// 	std::cout << "-----------------------------------------------------------" << std::endl;
+
+// 	std::cout << '\n';
+
+// 	std::cout << "-----------------------------------------------------------" << std::endl;
+// 	std::cout << "-------------------- Assign Tests Begin -------------------" << std::endl;
+// 	std::cout << "-----------------------------------------------------------" << std::endl;
+
+// 	{
+// 		std::cout << std::endl;
+// 		std::cout << ">>>>>>>>>>>>>>>std::vector<<<<<<<<<<<<<<<" << std::endl << std::endl;
+// 		std::vector<int> first;
+// 		std::vector<int> second;
+// 		std::vector<int> third;
+
+
+// 		first.assign (7,100);             // 7 ints with a value of 100
+
+// 		std::vector<int>::iterator it;
+// 		it=first.begin()+1;
+
+// 		second.assign (it,first.end()-1); // the 5 central values of first
+
+// 		int myints[] = {1776,7,4};
+// 		third.assign (myints,myints+3);   // assigning from array.
+
+// 		std::cout << "Size of first: " << int (first.size()) << '\n';
+// 		std::cout << "Size of second: " << int (second.size()) << '\n';
+// 		std::cout << "Size of third: " << int (third.size()) << '\n';
+// 	}
+// 	{
+// 		std::cout << std::endl;
+// 		std::cout << ">>>>>>>>>>>>>>>ft::vector<<<<<<<<<<<<<<<" << std::endl << std::endl;
+// 		ft::vector<int> first;
+// 		ft::vector<int> second;
+// 		ft::vector<int> third;
+
+// 		first.assign (7,100);             // 7 ints with a value of 100
+
+// 		ft::vector<int>::iterator it;
+// 		it=first.begin()+1;
+
+// 		second.assign (it,first.end()-1); // the 5 central values of first
+
+// 		int myints[] = {1776,7,4};
+// 		third.assign (myints,myints+3);   // assigning from array.
+
+// 		std::cout << "Size of first: " << int (first.size()) << '\n';
+// 		std::cout << "Size of second: " << int (second.size()) << '\n';
+// 		std::cout << "Size of third: " << int (third.size()) << '\n';
+// 	}
+// 	std::cout << '\n';
+// 	std::cout << '\n';
+// 	std::cout << "-----------------------------------------------------------" << std::endl;
+// 	std::cout << "---------------------- Assign Tests Ends ------------------" << std::endl;
+// 	std::cout << "-----------------------------------------------------------" << std::endl;
+// 	std::cout << '\n';
+
+// 	std::cout << "-----------------------------------------------------------" << std::endl;
+// 	std::cout << "---------------------- At Tests Begin ---------------------" << std::endl;
+// 	std::cout << "-----------------------------------------------------------" << std::endl;
+// 	{
+// 		std::cout << std::endl;
+// 		std::cout << ">>>>>>>>>>>>>>>std::vector<<<<<<<<<<<<<<<" << std::endl << std::endl;
+// 		std::vector<int> myvector (10);   // 10 zero-initialized ints
+
+// 		// assign some values:
+// 		for (unsigned i=0; i<myvector.size(); i++)
+// 			myvector.at(i)=i;
+
+// 		std::cout << "myvector contains:";
+// 		for (unsigned i=0; i<myvector.size(); i++)
+// 			std::cout << ' ' << myvector.at(i);
+// 		std::cout << '\n';
+// 	}
+// 	{
+// 		std::cout << std::endl;
+// 		std::cout << ">>>>>>>>>>>>>>>ft::vector<<<<<<<<<<<<<<<" << std::endl << std::endl;
+// 		ft::vector<int> myvector (10);   // 10 zero-initialized ints
+
+// 		// assign some values:
+// 		for (unsigned i=0; i<myvector.size(); i++)
+// 			myvector.at(i)=i;
+
+// 		std::cout << "myvector contains:";
+// 		for (unsigned i=0; i<myvector.size(); i++)
+// 			std::cout << ' ' << myvector.at(i);
+// 		std::cout << '\n';
+// 	}
+// 	std::cout << '\n';
+// 	std::cout << '\n';
+// 	std::cout << "-----------------------------------------------------------" << std::endl;
+// 	std::cout << "----------------------- At Tests Ends ---------------------" << std::endl;
+// 	std::cout << "-----------------------------------------------------------" << std::endl;
+// 	std::cout << '\n';
+
+// 	std::cout << "-----------------------------------------------------------" << std::endl;
+// 	std::cout << "---------------------- Back Tests Begin -------------------" << std::endl;
+// 	std::cout << "-----------------------------------------------------------" << std::endl;
+// 	{
+// 		std::cout << std::endl;
+// 		std::cout << ">>>>>>>>>>>>>>>std::vector<<<<<<<<<<<<<<<" << std::endl << std::endl;
+// 		std::vector<int> myvector;
+
+// 		myvector.push_back(10);
+
+// 		while (myvector.back() != 0)
+// 		{
+// 			myvector.push_back ( myvector.back() -1 );
+// 		}
+
+// 		std::cout << "myvector contains:";
+// 		for (unsigned i=0; i<myvector.size() ; i++)
+// 			std::cout << ' ' << myvector[i];
+// 		std::cout << '\n';
+// 	}
+
+// 	{
+// 		std::cout << std::endl;
+// 		std::cout << ">>>>>>>>>>>>>>>ft::vector<<<<<<<<<<<<<<<" << std::endl << std::endl;
+// 		ft::vector<int> myvector;
+
+// 		myvector.push_back(10);
+
+// 		while (myvector.back() != 0)
+// 		{
+// 			myvector.push_back ( myvector.back() -1 );
+// 		}
+
+// 		std::cout << "myvector contains:";
+// 		for (unsigned i=0; i<myvector.size() ; i++)
+// 			std::cout << ' ' << myvector[i];
+// 		std::cout << '\n';
+// 	}
+// 	std::cout << '\n';
+// 	std::cout << '\n';
+// 	std::cout << "-----------------------------------------------------------" << std::endl;
+// 	std::cout << "---------------------- Back Tests Ends --------------------" << std::endl;
+// 	std::cout << "-----------------------------------------------------------" << std::endl;
+// 	std::cout << '\n';
+
+// 	std::cout << "-----------------------------------------------------------" << std::endl;
+// 	std::cout << "---------------------- Begin Tests Begin ------------------" << std::endl;
+// 	std::cout << "-----------------------------------------------------------" << std::endl;
+
+// 	{
+// 		std::cout << std::endl;
+// 		std::cout << ">>>>>>>>>>>>>>>std::vector<<<<<<<<<<<<<<<" << std::endl << std::endl;
+// 		std::vector<int> myvector;
+// 		for (int i=1; i<=5; i++) myvector.push_back(i);
+
+// 		std::cout << "myvector contains:";
+// 		for (std::vector<int>::iterator it = myvector.begin() ; it != myvector.end(); ++it)
+// 			std::cout << ' ' << *it;
+// 		std::cout << '\n';
+// 	}
+// 	{
+// 		std::cout << std::endl;
+// 		std::cout << ">>>>>>>>>>>>>>>ft::vector<<<<<<<<<<<<<<<" << std::endl << std::endl;
+// 		ft::vector<int> myvector;
+// 		for (int i=1; i<=5; i++) myvector.push_back(i);
+
+// 		std::cout << "myvector contains:";
+// 		for (ft::vector<int>::iterator it = myvector.begin() ; it != myvector.end(); ++it)
+// 			std::cout << ' ' << *it;
+// 		std::cout << '\n';
+// 	}
+// 	std::cout << '\n';
+// 	std::cout << '\n';
+// 	std::cout << "-----------------------------------------------------------" << std::endl;
+// 	std::cout << "---------------------- Begin Tests Ends -------------------" << std::endl;
+// 	std::cout << "-----------------------------------------------------------" << std::endl;
+// 	std::cout << '\n';
+
+// 	std::cout << "-----------------------------------------------------------" << std::endl;
+// 	std::cout << "---------------------- End Tests Begin --------------------" << std::endl;
+// 	std::cout << "-----------------------------------------------------------" << std::endl;
+
+//   return 0;
+
+// }
 
 
 
