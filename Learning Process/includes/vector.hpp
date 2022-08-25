@@ -269,7 +269,7 @@ template<class T, T v>
 			/*--------------------------------------------------------------------*/
 			// Constructor
 			
-			explicit vector (const allocator_type& alloc = allocator_type())  :  _vec(nullptr), _alloc(alloc), _cap(0), _size(0) // empty container constructor
+			explicit vector (const allocator_type& alloc = allocator_type())  :  _vec(nullptr_f), _alloc(alloc), _cap(0), _size(0) // empty container constructor
 			{
 				// say();
 			}
@@ -372,7 +372,7 @@ template<class T, T v>
 				}
 				else
 				{
-					_vec = nullptr;
+					_vec = nullptr_f;
 					_size = 0;
 				}
 				// for (std::size_t index = 0; index < _size; ++index)
@@ -907,7 +907,7 @@ template<class T, T v>
 					uninitialized_alloc_copy(other);
 				}
 				else
-					_vec = nullptr;
+					_vec = nullptr_f;
 			}
 			size_type recommend(size_type new_size) const
 			{

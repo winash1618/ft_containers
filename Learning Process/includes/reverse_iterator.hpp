@@ -34,7 +34,7 @@ namespace ft
 	private:
 	void operator&() const;    /* Can't take address of nullptr */
 
-	} nullptr = {};   
+	} nullptr_f = {};   
 	template <class Iterator>
 	class reverse_iterator
 		: public ft::iterator<typename ft::iterator_traits<Iterator>::iterator_category,
@@ -53,7 +53,7 @@ namespace ft
 		typedef typename ft::iterator_traits<Iterator>::reference       reference;
 		typedef typename ft::iterator_traits<Iterator>::pointer         pointer;
 
-		reverse_iterator(): _iter(nullptr), current(nullptr){}
+		reverse_iterator(): _iter(nullptr_f), current(nullptr_f){}
 		explicit reverse_iterator(Iterator x) : _iter(x), current(x) {}
 		template <class U> 
 		reverse_iterator(const reverse_iterator<U>& u);
