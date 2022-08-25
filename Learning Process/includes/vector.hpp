@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/25 19:33:43 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/25 20:37:09 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -491,6 +491,7 @@ template<class T, T v>
 			}
 			size_type capacity() const
 			{
+				// std::cout << "hi" << std::endl;
 				return (this->_cap);
 			}
 			size_type max_size() const
