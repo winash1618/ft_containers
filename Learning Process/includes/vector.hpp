@@ -392,7 +392,7 @@ template<class T, T v>
 			iterator erase (iterator position)
 			{
 				_alloc.destroy(_vec + (begin() - position));
-				std::cout << (*position) << std::endl;
+				// std::cout << (*position) << std::endl;
 				for(_index = begin() - position; _index < _size - 1; _index++)
 				{
 					// std::cout << "hi i am here" << std::endl;
@@ -510,7 +510,7 @@ template<class T, T v>
 			}
 			size_type capacity() const
 			{
-				std::cout << "hi" << std::endl;
+				// std::cout << "hi" << std::endl;
 				return (this->_cap);
 			}
 			size_type max_size() const

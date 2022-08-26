@@ -1,4 +1,4 @@
-SRC = main.cpp 
+SRC = vector_erase_test.cpp 
 	
 OBJ = $(SRC:.cpp=.o)
 
