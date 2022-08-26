@@ -2,7 +2,9 @@ SRC = v_erase_test.cpp main.cpp
 
 EXE = $(SRC:.cpp=)
 
-DXE = exe
+DXE1 = exe_ft
+
+DXE2 = exe_std
 
 INC = includes
 
@@ -23,17 +25,17 @@ NAME = main
 all: $(FT) $(STD)
 
 $(FT): $(SRC)
-	mkdir -p objs exe
+	mkdir -p objs exe_ft
 	for d in $(EXE); do \
         $(CC) $(CFLAGS) -I$(INC) -D CT=ft -c $$d.cpp -o $(OBJ_DIR)/$(@)$$d.o; \
-		$(CC) $(CFLAGS) $(OBJ_DIR)/$(FT)$$d.o -o $(DXE)/$(@)$$d; \
+		$(CC) $(CFLAGS) $(OBJ_DIR)/$(FT)$$d.o -o $(DXE1)/$(@)$$d; \
     done
 	
 $(STD): $(SRC)
-	mkdir -p objs exe
+	mkdir -p objs exe_std
 	for d in $(EXE); do \
 		$(CC) $(CFLAGS) -I$(INC) -D CT=std -c $$d.cpp -o $(OBJ_DIR)/$@$$d.o; \
-		$(CC) $(CFLAGS) $(OBJ_DIR)/$(STD)$$d.o -o $(DXE)/$(@)$$d; \
+		$(CC) $(CFLAGS) $(OBJ_DIR)/$(STD)$$d.o -o $(DXE2)/$(@)$$d; \
 	done
 $(NAME): $(OBJ)
 	@$(CC) $(CFLAGS) $(OBJ) -o $@
@@ -42,7 +44,7 @@ clean:
 	@$(RM) $(OBJ_DIR)
 
 fclean: clean
-	@$(RM) $(DXE)
+	@$(RM) $(DXE1) $(DXE2)
 
 re: fclean all
 

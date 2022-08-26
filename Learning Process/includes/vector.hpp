@@ -392,7 +392,7 @@ template<class T, T v>
 			iterator erase (iterator position)
 			{
 				_alloc.destroy(_vec + (begin() - position));
-				// std::cout << (*position) << std::endl;
+				std::cout << (*position) << std::endl;
 				for(_index = begin() - position; _index < _size - 1; _index++)
 				{
 					// std::cout << "hi i am here" << std::endl;
