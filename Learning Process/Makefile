@@ -1,14 +1,16 @@
-SRC = vector_erase_test.cpp 
-	
-OBJ = $(SRC:.cpp=.o)
+SRC = v_erase_test.cpp main.cpp
+
+EXE = $(SRC:.cpp=)
+
+DXE = exe
 
 INC = includes
 
 OBJ_DIR = objs
 
-FT = ft_container
+FT = ft_
 
-STD = std_container
+STD = std_
 
 CC = c++
 
@@ -21,14 +23,18 @@ NAME = main
 all: $(FT) $(STD)
 
 $(FT): $(SRC)
-	mkdir -p objs
-	$(CC) $(CFLAGS) -I$(INC) -D CT=ft -c $(SRC) -o $(OBJ_DIR)/$@.o
-	$(CC) $(CFLAGS) $(OBJ_DIR)/$(FT).o -o $@
+	mkdir -p objs exe
+	for d in $(EXE); do \
+        $(CC) $(CFLAGS) -I$(INC) -D CT=ft -c $$d.cpp -o $(OBJ_DIR)/$(@)$$d.o; \
+		$(CC) $(CFLAGS) $(OBJ_DIR)/$(FT)$$d.o -o $(DXE)/$(@)$$d; \
+    done
+	
 $(STD): $(SRC)
-	mkdir -p objs
-	$(CC) $(CFLAGS) -I$(INC) -D CT=std -c $(SRC) -o $(OBJ_DIR)/$@.o
-	$(CC) $(CFLAGS) $(OBJ_DIR)/$(STD).o -o $@
-
+	mkdir -p objs exe
+	for d in $(EXE); do \
+		$(CC) $(CFLAGS) -I$(INC) -D CT=std -c $$d.cpp -o $(OBJ_DIR)/$@$$d.o; \
+		$(CC) $(CFLAGS) $(OBJ_DIR)/$(STD)$$d.o -o $(DXE)/$(@)$$d; \
+	done
 $(NAME): $(OBJ)
 	@$(CC) $(CFLAGS) $(OBJ) -o $@
 
@@ -36,7 +42,7 @@ clean:
 	@$(RM) $(OBJ_DIR)
 
 fclean: clean
-	@$(RM) $(FT) $(STD)
+	@$(RM) $(DXE)
 
 re: fclean all
 
