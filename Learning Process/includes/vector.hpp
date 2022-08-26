@@ -399,24 +399,32 @@ template<class T, T v>
 					_alloc.construct(_vec + _index, *(_vec + _index + 1));
 				}
 				_size--;
+				_vec[_size] = 0;
 				return (position);
 			}
 			iterator erase (iterator first, iterator last)
 			{
 				size_type j = 0;
+				size_type old_size = _size;
 				iterator t_end = end();
 				_size = begin() - first;
 				// std::cout << " size : " << _size << std::endl;
-				for (iterator i = first; i != last; i++)
+				// std::cout << " end : " << *t_end << std::endl;
+				for (iterator i = first; i != t_end ; i++)
 				{
-					if (last + j != t_end)
 					// std::cout << "f " << *(last + j) << std::endl;
 					*i = *(last + j);
 					j++;
-					
 					_size++;
-						
+					if (last + j == t_end)
+						break;
 				}
+				for (size_type i = _size; i < old_size; i++)
+				{
+					_vec[i] = 0;
+				}
+				// _size = 10;
+				// std::cout << "d " << old_size << " " << _size << std::endl;
 				return (first);
 				
 			}
