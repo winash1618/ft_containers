@@ -1,6 +1,6 @@
 SRC = v_erase_test.cpp main.cpp
 
-SRC_DIR = tests\
+SRC_DIR = tests/
 
 EXE = $(SRC:.cpp=)
 
@@ -24,17 +24,17 @@ CFLAGS = -Wall -Wextra -Werror -std=c++98
 
 all: $(FT) $(STD)
 
-$(FT): $(SRC)
+$(FT): 
 	mkdir -p objs exe_ft
 	for d in $(EXE); do \
-		$(CC) $(CFLAGS) -I$(INC) -D CT=ft -c $e$$d.cpp -o $(OBJ_DIR)/$(@)$$d.o; \
+		$(CC) $(CFLAGS) -I$(INC) -D CT=ft -c $(SRC_DIR)$$d.cpp -o $(OBJ_DIR)/$(@)$$d.o; \
 		$(CC) $(CFLAGS) $(OBJ_DIR)/$(FT)$$d.o -o $(DXE1)/$(@)$$d; \
     done
 	
-$(STD): $(SRC)
+$(STD): 
 	mkdir -p objs exe_std
 	for d in $(EXE); do \
-		$(CC) $(CFLAGS) -I$(INC) -D CT=std -c $$d.cpp -o $(OBJ_DIR)/$@$$d.o; \
+		$(CC) $(CFLAGS) -I$(INC) -D CT=std -c $(SRC_DIR)$$d.cpp -o $(OBJ_DIR)/$@$$d.o; \
 		$(CC) $(CFLAGS) $(OBJ_DIR)/$(STD)$$d.o -o $(DXE2)/$(@)$$d; \
 	done
 
