@@ -23,17 +23,19 @@ done
 echo "var1 = " $var1
 echo -e "${YELLOW}diff ft std${DEFAULT}"
 var2=`expr 0`
+mkdir exe
 for ((i=0; i<$var1; i++))
 do
-	diff ./exe_ft/$i ./exe_std/$i > ./exe_ft/final$i ;\
+	diff ./exe_ft/$i ./exe_std/$i > ./exe/final$i ;\
 done
 
 for ((i=0; i<$var1; i++))
 do
-   if [ -s ./exe_ft/final$i ]; then
+   if [ -s ./exe/final$i ]; then
 		echo -e "${RED}FAILED -42${DEFAULT}"
 	else
 		echo -e "${GREEN}PASS 125${DEFAULT}"
 	fi
 done
+rm -rf exe
 make fclean
