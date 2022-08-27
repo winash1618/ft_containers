@@ -1,5 +1,7 @@
 SRC = v_erase_test.cpp main.cpp
 
+SRC_DIR = tests\
+
 EXE = $(SRC:.cpp=)
 
 DXE1 = exe_ft
@@ -18,27 +20,23 @@ CC = c++
 
 RM = rm -rf
 
-CFLAGS = -Wall -Wextra -std=c++98
-
-NAME = main
+CFLAGS = -Wall -Wextra -Werror -std=c++98
 
 all: $(FT) $(STD)
 
-$(FT): $(SRC)
+$(FT): $(SRC_DIR)$(SRC)
 	mkdir -p objs exe_ft
 	for d in $(EXE); do \
-        $(CC) $(CFLAGS) -I$(INC) -D CT=ft -c $$d.cpp -o $(OBJ_DIR)/$(@)$$d.o; \
+		$(CC) $(CFLAGS) -I$(INC) -D CT=ft -c $(SRC_DIR)$e$$d.cpp -o $(OBJ_DIR)/$(@)$$d.o; \
 		$(CC) $(CFLAGS) $(OBJ_DIR)/$(FT)$$d.o -o $(DXE1)/$(@)$$d; \
     done
 	
-$(STD): $(SRC)
+$(STD): $(SRC_DIR)$(SRC)
 	mkdir -p objs exe_std
 	for d in $(EXE); do \
-		$(CC) $(CFLAGS) -I$(INC) -D CT=std -c $$d.cpp -o $(OBJ_DIR)/$@$$d.o; \
+		$(CC) $(CFLAGS) -I$(INC) -D CT=std -c $(SRC_DIR)$$d.cpp -o $(OBJ_DIR)/$@$$d.o; \
 		$(CC) $(CFLAGS) $(OBJ_DIR)/$(STD)$$d.o -o $(DXE2)/$(@)$$d; \
 	done
-$(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) $(OBJ) -o $@
 
 clean:
 	@$(RM) $(OBJ_DIR)

@@ -2,7 +2,6 @@
 #include "iterator.hpp"
 #include "reverse_iterator.hpp"
 #include <iterator>
-#include "stack.hpp"
 #include <vector>
 #include <map>
 #include <utility>
