@@ -392,7 +392,7 @@ template<class T, T v>
 			iterator erase (iterator position)
 			{
 				_alloc.destroy(_vec + (begin() - position));
-				std::cout << (*position) << std::endl;
+				// std::cout << (*position) << std::endl;
 				for(_index = begin() - position; _index < _size - 1; _index++)
 				{
 					// std::cout << "hi i am here" << std::endl;
@@ -654,7 +654,7 @@ template<class T, T v>
 				}
 				if (n < _size)
 				{
-					std::cout << "i am inside if" << std::endl;
+					// std::cout << "i am inside if" << std::endl;
 					// temp = t_alloc.allocate(n, 0);
 					// for (_index = 0; _index < n; ++_index)
 					// {
@@ -671,7 +671,7 @@ template<class T, T v>
 				}
 				else if (n >= _size && n < _cap )
 				{
-					std::cout << "i am inside else if" << std::endl;
+					// std::cout << "i am inside else if" << std::endl;
 					if (!val)
 						val = 0;
 					for(size_type index = _size; index < n; index++)
@@ -682,7 +682,7 @@ template<class T, T v>
 				}
 				else
 				{
-					std::cout << "i am inside else" << std::endl;
+					// std::cout << "i am inside else" << std::endl;
 					if (!val)
 						val = 0;
 					if (n > max_size())
@@ -769,27 +769,40 @@ template<class T, T v>
 				else if (n > 0)
 				{
 					
-					std::cout << "hi iam good " << begin() - position << std::endl;
+					// std::cout << "hi iam good " << begin() - position << std::endl;
 					size_type i = begin() - position;
-					size_type j = begin() - end();
+					// size_type j = begin() - end();
 					// resize(_size + n);
 					for (size_type index = 0; index < n; index++)
 					{
-						std::cout << "index " << index << " n value is " << n << std::endl;
 						push_back(val);
-					}
-					print();
-					position = begin() + i;
-					iterator it;
-					it = begin() + j;
-					for (_index = 0; _index < n; _index++)
-					{
-						value_type t_val = *position;
-						*position = *it;
-						*it = t_val;
-						it++;
+						position = begin() + i;
+						for (iterator it = position; it < end(); it++)
+						{
+							// std::cout << "back " << *(end() - 1) << std::endl;
+							value_type temp1 = back();
+							*(end() - 1) = *it;
+							*it = temp1;
+						}
 						position++;
 					}
+					// for (size_type index = 0; index < n; index++)
+					// {
+					// 	// std::cout << "index " << index << " n value is " << n << std::endl;
+					// 	push_back(val);
+					// }
+					// // print();
+					// position = begin() + i;
+					// iterator it;
+					// it = begin() + j;
+					// for (_index = 0; _index < n; _index++)
+					// {
+					// 	value_type t_val = *position;
+					// 	*position = *it;
+					// 	*it = t_val;
+					// 	it++;
+					// 	position++;
+					// }
 				}
 			}
 			// template <class InputIterator>
