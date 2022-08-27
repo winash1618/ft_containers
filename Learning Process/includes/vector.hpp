@@ -713,41 +713,60 @@ template<class T, T v>
 			// // insert functions
 			iterator insert (iterator position, const value_type& val) // single element insert
 			{
-				std::cout << "i am  in insert" << std::endl;
-				std::cout << begin() - position << std::endl;
+				// std::cout << "i am  in insert" << std::endl;
+				// std::cout << begin() - position << std::endl;
+
 				push_back(val);
-				value_type temp1 = *position;
-				*position = back();
-				iterator temp2 = end();
-				temp2--;
-				*temp2= temp1;
-				return position;
+				// value_type temp1 = *position;
+				// *position = back();
+				// iterator temp2 = end();
+				// temp2--;
+				// *temp2= temp1;
+				// return position;
+
+				for (iterator it = position; it < end(); it++)
+				{
+					// std::cout << "back " << *(end() - 1) << std::endl;
+					value_type temp1 = back();
+					*(end() - 1) = *it;
+					*it = temp1;
+				}
+				return (position);
+
 			}
 			void insert (iterator position, size_type n, const value_type& val) // fill n index starting from iterator position
 			{
 				
-				if (_size + n <= _cap)
+				if (_size + n <= _cap && n > 0)
 				{
-					iterator it;
-					it = end();
-					it--;
+					// iterator it;
+					// it = end();
+					// iterator end_t = it;
 					for (size_type index = 0; index < n; index++)
 					{
 						push_back(val);
-					}
-					for (size_type index = 0; index < n; index++)
-					{
-						value_type t_val = *position;
-						*position = *it;
-						*it = t_val;
-						
+						for (iterator it = position; it < end(); it++)
+						{
+							// std::cout << "back " << *(end() - 1) << std::endl;
+							value_type temp1 = back();
+							*(end() - 1) = *it;
+							*it = temp1;
+						}
 						position++;
-						it++;
-						
 					}
+					// std::cout << "*postiion " << *position << std::endl;
+					// for (size_type index = 0; index < n; index++)
+					// {
+					// 	value_type t_val = *position;
+					// 	*position = *it;
+					// 	*it = t_val;
+					// 	position++;
+					// 	it++;
+						
+					// }
 					
 				}
-				else
+				else if (n > 0)
 				{
 					
 					std::cout << "hi iam good " << begin() - position << std::endl;
