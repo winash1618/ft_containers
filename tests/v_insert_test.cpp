@@ -14,8 +14,7 @@ int main ()
   it = myvector.begin();
   it = myvector.insert ( it , 200 );
 
-  myvector.insert (it,14,300);
-  myvector.insert (it,14,300);
+  myvector.insert (it,200,300);
 
   // "it" no longer valid, get a new one:
   it = myvector.begin();
