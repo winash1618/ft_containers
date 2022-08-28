@@ -6,7 +6,9 @@ RED='\033[1;31m'
 GREEN='\033[1;32m'
 YELLOW='\033[0;33m'
 CYAN='\033[0;36m'
-
+echo -e "${CYAN}*********************************************${DEFAULT}"
+echo -e "${CYAN}*********** Vector Tests Begin **************${DEFAULT}"
+echo -e "${CYAN}*********************************************${DEFAULT}"
 declare -i var1=0
 declare -i var2=1
 echo -e "${YELLOW}Redirecting ft_container to ft${DEFAULT}"
@@ -39,3 +41,6 @@ do
 done
 rm -rf exe
 make fclean
+echo -e "${CYAN}*********************************************${DEFAULT}"
+echo -e "${CYAN}*********** Vector Tests Ends ***************${DEFAULT}"
+echo -e "${CYAN}*********************************************${DEFAULT}"
