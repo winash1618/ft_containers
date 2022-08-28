@@ -46,19 +46,40 @@ namespace ft
 
 
 template <class T, class Container>
-  bool operator==(const stack<T, Container>& x, const stack<T, Container>& y);
+  bool operator==(const stack<T, Container>& x, const stack<T, Container>& y)
+  {
+	return (x.c == y.c);
+  }
 template <class T, class Container>
-  bool operator< (const stack<T, Container>& x, const stack<T, Container>& y);
+  bool operator< (const stack<T, Container>& x, const stack<T, Container>& y)
+  {
+	return (x.c < y.c);
+  }
 template <class T, class Container>
-  bool operator!=(const stack<T, Container>& x, const stack<T, Container>& y);
+  bool operator!=(const stack<T, Container>& x, const stack<T, Container>& y)
+  {
+	return (x.c != y.c);
+  }
 template <class T, class Container>
-  bool operator> (const stack<T, Container>& x, const stack<T, Container>& y);
+  bool operator> (const stack<T, Container>& x, const stack<T, Container>& y)
+  {
+	return (x.c > y.c);
+  }
 template <class T, class Container>
-  bool operator>=(const stack<T, Container>& x, const stack<T, Container>& y);
+  bool operator>=(const stack<T, Container>& x, const stack<T, Container>& y)
+  {
+	return (x.c >= y.c);
+  }
 template <class T, class Container>
-  bool operator<=(const stack<T, Container>& x, const stack<T, Container>& y);
+  bool operator<=(const stack<T, Container>& x, const stack<T, Container>& y)
+  {
+	return (x.c <= y.c);
+  }
 
 template <class T, class Container>
-  void swap(stack<T, Container>& x, stack<T, Container>& y);
+  void swap(stack<T, Container>& x, stack<T, Container>& y)
+  {
+	x.c.swap(y.c);
+  }
 }
 #endif
