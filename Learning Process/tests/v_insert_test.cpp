@@ -15,6 +15,7 @@ int main ()
   it = myvector.insert ( it , 200 );
 
   myvector.insert (it,14,300);
+  myvector.insert (it,14,300);
 
   // "it" no longer valid, get a new one:
   it = myvector.begin();
@@ -30,7 +31,7 @@ int main ()
     std::cout << ' ' << *it;
   std::cout << '\n';
     std::cout << "size: " << (int) myvector.size() << '\n';
-//   std::cout << "capacity: " << (int) myvector.capacity() << '\n';
+  std::cout << "capacity: " << (int) myvector.capacity() << '\n';
 
   return 0;
 }
