@@ -1,7 +1,8 @@
 SRC = v_erase_test.cpp main.cpp v_popback_test.cpp \
 		v_insert_test.cpp v_swap_test.cpp v_empty_test.cpp \
 		v_construct_test.cpp v_pushback_test.cpp v_relation_test.cpp \
-		v_nonswap_test.cpp v_bracket_test.cpp v_assignment_test.cpp
+		v_nonswap_test.cpp v_bracket_test.cpp v_assignment_test.cpp \
+		v_rbegin_test.cpp v_rend_test.cpp
 
 SRC_DIR = tests/
 

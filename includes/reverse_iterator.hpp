@@ -66,7 +66,8 @@ namespace ft
 		reference operator*() const
 		{
 			Iterator tmp = current;
-			return *(--tmp);
+			tmp--;
+			return *(tmp);
 		}
 		pointer   operator->() const
 		{
