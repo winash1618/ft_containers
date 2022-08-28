@@ -9,7 +9,7 @@
 
 int main ()
 {
-  std::vector<int> myvector;
+  CT::vector<int> myvector;
   int * p;
   unsigned int i;
 

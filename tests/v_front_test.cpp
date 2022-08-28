@@ -9,7 +9,7 @@
 
 int main ()
 {
-  std::vector<int> myvector;
+  CT::vector<int> myvector;
 
   myvector.push_back(78);
   myvector.push_back(16);

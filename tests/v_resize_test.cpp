@@ -9,7 +9,7 @@
 
 int main ()
 {
-  std::vector<int> myvector;
+  CT::vector<int> myvector;
 
   // set some initial content:
   for (int i=1;i<10;i++) myvector.push_back(i);
