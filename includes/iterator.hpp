@@ -218,6 +218,8 @@ namespace ft
 			{
 				return _iterator;
 			}
+			bool operator==(const __wrap_iter& rhs) const {return _iterator==rhs._iterator;}
+			bool operator!=(const __wrap_iter& rhs) const {return _iterator!=rhs._iterator;}
 	};
 	
 
