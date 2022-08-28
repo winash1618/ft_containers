@@ -565,7 +565,13 @@ template<class T, T v>
 			}
 			reference       at(size_type n)
 			{
-				return (n < size() ? _vec[n] : throw std::out_of_range("Index out of range"));
+				if (n < size() && n >= 0)
+				{
+					return (_vec[n]);
+				}
+				else
+					throw std::out_of_range("Index out of range");
+				// return (n < size() ? _vec[n] : throw std::out_of_range("Index out of range"));
 			}
 			const_reference at(size_type n) const
 			{
