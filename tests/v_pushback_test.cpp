@@ -19,6 +19,7 @@ int main ()
   } while (myint);
 
   std::cout << "myvector stores " << int(myvector.size()) << " numbers.\n";
-
+std::cout << "size: " << (int) myvector.size() << '\n';
+  std::cout << "capacity: " << (int) myvector.capacity() << '\n';
   return 0;
 }

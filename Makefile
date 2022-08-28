@@ -1,5 +1,5 @@
 SRC = v_erase_test.cpp main.cpp v_popback_test.cpp \
-		v_insert_test.cpp
+		v_insert_test.cpp v_swap_test.cpp v_empty_test.cpp
 # v_pushback_test.cpp
 
 SRC_DIR = tests/

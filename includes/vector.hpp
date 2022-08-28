@@ -736,89 +736,50 @@ template<class T, T v>
 			}
 			void insert (iterator position, size_type n, const value_type& val) // fill n index starting from iterator position
 			{
-				
-				if (_size + n <= _cap && n > 0)
+				for (size_type index = 0; index < n; index++)
 				{
-					// iterator it;
-					// it = end();
-					// iterator end_t = it;
-					for (size_type index = 0; index < n; index++)
+					if (_size + index <= _cap)
 					{
 						push_back(val);
 						for (iterator it = position; it < end(); it++)
 						{
-							// std::cout << "back " << *(end() - 1) << std::endl;
 							value_type temp1 = back();
 							*(end() - 1) = *it;
 							*it = temp1;
 						}
 						position++;
-					}
-					// std::cout << "*postiion " << *position << std::endl;
-					// for (size_type index = 0; index < n; index++)
-					// {
-					// 	value_type t_val = *position;
-					// 	*position = *it;
-					// 	*it = t_val;
-					// 	position++;
-					// 	it++;
 						
-					// }
-					
-				}
-				else if (n > 0)
-				{
-					
-					// std::cout << "hi iam good " << begin() - position << std::endl;
-					size_type i = begin() - position;
-					// size_type j = begin() - end();
-					// resize(_size + n);
-					// print();
-					for (size_type index = 0; index < n; index++)
+					}
+					else
 					{
-						// print();
-						// push_back(val);+
-						temp = t_alloc.allocate(_size + 1, 0);
-						for (size_type index = 0; index < _size; ++index)
-						{
-							t_alloc.construct(temp + index, _vec[index]);
-						}
-						t_alloc.construct(temp + _size, val);
-						_alloc.deallocate(_vec, _cap);
-						for (size_type index = 0; index < _size; ++index)
-							_alloc.destroy(_vec + index);
-						_alloc = t_alloc;
-						_vec = temp;
-						_cap = _size + 1;
-						_size++;
-						position = begin() + i;
-						for (iterator it = position; it < end(); it++)
-						{
-							// std::cout << "back " << *(end() - 1) << std::endl;
-							value_type temp1 = back();
-							*(end() - 1) = *it;
-							*it = temp1;
-						}
-						position++;
-						
+						size_type i = begin() - position;
+						// for (size_type index1 = 0; index1 < n; index1++)
+						// {
+							// print();
+							temp = t_alloc.allocate(_size + 1, 0);
+							for (size_type index1 = 0; index1 < _size; ++index1)
+							{
+								t_alloc.construct(temp + index1, _vec[index1]);
+							}
+							t_alloc.construct(temp + _size, val);
+							_alloc.deallocate(_vec, _cap);
+							for (size_type index = 0; index < _size; ++index)
+								_alloc.destroy(_vec + index);
+							_alloc = t_alloc;
+							_vec = temp;
+							_cap = _size + 1;
+							_size++;
+							position = begin() + i;
+							for (iterator it = position; it < end(); it++)
+							{
+								value_type temp1 = back();
+								*(end() - 1) = *it;
+								*it = temp1;
+							}
+							position++;
+							
+						// }
 					}
-					// for (size_type index = 0; index < n; index++)
-					// {
-					// 	// std::cout << "index " << index << " n value is " << n << std::endl;
-					// 	push_back(val);
-					// }
-					// // print();
-					// position = begin() + i;
-					// iterator it;
-					// it = begin() + j;
-					// for (_index = 0; _index < n; _index++)
-					// {
-					// 	value_type t_val = *position;
-					// 	*position = *it;
-					// 	*it = t_val;
-					// 	it++;
-					// 	position++;
-					// }
 				}
 			}
 			// template <class InputIterator>
@@ -857,7 +818,7 @@ template<class T, T v>
 			}
 			void swap (vector& x)
 			{
-				std::cout << "swap" << std::endl;
+				// std::cout << "swap" << std::endl;
 				temp = x._vec;
 				t_alloc = x._alloc;
 				size_type t_size = x._size;
@@ -865,11 +826,11 @@ template<class T, T v>
 				x._vec = _vec;
 				x._alloc = _alloc;
 				x._size = _size;
-				x._cap = _cap;
+				x._cap = _cap / 2;
 				_vec = temp;
 				_alloc = t_alloc;
 				_size = t_size;
-				_cap = t_cap;
+				_cap = t_cap / 2;
 			}
 			void print(void)
 			{

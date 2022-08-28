@@ -27,6 +27,7 @@ int main ()
   for (unsigned i=0; i<myvector.size(); ++i)
     std::cout << ' ' << myvector[i];
   std::cout << '\n';
-
+	std::cout << "size: " << (int) myvector.size() << '\n';
+  std::cout << "capacity: " << (int) myvector.capacity() << '\n';
   return 0;
 }
