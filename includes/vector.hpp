@@ -1027,7 +1027,13 @@ template<class T, T v>
 		template <class T, class Alloc>
 		bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 		{
-			return (std::lexicographical_compare(lhs.begin(),lhs.end(),rhs.begin(),rhs.end()));
+			//src https://en.cppreference.com/w/cpp/algorithm/lexicographical_compare
+			for ( ; (lhs.begin() != lhs.end()) && (rhs.begin() != rhs.end()); ++(lhs.begin()), (void) ++(rhs.begin()) ) 
+			{
+				if (*(lhs.begin()) < *(rhs.begin())) return true;
+				if (*(rhs.begin()) < *(lhs.begin())) return false;
+			}
+			return (lhs.begin() == lhs.end()) && (rhs.begin() != rhs.end());
 		}
 		template <class T, class Alloc>
 		bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
