@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/29 17:20:49 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/29 17:43:52 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,104 +40,6 @@ namespace ft
 	// void operator&() const;    /* Can't take address of nullptr */
 
 	// } nullptr = {};   
-	// template <bool>
-	// class __vector_base_common
-	// {
-	// protected:
-	// 	__vector_base_common() {}
-	// 	void __throw_length_error() const;
-	// 	void __throw_out_of_range() const;
-	// };
-	
-	// template <class _Tp, class _Allocator>
-	// class __vector_base
-	// 	: protected __vector_base_common<true>
-	// {
-	// 	public:
-	// 		typedef _Allocator                               allocator_type;
-	// 		typedef allocator_traits<allocator_type>         __alloc_traits;
-	// 		typedef typename __alloc_traits::size_type       size_type;
-	// 	protected:
-	// 		typedef _Tp                                      value_type;
-	// 		typedef value_type&                              reference;
-	// 		typedef const value_type&                        const_reference;
-	// 		typedef typename __alloc_traits::difference_type difference_type;
-	// 		typedef typename __alloc_traits::pointer         pointer;
-	// 		typedef typename __alloc_traits::const_pointer   const_pointer;
-	// 		typedef pointer                                  iterator;
-	// 		typedef const_pointer                            const_iterator;
-
-	// 		pointer                                         __begin_;
-	// 		pointer                                         __end_;
-	// 		// __compressed_pair<pointer, allocator_type> __end_cap_;
-
-	// 		// allocator_type& __alloc()
-	// 		// 	{return __end_cap_.second();}
-	// 		// const allocator_type& __alloc() const
-	// 		// 	{return __end_cap_.second();}
-	// 		// pointer& __end_cap()
-	// 		// 	{return __end_cap_.first();}
-	// 		// const pointer& __end_cap() const
-	// 		// 	{return __end_cap_.first();}
-
-	// 		__vector_base();
-	// 		__vector_base(const allocator_type& __a);
-	// 		~__vector_base();
-
-	// 		void clear()
-	// 		{
-	// 			__destruct_at_end(__begin_);
-	// 		}
-	// 		size_type capacity() const
-	// 		{
-	// 			return static_cast<size_type>(__end_cap() - __begin_);
-	// 		}
-
-	// 		void __destruct_at_end(pointer __new_last)
-	// 		{
-	// 			pointer __soon_to_be_end = __end_;
-	// 			while (__new_last != __soon_to_be_end)
-	// 				__alloc_traits::destroy(__alloc(), _VSTD::__to_address(--__soon_to_be_end));
-	// 			__end_ = __new_last;
-	// 		}
-
-	// 		void __copy_assign_alloc(const __vector_base& __c)
-	// 		{
-	// 			__copy_assign_alloc(__c, integral_constant<bool,
-	// 			__alloc_traits::propagate_on_container_copy_assignment::value>());
-	// 		}
-
-	// 		void __move_assign_alloc(__vector_base& __c)
-	// 		_(
-	// 				!__alloc_traits::propagate_on_container_move_assignment::value ||
-	// 				is_nothrow_move_assignable<allocator_type>::value)
-	// 			{__move_assign_alloc(__c, integral_constant<bool,
-	// 						__alloc_traits::propagate_on_container_move_assignment::value>());}
-	// 	private:
-	// 		void __copy_assign_alloc(const __vector_base& __c, true_type)
-	// 		{
-	// 			if (__alloc() != __c.__alloc())
-	// 			{
-	// 				clear();
-	// 				__alloc_traits::deallocate(__alloc(), __begin_, capacity());
-	// 				__begin_ = __end_ = __end_cap() = nullptr;
-	// 			}
-	// 			__alloc() = __c.__alloc();
-	// 		}
-
-	// 		void __copy_assign_alloc(const __vector_base&, false_type)
-	// 		{}
-
-	// 		void __move_assign_alloc(__vector_base& __c, true_type)
-	// 		_(is_nothrow_move_assignable<allocator_type>::value)
-	// 			{
-	// 				__alloc() = _VSTD::move(__c.__alloc());
-	// 			}
-
-	// 		void __move_assign_alloc(__vector_base&, false_type)
-			
-	// 			{}
-	// };
 
 /*---------------std::is_integral----------------------------------------*/
 
@@ -279,19 +181,11 @@ template<class T, T v>
 			explicit vector (size_type len, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
 			 : _alloc(alloc) // fill constructor
 			{
-				// std::cout << "hi" << std::endl;
-				// say();
-				
 				if (len > 0)
 				{
 					allocate(len);
 					construct_at_end(len, val);
 				}
-				// for (std::size_t index = 0; index < _size; ++index)
-				// {
-				// 	std::cout << this->_vec[index] << std::endl;
-				// }
-				// std::cout << typeid(allocator_type).name();
 			}
 			
 			template <class InputIterator>
@@ -306,37 +200,19 @@ template<class T, T v>
 				for (size_type index = 0; index < size; ++index)
 				{
 					_alloc.construct(_vec + index, *(first + index));
-					// std::cout << this->_vec[index] << std::endl;
 					++_size;
 				}
-				// std::cout << _size << std::endl;
-				// std::size_t index = 0;
-				// for (; first != last; ++first)
-				// {
-				// 	_alloc.construct(_vec + index, *(first));
-				// 	std::cout << this->_vec[index] << std::endl;
-				// 	index++;
-				// }
 			}
 			
 			vector (const vector& x) : _size(0)  // Copy constructor
 			{
-				// std::cout << "I am in copy constructor" << std::endl;
-				// *this = x;
 				_alloc = x.get_allocator();
 				copy(x);
-				// std::cout << "I am back in copy again" << std::endl;
-				// for (std::size_t index = 0; index < _size; ++index)
-				// {
-				// 	std::cout << this->_vec[index] << std::endl;
-				// }
-				// std::cout << "End of copy constructor" << std::endl;
 			}
 			
 			// Destructor
 			~vector ()
 			{
-				// std::cout << "Destructor called" << std::endl;
 				deallocate_and_destruct(_cap, _size);
 			}
 
@@ -351,17 +227,11 @@ template<class T, T v>
 				
 				if (x._vec)
 				{
-					
-					// if ()
-					// {
-					// 	this->_alloc = x.get_allocator();
-					// }
 					this->_alloc = x.get_allocator();
 					if (x.size() > this->capacity())
 					{
 						reallocate(this->capacity(), x.size());
 					}
-					// std::cout << x.size() << " " << _size << std::endl;
 					uninitialized_alloc_copy(x);
 				}
 				else
@@ -369,10 +239,6 @@ template<class T, T v>
 					_vec = nullptr_f;
 					_size = 0;
 				}
-				// for (std::size_t index = 0; index < _size; ++index)
-				// {
-				// 	std::cout << this->_vec[index] << std::endl;
-				// }
 				return *this;
 			}
 			
@@ -386,10 +252,8 @@ template<class T, T v>
 			iterator erase (iterator position)
 			{
 				_alloc.destroy(_vec + (begin() - position));
-				// std::cout << (*position) << std::endl;
 				for(_index = begin() - position; _index < _size - 1; _index++)
 				{
-					// std::cout << "hi i am here" << std::endl;
 					_alloc.construct(_vec + _index, *(_vec + _index + 1));
 				}
 				_size--;
@@ -580,61 +444,15 @@ template<class T, T v>
 			template <class InputIterator>
 			void assign (InputIterator first, InputIterator last , typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)
 			{
-				// deallocate_and_destruct(_cap, _size);
 				if (first > last)
 					throw std::length_error("vector");
 				size_type size = ft::distance(first, last);
-				// std::cout << ft::distance(last, first) << std::endl;
 				allocate(size);
 				for (size_type index = 0; index < size; ++index)
 				{
 					_alloc.construct(_vec + index, *(first + index));
-					//std::cout << _vec[index] << std::endl;
 					++_size;
 				}
-				// std::size_t index = 0;
-				// for (; first != last; ++first)
-				// {
-				// 	_alloc.construct(_vec + index, *(first));
-				// 	index++;
-				// }
-				
-				// if (new_size <= capacity())
-				// {
-				// 	InputIterator mid = last;
-				// 	bool growing = false;
-				// 	if (new_size > size())
-				// 	{
-				// 		growing = true;
-				// 		mid =  first;
-				// 		ft::advance(mid, size());
-				// 	}
-				// 	pointer m = std::copy(first, mid, this->begin());
-				// 	if (growing)
-				// 	{
-				// 		_size = new_size;
-				// 		for (std::size_t index = 0; index < size; ++index)
-				// 		{
-				// 			_alloc.construct(_vec + index, *mid);
-				// 			mid++;
-				// 		}
-				// 	}
-				// 	else
-				// 	{
-				// 		for (std::size_t index = 0; index < size; ++index)
-				// 		{
-				// 			_alloc.destroy(_vec + index);
-							
-				// 		}
-				// 		_size = 0;
-				// 	}
-				// }
-				// else
-				// {
-				// 	deallocate();
-				// 	allocate(recommend(new_size));
-				// 	construct_at_end(first, last, new_size);
-				// }
 			}
 			void assign (size_type n, const value_type& val)
 			{
@@ -657,19 +475,6 @@ template<class T, T v>
 				}
 				if (n < _size)
 				{
-					// std::cout << "i am inside if" << std::endl;
-					// temp = t_alloc.allocate(n, 0);
-					// for (_index = 0; _index < n; ++_index)
-					// {
-					// 	t_alloc.construct(temp + _index, *(_vec + _index));
-					// }
-					// for (_index = 0; _index < _size; ++_index)
-					// {
-					// 	_alloc.destroy(_vec + _index);
-					// }
-					// _alloc.deallocate(_vec,_cap);
-					// _alloc = t_alloc;
-					// _vec = temp;
 					_size = n;
 				}
 				else if (n >= _size && n < _cap )
@@ -685,7 +490,6 @@ template<class T, T v>
 				}
 				else
 				{
-					// std::cout << "i am inside else" << std::endl;
 					if (!val)
 						val = 0;
 					if (n > max_size())
@@ -707,7 +511,6 @@ template<class T, T v>
 					_alloc = t_alloc;
 					_vec = temp;
 					_cap = recommend(n);
-					// _cap = 1.9 * n;
 					_size = n;
 
 				}
@@ -716,72 +519,43 @@ template<class T, T v>
 			// // insert functions
 			iterator insert (iterator position, const value_type& val) // single element insert
 			{
-				// std::cout << "i am  in insert" << std::endl;
-				// std::cout << begin() - position << std::endl;
 				if (_size + 1 <= _cap)
+				{
+					_alloc.construct(_vec + _size, val);
+					_cap = _size + 1;
+					_size++;
+					for (iterator it = position; it < end(); it++)
 					{
-						_alloc.construct(_vec + _size, val);
-						// std::cout << "i am  in insert , cap: " << _cap << std::endl;
-						_cap = _size + 1;
-						_size++;
-						for (iterator it = position; it < end(); it++)
-						{
-							value_type temp1 = back();
-							*(end() - 1) = *it;
-							*it = temp1;
-						}
-						// position++;
-						// std::cout << "bi" << std::endl;
+						value_type temp1 = back();
+						*(end() - 1) = *it;
+						*it = temp1;
 					}
-					else
+				}
+				else
+				{
+					size_type i = begin() - position;
+					temp = t_alloc.allocate(_size * 2, 0);
+					for (size_type index1 = 0; index1 < _size; ++index1)
 					{
-						size_type i = begin() - position;
-						// for (size_type index1 = 0; index1 < n; index1++)
-						// {
-							// print();
-							temp = t_alloc.allocate(_size * 2, 0);
-							for (size_type index1 = 0; index1 < _size; ++index1)
-							{
-								t_alloc.construct(temp + index1, _vec[index1]);
-							}
-							t_alloc.construct(temp + _size, val);
-							// std::cout << "i am  in insert , cap: " << _cap << std::endl;
-							_alloc.deallocate(_vec, _cap);
-							for (size_type index1 = 0; index1 < _size; ++index1)
-								_alloc.destroy(_vec + index1);
-							_alloc = t_alloc;
-							_vec = temp;
-							_cap = _size * 2;
-							// std::cout << "hi" << std::endl;
-							_size++;
-							position = begin() + i;
-							for (iterator it = position; it < end(); it++)
-							{
-								value_type temp1 = back();
-								*(end() - 1) = *it;
-								*it = temp1;
-							}
-							// position++;
-							
-						// }
+						t_alloc.construct(temp + index1, _vec[index1]);
 					}
-		
-				// value_type temp1 = *position;
-				// *position = back();
-				// iterator temp2 = end();
-				// temp2--;
-				// *temp2= temp1;
-				// return position;
-
-				// for (iterator it = position; it < end(); it++)
-				// {
-				// 	// std::cout << "back " << *(end() - 1) << std::endl;
-				// 	value_type temp1 = back();
-				// 	*(end() - 1) = *it;
-				// 	*it = temp1;
-				// }
+					t_alloc.construct(temp + _size, val);
+					_alloc.deallocate(_vec, _cap);
+					for (size_type index1 = 0; index1 < _size; ++index1)
+						_alloc.destroy(_vec + index1);
+					_alloc = t_alloc;
+					_vec = temp;
+					_cap = _size * 2;
+					_size++;
+					position = begin() + i;
+					for (iterator it = position; it < end(); it++)
+					{
+						value_type temp1 = back();
+						*(end() - 1) = *it;
+						*it = temp1;
+					}
+				}
 				return (position);
-
 			}
 			void insert (iterator position, size_type n, const value_type& val) // fill n index starting from iterator position
 			{
@@ -823,59 +597,6 @@ template<class T, T v>
 				_vec = temp;
 				_size = t_size;
 				_cap = t_cap;
-
-
-
-				
-				// std::cout << "i am  in insert" << std::endl;
-				// for (size_type index = 0; index < n; index++)
-				// {
-				// 	if (_size + 1 <= _cap)
-				// 	{
-				// 		_alloc.construct(_vec + _size, val);
-				// 		// std::cout << "i am  in insert , cap: " << _cap << std::endl;
-				// 		_size++;
-				// 		for (iterator it = position; it < end(); it++)
-				// 		{
-				// 			value_type temp1 = back();
-				// 			*(end() - 1) = *it;
-				// 			*it = temp1;
-				// 		}
-				// 		position++;
-						
-				// 	}
-				// 	else
-				// 	{
-				// 		size_type i = begin() - position;
-				// 		// for (size_type index1 = 0; index1 < n; index1++)
-				// 		// {
-				// 			// print();
-				// 			temp = t_alloc.allocate(_size + 1, 0);
-				// 			for (size_type index1 = 0; index1 < _size; ++index1)
-				// 			{
-				// 				t_alloc.construct(temp + index1, _vec[index1]);
-				// 			}
-				// 			t_alloc.construct(temp + _size, val);
-				// 			// std::cout << "i am  in insert , cap: " << _cap << std::endl;
-				// 			_alloc.deallocate(_vec, _cap);
-				// 			for (size_type index1 = 0; index1 < _size; ++index1)
-				// 				_alloc.destroy(_vec + index1);
-				// 			_alloc = t_alloc;
-				// 			_vec = temp;
-				// 			_cap = _size + 1;
-				// 			_size++;
-				// 			position = begin() + i;
-				// 			for (iterator it = position; it < end(); it++)
-				// 			{
-				// 				value_type temp1 = back();
-				// 				*(end() - 1) = *it;
-				// 				*it = temp1;
-				// 			}
-				// 			position++;
-							
-				// 		// }
-				// 	}
-				// }
 			}
 			template <class InputIterator>
 			void insert (iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)
@@ -926,8 +647,6 @@ template<class T, T v>
 				if (_size  == 0)
 					throw std::out_of_range("can");
 				_alloc.destroy(&_vec[_size-- - 1]);
-				// _alloc.destroy(_vec + size() - 1);
-				// _size -= 1;
 			}
 			reference       front()
 			{
@@ -951,7 +670,6 @@ template<class T, T v>
 			}
 			void swap (vector& x)
 			{
-				// std::cout << "swap" << std::endl;
 				temp = x._vec;
 				t_alloc = x._alloc;
 				size_type t_size = x._size;
