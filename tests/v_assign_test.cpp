@@ -25,5 +25,10 @@ int main ()
   std::cout << "Size of first: " << int (first.size()) << '\n';
   std::cout << "Size of second: " << int (second.size()) << '\n';
   std::cout << "Size of third: " << int (third.size()) << '\n';
+
+  std::cout << "Capacity of first: " << int (first.capacity()) << '\n';
+  std::cout << "Capacity of second: " << int (second.capacity()) << '\n';
+  std::cout << "Capacity of third: " << int (third.capacity()) << '\n';
+
   return 0;
 }

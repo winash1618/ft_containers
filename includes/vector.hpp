@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/25 20:37:09 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/29 14:02:53 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,15 +299,7 @@ template<class T, T v>
 					const allocator_type& alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0) : 
 					_alloc(alloc), _cap(0), _size(0)// range constructor
 			{
-				// say();
-				// std::cout << "hello i am here" << std::endl;
-				// std::size_t size = 5;
-				size_type size = ft::distance(first, last); // this will cause error because i am not using enable_if so it is passing int also
-				// std::cout << size << std::endl;
-				// std::cout << std::is_same<int, InputIterator>::value << std::endl;
-				// std::cout << std::is_same<iterator, InputIterator>::value << std::endl;
-				// std::cout << typeid(iterator).name() << std::endl;
-				// std::cout << typeid(InputIterator).name() << std::endl;
+				size_type size = ft::distance(first, last);
 				allocate(size);
 				for (size_type index = 0; index < size; ++index)
 				{
@@ -915,11 +907,6 @@ template<class T, T v>
 				_cap = capacity;
 				_vec = _alloc.allocate(capacity, 0);
 			}
-			// void allocate(size_type capacity)
-			// {
-			// 	_cap = capacity;
-			// 	_vec = _alloc.allocate(capacity, 0);
-			// }
 
 			void deallocate(std::size_t capacity)
 			{
@@ -965,13 +952,10 @@ template<class T, T v>
 			void uninitialized_alloc_copy(const vector& other)
 			{
 				_size = other.size();
-				// std::cout << _size << "i am in unin"  << std::endl;
 				for (size_type index=0; index < _size; ++index)
 				{
-					// std::cout << *(other._vec + index)  << std::endl;
 					this->_alloc.construct(this->_vec + index, *(other._vec + index));
 				}
-				// std::cout << "i am going out" << std::endl;
 			}
 			void copy(const vector& other)
 			{
@@ -1050,29 +1034,6 @@ template<class T, T v>
 		{
 			return !(lhs < rhs);
 		}
-			
-		// template <class T, class Alloc = std::allocator<T> >
-		// void swap (ft::vector<T,Alloc>& x, ft::vector<T,Alloc>& y)
-		// {
-		// 	typedef Alloc allocator_type;
-			
-		// 	allocator_type t_alloc;
-		// 	T* t_vec;
-		// 	typename allocator_type::size_type t_size;
-		// 	typename allocator_type::size_type t_cap;
-		// 	t_alloc = x._alloc;
-		// 	t_vec = x._vec;
-		// 	t_size = x._size;
-		// 	t_cap = x._cap;
-		// 	x._alloc = y._alloc;
-		// 	x._vec = y._vec;
-		// 	x._cap = y._cap;
-		// 	x._size = y._size;
-		// 	y._alloc = t_alloc;
-		// 	y._vec = t_vec;
-		// 	y._size = t_size;
-		// 	y._cap = t_cap;
-		// }
 		// #include "vector.cpp" // include separate implementation file inside namespace
 }
 #endif
