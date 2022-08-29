@@ -13,17 +13,25 @@ int main ()
 
   it = myvector.begin();
   it = myvector.insert ( it , 200 );
+    std::cout << "size: " << (int) myvector.size() << '\n';
+  std::cout << "capacity: " << (int) myvector.capacity() << '\n';
 
   myvector.insert (it,13,300);
 
+    std::cout << "size: " << (int) myvector.size() << '\n';
+  std::cout << "capacity: " << (int) myvector.capacity() << '\n';
   // "it" no longer valid, get a new one:
   it = myvector.begin();
 
-//   std::vector<int> anothervector (2,400);
-//   myvector.insert (it+2,anothervector.begin(),anothervector.end());
+  std::vector<int> anothervector (2,400);
+  myvector.insert (it+2,anothervector.begin(),anothervector.end());
+    std::cout << "size: " << (int) myvector.size() << '\n';
+  std::cout << "capacity: " << (int) myvector.capacity() << '\n';
 
-//   int myarray [] = { 501,502,503 };
-//   myvector.insert (myvector.begin(), myarray, myarray+3);
+  int myarray [] = { 501,502,503 };
+  myvector.insert (myvector.begin(), myarray, myarray+3);
+    std::cout << "size: " << (int) myvector.size() << '\n';
+  std::cout << "capacity: " << (int) myvector.capacity() << '\n';
 
   std::cout << "myvector contains:";
   for (it=myvector.begin(); it<myvector.end(); it++)
