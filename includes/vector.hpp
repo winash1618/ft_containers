@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/29 16:30:06 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/29 17:20:49 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,6 +299,8 @@ template<class T, T v>
 					const allocator_type& alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0) : 
 					_alloc(alloc), _cap(0), _size(0)// range constructor
 			{
+				if (first > last)
+					throw std::length_error("vector");
 				size_type size = ft::distance(first, last);
 				allocate(size);
 				for (size_type index = 0; index < size; ++index)
@@ -579,7 +581,10 @@ template<class T, T v>
 			void assign (InputIterator first, InputIterator last , typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)
 			{
 				// deallocate_and_destruct(_cap, _size);
+				if (first > last)
+					throw std::length_error("vector");
 				size_type size = ft::distance(first, last);
+				// std::cout << ft::distance(last, first) << std::endl;
 				allocate(size);
 				for (size_type index = 0; index < size; ++index)
 				{
@@ -810,6 +815,9 @@ template<class T, T v>
 					t_alloc.construct(temp + t_size + index, *it);
 					index++;
 				}
+				_alloc.deallocate(_vec, _cap);
+				for (size_type index1 = 0; index1 < _size; ++index1)
+					_alloc.destroy(_vec + index1);
 				t_size = t_size + index;
 				_alloc = t_alloc;
 				_vec = temp;
@@ -872,6 +880,8 @@ template<class T, T v>
 			template <class InputIterator>
 			void insert (iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)
 			{
+				if (first > last)
+					throw std::length_error("vector");
 				size_type t_cap;
 				if (_size + (size_type)(last - first) > _cap)
 				{
