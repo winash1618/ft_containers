@@ -11,7 +11,7 @@ int main ()
   // constructors used in the same order as described above:
   CT::vector<int> first;                                // empty vector of ints
   CT::vector<int> second (4,100);                       // four ints with value 100
-//   std::vector<int> third (second.begin(),second.end());  // iterating through second
+  CT::vector<int> third (second.begin(),second.end());  // iterating through second
   CT::vector<int> fourth (second);                       // a copy of third
 
   // the iterator constructor can also be used to construct from arrays:

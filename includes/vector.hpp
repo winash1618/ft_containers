@@ -294,36 +294,36 @@ template<class T, T v>
 				// std::cout << typeid(allocator_type).name();
 			}
 			
-			// template <class InputIterator, typename = typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type>
-			// vector (InputIterator first, InputIterator last,
-			// 		const allocator_type& alloc = allocator_type()) : 
-			// 		_alloc(alloc), _cap(0), _size(0)// range constructor
-			// {
-			// 	// say();
-			// 	// std::cout << "hello i am here" << std::endl;
-			// 	// std::size_t size = 5;
-			// 	size_type size = ft::distance(first, last); // this will cause error because i am not using enable_if so it is passing int also
-			// 	// std::cout << size << std::endl;
-			// 	// std::cout << std::is_same<int, InputIterator>::value << std::endl;
-			// 	// std::cout << std::is_same<iterator, InputIterator>::value << std::endl;
-			// 	// std::cout << typeid(iterator).name() << std::endl;
-			// 	// std::cout << typeid(InputIterator).name() << std::endl;
-			// 	allocate(size);
-			// 	for (size_type index = 0; index < size; ++index)
-			// 	{
-			// 		_alloc.construct(_vec + index, *(first + index));
-			// 		// std::cout << this->_vec[index] << std::endl;
-			// 		++_size;
-			// 	}
-			// 	// std::cout << _size << std::endl;
-			// 	// std::size_t index = 0;
-			// 	// for (; first != last; ++first)
-			// 	// {
-			// 	// 	_alloc.construct(_vec + index, *(first));
-			// 	// 	std::cout << this->_vec[index] << std::endl;
-			// 	// 	index++;
-			// 	// }
-			// }
+			template <class InputIterator>
+			vector (InputIterator first, InputIterator last,
+					const allocator_type& alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0) : 
+					_alloc(alloc), _cap(0), _size(0)// range constructor
+			{
+				// say();
+				// std::cout << "hello i am here" << std::endl;
+				// std::size_t size = 5;
+				size_type size = ft::distance(first, last); // this will cause error because i am not using enable_if so it is passing int also
+				// std::cout << size << std::endl;
+				// std::cout << std::is_same<int, InputIterator>::value << std::endl;
+				// std::cout << std::is_same<iterator, InputIterator>::value << std::endl;
+				// std::cout << typeid(iterator).name() << std::endl;
+				// std::cout << typeid(InputIterator).name() << std::endl;
+				allocate(size);
+				for (size_type index = 0; index < size; ++index)
+				{
+					_alloc.construct(_vec + index, *(first + index));
+					// std::cout << this->_vec[index] << std::endl;
+					++_size;
+				}
+				// std::cout << _size << std::endl;
+				// std::size_t index = 0;
+				// for (; first != last; ++first)
+				// {
+				// 	_alloc.construct(_vec + index, *(first));
+				// 	std::cout << this->_vec[index] << std::endl;
+				// 	index++;
+				// }
+			}
 			
 			vector (const vector& x) : _size(0)  // Copy constructor
 			{
@@ -583,62 +583,62 @@ template<class T, T v>
 			}
 
 			// assign functions:
-			// template <class InputIterator, typename = typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type>
-			// void assign (InputIterator first, InputIterator last)
-			// {
-			// 	// deallocate_and_destruct(_cap, _size);
-			// 	size_type size = ft::distance(first, last);
-			// 	allocate(size * 2);
-			// 	for (size_type index = 0; index < size; ++index)
-			// 	{
-			// 		_alloc.construct(_vec + index, *(first + index));
-			// 		//std::cout << _vec[index] << std::endl;
-			// 		++_size;
-			// 	}
-			// 	// std::size_t index = 0;
-			// 	// for (; first != last; ++first)
-			// 	// {
-			// 	// 	_alloc.construct(_vec + index, *(first));
-			// 	// 	index++;
-			// 	// }
+			template <class InputIterator>
+			void assign (InputIterator first, InputIterator last , typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)
+			{
+				// deallocate_and_destruct(_cap, _size);
+				size_type size = ft::distance(first, last);
+				allocate(size * 2);
+				for (size_type index = 0; index < size; ++index)
+				{
+					_alloc.construct(_vec + index, *(first + index));
+					//std::cout << _vec[index] << std::endl;
+					++_size;
+				}
+				// std::size_t index = 0;
+				// for (; first != last; ++first)
+				// {
+				// 	_alloc.construct(_vec + index, *(first));
+				// 	index++;
+				// }
 				
-			// 	// if (new_size <= capacity())
-			// 	// {
-			// 	// 	InputIterator mid = last;
-			// 	// 	bool growing = false;
-			// 	// 	if (new_size > size())
-			// 	// 	{
-			// 	// 		growing = true;
-			// 	// 		mid =  first;
-			// 	// 		ft::advance(mid, size());
-			// 	// 	}
-			// 	// 	pointer m = std::copy(first, mid, this->begin());
-			// 	// 	if (growing)
-			// 	// 	{
-			// 	// 		_size = new_size;
-			// 	// 		for (std::size_t index = 0; index < size; ++index)
-			// 	// 		{
-			// 	// 			_alloc.construct(_vec + index, *mid);
-			// 	// 			mid++;
-			// 	// 		}
-			// 	// 	}
-			// 	// 	else
-			// 	// 	{
-			// 	// 		for (std::size_t index = 0; index < size; ++index)
-			// 	// 		{
-			// 	// 			_alloc.destroy(_vec + index);
+				// if (new_size <= capacity())
+				// {
+				// 	InputIterator mid = last;
+				// 	bool growing = false;
+				// 	if (new_size > size())
+				// 	{
+				// 		growing = true;
+				// 		mid =  first;
+				// 		ft::advance(mid, size());
+				// 	}
+				// 	pointer m = std::copy(first, mid, this->begin());
+				// 	if (growing)
+				// 	{
+				// 		_size = new_size;
+				// 		for (std::size_t index = 0; index < size; ++index)
+				// 		{
+				// 			_alloc.construct(_vec + index, *mid);
+				// 			mid++;
+				// 		}
+				// 	}
+				// 	else
+				// 	{
+				// 		for (std::size_t index = 0; index < size; ++index)
+				// 		{
+				// 			_alloc.destroy(_vec + index);
 							
-			// 	// 		}
-			// 	// 		_size = 0;
-			// 	// 	}
-			// 	// }
-			// 	// else
-			// 	// {
-			// 	// 	deallocate();
-			// 	// 	allocate(recommend(new_size));
-			// 	// 	construct_at_end(first, last, new_size);
-			// 	// }
-			// }
+				// 		}
+				// 		_size = 0;
+				// 	}
+				// }
+				// else
+				// {
+				// 	deallocate();
+				// 	allocate(recommend(new_size));
+				// 	construct_at_end(first, last, new_size);
+				// }
+			}
 			void assign (size_type n, const value_type& val)
 			{
 				allocate(n * 2);
