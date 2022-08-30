@@ -7,6 +7,47 @@
 # include "iterator.hpp"
 # include "iterator_traits.hpp"
 # include "reverse_iterator.hpp"
+
+
+// The read-only operations, such as search or tree traversal, 
+// on a red–black tree require no modification from those used for binary search trees, 
+// because every red–black tree is a special case of a simple binary search tree.
+//---------------------------------------------------------------------------------
+// Basic type definitions:
+//---------------------------------------------------------------------------------
+
+enum color_t { BLACK, RED };
+
+struct RBnode {     // node of red–black tree
+  RBnode* parent;   // == NULL if root of the tree
+  RBnode* child[2]; // == NIL if child is empty
+    // Index is:
+    //   LEFT  := 0, if (key < parent->key)
+    //   RIGHT := 1, if (key > parent->key)
+  enum color_t color;
+  int key;
+};
+
+#define NIL   NULL // null pointer  or  pointer to sentinel node
+#define LEFT  0
+#define RIGHT 1
+#define left  child[LEFT]
+#define right child[RIGHT]
+
+struct RBtree { // red–black tree
+  RBnode* root; // == NIL if tree is empty
+};
+
+// Get the child direction (∈ { LEFT, RIGHT })
+//   of the non-root non-NIL  RBnode* N:
+#define childDir(N) ( N == (N->parent)->right ? RIGHT : LEFT )
+//---------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------
+
+
+
+
+
 namespace ft
 {
 	template < class Key,                                     // map::key_type
@@ -33,77 +74,80 @@ namespace ft
 			typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
 
 			explicit map (const key_compare& comp = key_compare(),
-			const allocator_type& alloc = allocator_type()){}
-			template <class InputIterator>
-			map (InputIterator first, InputIterator last,
-				const key_compare& comp = key_compare(),
-				const allocator_type& alloc = allocator_type());	
-			map (const map& x);
+			const allocator_type& alloc = allocator_type())
+			{
+				std::cout << "Map default constructor called" << std::endl;
+			}
+			// template <class InputIterator>
+			// map (InputIterator first, InputIterator last,
+			// 	const key_compare& comp = key_compare(),
+			// 	const allocator_type& alloc = allocator_type());	
+			// map (const map& x);
 
-			~map();
+			// ~map();
 
-			iterator begin();
-			const_iterator begin() const;
+			// iterator begin();
+			// const_iterator begin() const;
 
-			void clear();
+			// void clear();
 
-			size_type count (const key_type& k) const;
+			// size_type count (const key_type& k) const;
 
-			bool empty() const;
+			// bool empty() const;
 
-			iterator end();
-			const_iterator end() const;
+			// iterator end();
+			// const_iterator end() const;
 
-			pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
-			pair<iterator,iterator>             equal_range (const key_type& k);
+			// pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
+			// pair<iterator,iterator>             equal_range (const key_type& k);
 
 				
-			void erase (iterator position);
-			size_type erase (const key_type& k);
-			void erase (iterator first, iterator last);
+			// void erase (iterator position);
+			// size_type erase (const key_type& k);
+			// void erase (iterator first, iterator last);
 
-			iterator find (const key_type& k);
-			const_iterator find (const key_type& k) const;
+			// iterator find (const key_type& k);
+			// const_iterator find (const key_type& k) const;
 
-			allocator_type get_allocator() const;
+			// allocator_type get_allocator() const;
 
-			// single element insert
-			pair<iterator,bool> insert (const value_type& val);
-			// with hint insert	
-			iterator insert (iterator position, const value_type& val);
-			// range insert
-			template <class InputIterator>
-			void insert (InputIterator first, InputIterator last);
-
-
-			key_compare key_comp() const;
+			// // single element insert
+			// pair<iterator,bool> insert (const value_type& val);
+			// // with hint insert	
+			// iterator insert (iterator position, const value_type& val);
+			// // range insert
+			// template <class InputIterator>
+			// void insert (InputIterator first, InputIterator last);
 
 
-			iterator lower_bound (const key_type& k);
-			const_iterator lower_bound (const key_type& k) const;
-
-			size_type max_size() const;
-
-			mapped_type& operator[] (const key_type& k);
-
-			map& operator= (const map& x);
+			// key_compare key_comp() const;
 
 
-			reverse_iterator rbegin();
-			const_reverse_iterator rbegin() const;
+			// iterator lower_bound (const key_type& k);
+			// const_iterator lower_bound (const key_type& k) const;
+
+			// size_type max_size() const;
+
+			// mapped_type& operator[] (const key_type& k);
+
+			// map& operator= (const map& x);
 
 
-			reverse_iterator rend();
-			const_reverse_iterator rend() const;
+			// reverse_iterator rbegin();
+			// const_reverse_iterator rbegin() const;
 
-			size_type size() const;
 
-			void swap (map& x);
+			// reverse_iterator rend();
+			// const_reverse_iterator rend() const;
 
-			iterator upper_bound (const key_type& k);
-			const_iterator upper_bound (const key_type& k) const;
+			// size_type size() const;
 
-			value_compare value_comp() const;
+			// void swap (map& x);
+
+			// iterator upper_bound (const key_type& k);
+			// const_iterator upper_bound (const key_type& k) const;
+
+			// value_compare value_comp() const;
 	};
 		template <class Key, class T, class Compare, class Alloc>
 		bool operator== ( const map<Key,T,Compare,Alloc>& lhs,
