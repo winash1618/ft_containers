@@ -8,46 +8,6 @@
 # include "iterator_traits.hpp"
 # include "reverse_iterator.hpp"
 
-
-// The read-only operations, such as search or tree traversal, 
-// on a red–black tree require no modification from those used for binary search trees, 
-// because every red–black tree is a special case of a simple binary search tree.
-//---------------------------------------------------------------------------------
-// Basic type definitions:
-//---------------------------------------------------------------------------------
-
-enum color_t { BLACK, RED };
-
-struct RBnode {     // node of red–black tree
-  RBnode* parent;   // == NULL if root of the tree
-  RBnode* child[2]; // == NIL if child is empty
-    // Index is:
-    //   LEFT  := 0, if (key < parent->key)
-    //   RIGHT := 1, if (key > parent->key)
-  enum color_t color;
-  int key;
-};
-
-#define NIL   NULL // null pointer  or  pointer to sentinel node
-#define LEFT  0
-#define RIGHT 1
-#define left  child[LEFT]
-#define right child[RIGHT]
-
-struct RBtree { // red–black tree
-  RBnode* root; // == NIL if tree is empty
-};
-
-// Get the child direction (∈ { LEFT, RIGHT })
-//   of the non-root non-NIL  RBnode* N:
-#define childDir(N) ( N == (N->parent)->right ? RIGHT : LEFT )
-//---------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------
-
-
-
-
-
 namespace ft
 {
 	template < class Key,                                     // map::key_type
