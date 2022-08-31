@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 10:50:33 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/25 17:03:23 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/31 14:46:42 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@
 #include "iterator_traits.hpp"
 namespace ft
 {
-	template <class Category, class T, class Distance = std::ptrdiff_t,
-	class Pointer = T*, class Reference = T&>
-	struct iterator 
-	{
-		typedef T			value_type;
-		typedef Distance	difference_type;
-		typedef Pointer		pointer;
-		typedef Reference	reference;
-		typedef Category	iterator_category;
-	};
+	// template <class Category, class T, class Distance = std::ptrdiff_t,
+	// class Pointer = T*, class Reference = T&>
+	// struct iterator 
+	// {
+	// 	typedef T			value_type;
+	// 	typedef Distance	difference_type;
+	// 	typedef Pointer		pointer;
+	// 	typedef Reference	reference;
+	// 	typedef Category	iterator_category;
+	// };
 
 	// template<class Category, class T, class Distance = ptrdiff_t,
 	// class Pointer = T*, class Reference = T&>
@@ -145,18 +145,19 @@ namespace ft
 
 	
 	template<typename T>
-	class __wrap_iter : public ft::iterator<ft::random_access_iterator_tag, int>
+	class iterator
 	{
 		private:
 			T* _iterator;
 
 		public:
-
-			__wrap_iter() : _iterator(){}
-			__wrap_iter(T* iter) : _iterator( iter )
-			{
-				
-			}
+			typedef T								value_type;
+			typedef T*								pointer;
+			typedef T&								reference;
+			typedef std::ptrdiff_t					difference_type;
+			typedef ft::random_access_iterator_tag	iterator_category;
+			iterator() : _iterator(){}
+			iterator(T* iter) : _iterator( iter ){}
 
 			reference operator*() const { 
 				return *_iterator; 
@@ -197,7 +198,7 @@ namespace ft
 				return *this;
 			}
 			
-			difference_type operator-(const __wrap_iter& other) const { 
+			difference_type operator-(const iterator& other) const { 
 				return std::distance(_iterator, other._iterator); 
 			}
 			// difference_type operator-(const __wrap_iter& other) const { 
@@ -218,8 +219,8 @@ namespace ft
 			{
 				return _iterator;
 			}
-			bool operator==(const __wrap_iter& rhs) const {return _iterator==rhs._iterator;}
-			bool operator!=(const __wrap_iter& rhs) const {return _iterator!=rhs._iterator;}
+			// bool operator==(const iterator& rhs) const {return _iterator==rhs._iterator;}
+			// bool operator!=(const iterator& rhs) const {return _iterator!=rhs._iterator;}
 	};
 	
 
@@ -296,78 +297,78 @@ namespace ft
 
 	template <class _Iter1, class _Iter2>
 	bool
-	operator==(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter2>& __y) 
+	operator==(const iterator<_Iter1>& __x, const iterator<_Iter2>& __y) 
 	{
 		return __x.base() == __y.base();
 	}
 
 	template <class _Iter1, class _Iter2>
 	bool
-	operator<(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter2>& __y) 
+	operator<(const iterator<_Iter1>& __x, const iterator<_Iter2>& __y) 
 	{
 		return __x.base() < __y.base();
 	}
 
 	template <class _Iter1, class _Iter2>
 	bool
-	operator!=(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter2>& __y) 
+	operator!=(const iterator<_Iter1>& __x, const iterator<_Iter2>& __y) 
 	{
 		return !(__x == __y);
 	}
 
 	template <class _Iter1, class _Iter2>
 	bool
-	operator>(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter2>& __y) 
+	operator>(const iterator<_Iter1>& __x, const iterator<_Iter2>& __y) 
 	{
 		return __y < __x;
 	}
 
 	template <class _Iter1, class _Iter2>
 	bool
-	operator>=(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter2>& __y) 
+	operator>=(const iterator<_Iter1>& __x, const iterator<_Iter2>& __y) 
 	{
 		return !(__x < __y);
 	}
 
 	template <class _Iter1, class _Iter2>
 	bool
-	operator<=(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter2>& __y) 
+	operator<=(const iterator<_Iter1>& __x, const iterator<_Iter2>& __y) 
 	{
 		return !(__y < __x);
 	}
 
 	template <class _Iter1>
 	bool
-	operator!=(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter1>& __y) 
+	operator!=(const iterator<_Iter1>& __x, const iterator<_Iter1>& __y) 
 	{
 		return !(__x == __y);
 	}
 
 	template <class _Iter1>
 	bool
-	operator>(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter1>& __y) 
+	operator>(const iterator<_Iter1>& __x, const iterator<_Iter1>& __y) 
 	{
 		return __y < __x;
 	}
 
 	template <class _Iter1>
 	bool
-	operator>=(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter1>& __y) 
+	operator>=(const iterator<_Iter1>& __x, const iterator<_Iter1>& __y) 
 	{
 		return !(__x < __y);
 	}
 
 	template <class _Iter1>
 	bool
-	operator<=(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter1>& __y) 
+	operator<=(const iterator<_Iter1>& __x, const iterator<_Iter1>& __y) 
 	{
 		return !(__y < __x);
 	}
 
 	
 	template <class _Iter1, class _Iter2>
-	typename __wrap_iter<_Iter1>::difference_type
-	operator-(const __wrap_iter<_Iter1>& __x, const __wrap_iter<_Iter2>& __y) 
+	typename iterator<_Iter1>::difference_type
+	operator-(const iterator<_Iter1>& __x, const iterator<_Iter2>& __y) 
 	{
 		return __x.base() - __y.base();
 	}

@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/29 17:43:52 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/31 15:59:45 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,8 +160,8 @@ template<class T, T v>
 			typedef typename allocator_type::const_reference			const_reference;
 			typedef typename allocator_type::pointer					pointer;
 			typedef typename allocator_type::const_pointer				const_pointer;
-			typedef ft::__wrap_iter<value_type>							iterator;
-			typedef ft::__wrap_iter<value_type>							const_iterator;
+			typedef ft::iterator<value_type>							iterator;
+			typedef ft::iterator<const value_type>							const_iterator;
 			typedef typename allocator_type::size_type					size_type;
 			typedef typename allocator_type::difference_type			difference_type;
 			typedef ft::reverse_iterator<iterator>						reverse_iterator;
@@ -289,6 +289,8 @@ template<class T, T v>
 
 			void push_back (const value_type& val)
 			{
+				Allocator t_alloc1;
+				pointer t_vec;
 				// std::cout << _cap << std::endl;
 				if (!_cap)
 				{
@@ -302,17 +304,17 @@ template<class T, T v>
 					if (_size + 1 > _cap)
 					{
 						// std::cout << "HI I am inside overflow handler" << std::endl;
-						temp = t_alloc.allocate(_size * 2, 0);
-						for (_index = 0; _index < _size; ++_index)
+						t_vec = t_alloc1.allocate(_size * 4);
+						for (size_type index = 0; index < _size; ++index)
 						{
-							t_alloc.construct(temp + _index, _vec[_index]);
+							t_alloc1.construct(t_vec + index, _vec[index]);
 						}
-						t_alloc.construct(temp + _index, val);
+						t_alloc1.construct(t_vec + _size, val);
+						for (size_type index= 0; index < _size; ++index)
+							_alloc.destroy(_vec + index);
 						_alloc.deallocate(_vec, _cap);
-						for (_index = 0; _index < _size; ++_index)
-							_alloc.destroy(_vec + _index);
-						_alloc = t_alloc;
-						_vec = temp;
+						_alloc = t_alloc1;
+						_vec = t_vec;
 						_cap = _size * 2;
 						_size++;
 					}
@@ -349,19 +351,19 @@ template<class T, T v>
 			
 			reverse_iterator       rbegin()
 			{
-				return reverse_iterator(_vec + size()); 
+				return reverse_iterator(this->end()); 
 			}
 			const_reverse_iterator rbegin()  const
 			{
-				return reverse_iterator(_vec + size()); 
+				return const_reverse_iterator(this->end()); 
 			}
 			reverse_iterator       rend()
 			{
-				return reverse_iterator(_vec); 
+				return reverse_iterator(this->begin()); 
 			}
 			const_reverse_iterator rend()    const
 			{
-				return reverse_iterator(_vec); 
+				return const_reverse_iterator(this->begin()); 
 			}
 			
 			// Capacity based functions
