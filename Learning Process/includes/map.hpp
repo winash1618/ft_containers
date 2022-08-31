@@ -28,7 +28,7 @@ namespace ft
 			typedef typename allocator_type::const_pointer				const_pointer;
 			typedef typename allocator_type::size_type					size_type;
 			typedef typename allocator_type::difference_type			difference_type;
-			typedef ft::__wrap_iter<value_type>							iterator;
+			typedef typename ft::RBTree<K, pair<const K, V>, MapKeyOfT>::iterator iterator;
 			typedef ft::__wrap_iter<value_type>							const_iterator;
 			typedef ft::reverse_iterator<iterator>						reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
@@ -108,6 +108,15 @@ namespace ft
 			// const_iterator upper_bound (const key_type& k) const;
 
 			// value_compare value_comp() const;
+		private:
+			struct MapKeyOfT
+			{
+				const K& operator()(const pair<const K, V>& kv)
+				{
+					return kv.first;
+				}
+			};
+			RBTree<K,pair<const K, V>, MapKeyOfT> _t;
 	};
 		template <class Key, class T, class Compare, class Alloc>
 		bool operator== ( const map<Key,T,Compare,Alloc>& lhs,
