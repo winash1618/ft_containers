@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/31 15:59:45 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/31 16:55:42 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,8 +289,8 @@ template<class T, T v>
 
 			void push_back (const value_type& val)
 			{
-				Allocator t_alloc1;
-				pointer t_vec;
+				
+				
 				// std::cout << _cap << std::endl;
 				if (!_cap)
 				{
@@ -304,7 +304,8 @@ template<class T, T v>
 					if (_size + 1 > _cap)
 					{
 						// std::cout << "HI I am inside overflow handler" << std::endl;
-						t_vec = t_alloc1.allocate(_size * 4);
+						Allocator t_alloc1 ;
+						pointer t_vec = t_alloc1.allocate(_size * 2);
 						for (size_type index = 0; index < _size; ++index)
 						{
 							t_alloc1.construct(t_vec + index, _vec[index]);

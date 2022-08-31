@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:27:34 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/31 15:55:29 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/08/31 21:53:56 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ namespace ft
 		}
 		reverse_iterator  operator--(int)
 		{
-			reverse_iterator tmp(*this); --current; return tmp;
+			reverse_iterator tmp(*this); ++current; return tmp;
 		}
 		reverse_iterator  operator+ (difference_type n) const
 		{

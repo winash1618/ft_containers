@@ -22,3 +22,10 @@ In this project, you will implement a few container types of the C++ standard te
 - https://blog.csdn.net/weixin_45599288/article/details/122520861
 - https://www.cs.usfca.edu/~galles/visualization/RedBlack.html
 
+- map concepts : understandings through practice
+	- the new node inserting will allways be red.
+	- there can be more than two black nodes together.
+	- there cannot be two red nodes together.
+	- insertion allways start from the head.
+	- balencing after insertion is looking hard (may need more reading and practice)
+	- 
