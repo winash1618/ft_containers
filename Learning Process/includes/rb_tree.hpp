@@ -13,35 +13,32 @@ namespace ft
 	enum color_t { BLACK, RED };
 
 	template<class K, class V>
-	struct RBnode {     // node of red–black tree
-		RBnode<K, V>* _parent;   // == NULL if root of the tree
-		RBnode<K, V>* _child[2]; // == NIL if child is empty
-			// Index is:
-			//   LEFT  := 0, if (key < parent->key)
-			//   RIGHT := 1, if (key > parent->key)
+	struct RBNode {     // node of red–black tree
+		RBNode<K, V>* _parent;   // == NULL if root of the tree
+		RBNode<K, V>* _left;
+		RBNode<K, V>* _right;
 		ft::pair<K, V> _kv;
 		enum color_t _color;
-		RBnode(const ft::pair<K, V)& kv): _parent(nullptr_f)
-										,_child(nullptr)
+		RBNode(const ft::pair<K, V)& kv): _parent(nullptr_f)
+										,_left(nullptr_f)
+										,_right(nullptr_f)
 										,_kv(kv)
 										,_color(RED)
 		{}
 	};
 
-	#define NIL   NULL // null pointer  or  pointer to sentinel node
-	#define LEFT  0
-	#define RIGHT 1
-	#define left  _child[LEFT]
-	#define right _child[RIGHT]
-
-	struct RBtree { // red–black tree
-		RBnode* root; // == NIL if tree is empty
-	};
-
-	// Get the child direction (∈ { LEFT, RIGHT })
-	//   of the non-root non-NIL  RBnode* N:
-	#define childDir(N) ( N == (N->parent)->right ? RIGHT : LEFT )
+	template<class K, class V>
+	class RBTree
+	{
+		typedef RBNode<K, V> Node;
+		public:
+			RBTree(): _root(nullptr) {}
+			
+		private:
+			Node* _root;
+	}
 	//---------------------------------------------------------------------------------
+	// https://opensource.apple.com/source/xnu/xnu-2050.18.24/bsd/hfs/hfscommon/headers/RedBlackTree.h.auto.html
 	//---------------------------------------------------------------------------------
 
 
