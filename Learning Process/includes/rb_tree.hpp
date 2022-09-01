@@ -13,26 +13,104 @@ namespace ft
 	enum color_t { BLACK, RED };
 
 	template<class T>
-struct RBTreeNode
-{
-	RBTreeNode<T>* _left;
-	RBTreeNode<T>* _right;
-	RBTreeNode<T>* _parent;
+	struct RBTreeNode
+	{
+		RBTreeNode<T>* _left;
+		RBTreeNode<T>* _right;
+		RBTreeNode<T>* _parent;
+		
+		T _data;
+		Color _color;
+		RBTreeNode(const T& data)
+				:_left(nullptr)
+				,_right(nullptr)
+				,_parent(nullptr)
+				,_data(data)
+				,_color(RED)
+		{}
+	};
+
+
+
+	template<class T,class Ref,class Ptr>
+	struct _TreeIterator
+	{
+		/*typedef Ref reference;
+		typedef Ptr pointer;*/
+		typedef RBTreeNode<T> Node;
+		typedef _TreeIterator<T, Ref, Ptr> Self;
+		Node* _node;
+		_TreeIterator(Node* node)
+			:_node(node)
+		{}
+		Ref operator*()
+		{
+			return _node->_data;
+		}
+		Ptr operator ->()
+		{
+			return &_node->_data;
+		}
+		bool  operator !=(const Self& s) const
+		{
+			return _node != s._node;
+		}
+		bool  operator ==(const Self& s) const
+		{
+			return _node == s._node;
+		}
+		Self& operator++()
+		{
+			if (_node->_right)
+			{
+				
+				Node* left = _node->_right;
+				while (left->_left)
+				{
+					left = left->_left;
+				}
+					_node = left;
+				}
+				else
+				{
+					Node* cur = _node;
+					Node* parent = cur->_parent;
+					while (parent && cur == parent->_right)
+					{
+						cur = cur->_parent;
+						parent = parent->_parent;
+					}
+					_node = parent;
+				}
+			return *this;
+		}
+		Self& operator--()
+		{
+			if (_node->_left)
+			{
+				
+				Node* left = _node->_left;
+				while (right->_right)
+				{
+					right = right->_right;
+				}
+				_node = right;
+			}
+			else
+			{
+				Node* cur = _node;
+				Node* parent = cur->_parent;
+				while (parent && cur == parent->_left)
+				{
+					cur = cur->_parent;
+					parent = parent->_parent;
+				}
+				_node = parent;
+			}
+			return *this;
+		}
+	};
 	
-	T _data;
-	Color _color;
-	RBTreeNode(const T& data)
-			:_left(nullptr)
-			,_right(nullptr)
-			,_parent(nullptr)
-			,_data(data)
-			,_color(RED)
-	{}
-};
-
-
-
-
 	template<class K, class V>
 	class RBTree
 	{
