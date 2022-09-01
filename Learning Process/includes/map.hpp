@@ -28,10 +28,10 @@ namespace ft
 			typedef typename allocator_type::const_pointer				const_pointer;
 			typedef typename allocator_type::size_type					size_type;
 			typedef typename allocator_type::difference_type			difference_type;
-			typedef typename ft::RBTree<K, pair<const K, V>, MapKeyOfT>::iterator iterator;
-			typedef ft::__wrap_iter<value_type>							const_iterator;
-			typedef ft::reverse_iterator<iterator>						reverse_iterator;
-			typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
+			typedef typename ft::RBTree<Key, pair<const Key, T>, MapKeyOfT>::iterator iterator;
+			// typedef ft::__wrap_iter<value_type>							const_iterator;
+			// typedef ft::reverse_iterator<iterator>						reverse_iterator;
+			// typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
 
 			explicit map (const key_compare& comp = key_compare(),
 			const allocator_type& alloc = allocator_type())
@@ -46,7 +46,10 @@ namespace ft
 
 			// ~map();
 
-			// iterator begin();
+			iterator begin()
+			{
+				return _t.begin();
+			}
 			// const_iterator begin() const;
 
 			// void clear();
@@ -55,7 +58,10 @@ namespace ft
 
 			// bool empty() const;
 
-			// iterator end();
+			iterator end()
+			{
+				return _t.end();
+			}
 			// const_iterator end() const;
 
 			// pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
@@ -72,7 +78,10 @@ namespace ft
 			// allocator_type get_allocator() const;
 
 			// // single element insert
-			// pair<iterator,bool> insert (const value_type& val);
+			pair<iterator,bool> insert (const value_type& val)
+			{
+				return _t.insert(val);
+			}
 			// // with hint insert	
 			// iterator insert (iterator position, const value_type& val);
 			// // range insert
@@ -88,7 +97,12 @@ namespace ft
 
 			// size_type max_size() const;
 
-			// mapped_type& operator[] (const key_type& k);
+			mapped_type& operator[] (const key_type& k)
+			{
+				pair<iterator, bool> ret = insert(make_pair(key, T()));
+				iterator it = ret.first;
+				return it->second;
+			}
 
 			// map& operator= (const map& x);
 
@@ -116,7 +130,7 @@ namespace ft
 					return kv.first;
 				}
 			};
-			RBTree<K,pair<const K, V>, MapKeyOfT> _t;
+			RBTree<Key, pair<const Key, T>, MapKeyOfT> _t;
 	};
 		template <class Key, class T, class Compare, class Alloc>
 		bool operator== ( const map<Key,T,Compare,Alloc>& lhs,
