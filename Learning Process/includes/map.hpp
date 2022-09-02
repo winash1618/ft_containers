@@ -5,6 +5,7 @@
 # include <algorithm>
 # include <functional>
 # include "iterator.hpp"
+# include "rb_tree.hpp"
 # include "iterator_traits.hpp"
 # include "reverse_iterator.hpp"
 
@@ -16,6 +17,14 @@ namespace ft
 	class Alloc = std::allocator<ft::pair<const Key,T> >    // map::allocator_type
 	> class map
 	{
+		private:
+			struct MapKeyOfT
+			{
+				const Key& operator()(const pair<const Key , T>& kv)
+				{
+					return kv.first;
+				}
+			};
 		public:
 			typedef Key													key_type;
 			typedef T													mapped_type;
@@ -97,7 +106,7 @@ namespace ft
 
 			// size_type max_size() const;
 
-			mapped_type& operator[] (const key_type& k)
+			mapped_type& operator[] (const key_type& key)
 			{
 				pair<iterator, bool> ret = insert(make_pair(key, T()));
 				iterator it = ret.first;
@@ -123,22 +132,21 @@ namespace ft
 
 			// value_compare value_comp() const;
 		private:
-			struct MapKeyOfT
-			{
-				const K& operator()(const pair<const K, V>& kv)
-				{
-					return kv.first;
-				}
-			};
 			RBTree<Key, pair<const Key, T>, MapKeyOfT> _t;
 	};
 		template <class Key, class T, class Compare, class Alloc>
 		bool operator== ( const map<Key,T,Compare,Alloc>& lhs,
-							const map<Key,T,Compare,Alloc>& rhs );
+							const map<Key,T,Compare,Alloc>& rhs )
+		{
+			return (lhs == rhs);
+		}
 		
 		template <class Key, class T, class Compare, class Alloc>
 		bool operator!= ( const map<Key,T,Compare,Alloc>& lhs,
-							const map<Key,T,Compare,Alloc>& rhs );
+							const map<Key,T,Compare,Alloc>& rhs )
+		{
+			return !(lhs == rhs);
+		}
 			
 		template <class Key, class T, class Compare, class Alloc>
 		bool operator<  ( const map<Key,T,Compare,Alloc>& lhs,
