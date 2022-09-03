@@ -1,5 +1,5 @@
-// #include "pair.hpp"
-// #include "map.hpp"
+#include "pair.hpp"
+#include "map.hpp"
 #include <iostream>
 #include <string>
 #include <map>
@@ -9,39 +9,39 @@
 
 
 
-int main ()
-{
-  std::map<int,int> mymap;
+// int main ()
+// {
+//   std::map<int,int> mymap;
 
-  mymap[54] = 1005;
-  mymap[12] = 2003;
-  mymap[17] = 3002;
-  mymap[15] = 1001;
-  mymap[18] = 2006;
-  mymap[11] = 3002;
-  mymap[69] = 1006;
-  mymap[55] = 2003;
-  mymap[89] = 3001;
-  mymap[88] = 2003;
-  mymap[150] = 3001;
+//   mymap[54] = 1005;
+//   mymap[12] = 2003;
+//   mymap[17] = 3002;
+//   mymap[15] = 1001;
+//   mymap[18] = 2006;
+//   mymap[11] = 3002;
+//   mymap[69] = 1006;
+//   mymap[55] = 2003;
+//   mymap[89] = 3001;
+//   mymap[88] = 2003;
+//   mymap[150] = 3001;
 
-  // show content:
-  for (std::map<int,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
-    std::cout << it->first << " => " << it->second << '\n';
+//   // show content:
+//   for (std::map<int,int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
+//     std::cout << it->first << " => " << it->second << '\n';
 
-  return 0;
-}
+//   return 0;
+// }
 
 
 // map::insert (C++98)
-// #include <iostream>
-// #include <map>
+#include <iostream>
+#include <map>
 
-// int main ()
-// {
-//   std::map<char,int> mymap;
+int main ()
+{
+  ft::map<char,int> mymap();
 
-//   // first insert function version (single parameter):
+  // first insert function version (single parameter):
 //   mymap.insert ( std::pair<char,int>('a',100) );
 //   mymap.insert ( std::pair<char,int>('z',200) );
 
@@ -50,7 +50,7 @@ int main ()
 //   if (ret.second==false) {
 //     std::cout << "element 'z' already existed";
 //     std::cout << " with a value of " << ret.first->second << '\n';
-//   }
+  }
 
 //   // second insert function version (with hint position):
 //   std::map<char,int>::iterator it = mymap.begin();

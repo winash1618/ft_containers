@@ -19,10 +19,6 @@ namespace ft
 	class Alloc = std::allocator<ft::pair<const Key,T> >    // map::allocator_type
 	> class map
 	{
-		private:
-			typedef RBTreeNode<K> Node;
-			Node* _root;
-			allocator_type _alloc;
 
 		public:
 			typedef Key													key_type;
@@ -32,8 +28,9 @@ namespace ft
 			typedef Alloc												allocator_type;
 			typedef value_type&											reference;
 			typedef const value_type&									const_reference;
+			
 			class value_compare
-				: public binary_function<value_type, value_type, bool>
+				: public std::binary_function<value_type, value_type, bool>
 			{
 				friend class map;
 				protected:
@@ -45,9 +42,8 @@ namespace ft
 						{return comp(__x.first, __y.first);}
 			};
 			
-		private:
-			 typedef __tree<__value_type, __vc, __allocator_type>   __base;
-			 __base __tree_;
+
+
 		public:
 			typedef typename allocator_type::pointer					pointer;
 			typedef typename allocator_type::const_pointer				const_pointer;
@@ -58,9 +54,15 @@ namespace ft
 			// typedef ft::reverse_iterator<iterator>						reverse_iterator;
 			// typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
 			
+		private:
+			typedef RBTreeNode<value_type> Node;
+			Node* _root;
+			allocator_type _alloc;
+			size_type _size;
 
+		public:
 			explicit map (const key_compare& comp = key_compare(),
-			const allocator_type& alloc = allocator_type())
+			const allocator_type& alloc = allocator_type()) : _root(), _alloc(alloc), _size(0)
 			{
 				std::cout << "Map default constructor called" << std::endl;
 			}
@@ -72,10 +74,7 @@ namespace ft
 
 			// ~map();
 
-			iterator begin()
-			{
-				return _t.begin();
-			}
+			// iterator begin();
 			// const_iterator begin() const;
 
 			// void clear();
@@ -84,10 +83,7 @@ namespace ft
 
 			// bool empty() const;
 
-			iterator end()
-			{
-				return _t.end();
-			}
+			// iterator end();
 			// const_iterator end() const;
 
 			// pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
@@ -104,10 +100,10 @@ namespace ft
 			// allocator_type get_allocator() const;
 
 			// // single element insert
-			pair<iterator,bool> insert (const value_type& val)
-			{
-				return _t.insert(val);
-			}
+			// pair<iterator,bool> insert (const value_type& val)
+			// {
+
+			// }
 			// // with hint insert	
 			// iterator insert (iterator position, const value_type& val);
 			// // range insert
@@ -123,12 +119,7 @@ namespace ft
 
 			// size_type max_size() const;
 
-			mapped_type& operator[] (const key_type& key)
-			{
-				pair<iterator, bool> ret = insert(make_pair(key, T()));
-				iterator it = ret.first;
-				return it->second;
-			}
+			// mapped_type& operator[] (const key_type& key);
 
 			// map& operator= (const map& x);
 
@@ -151,17 +142,10 @@ namespace ft
 	};
 		template <class Key, class T, class Compare, class Alloc>
 		bool operator== ( const map<Key,T,Compare,Alloc>& lhs,
-							const map<Key,T,Compare,Alloc>& rhs )
-		{
-			return (lhs == rhs);
-		}
-		
+							const map<Key,T,Compare,Alloc>& rhs );
 		template <class Key, class T, class Compare, class Alloc>
 		bool operator!= ( const map<Key,T,Compare,Alloc>& lhs,
-							const map<Key,T,Compare,Alloc>& rhs )
-		{
-			return !(lhs == rhs);
-		}
+							const map<Key,T,Compare,Alloc>& rhs );
 			
 		template <class Key, class T, class Compare, class Alloc>
 		bool operator<  ( const map<Key,T,Compare,Alloc>& lhs,
