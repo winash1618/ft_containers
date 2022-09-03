@@ -44,6 +44,7 @@ namespace ft
 		typedef _Tp                        value_type;
 
 		__tree_iterator() {}
+		__tree_iterator(__node_pointer ptr): __ptr_(ptr) {}
 
 		reference operator*() const {return __ptr_->__value_;}
 		pointer operator->() const {return &__ptr_->__value_;}
