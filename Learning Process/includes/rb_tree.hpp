@@ -118,8 +118,8 @@ namespace ft
 			RBTree(): _root(nullptr) {}
 			typedef _TreeIterator<T, T&, T*> iterator;
 			
-	private:
-		Node* _root;
+		private:
+			Node* _root;
 	};
 	//---------------------------------------------------------------------------------
 	// https://opensource.apple.com/source/xnu/xnu-2050.18.24/bsd/hfs/hfscommon/headers/RedBlackTree.h.auto.html
