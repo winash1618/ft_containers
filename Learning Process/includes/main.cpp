@@ -39,7 +39,7 @@
 
 int main ()
 {
-  ft::map<char,int> mymap();
+  ft::map<char,int> mymap;
 
   // first insert function version (single parameter):
 //   mymap.insert ( std::pair<char,int>('a',100) );

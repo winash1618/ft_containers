@@ -59,6 +59,7 @@ namespace ft
 			Node* _root;
 			allocator_type _alloc;
 			size_type _size;
+			Node* _head;
 
 		public:
 			explicit map (const key_compare& comp = key_compare(),
@@ -99,11 +100,14 @@ namespace ft
 
 			// allocator_type get_allocator() const;
 
-			// // single element insert
-			// pair<iterator,bool> insert (const value_type& val)
-			// {
-
-			// }
+			// single element insert
+			pair<iterator,bool> insert (const value_type& val)
+			{
+				if (size)
+				{
+					
+				}
+			}
 			// // with hint insert	
 			// iterator insert (iterator position, const value_type& val);
 			// // range insert
