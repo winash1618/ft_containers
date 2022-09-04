@@ -166,6 +166,142 @@ namespace ft
 						return ft::make_pair(iterator(cur), false);
 					}
 				}
+				// Here we create a new node and place it in the right place and then balance the tree.
+				cur = n_alloc.allocate(1);
+				_alloc.construct(&(cur->_data), val);
+				node_pointer newnode = cur;
+				newnode->_color = RED;
+				if (parent->_data.first < val.first) // due to the above while the parent reach next to the null leaf. we will check where to place the node (left or right) and place the node.
+				{
+					parent->_right = newnode;
+					newnode->_parent = parent;
+				}
+				else
+				{
+					parent->_left = newnode;
+					newnode->_parent = parent;
+				}
+				// The next step check if we have an unbalanced tree by looking at the color of the parent. while parent exists and color of the parent is RED we will stay in the while loop.
+				while (parent && parent->_color == RED)
+				{
+					Node* grandParent = parent->_parent;// since parent exists we set the parent->_parent to grandParent.
+					if (grandParent->_left == parent) // Now checking where grandParent's child is. if left we enter the if.
+					{
+						Node* uncle = grandParent->_right; // since the grandParent child is left we set the grandParent right as uncle.
+						/*
+									/
+								grandParent(B)
+								/        \
+							parent(R)	uncle
+							|				|
+				(left(R) or right(R))
+					*/
+						if (uncle && uncle->_color == RED) // if uncle color is red as above enter if. 
+						{
+							/*
+									/
+								grandParent(B)
+								/        \
+							parent(R)	uncle(R)
+							|				|
+					(left(R) or right(R))
+					*/
+							parent->_color = BLACK;
+							uncle->_color = BLACK;
+							grandParent->_color = RED;
+							cur = grandParent;
+							parent = cur->_parent;
+								/*
+									/
+								grandParent(R)
+								/        \
+							parent(B)	uncle(B)
+							|				|
+					(left(R) or right(R))
+					*/
+						}
+						else
+						{
+							if (parent->_left == cur) // Here we are checking if we put parent->_left as newnode.
+							{
+									/*
+									/
+								grandParent(B)
+								/        \
+							parent(R)	uncle(R)
+							/				|
+						left(R) 
+					*/
+								RotateR(grandParent);
+								parent->_color = BLACK;
+								grandParent->_color = RED;
+								/*
+										/
+									grandParent(R)(rotateR)(after this rotate parent will be in position of grandParent)
+									/        \
+								parent(B)	uncle(R)
+								/				\
+							left(R)
+							*/
+							}
+							else
+							{
+									/*
+									/
+								grandParent(B)
+								/        \
+							parent(R)	uncle(R)
+								\			|
+							right(R) 
+							*/
+								RotateL(parent);
+								RotateR(grandParent);
+								grandParent->_color = RED;
+								cur->_color = BLACK;
+								/*
+									/
+								grandParent(R)
+								/        \
+							parent(R)	uncle(R)
+								\			|
+							right(B) 
+							*/
+							}
+							break;
+						}
+					}
+					else // same as above but just opposite.
+					{
+						node_pointer uncle = grandParent->_left;
+						if (uncle && uncle->_color == RED)
+						{
+							uncle->_color = BLACK;
+							parent->_color = BLACK;
+							grandParent->color = RED;
+							cur = grandParent;
+							parent = cur->_parent;
+						}
+						else
+						{
+							if (parent->_right == cur)
+							{
+								RotateL(grandParent);
+								parent->_color = BLACK;
+								grandParent->_color = RED;
+							}
+							else
+							{
+								RotateR(parent);
+								RotateL(grandParent);
+								cur->_color = BLACK;
+								grandParent->_color = RED;
+							}
+							break;
+						}
+					}
+				}
+				_root->_color = BLACK;
+				return ft::make_pair(iterator(newnode), true);
 			}
 			// // with hint insert	
 			// iterator insert (iterator position, const value_type& val);
@@ -203,6 +339,31 @@ namespace ft
 
 			// value_compare value_comp() const;
 
+		private:
+			void RotateL(node_pointer parent)
+			{
+				node_pointer subR = parent->_right;
+				node_pointer subRL = subR->_left;
+				node_pointer parentParent = parent->_parent;
+				parent->_right = subRL;
+				subR->_left = parent;
+				parent->_parent = subR;
+				if (subRL)
+					subRL->_parent = parent;
+				if (_root == parent)
+				{
+					_root = subR;
+					_root - _parent = nullptr;
+				}
+				else
+				{
+					if (parentParent->_left == parent)
+						parentParent->_left = subR;
+					else
+						parentParent->_right = subR;
+					subR->_parent = parentParent;
+				}
+			}
 			
 	};
 		template <class Key, class T, class Compare, class Alloc>
