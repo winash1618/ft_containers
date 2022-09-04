@@ -277,7 +277,7 @@ namespace ft
 						{
 							uncle->_color = BLACK;
 							parent->_color = BLACK;
-							grandParent->color = RED;
+							grandParent->_color = RED;
 							cur = grandParent;
 							parent = cur->_parent;
 						}
@@ -422,7 +422,7 @@ namespace ft
 				}
 			}
 
-			void RotateR(node_pointer* parent)
+			void RotateR(node_pointer parent)
 			{
 				node_pointer subL = parent->_left;
 				node_pointer subLR = subL->_right;

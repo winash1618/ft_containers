@@ -38,15 +38,16 @@ namespace ft
 	{
 	private:
 		typedef _NodePtr				__node_pointer;
+		typedef _V value_type;
+		value_type						__val;
 		__node_pointer					__ptr_;
 	public:
-		typedef _V value_type;
 		typedef value_type& reference;
 		typedef value_type* pointer;
 		typedef ft::bidirectional_iterator_tag	iterator_category;
 
 		__tree_iterator() {}
-		__tree_iterator(__node_pointer ptr): __ptr_(ptr) {}
+		__tree_iterator(value_type val, __node_pointer ptr): __val(val), __ptr_(ptr) {}
 
 		reference operator*() const {return __ptr_->__value_;}
 		pointer operator->() const {return &__ptr_->__value_;}
