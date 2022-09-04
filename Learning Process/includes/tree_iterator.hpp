@@ -2,6 +2,7 @@
 # define TREE_ITERATOR_HPP
 
 #include "iterator_traits.hpp"
+#include "map.hpp"
 namespace ft
 {
 
@@ -42,8 +43,8 @@ namespace ft
 		// typedef typename _NodePtr::value_type::second      mapped_type;
 	public:
 		// typedef ft::pair<key_type, mapped_type>                          value_type;
-		// typedef value_type& reference;
-		// typedef value_type* pointer;
+		// typedef ft::map::value_type& reference;
+		// typedef ft::map::value_type* pointer;
 		typedef ft::bidirectional_iterator_tag	iterator_category;
 
 		__tree_iterator() {}

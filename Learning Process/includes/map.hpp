@@ -64,7 +64,7 @@ namespace ft
 			typedef RBTreeNode<value_type>	Node;
 			typedef Node					__node_pointer;
 			typedef typename __allocator_type::template rebind<__node_pointer>::other __node_allocator;
-		
+
 		public:
 			typedef typename allocator_type::pointer					pointer;
 			typedef typename allocator_type::const_pointer				const_pointer;
@@ -82,7 +82,7 @@ namespace ft
 			allocator_type _alloc;
 			__node_allocator	n_alloc;
 			size_type _size;
-
+			
 
 		public:
 			explicit map (const key_compare& comp = key_compare(),
@@ -128,8 +128,8 @@ namespace ft
 			// allocator_type get_allocator() const;
 
 			// single element insert
-			// ft::pair<iterator,bool> insert (const value_type& val)
-			void insert (const value_type& val)
+			ft::pair<iterator,bool> insert (const value_type& val)
+			// void insert (const value_type& val)
 			{
 				// when the size of the map is empty.
 				// this will add new element to the map and return true since there is new allocation.
@@ -140,32 +140,32 @@ namespace ft
 					
 					_alloc.construct(&(_root->_data), val);
 					_root->_color = BLACK;
+					return ft::make_pair(iterator(_root), true);
 					
-					// return ft::make_pair(iterator(_root), true);
 				}
 				
 				// this is searching for a match in the current map element if there
 				// is a match it will return with false since there is no allocation.
-				// node_pointer cur = _root;
-				// node_pointer parent = nullptr;
-				// while (cur)
-				// {
+				node_pointer cur = _root;
+				node_pointer parent = nullptr;
+				while (cur)
+				{
 					
-				// 	if (cur->_data.first < val.first)
-				// 	{
-				// 		parent = cur;
-				// 		cur = cur->_right;
-				// 	}
-				// 	else if (cur->_data.first > val.first)
-				// 	{
-				// 		parent = cur;
-				// 		cur = cur->_left;
-				// 	}
-				// 	else
-				// 	{
-				// 		// return ft::make_pair(iterator(cur), false);
-				// 	}
-				// }
+					if (cur->_data.first < val.first)
+					{
+						parent = cur;
+						cur = cur->_right;
+					}
+					else if (cur->_data.first > val.first)
+					{
+						parent = cur;
+						cur = cur->_left;
+					}
+					else
+					{
+						return ft::make_pair(iterator(cur), false);
+					}
+				}
 			}
 			// // with hint insert	
 			// iterator insert (iterator position, const value_type& val);
