@@ -32,7 +32,7 @@ namespace ft
 		return __x->__parent_;
 	}
 
-	template <class _NodePtr>
+	template <class _V, class _NodePtr>
 	class __tree_iterator
 	{
 	private:
@@ -40,8 +40,10 @@ namespace ft
 		__node_pointer					__ptr_;
 
 	public:
-		typedef ft::bidirectional_iterator_tag iterator_category;
-		typedef _Tp                        value_type;
+		typedef ft::bidirectional_iterator_tag	iterator_category;
+		typedef _V								value_type;
+		typedef value_type&						reference;
+		typedef value_type*						pointer;
 
 		__tree_iterator() {}
 		__tree_iterator(__node_pointer ptr): __ptr_(ptr) {}

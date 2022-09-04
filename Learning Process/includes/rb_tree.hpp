@@ -110,16 +110,25 @@ namespace ft
 	// 	}
 	// };
 	
-	// template<class K, class T, class KeyOfT>
-	// class RBTree
+	// template <class _Tp,  class _Allocator>
+	// class tree
 	// {
-	// 	typedef RBTreeNode<K> Node;
 	// 	public:
-	// 		RBTree(): _root(nullptr) {}
-	// 		typedef _TreeIterator<T, T&, T*> iterator;
+	// 		typedef _Tp                                      value_type;
+	// 		typedef _Allocator                               allocator_type;
+	// 		typedef typename allocator_type::pointer         pointer;
+	// 		typedef typename allocator_type::const_pointer   const_pointer;
+	// 		typedef typename allocator_type::size_type       size_type;
+	// 		typedef typename allocator_type::difference_type difference_type;
 			
+	// 		typedef RBTreeNode<value_type> __node;
+	// 		typedef typename allocator_type::template rebind<__node>::other	__node_allocator;
 	// 	private:
-	// 		Node* _root;
+	// 		typedef typename allocator_type::pointer						__node_pointer;
+	// 		typedef typename allocator_type::pointer						__node_const_pointer;
+	// 		__node_pointer													__root;
+		
+	
 	// };
 	//---------------------------------------------------------------------------------
 	// https://opensource.apple.com/source/xnu/xnu-2050.18.24/bsd/hfs/hfscommon/headers/RedBlackTree.h.auto.html

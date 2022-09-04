@@ -10,6 +10,7 @@
 
 namespace ft
 {
+	
 	enum color_t { BLACK, RED };
 
 	template<class T>
@@ -29,7 +30,6 @@ namespace ft
 				,_color(RED)
 		{}
 	};
-
 	template < class Key,                                     // map::key_type
 	class T,                                       // map::mapped_type
 	class Compare = std::less<Key>,                     // map::key_compare
@@ -58,31 +58,31 @@ namespace ft
 					bool operator()(const value_type& __x, const value_type& __y) const
 						{return comp(__x.first, __y.first);}
 			};
-			
+		// https://stackoverflow.com/questions/14148756/what-does-template-rebind-do
 		private:
 			typedef pair<key_type, mapped_type>                             __value_type;
-			typedef typename allocator_type::template rebind_alloc<__value_type>::other __allocator_type;
-
+			typedef typename allocator_type::template rebind<__value_type>::other __allocator_type;
+			typedef RBTreeNode<value_type>	Node;
+			typedef Node*					__node_pointer
+			typedef typename __allocator_type::template rebind<__node_pointer>::other __node_allocator;
+		
 		public:
 			typedef typename allocator_type::pointer					pointer;
 			typedef typename allocator_type::const_pointer				const_pointer;
 			typedef typename allocator_type::size_type					size_type;
 			typedef typename allocator_type::difference_type			difference_type;
-			typedef typename __allocator_type::pointer					__node_pointer;
-			typedef typename __allocator_type::const_pointer			__node_const_pointer;
-			typedef typename ft::__tree_iterator<__node_pointer> 		iterator;
+			typedef typename ft::__tree_iterator<value_type, __node_pointer> 		iterator;
 			// typedef ft::__wrap_iter<value_type>							const_iterator;
 			// typedef ft::reverse_iterator<iterator>						reverse_iterator;
 			// typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
 			
 		private:
-			typedef RBTreeNode<value_type>	Node;
-			typedef Node*					__node_pointer
 			__node_pointer _root;
+			__node_pointer _head;
 			allocator_type _alloc;
-			__allocator_type	t_alloc;
+			__node_allocator	n_alloc;
 			size_type _size;
-			Node* _head;
+
 
 		public:
 			explicit map (const key_compare& comp = key_compare(),
@@ -130,8 +130,9 @@ namespace ft
 				// this will add new element to the map and return true since there is new allocation.
 				if (_root == nullptr)
 				{
-					_root = t_alloc.allocate(1, 0);
-					t_alloc.construct(_root, val);
+					_root = n_alloc.allocate(1, 0);
+					__node_pointer temp(val);
+					n_alloc.construct(_root, temp);
 					_root->_color = BLACK;
 					return ft::make_pair(iterator(_root), true);
 				}
@@ -196,7 +197,6 @@ namespace ft
 
 			// value_compare value_comp() const;
 
-		private:
 			
 	};
 		template <class Key, class T, class Compare, class Alloc>
