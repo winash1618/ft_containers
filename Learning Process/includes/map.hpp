@@ -71,7 +71,7 @@ namespace ft
 			typedef typename allocator_type::size_type					size_type;
 			typedef typename allocator_type::difference_type			difference_type;
 			typedef typename __node_allocator::pointer					node_pointer;
-			typedef typename ft::__tree_iterator<node_pointer> 			iterator;
+			typedef typename ft::__tree_iterator<value_type, node_pointer> 			iterator;
 			// typedef ft::__wrap_iter<value_type>							const_iterator;
 			// typedef ft::reverse_iterator<iterator>						reverse_iterator;
 			// typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
@@ -345,23 +345,106 @@ namespace ft
 				node_pointer subR = parent->_right;
 				node_pointer subRL = subR->_left;
 				node_pointer parentParent = parent->_parent;
+							// initial tree
+								/*parentParent
+									  |
+									parent
+									/	\
+										subR
+										/
+									  subRL
+									  */
 				parent->_right = subRL;
 				subR->_left = parent;
 				parent->_parent = subR;
+									/*
+									parent
+									/	\
+										subRL
+										
+
+
+										subR
+										/
+									  parent
+
+
+									  subR
+									  	|
+									  parent
+									  */
+
 				if (subRL)
 					subRL->_parent = parent;
+									/*
+									parent
+									  |
+									subRL
+									*/
 				if (_root == parent)
 				{
 					_root = subR;
-					_root - _parent = nullptr;
+					_root -> _parent = nullptr;
 				}
 				else
 				{
 					if (parentParent->_left == parent)
 						parentParent->_left = subR;
+						/*
+							parentParent
+								/
+							   subR
+						*/
 					else
 						parentParent->_right = subR;
+						/*
+							parentParent
+								\
+								subR
+						*/
 					subR->_parent = parentParent;
+						/*
+						parentParent
+							|
+						   subR
+						*/
+
+						// final tree
+						/*
+						parentParent
+							|
+						subR(left or right)
+							/
+						parent
+							\
+							subRL
+							*/
+				}
+			}
+
+			void RotateR(node_pointer* parent)
+			{
+				node_pointer subL = parent->_left;
+				node_pointer subLR = subL->_right;
+				node_pointer parentParent = parent->_parent;
+
+				parent->_left = subLR;
+				subL->_right = parent;
+				if (subLR)
+					subLR->_parent = parent;
+				parent->_parent = subL;
+				if (_root == parent)
+				{
+					_root = subL;
+					_root->_parent = nullptr;
+				}
+				else
+				{
+					if (parentParent->_left == parent)
+						parentParent->_left = subL;
+					else
+						parentParent->_right = subL;
+					subL->_parent = parentParent;
 				}
 			}
 			
