@@ -140,7 +140,7 @@ namespace ft
 					
 					_alloc.construct(&(_root->_data), val);
 					_root->_color = BLACK;
-					return ft::make_pair(iterator(_root), true);
+					return ft::make_pair(iterator(val, _root), true);
 					
 				}
 				
@@ -163,7 +163,7 @@ namespace ft
 					}
 					else
 					{
-						return ft::make_pair(iterator(cur), false);
+						return ft::make_pair(iterator(val, cur), false);
 					}
 				}
 				// Here we create a new node and place it in the right place and then balance the tree.
@@ -301,7 +301,7 @@ namespace ft
 					}
 				}
 				_root->_color = BLACK;
-				return ft::make_pair(iterator(newnode), true);
+				return ft::make_pair(iterator(val, newnode), true);
 			}
 			// // with hint insert	
 			// iterator insert (iterator position, const value_type& val);
