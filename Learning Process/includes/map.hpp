@@ -5,13 +5,30 @@
 # include <algorithm>
 # include <functional>
 # include "iterator.hpp"
-# include "rb_tree.hpp"
 # include "iterator_traits.hpp"
 # include "reverse_iterator.hpp"
 
 namespace ft
 {
-	
+	enum color_t { BLACK, RED };
+
+	template<class T>
+	struct RBTreeNode
+	{
+		RBTreeNode<T>* _left;
+		RBTreeNode<T>* _right;
+		RBTreeNode<T>* _parent;
+		
+		T _data;
+		color_t _color;
+		RBTreeNode(const T& data)
+				:_left(nullptr)
+				,_right(nullptr)
+				,_parent(nullptr)
+				,_data(data)
+				,_color(RED)
+		{}
+	};
 
 	template < class Key,                                     // map::key_type
 	class T,                                       // map::mapped_type
@@ -42,13 +59,17 @@ namespace ft
 						{return comp(__x.first, __y.first);}
 			};
 			
-
+		private:
+			typedef pair<key_type, mapped_type>                             __value_type;
+			typedef typename allocator_type::template rebind_alloc<__value_type>::other __allocator_type;
 
 		public:
 			typedef typename allocator_type::pointer					pointer;
 			typedef typename allocator_type::const_pointer				const_pointer;
 			typedef typename allocator_type::size_type					size_type;
 			typedef typename allocator_type::difference_type			difference_type;
+			typedef typename __allocator_type::pointer					__node_pointer;
+			typedef typename __allocator_type::const_pointer			__node_const_pointer;
 			typedef typename ft::__tree_iterator<__node_pointer> 		iterator;
 			// typedef ft::__wrap_iter<value_type>							const_iterator;
 			// typedef ft::reverse_iterator<iterator>						reverse_iterator;
@@ -59,6 +80,7 @@ namespace ft
 			typedef Node*					__node_pointer
 			__node_pointer _root;
 			allocator_type _alloc;
+			__allocator_type	t_alloc;
 			size_type _size;
 			Node* _head;
 
@@ -104,10 +126,39 @@ namespace ft
 			// single element insert
 			ft::pair<iterator,bool> insert (const value_type& val)
 			{
-				// find the most leftish node and set a pointer(root()).
-				// then set __node_pointer __nd = leftish node pointer.
-				// then look at the first __find_equal function.
-				//
+				// when the size of the map is empty.
+				// this will add new element to the map and return true since there is new allocation.
+				if (_root == nullptr)
+				{
+					_root = t_alloc.allocate(1, 0);
+					t_alloc.construct(_root, val);
+					_root->_color = BLACK;
+					return ft::make_pair(iterator(_root), true);
+				}
+				// this is searching for a match in the current map element if there
+				// is a match it will return with false since there is no allocation.
+				__node_pointer cur = _root;
+				__node_pointer parent = nullptr;
+				while (cur)
+				{
+					if (cur->_data.first < val.first)
+					{
+						parent = cur;
+						cur = cur->_right;
+					}
+					else if (cur->_data.first > val.first)
+					{
+						parent = cur;
+						cur = cur->left;
+					}
+					else
+					{
+						return ft::make_pair(iterator(cur), false);
+					}
+				}
+				cur = _alloc.allocate(1, 0);
+				_alloc.allocate(1, 0);
+
 			}
 			// // with hint insert	
 			// iterator insert (iterator position, const value_type& val);
@@ -146,47 +197,7 @@ namespace ft
 			// value_compare value_comp() const;
 
 		private:
-			__find_equal(typename __node_pointer& __parent, const _Key& __v)
-			{
-				__node_pointer temp = _root;
-				while (temp->_left != nullptr)
-					temp = temp->_left;
-				__node_pointer __nd = temp;
-				if (__nd != nullptr)
-				{
-					while (true)
-					{
-						if (value_comp()(__v, __nd->_data))
-						{
-							if (__nd->__left_ != nullptr)
-								__nd = static_cast<__node_pointer>(__nd->__left_);
-							else
-							{
-								__parent = __nd;
-								return __parent->__left_;
-							}
-						}
-						else if (value_comp()(__nd->_data, __v))
-						{
-							if (__nd->__right_ != nullptr)
-								__nd = static_cast<__node_pointer>(__nd->__right_);
-							else
-							{
-								__parent = __nd;
-								return __parent->__right_;
-							}
-						}
-						else
-						{
-							__parent = __nd;
-							return __parent;
-						}
-					}
-				}
-				__parent = __end_node();
-				return __parent->__left_;
-			}
-
+			
 	};
 		template <class Key, class T, class Compare, class Alloc>
 		bool operator== ( const map<Key,T,Compare,Alloc>& lhs,
