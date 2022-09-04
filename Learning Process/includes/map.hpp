@@ -4,9 +4,7 @@
 # include <iostream>
 # include <algorithm>
 # include <functional>
-# include "iterator.hpp"
-# include "iterator_traits.hpp"
-# include "reverse_iterator.hpp"
+# include "tree_iterator.hpp"
 
 namespace ft
 {
@@ -30,6 +28,7 @@ namespace ft
 				,_color(RED)
 		{}
 	};
+	
 	template < class Key,                                     // map::key_type
 	class T,                                       // map::mapped_type
 	class Compare = std::less<Key>,                     // map::key_compare
@@ -63,7 +62,7 @@ namespace ft
 			typedef pair<key_type, mapped_type>                             __value_type;
 			typedef typename allocator_type::template rebind<__value_type>::other __allocator_type;
 			typedef RBTreeNode<value_type>	Node;
-			typedef Node*					__node_pointer
+			typedef Node					__node_pointer;
 			typedef typename __allocator_type::template rebind<__node_pointer>::other __node_allocator;
 		
 		public:
@@ -71,14 +70,15 @@ namespace ft
 			typedef typename allocator_type::const_pointer				const_pointer;
 			typedef typename allocator_type::size_type					size_type;
 			typedef typename allocator_type::difference_type			difference_type;
-			typedef typename ft::__tree_iterator<value_type, __node_pointer> 		iterator;
+			typedef typename __node_allocator::pointer					node_pointer;
+			typedef typename ft::__tree_iterator<node_pointer> 			iterator;
 			// typedef ft::__wrap_iter<value_type>							const_iterator;
 			// typedef ft::reverse_iterator<iterator>						reverse_iterator;
 			// typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
 			
 		private:
-			__node_pointer _root;
-			__node_pointer _head;
+			node_pointer _root;
+			node_pointer _head;
 			allocator_type _alloc;
 			__node_allocator	n_alloc;
 			size_type _size;
@@ -86,7 +86,7 @@ namespace ft
 
 		public:
 			explicit map (const key_compare& comp = key_compare(),
-			const allocator_type& alloc = allocator_type()) : _root(), _alloc(alloc), _size(0)
+			const allocator_type& alloc = allocator_type()) : _root(nullptr), _alloc(alloc), _size(0)
 			{
 				std::cout << "Map default constructor called" << std::endl;
 			}
@@ -96,7 +96,11 @@ namespace ft
 			// 	const allocator_type& alloc = allocator_type());	
 			// map (const map& x);
 
-			// ~map();
+			~map()
+			{
+				std::cout << (_root->_data).first << std::endl;
+				std::cout << _root->_color;
+			}
 
 			// iterator begin();
 			// const_iterator begin() const;
@@ -124,42 +128,44 @@ namespace ft
 			// allocator_type get_allocator() const;
 
 			// single element insert
-			ft::pair<iterator,bool> insert (const value_type& val)
+			// ft::pair<iterator,bool> insert (const value_type& val)
+			void insert (const value_type& val)
 			{
 				// when the size of the map is empty.
 				// this will add new element to the map and return true since there is new allocation.
+				std::cout << "I am inside insert" << std::endl;
 				if (_root == nullptr)
 				{
-					_root = n_alloc.allocate(1, 0);
-					__node_pointer temp(val);
-					n_alloc.construct(_root, temp);
+					_root = n_alloc.allocate(1);
+					
+					_alloc.construct(&(_root->_data), val);
 					_root->_color = BLACK;
-					return ft::make_pair(iterator(_root), true);
+					
+					// return ft::make_pair(iterator(_root), true);
 				}
+				
 				// this is searching for a match in the current map element if there
 				// is a match it will return with false since there is no allocation.
-				__node_pointer cur = _root;
-				__node_pointer parent = nullptr;
-				while (cur)
-				{
-					if (cur->_data.first < val.first)
-					{
-						parent = cur;
-						cur = cur->_right;
-					}
-					else if (cur->_data.first > val.first)
-					{
-						parent = cur;
-						cur = cur->left;
-					}
-					else
-					{
-						return ft::make_pair(iterator(cur), false);
-					}
-				}
-				cur = _alloc.allocate(1, 0);
-				_alloc.allocate(1, 0);
-
+				// node_pointer cur = _root;
+				// node_pointer parent = nullptr;
+				// while (cur)
+				// {
+					
+				// 	if (cur->_data.first < val.first)
+				// 	{
+				// 		parent = cur;
+				// 		cur = cur->_right;
+				// 	}
+				// 	else if (cur->_data.first > val.first)
+				// 	{
+				// 		parent = cur;
+				// 		cur = cur->_left;
+				// 	}
+				// 	else
+				// 	{
+				// 		// return ft::make_pair(iterator(cur), false);
+				// 	}
+				// }
 			}
 			// // with hint insert	
 			// iterator insert (iterator position, const value_type& val);
