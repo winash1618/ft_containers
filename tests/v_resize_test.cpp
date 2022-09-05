@@ -25,5 +25,17 @@ int main ()
   	std::cout << "size: " << (int) myvector.size() << '\n';
   std::cout << "capacity: " << (int) myvector.capacity() << '\n';
 
+
+
+	{
+		CT::vector<std::string> vec;
+
+		vec.resize(7, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod auctor odio, sed fermentum libero varius quis. Curabitur sed faucibus tortor.");
+		for (size_t i = 0; i < vec.size(); i++) {
+			std::cout << vec[i] << std::endl;
+		}
+	}
+
+
   return 0;
 }

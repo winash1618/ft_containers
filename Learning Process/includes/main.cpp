@@ -40,18 +40,28 @@
 int main ()
 {
   ft::map<char,int> mymap;
+  std::map<char,int> mymap1;
 
   // first insert function version (single parameter):
-  mymap.insert ( ft::pair<char,int>('a',100) );
-  mymap.insert ( ft::pair<char,int>('a',100) );
-//   mymap.insert ( std::pair<char,int>('z',200) );
+//   mymap.insert ( ft::pair<char,int>('a',100) );
+//   mymap.insert ( ft::pair<char,int>('a',100) );
+  mymap.insert ( ft::pair<char,int>('z',200) );
+  mymap1.insert ( std::pair<char,int>('z',200) );
 
-//   std::pair<std::map<char,int>::iterator,bool> ret;
-//   ret = mymap.insert ( std::pair<char,int>('z',500) );
-//   if (ret.second==false) {
-//     std::cout << "element 'z' already existed";
-//     std::cout << " with a value of " << ret.first->second << '\n';
+  ft::pair<ft::map<char,int>::iterator,bool> ret;
+ 	std::pair<std::map<char,int>::iterator,bool> ret1;
+  ret = mymap.insert (ft::pair<char,int>('z',500));
+  ret1 = mymap1.insert ( std::pair<char,int>('z',500) );
+
+  if (ret.second==false) {
+    std::cout << "element 'z' already existed";
+    std::cout << " with a value of " << ret.first->second << '\n';
   }
+  if (ret1.second==false) {
+    std::cout << "element 'z' already existed";
+    std::cout << " with a value of " << ret1.first->second << '\n';
+  }
+
 
 //   // second insert function version (with hint position):
 //   std::map<char,int>::iterator it = mymap.begin();
@@ -74,8 +84,8 @@ int main ()
 //   for (it=anothermap.begin(); it!=anothermap.end(); ++it)
 //     std::cout << it->first << " => " << it->second << '\n';
 
-//   return 0;
-// }
+  return 0;
+}
 
 
 

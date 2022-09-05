@@ -49,20 +49,38 @@ namespace ft
 		__tree_iterator() {}
 		__tree_iterator(value_type val, __node_pointer ptr): __val(val), __ptr_(ptr) {}
 
-		reference operator*() const {return __ptr_->__value_;}
-		pointer operator->() const {return &__ptr_->__value_;}
+		reference operator*() const
+		{
+			return __ptr_->_data;
+		}
+		pointer operator->() const
+		{
+			return &__ptr_->_data;
+		}
 
 		__tree_iterator& operator++()
-			{__ptr_ = __tree_next(__ptr_);
-			return *this;}
+		{
+			__ptr_ = __tree_next(__ptr_);
+			return *this;
+		}
 		__tree_iterator operator++(int)
-			{__tree_iterator __t(*this); ++(*this); return __t;}
+		{
+			__tree_iterator __t(*this);
+			++(*this);
+			return __t;
+		}
 
 		__tree_iterator& operator--()
-			{__ptr_ = __tree_prev(__ptr_);
-			return *this;}
+		{
+			__ptr_ = __tree_prev(__ptr_);
+			return *this;
+		}
 		__tree_iterator operator--(int)
-			{__tree_iterator __t(*this); --(*this); return __t;}
+		{
+			__tree_iterator __t(*this);
+			--(*this); 
+			return __t;
+		}
 
 		// friend bool operator==(const __tree_iterator& __x, const __tree_iterator& __y)
 		// 	{return __x.__ptr_ == __y.__ptr_;}

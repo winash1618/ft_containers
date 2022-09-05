@@ -66,13 +66,13 @@ namespace ft
 			typedef typename __allocator_type::template rebind<__node_pointer>::other __node_allocator;
 
 		public:
-			typedef typename allocator_type::pointer					pointer;
-			typedef typename allocator_type::const_pointer				const_pointer;
-			typedef typename allocator_type::size_type					size_type;
-			typedef typename allocator_type::difference_type			difference_type;
-			typedef typename __node_allocator::pointer					node_pointer;
-			typedef typename ft::__tree_iterator<value_type, node_pointer> 			iterator;
-			// typedef ft::__wrap_iter<value_type>							const_iterator;
+			typedef typename allocator_type::pointer						pointer;
+			typedef typename allocator_type::const_pointer					const_pointer;
+			typedef typename allocator_type::size_type						size_type;
+			typedef typename allocator_type::difference_type				difference_type;
+			typedef typename __node_allocator::pointer						node_pointer;
+			typedef ft::__tree_iterator<value_type, node_pointer> 			iterator;
+			typedef ft::__tree_iterator<value_type, node_pointer>			const_iterator;
 			// typedef ft::reverse_iterator<iterator>						reverse_iterator;
 			// typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
 			
@@ -102,8 +102,25 @@ namespace ft
 				std::cout << _root->_color;
 			}
 
-			// iterator begin();
-			// const_iterator begin() const;
+			iterator begin()
+			{
+				node_pointer left = _root;
+				while (left && left->_left)
+				{
+					left = left->_left;
+				}
+				return iterator(left->_data, left);
+			}
+
+			const_iterator begin() const
+			{
+				node_pointer left = _root;
+				while (left && left->_left)
+				{
+					left = left->_left;
+				}
+				return const_iterator(left->_data, left);
+			}
 
 			// void clear();
 
@@ -111,8 +128,14 @@ namespace ft
 
 			// bool empty() const;
 
-			// iterator end();
-			// const_iterator end() const;
+			iterator end()
+			{
+				return iterator(nullptr, nullptr);
+			}
+			const_iterator end() const
+			{
+				return iterator(nullptr, nullptr);
+			}
 
 			// pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
 			// pair<iterator,iterator>             equal_range (const key_type& k);
@@ -163,6 +186,7 @@ namespace ft
 					}
 					else
 					{
+						
 						return ft::make_pair(iterator(val, cur), false);
 					}
 				}
