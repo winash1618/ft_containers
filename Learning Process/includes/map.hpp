@@ -160,8 +160,9 @@ namespace ft
 				if (_root == nullptr)
 				{
 					_root = n_alloc.allocate(1);
-					
-					_alloc.construct(&(_root->_data), val);
+					ft::RBTreeNode<value_type> temp(val);
+					n_alloc.construct(_root, temp);
+					std::cout << _root->_data.second << std::endl;
 					_root->_color = BLACK;
 					return ft::make_pair(iterator(val, _root), true);
 					
@@ -192,7 +193,8 @@ namespace ft
 				}
 				// Here we create a new node and place it in the right place and then balance the tree.
 				cur = n_alloc.allocate(1);
-				_alloc.construct(&(cur->_data), val);
+				ft::RBTreeNode<value_type> temp(val);
+				n_alloc.construct(cur, temp);
 				node_pointer newnode = cur;
 				newnode->_color = RED;
 				if (parent->_data.first < val.first) // due to the above while the parent reach next to the null leaf. we will check where to place the node (left or right) and place the node.

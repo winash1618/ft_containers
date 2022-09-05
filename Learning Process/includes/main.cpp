@@ -55,11 +55,11 @@ int main ()
 
   if (ret.second==false) {
     std::cout << "element 'z' already existed";
-    std::cout << " with a value of " << ret.first->second << '\n';
+    std::cout << " with a value of " << ret.first->first << " " << ret.first->second << '\n';
   }
   if (ret1.second==false) {
     std::cout << "element 'z' already existed";
-    std::cout << " with a value of " << ret1.first->second << '\n';
+    std::cout << " with a value of " << ret.first->first << " " << ret1.first->second << '\n';
   }
 
 
