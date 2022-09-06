@@ -164,7 +164,9 @@ namespace ft
 					n_alloc.construct(_root, temp);
 					std::cout << _root->_data.second << std::endl;
 					_root->_color = BLACK;
-					return ft::make_pair(iterator(val, _root), true);
+					ft::pair<iterator, bool> t = ft::make_pair(iterator(val, _root), true);
+					std::cout << t.first->first << std::endl;
+					return t;
 					
 				}
 				

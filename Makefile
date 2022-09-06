@@ -1,12 +1,12 @@
-# SRC = v_rbegin_test
-SRC = v_erase_test.cpp v_popback_test.cpp v_sizecap_test.cpp \
-		v_insert_test.cpp v_swap_test.cpp v_empty_test.cpp \
-		v_construct_test.cpp v_pushback_test.cpp v_relation_test.cpp \
-		v_nonswap_test.cpp v_bracket_test.cpp v_assignment_test.cpp \
-		v_rbegin_test.cpp v_rend_test.cpp v_reserve_test.cpp \
-		v_resize_test.cpp v_size_test.cpp v_at_test.cpp \
-		v_getalloc_test.cpp v_front_test.cpp v_clear_test.cpp \
-		v_begin_test.cpp v_assign_test.cpp
+SRC = v_resize_test.cpp
+# SRC = v_erase_test.cpp v_popback_test.cpp v_sizecap_test.cpp \
+# 		v_insert_test.cpp v_swap_test.cpp v_empty_test.cpp \
+# 		v_construct_test.cpp v_pushback_test.cpp v_relation_test.cpp \
+# 		v_nonswap_test.cpp v_bracket_test.cpp v_assignment_test.cpp \
+# 		v_rbegin_test.cpp v_rend_test.cpp v_reserve_test.cpp \
+# 		v_resize_test.cpp v_size_test.cpp v_at_test.cpp \
+# 		v_getalloc_test.cpp v_front_test.cpp v_clear_test.cpp \
+# 		v_begin_test.cpp v_assign_test.cpp
 
 SRC_DIR = tests/
 

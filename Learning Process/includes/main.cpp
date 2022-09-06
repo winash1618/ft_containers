@@ -53,14 +53,11 @@ int main ()
   ret = mymap.insert (ft::pair<char,int>('z',500));
   ret1 = mymap1.insert ( std::pair<char,int>('z',500) );
 
-  if (ret.second==false) {
     std::cout << "element 'z' already existed";
     std::cout << " with a value of " << ret.first->first << " " << ret.first->second << '\n';
-  }
-  if (ret1.second==false) {
+
     std::cout << "element 'z' already existed";
     std::cout << " with a value of " << ret.first->first << " " << ret1.first->second << '\n';
-  }
 
 
 //   // second insert function version (with hint position):

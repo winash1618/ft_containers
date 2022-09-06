@@ -17,6 +17,7 @@ int main ()
   myvector.resize(5);
   myvector.resize(8,100);
   myvector.resize(12);
+  myvector.resize(INT_MIN);
 
   std::cout << "myvector contains:";
   for (size_t i=0;i<myvector.size();i++)
@@ -31,6 +32,10 @@ int main ()
 		CT::vector<std::string> vec;
 
 		vec.resize(7, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod auctor odio, sed fermentum libero varius quis. Curabitur sed faucibus tortor.");
+		for (size_t i = 0; i < vec.size(); i++) {
+			std::cout << vec[i] << std::endl;
+		}
+		vec.resize(12, "Proin tellus sem, facilisis vel faucibus nec, convallis in ex");
 		for (size_t i = 0; i < vec.size(); i++) {
 			std::cout << vec[i] << std::endl;
 		}
