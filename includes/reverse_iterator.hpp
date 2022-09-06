@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:27:34 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/31 21:53:56 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/09/06 14:49:15 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@ namespace ft
 		typedef typename ft::iterator_traits<Iterator>::difference_type difference_type;
 		typedef typename ft::iterator_traits<Iterator>::reference       reference;
 		typedef typename ft::iterator_traits<Iterator>::pointer         pointer;
+		typedef typename ft::iterator_traits<Iterator>::value_type         value_type;
+		typedef typename ft::iterator_traits<Iterator>::iterator_category         iterator_category;
+		
 
 		reverse_iterator(): _iter(), current(){}
 		explicit reverse_iterator(Iterator x) : _iter(x), current(x) {}

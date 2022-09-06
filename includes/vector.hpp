@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/31 16:55:42 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/09/06 15:01:52 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,11 +181,11 @@ template<class T, T v>
 			explicit vector (size_type len, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
 			 : _alloc(alloc) // fill constructor
 			{
-				if (len > 0)
-				{
-					allocate(len);
-					construct_at_end(len, val);
-				}
+				
+					
+					
+				allocate(len);
+				construct_at_end(len, val);
 			}
 			
 			template <class InputIterator>
@@ -384,7 +384,7 @@ template<class T, T v>
 			}
 			size_type max_size() const
 			{
-				return (std::numeric_limits<difference_type>::max()); 
+				return (_alloc.max_size()); 
 			}
 			bool empty() const
 			{
@@ -478,13 +478,17 @@ template<class T, T v>
 				}
 				if (n < _size)
 				{
+					for(size_type index = n; index < _size; index++)
+					{
+						_alloc.destroy(_vec + index);
+					}
 					_size = n;
 				}
 				else if (n >= _size && n < _cap )
 				{
 					// std::cout << "i am inside else if" << std::endl;
-					if (!val)
-						val = 0;
+					// if (!val)
+					// 	val = 0;
 					for(size_type index = _size; index < n; index++)
 					{
 						_alloc.construct(_vec + index, val);
@@ -493,8 +497,8 @@ template<class T, T v>
 				}
 				else
 				{
-					if (!val)
-						val = 0;
+					// if (!val)
+					// 	val = 0;
 					if (n > max_size())
 						throw std::length_error("Capacity allocated exceeds max_size()");
 
