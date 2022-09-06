@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/09/06 15:01:52 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/09/06 15:36:01 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -474,8 +474,9 @@ template<class T, T v>
 
 				if (n > max_size())
 				{
-					throw std::length_error("Fix it");
-				}
+					throw std::length_error("vector");
+				}else
+					recommend(n);
 				if (n < _size)
 				{
 					for(size_type index = n; index < _size; index++)
