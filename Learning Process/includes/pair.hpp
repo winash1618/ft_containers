@@ -19,9 +19,14 @@ namespace ft
 				
 				second = p.second;
 			}
-			pair& operator=(const pair& p)
+			pair& operator=(const pair& p) 
 			{
-				second = p.second;
+				if (this != &p)
+				{
+					first = p.first;
+					second = p.second;
+				}
+				
 				return *this;
 			}
 	};

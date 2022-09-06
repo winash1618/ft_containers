@@ -13,11 +13,11 @@ namespace ft
 	_NodePtr
 	__tree_next(_NodePtr __x)
 	{
-		if (__x->__right_ != nullptr)
-			return __tree_min(__x->__right_);
+		if (__x->_right != nullptr)
+			return __tree_min(__x->_right);
 		while (!__tree_is_left_child(__x))
-			__x = __x->__parent_;
-		return __x->__parent_;
+			__x = __x->_parent;
+		return __x->_parent;
 	}
 
 	// Returns:  pointer to the previous in-order node before __x.
@@ -39,7 +39,7 @@ namespace ft
 	private:
 		typedef _NodePtr				__node_pointer;
 		typedef _V value_type;
-		value_type						__val;
+		// value_type						__val; commenting this fixed the assignment operator overload error in ft::pair
 		__node_pointer					__ptr_;
 	public:
 		typedef value_type& reference;
@@ -47,7 +47,7 @@ namespace ft
 		typedef ft::bidirectional_iterator_tag	iterator_category;
 
 		__tree_iterator() {}
-		__tree_iterator(value_type val, __node_pointer ptr): __val(val), __ptr_(ptr) {}
+		__tree_iterator(value_type val, __node_pointer ptr):  __ptr_(ptr) {}
 
 		reference operator*() const
 		{
@@ -58,29 +58,29 @@ namespace ft
 			return &__ptr_->_data;
 		}
 
-		__tree_iterator& operator++()
-		{
-			__ptr_ = __tree_next(__ptr_);
-			return *this;
-		}
-		__tree_iterator operator++(int)
-		{
-			__tree_iterator __t(*this);
-			++(*this);
-			return __t;
-		}
+		// __tree_iterator& operator++()
+		// {
+		// 	__ptr_ = __tree_next(__ptr_);
+		// 	return *this;
+		// }
+		// __tree_iterator operator++(int)
+		// {
+		// 	__tree_iterator __t(*this);
+		// 	++(*this);
+		// 	return __t;
+		// }
 
-		__tree_iterator& operator--()
-		{
-			__ptr_ = __tree_prev(__ptr_);
-			return *this;
-		}
-		__tree_iterator operator--(int)
-		{
-			__tree_iterator __t(*this);
-			--(*this); 
-			return __t;
-		}
+		// __tree_iterator& operator--()
+		// {
+		// 	__ptr_ = __tree_prev(__ptr_);
+		// 	return *this;
+		// }
+		// __tree_iterator operator--(int)
+		// {
+		// 	__tree_iterator __t(*this);
+		// 	--(*this); 
+		// 	return __t;
+		// }
 
 		// friend bool operator==(const __tree_iterator& __x, const __tree_iterator& __y)
 		// 	{return __x.__ptr_ == __y.__ptr_;}

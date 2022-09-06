@@ -45,20 +45,26 @@ int main ()
   // first insert function version (single parameter):
 //   mymap.insert ( ft::pair<char,int>('a',100) );
 //   mymap.insert ( ft::pair<char,int>('a',100) );
-  mymap.insert ( ft::pair<char,int>('z',200) );
-  mymap1.insert ( std::pair<char,int>('z',200) );
 
-  ft::pair<ft::map<char,int>::iterator,bool> ret;
- 	std::pair<std::map<char,int>::iterator,bool> ret1;
-  ret = mymap.insert (ft::pair<char,int>('z',500));
-  ret1 = mymap1.insert ( std::pair<char,int>('z',500) );
+	mymap.insert ( ft::pair<char,int>('z',200) );
+	mymap1.insert ( std::pair<char,int>('z',200) );
+	ft::pair<ft::map<char,int>::iterator,bool> ret;
+	std::pair<std::map<char,int>::iterator,bool> ret1;
+	
+	 ret = mymap.insert (ft::pair<char,int>('z',500));
+	ret1 = mymap1.insert (std::pair<char,int>('z',500));
 
-    std::cout << "element 'z' already existed";
-    std::cout << " with a value of " << ret.first->first << " " << ret.first->second << '\n';
+	std::cout << "element 'z' already existed";
+	std::cout << " with a value of " << ret.first->first << " " << ret.first->second << '\n';
 
-    std::cout << "element 'z' already existed";
-    std::cout << " with a value of " << ret.first->first << " " << ret1.first->second << '\n';
-
+	std::cout << "element 'z' already existed";
+	std::cout << " with a value of " << ret1.first->first << " " << ret1.first->second << '\n';
+	// size_t i = 0;
+	// for(ft::map<char,int>::iterator it = mymap.begin(); i < 1; ++i, ++it)
+	// 	std::cout << it->first << "->" << it->second << std::endl;
+	std::cout << "HELKO" << std::endl;
+	ft::map<char,int>::iterator it = mymap.begin();
+	std::cout << it->first << "->" << it->second << std::endl;
 
 //   // second insert function version (with hint position):
 //   std::map<char,int>::iterator it = mymap.begin();
