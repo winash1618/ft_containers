@@ -5,7 +5,39 @@
 #include "map.hpp"
 namespace ft
 {
+	// Returns:  true if __x is a left child of its parent, else false
+	// Precondition:  __x != nullptr.
+	template <class _NodePtr>
+	inline
+	bool
+	__tree_is_left_child(_NodePtr __x)
+	{
+		return __x == __x->_parent->_left;
+	}
 
+	// Returns:  pointer to the left-most node under __x.
+	// Precondition:  __x != nullptr.
+	template <class _NodePtr>
+	inline
+	_NodePtr
+	__tree_min(_NodePtr __x)
+	{
+		while (__x->_left != nullptr)
+			__x = __x->_left;
+		return __x;
+	}
+
+	// Returns:  pointer to the right-most node under __x.
+	// Precondition:  __x != nullptr.
+	template <class _NodePtr>
+	inline
+	_NodePtr
+	__tree_max(_NodePtr __x)
+	{
+		while (__x->_right != nullptr)
+			__x = __x->_right;
+		return __x;
+	}
 
 	// Returns:  pointer to the next in-order node after __x.
 	// Precondition:  __x != nullptr.
@@ -16,7 +48,9 @@ namespace ft
 		if (__x->_right != nullptr)
 			return __tree_min(__x->_right);
 		while (!__tree_is_left_child(__x))
+		{
 			__x = __x->_parent;
+		}
 		return __x->_parent;
 	}
 
@@ -26,11 +60,11 @@ namespace ft
 	_NodePtr
 	__tree_prev(_NodePtr __x)
 	{
-		if (__x->__left_ != nullptr)
-			return __tree_max(__x->__left_);
+		if (__x->_left != nullptr)
+			return __tree_max(__x->_left);
 		while (__tree_is_left_child(__x))
-			__x = __x->__parent_;
-		return __x->__parent_;
+			__x = __x->_parent;
+		return __x->_parent;
 	}
 
 	template <class _V, class _NodePtr>
@@ -47,7 +81,7 @@ namespace ft
 		typedef ft::bidirectional_iterator_tag	iterator_category;
 
 		__tree_iterator() {}
-		__tree_iterator(value_type val, __node_pointer ptr):  __ptr_(ptr) {}
+		__tree_iterator(value_type val, __node_pointer ptr): __ptr_(ptr) {}
 
 		reference operator*() const
 		{
@@ -58,34 +92,34 @@ namespace ft
 			return &__ptr_->_data;
 		}
 
-		// __tree_iterator& operator++()
-		// {
-		// 	__ptr_ = __tree_next(__ptr_);
-		// 	return *this;
-		// }
-		// __tree_iterator operator++(int)
-		// {
-		// 	__tree_iterator __t(*this);
-		// 	++(*this);
-		// 	return __t;
-		// }
+		__tree_iterator& operator++()
+		{
+			__ptr_ = __tree_next(__ptr_);
+			return *this;
+		}
+		__tree_iterator operator++(int)
+		{
+			__tree_iterator __t(*this);
+			++(*this);
+			return __t;
+		}
 
-		// __tree_iterator& operator--()
-		// {
-		// 	__ptr_ = __tree_prev(__ptr_);
-		// 	return *this;
-		// }
-		// __tree_iterator operator--(int)
-		// {
-		// 	__tree_iterator __t(*this);
-		// 	--(*this); 
-		// 	return __t;
-		// }
+		__tree_iterator& operator--()
+		{
+			__ptr_ = __tree_prev(__ptr_);
+			return *this;
+		}
+		__tree_iterator operator--(int)
+		{
+			__tree_iterator __t(*this);
+			--(*this); 
+			return __t;
+		}
 
-		// friend bool operator==(const __tree_iterator& __x, const __tree_iterator& __y)
-		// 	{return __x.__ptr_ == __y.__ptr_;}
-		// friend bool operator!=(const __tree_iterator& __x, const __tree_iterator& __y)
-		// 	{return !(__x == __y);}
+		friend bool operator==(const __tree_iterator& __x, const __tree_iterator& __y)
+			{return __x.__ptr_ == __y.__ptr_;}
+		friend bool operator!=(const __tree_iterator& __x, const __tree_iterator& __y)
+			{return !(__x == __y);}
 
 	};
 	

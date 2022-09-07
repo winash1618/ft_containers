@@ -130,11 +130,21 @@ namespace ft
 
 			iterator end()
 			{
-				return iterator(nullptr, nullptr);
+				node_pointer right = _root;
+				while (right && right->_right)
+				{
+					right = right->_right;
+				}
+				return iterator(right->_data, right->_right);
 			}
 			const_iterator end() const
 			{
-				return iterator(nullptr, nullptr);
+				node_pointer right = _root;
+				while (right)
+				{
+					right = right->_right;
+				}
+				return const_iterator(right->_data, right->_right);
 			}
 
 			// pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
@@ -166,6 +176,7 @@ namespace ft
 					_root->_color = BLACK;
 					ft::pair<iterator, bool> t = ft::make_pair<iterator, bool>(iterator(val, _root), true);
 					std::cout << t.first->first << std::endl;
+					_size++;
 					return t;
 					
 				}
@@ -176,7 +187,6 @@ namespace ft
 				node_pointer parent = nullptr;
 				while (cur)
 				{
-					
 					if (cur->_data.first < val.first)
 					{
 						parent = cur;
@@ -189,7 +199,6 @@ namespace ft
 					}
 					else
 					{
-						
 						return ft::make_pair(iterator(val, cur), false);
 					}
 				}
