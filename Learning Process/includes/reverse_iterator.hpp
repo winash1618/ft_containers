@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:27:34 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/14 19:47:00 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/09/08 13:53:36 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,7 @@ namespace ft
 		reverse_iterator(): _iter(nullptr_f), current(nullptr_f){}
 		explicit reverse_iterator(Iterator x) : _iter(x), current(x) {}
 		template <class U> 
-		reverse_iterator(const reverse_iterator<U>& u);
-		template <class U> 
-		reverse_iterator& operator=(const reverse_iterator<U>& u);//c++11
+		reverse_iterator(const reverse_iterator<U>& u) : _iter(u.base()), current(u.base()) {}
 		Iterator base() const
 		{
 			return current;

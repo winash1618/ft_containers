@@ -73,57 +73,64 @@ namespace ft
 	template <class _V, class _NodePtr>
 	class __tree_iterator
 	{
-	private:
-		typedef _NodePtr				__node_pointer;
-		typedef _V value_type;
-		// value_type						__val; commenting this fixed the assignment operator overload error in ft::pair
-		__node_pointer					__ptr_;
-	public:
-		typedef value_type& reference;
-		typedef value_type* pointer;
-		typedef ft::bidirectional_iterator_tag	iterator_category;
+		private:
+			typedef _NodePtr				__node_pointer;
+			typedef _V value_type;
+			// value_type						__val; commenting this fixed the assignment operator overload error in ft::pair
+			__node_pointer					__ptr_;
+			__node_pointer					__end_;
+		public:
+			typedef value_type& reference;
+			typedef value_type* pointer;
+			typedef ft::bidirectional_iterator_tag	iterator_category;
 
-		__tree_iterator() {}
-		__tree_iterator(__node_pointer ptr): __ptr_(ptr) {}
+			__tree_iterator() {}
+			__tree_iterator(__node_pointer ptr): __ptr_(ptr) {}
+			__tree_iterator(__node_pointer end, __node_pointer ptr):__end_(end), __ptr_(ptr) {}
 
-		reference operator*() const
-		{
-			return __ptr_->_data;
-		}
-		pointer operator->() const
-		{
-			return &__ptr_->_data;
-		}
+			reference operator*() const
+			{
+				return __ptr_->_data;
+			}
+			pointer operator->() const
+			{
+				return &__ptr_->_data;
+			}
 
-		__tree_iterator& operator++()
-		{
-			__ptr_ = __tree_next(__ptr_);
-			std::cout << &(__ptr_) << std::endl;
-			return *this;
-		}
-		__tree_iterator operator++(int)
-		{
-			__tree_iterator __t(*this);
-			++(*this);
-			return __t;
-		}
+			__tree_iterator& operator++()
+			{
+				__ptr_ = __tree_next(__ptr_);
+				return *this;
+			}
+			__tree_iterator operator++(int)
+			{
+				__tree_iterator __t(*this);
+				++(*this);
+				return __t;
+			}
 
-		__tree_iterator& operator--()
-		{
-			__ptr_ = __tree_prev(__ptr_);
-			return *this;
-		}
-		__tree_iterator operator--(int)
-		{
-			__tree_iterator __t(*this);
-			--(*this); 
-			return __t;
-		}
+			__tree_iterator& operator--()
+			{
+				if (__ptr_ == nullptr)
+				{
+					__ptr_ = __end_;
+					return *this;
+				}
+				// __ptr_ = __tree_prev(__ptr_);
+				return *this;
+			}
+			__tree_iterator operator--(int)
+			{
+				
+				__tree_iterator __t(*this);
+				--(*this); 
+				return __t;
+			}
 
-		friend bool operator==(const __tree_iterator& __x, const __tree_iterator& __y)
-			{return __x.__ptr_ == __y.__ptr_;}
-		friend bool operator!=(const __tree_iterator& __x, const __tree_iterator& __y)
-			{return !(__x == __y);}
+			friend bool operator==(const __tree_iterator& __x, const __tree_iterator& __y)
+				{return __x.__ptr_ == __y.__ptr_;}
+			friend bool operator!=(const __tree_iterator& __x, const __tree_iterator& __y)
+				{return !(__x == __y);}
 
 	};
 	

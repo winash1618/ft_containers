@@ -71,7 +71,8 @@ int main ()
 	for(ft::map<char,int>::iterator it = mymap.begin(); it != mymap.end(); ++it)
 		std::cout << it->first << "->" << it->second << std::endl;
 	std::cout << "HELKO" << std::endl;
-	ft::map<char,int>::iterator it = mymap.begin();
+	ft::map<char,int>::iterator it = mymap.end();
+	it--;
 
 	std::cout << it->first << "->" << it->second << std::endl;
 
