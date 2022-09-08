@@ -73,8 +73,8 @@ namespace ft
 			typedef typename __node_allocator::pointer						node_pointer;
 			typedef ft::__tree_iterator<value_type, node_pointer> 			iterator;
 			typedef ft::__tree_iterator<value_type, node_pointer>			const_iterator;
-			// typedef ft::reverse_iterator<iterator>						reverse_iterator;
-			// typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
+			typedef ft::reverse_iterator<iterator>						reverse_iterator;
+			typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
 			
 		private:
 			node_pointer _root;
@@ -132,11 +132,30 @@ namespace ft
 				return const_iterator(right, left);
 			}
 
-			// void clear();
+			void clear()
+			{
+				
+			}
 
-			// size_type count (const key_type& k) const;
+			size_type count (const key_type& k) const
+			{
+				size_type counter = 0;
+				iterator search = begin();
+				while (search != end())
+				{
+					if ( search->first == k)
+						counter++;
+					search++;
+				}
+				return (counter);
+			}
 
-			// bool empty() const;
+			bool empty() const
+			{
+				if (_size == 0)
+					return true;
+				return false;
+			}
 
 			iterator end()
 			{
@@ -368,17 +387,17 @@ namespace ft
 
 			// mapped_type& operator[] (const key_type& key);
 
-			// map& operator= (const map& x);
+			// map& operator=(const map& x);
 
 
-			// reverse_iterator rbegin();
-			// const_reverse_iterator rbegin() const;
+			reverse_iterator rbegin(){return reverse_iterator(this->end());}
+			const_reverse_iterator rbegin() const{return const_reverse_iterator(this->end());}
 
 
-			// reverse_iterator rend();
-			// const_reverse_iterator rend() const;
+			reverse_iterator rend(){return reverse_iterator(this->begin()); }
+			const_reverse_iterator rend() const{return const_reverse_iterator(this->begin()); };
 
-			// size_type size() const;
+			size_type size() const{return (_size);}
 
 			// void swap (map& x);
 
