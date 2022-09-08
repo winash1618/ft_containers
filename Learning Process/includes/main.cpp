@@ -68,7 +68,7 @@ int main ()
 	// std::cout << "element 'z' already existed";
 	// std::cout << " with a value of " << ret1.first->first << " " << ret1.first->second << '\n';
 
-	for(ft::map<char,int>::iterator it = mymap.begin(); it != mymap.end() ; ++it)
+	for(ft::map<char,int>::iterator it = mymap.begin(); it != mymap.end(); ++it)
 		std::cout << it->first << "->" << it->second << std::endl;
 	std::cout << "HELKO" << std::endl;
 	ft::map<char,int>::iterator it = mymap.begin();

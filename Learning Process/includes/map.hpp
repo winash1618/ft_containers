@@ -109,7 +109,7 @@ namespace ft
 				{
 					left = left->_left;
 				}
-				return iterator(left->_data, left);
+				return iterator(left);
 			}
 
 			const_iterator begin() const
@@ -119,7 +119,7 @@ namespace ft
 				{
 					left = left->_left;
 				}
-				return const_iterator(left->_data, left);
+				return const_iterator(left);
 			}
 
 			// void clear();
@@ -135,16 +135,16 @@ namespace ft
 				{
 					right = right->_right;
 				}
-				return iterator(right->_data, right->_right);
+				return iterator(right->_right);
 			}
 			const_iterator end() const
 			{
 				node_pointer right = _root;
-				while (right)
+				while (right && right->_right)
 				{
 					right = right->_right;
 				}
-				return const_iterator(right->_data, right->_right);
+				return const_iterator(right->_right);
 			}
 
 			// pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
@@ -174,7 +174,7 @@ namespace ft
 					n_alloc.construct(_root, temp);
 					std::cout << _root->_data.second << std::endl;
 					_root->_color = BLACK;
-					ft::pair<iterator, bool> t = ft::make_pair<iterator, bool>(iterator(val, _root), true);
+					ft::pair<iterator, bool> t = ft::make_pair<iterator, bool>(iterator(_root), true);
 					std::cout << t.first->first << std::endl;
 					_size++;
 					return t;
@@ -199,7 +199,7 @@ namespace ft
 					}
 					else
 					{
-						return ft::make_pair(iterator(val, cur), false);
+						return ft::make_pair(iterator(cur), false);
 					}
 				}
 				// Here we create a new node and place it in the right place and then balance the tree.
@@ -338,7 +338,7 @@ namespace ft
 					}
 				}
 				_root->_color = BLACK;
-				return ft::make_pair(iterator(val, newnode), true);
+				return ft::make_pair(iterator(newnode), true);
 			}
 			// // with hint insert	
 			// iterator insert (iterator position, const value_type& val);

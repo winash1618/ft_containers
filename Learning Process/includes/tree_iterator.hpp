@@ -12,7 +12,10 @@ namespace ft
 	bool
 	__tree_is_left_child(_NodePtr __x)
 	{
-		return __x == __x->_parent->_left;
+		if (__x != nullptr )
+			if (__x->_parent != nullptr)
+				return __x == __x->_parent->_left;
+		return 0;
 	}
 
 	// Returns:  pointer to the left-most node under __x.
@@ -47,7 +50,7 @@ namespace ft
 	{
 		if (__x->_right != nullptr)
 			return __tree_min(__x->_right);
-		while (!__tree_is_left_child(__x))
+		while (!__tree_is_left_child(__x) && __x->_parent)
 		{
 			__x = __x->_parent;
 		}
@@ -81,7 +84,7 @@ namespace ft
 		typedef ft::bidirectional_iterator_tag	iterator_category;
 
 		__tree_iterator() {}
-		__tree_iterator(value_type val, __node_pointer ptr): __ptr_(ptr) {}
+		__tree_iterator(__node_pointer ptr): __ptr_(ptr) {}
 
 		reference operator*() const
 		{
@@ -95,6 +98,7 @@ namespace ft
 		__tree_iterator& operator++()
 		{
 			__ptr_ = __tree_next(__ptr_);
+			std::cout << &(__ptr_) << std::endl;
 			return *this;
 		}
 		__tree_iterator operator++(int)
