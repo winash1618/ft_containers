@@ -8,7 +8,11 @@ SRC = v_resize_test.cpp
 # 		v_getalloc_test.cpp v_front_test.cpp v_clear_test.cpp \
 # 		v_begin_test.cpp v_assign_test.cpp
 
-SRC_DIR = tests/
+SRCM = m_test.cpp
+
+SRC_DIR = tests/vec_tests/
+
+SRC_DIRM = tests/map_tests/
 
 EXE = $(SRC:.cpp=)
 
