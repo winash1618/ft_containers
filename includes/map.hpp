@@ -134,7 +134,8 @@ namespace ft
 
 			void clear()
 			{
-				
+				destroy();
+				_size = 0;
 			}
 
 			size_type count (const key_type& k) const
@@ -383,7 +384,10 @@ namespace ft
 			// iterator lower_bound (const key_type& k);
 			// const_iterator lower_bound (const key_type& k) const;
 
-			// size_type max_size() const;
+			size_type max_size() const
+			{
+				return (n_alloc.max_size()); 
+			}
 
 			// mapped_type& operator[] (const key_type& key);
 
@@ -407,6 +411,19 @@ namespace ft
 			// value_compare value_comp() const;
 
 		private:
+
+			void destroy(void)
+			{
+				node_pointer __nd = _root;
+				if (__nd != nullptr)
+				{
+					destroy(__nd->_left);
+					destroy(__nd->_right);
+					__node_allocator& __na = __node_allocator;
+					__na.destroy(__nd);
+					__na.deallocate( __nd, 1);
+				}
+			}
 			void RotateL(node_pointer parent)
 			{
 				node_pointer subR = parent->_right;
