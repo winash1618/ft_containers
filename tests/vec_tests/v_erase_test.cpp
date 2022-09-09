@@ -21,7 +21,7 @@ int main ()
   myvector.erase (myvector.begin()+5);
 
   // erase the first 3 elements:
-  myvector.erase (myvector.begin(),myvector.begin()+3);
+  myvector.erase (myvector.begin(),myvector.begin()+2);
 
   std::cout << "myvector contains:";
   for (unsigned i=0; i<myvector.size(); ++i)
