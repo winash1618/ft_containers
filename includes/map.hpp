@@ -132,7 +132,7 @@ namespace ft
 
 
 			//clear the map
-			void clear() {destroy(_root); _size = 0;}
+			void clear() {destroy(_root); _size = 0; _root = nullptr;}
 
 			size_type count (const key_type& k) const
 			{
@@ -173,8 +173,14 @@ namespace ft
 				return const_iterator(right, right->_right);
 			}
 
-			// pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
-			// pair<iterator,iterator>             equal_range (const key_type& k);
+			pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
+			{
+				return ft::pair(lower_bound(k), upper_bound(k));
+			}
+			pair<iterator,iterator>             equal_range (const key_type& k)
+			{
+				return ft::pair(lower_bound(k), upper_bound(k));
+			}
 
 				
 			// void erase (iterator position);
@@ -409,8 +415,35 @@ namespace ft
 
 
 
-			// iterator lower_bound (const key_type& k);
-			// const_iterator lower_bound (const key_type& k) const;
+			iterator lower_bound (const key_type& k)
+			{
+				node_pointer __root = _root;
+				node_pointer __result = nullptr;
+				while (__root != nullptr)
+				{
+					if (!_comp(__root->data.first, k))
+					{
+						__result = __root;
+						__root = __root->_left;
+					}
+					else
+						__root = __root->_right;
+				}
+				if (__result)
+					return iterator(__result);
+				return (end());
+				// iterator it = find(k);
+				// iterator temp = it;
+				// if (it != nullptr)
+				// {
+				// 	--it;
+				// 	if (it != nullptr)
+				// 		return (it);
+				// 	return (temp);
+				// }
+				// return (end());
+			}
+			const_iterator lower_bound (const key_type& k) const {return const_iterator(lower_bound(k));}
 
 			size_type max_size() const
 			{
@@ -433,8 +466,25 @@ namespace ft
 
 			// void swap (map& x);
 
-			// iterator upper_bound (const key_type& k);
-			// const_iterator upper_bound (const key_type& k) const;
+			iterator upper_bound (const key_type& k)
+			{
+				node_pointer __root = _root;
+				node_pointer __result = nullptr;
+				while (__root != nullptr)
+				{
+					if (_comp(__root->data.first, k))
+					{
+						__result = __root;
+						__root = __root->_left;
+					}
+					else
+						__root = __root->_right;
+				}
+				if (__result)
+					return iterator(__result);
+				return (end());
+			}
+			const_iterator upper_bound (const key_type& k) const {return const_iterator(upper_bound);}
 
 			// value_compare value_comp() const;
 
