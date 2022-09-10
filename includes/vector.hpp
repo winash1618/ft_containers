@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/09/09 08:26:38 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/09/10 15:03:57 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,21 +126,7 @@ template<class T, T v>
 	int is_int<int>() {
 	return true;
 }
-	// template<typename T>
-	// struct ft::enable_if<> : false_type {};
 
-	// template<typename T>
-	// struct ft::enable_if<std::is_same<T, ft::iterator_traits<iterator_type>::iterator_category>, T>::type : true_type {};
-
-/*--------------implementation 2 of enable if-----------------------------*/
-// template <class Iter>
-// using iter_cat_t = typename iterator_traits<Iter>::iterator_category;
-
-// template <class T, class = void>
-// constexpr bool is_iterator_v = false;
-
-// template <class T>
-// constexpr bool is_iterator_v<T, std::void_t<iter_cat_t<T>>> = true;
 	
 	template <class T, class Allocator = std::allocator<T> >
 	class vector

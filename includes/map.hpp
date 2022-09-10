@@ -80,6 +80,7 @@ namespace ft
 		private:
 			node_pointer _root;
 			node_pointer _head;
+			key_compare _comp;
 			allocator_type _alloc;
 			__node_allocator	n_alloc;
 			size_type _size;
@@ -180,10 +181,37 @@ namespace ft
 			// size_type erase (const key_type& k);
 			// void erase (iterator first, iterator last);
 
-			// iterator find (const key_type& k);
-			// const_iterator find (const key_type& k) const;
+			iterator find (const key_type& k)
+			{
+				node_pointer cur = _root;
+				node_pointer cur = nullptr;
+				while (cur)
+				{
+					if (cur->_data.first < k)
+					{
+						parent = cur;
+						cur = cur->_right;
+					}
+					else if (cur->_data.first > val.first)
+					{
+						parent = cur;
+						cur = cur->_left;
+					}
+					else
+					{
+						return (iterator(cur));
+					}
+				}
+				return (end());
+			}
 
-			// allocator_type get_allocator() const;
+			const_iterator find (const key_type& k) const
+			{
+				return (const_iterator(find(k)));
+			}
+			
+			allocator_type get_allocator() const {return (this->_alloc);}
+			key_compare key_comp() const {return (this->_comp);}
 
 			// single element insert
 			ft::pair<iterator,bool> insert (const value_type& val)
@@ -197,10 +225,8 @@ namespace ft
 					_root = n_alloc.allocate(1);
 					ft::RBTreeNode<value_type> temp(val);
 					n_alloc.construct(_root, temp);
-					std::cout << _root->_data.second << std::endl;
 					_root->_color = BLACK;
 					ft::pair<iterator, bool> t = ft::make_pair<iterator, bool>(iterator(_root), true);
-					std::cout << t.first->first << std::endl;
 				
 					_size++;
 					return t;
@@ -366,14 +392,21 @@ namespace ft
 				_root->_color = BLACK;
 				return ft::make_pair(iterator(newnode), true);
 			}
-			// // with hint insert	
-			// iterator insert (iterator position, const value_type& val);
-			// // range insert
-			// template <class InputIterator>
-			// void insert (InputIterator first, InputIterator last);
+			// with hint insert	
+			iterator insert (iterator position, const value_type& val)
+			{
 
+			}
+			// range insert
+			template <class InputIterator>
+			void insert (InputIterator first, InputIterator last)
+			{
+				for(InputIterator it = first; it != last; it++)
+				{
+					insert(*it);
+				}
+			}
 
-			// key_compare key_comp() const;
 
 
 			// iterator lower_bound (const key_type& k);

@@ -68,9 +68,14 @@ int main ()
 	// std::cout << "element 'z' already existed";
 	// std::cout << " with a value of " << ret1.first->first << " " << ret1.first->second << '\n';
 
-	std::cout << "HELKO" << std::endl;
-	for(ft::map<char,int>::reverse_iterator it = mymap.rbegin(); it != mymap.rend(); it++)
-	{std::cout << it->first << "->" << it->second << std::endl;}
+	// std::cout << "HELKO" << std::endl;
+	// for(ft::map<char,int>::reverse_iterator it = mymap.rbegin(); it != mymap.rend(); it++)
+	// {std::cout << it->first << "->" << it->second << std::endl;}
+	for (std::map<char, int>::iterator it=mymap1.begin(); it!=mymap1.end(); ++it)
+   		 std::cout << it->first << " => " << it->second << '\n';
+	std::map<char,int>::iterator it = mymap1.begin();
+	it++;
+	mymap1.insert(it, mymap1.end());
 
 	// for(ft::map<char,int>::reverse_iterator it1 = mymap.rend(); it1 != mymap.rbegin(); it1--)
 	// {std::cout << it1->first << "->" << it1->second << std::endl;}
@@ -78,6 +83,7 @@ int main ()
 	// it-- ;
 
 	// std::cout << it->first << "->" << it->second << std::endl;
+	std::cout<< "--------------------------------------------------------" << std::endl;
 
 //   // second insert function version (with hint position):
 //   std::map<char,int>::iterator it = mymap.begin();
@@ -92,8 +98,8 @@ int main ()
 //   std::cout << "mymap contains:\n";
 //   ft::map<char, int>::iterator it=mymap.begin(); 
 //   ft::map<char, int>::iterator it1=mymap.end(); 
-//   for (ft::map<char, int>::iterator it=mymap.begin(); it!=mymap.end(); ++it)
-    // std::cout << mymap->first << " => " << mymap->second << '\n';
+  for (std::map<char, int>::iterator it=mymap1.begin(); it!=mymap1.end(); ++it)
+    std::cout << it->first << " => " << it->second << '\n';
     // std::cout << it1->first << " => " << it1->second << '\n';
 
 //   std::cout << "anothermap contains:\n";
