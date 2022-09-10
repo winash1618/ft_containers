@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:27:34 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/09/06 14:49:15 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/09/10 12:20:21 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ namespace ft
 		}
 		pointer   operator->() const
 		{
-			
+			return &(operator*());
 		}
 		reverse_iterator& operator++()
 		{

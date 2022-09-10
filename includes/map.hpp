@@ -5,6 +5,7 @@
 # include <algorithm>
 # include <functional>
 # include "tree_iterator.hpp"
+# include "reverse_iterator.hpp"
 
 namespace ft
 {
@@ -96,11 +97,7 @@ namespace ft
 			// 	const allocator_type& alloc = allocator_type());	
 			// map (const map& x);
 
-			~map()
-			{
-				std::cout << (_root->_data).first << std::endl;
-				std::cout << _root->_color;
-			}
+			~map() {destroy(_root);}
 
 			iterator begin()
 			{
@@ -132,11 +129,9 @@ namespace ft
 				return const_iterator(right, left);
 			}
 
-			void clear()
-			{
-				destroy();
-				_size = 0;
-			}
+
+			//clear the map
+			void clear() {destroy(_root); _size = 0;}
 
 			size_type count (const key_type& k) const
 			{
@@ -196,7 +191,7 @@ namespace ft
 			{
 				// when the size of the map is empty.
 				// this will add new element to the map and return true since there is new allocation.
-				std::cout << "I am inside insert" << std::endl;
+				// std::cout << "I am inside insert" << std::endl;
 				if (_root == nullptr)
 				{
 					_root = n_alloc.allocate(1);
@@ -412,14 +407,13 @@ namespace ft
 
 		private:
 
-			void destroy(void)
+			void destroy(node_pointer __nd)
 			{
-				node_pointer __nd = _root;
 				if (__nd != nullptr)
 				{
 					destroy(__nd->_left);
 					destroy(__nd->_right);
-					__node_allocator& __na = __node_allocator;
+					__node_allocator __na;
 					__na.destroy(__nd);
 					__na.deallocate( __nd, 1);
 				}

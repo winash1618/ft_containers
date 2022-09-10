@@ -73,9 +73,10 @@ namespace ft
 	template <class _V, class _NodePtr>
 	class __tree_iterator
 	{
+		public:
+			typedef _V value_type;
 		private:
 			typedef _NodePtr				__node_pointer;
-			typedef _V value_type;
 			// value_type						__val; commenting this fixed the assignment operator overload error in ft::pair
 			__node_pointer					__ptr_;
 			__node_pointer					__end_;
@@ -83,6 +84,7 @@ namespace ft
 			typedef value_type& reference;
 			typedef value_type* pointer;
 			typedef ft::bidirectional_iterator_tag	iterator_category;
+			typedef std::ptrdiff_t					difference_type;
 
 			__tree_iterator() {}
 			__tree_iterator(__node_pointer ptr): __ptr_(ptr) {}
@@ -116,7 +118,7 @@ namespace ft
 					__ptr_ = __end_;
 					return *this;
 				}
-				// __ptr_ = __tree_prev(__ptr_);
+				__ptr_ = __tree_prev(__ptr_);
 				return *this;
 			}
 			__tree_iterator operator--(int)
