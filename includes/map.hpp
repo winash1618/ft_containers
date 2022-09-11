@@ -96,7 +96,11 @@ namespace ft
 			// map (InputIterator first, InputIterator last,
 			// 	const key_compare& comp = key_compare(),
 			// 	const allocator_type& alloc = allocator_type());	
-			// map (const map& x);
+			map (const map& x)
+			{
+				*this = x;
+				return;
+			}
 
 			~map() {destroy(_root);}
 
@@ -173,13 +177,13 @@ namespace ft
 				return const_iterator(right, right->_right);
 			}
 
-			pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
+			pair<const_iterator,const_iterator> equal_range (const key_type& k) const
 			{
-				return ft::pair(lower_bound(k), upper_bound(k));
+				return ft::pair<const_iterator, const_iterator>(lower_bound(k), upper_bound(k));
 			}
 			pair<iterator,iterator>             equal_range (const key_type& k)
 			{
-				return ft::pair(lower_bound(k), upper_bound(k));
+				return ft::pair<iterator, iterator>(lower_bound(k), upper_bound(k));
 			}
 
 				
@@ -190,7 +194,7 @@ namespace ft
 			iterator find (const key_type& k)
 			{
 				node_pointer cur = _root;
-				node_pointer cur = nullptr;
+				node_pointer parent = nullptr;
 				while (cur)
 				{
 					if (cur->_data.first < k)
@@ -198,7 +202,7 @@ namespace ft
 						parent = cur;
 						cur = cur->_right;
 					}
-					else if (cur->_data.first > val.first)
+					else if (cur->_data.first > k)
 					{
 						parent = cur;
 						cur = cur->_left;
@@ -450,9 +454,34 @@ namespace ft
 				return (n_alloc.max_size()); 
 			}
 
-			// mapped_type& operator[] (const key_type& key);
+			mapped_type& operator[] (const key_type& key)
+			{
+				iterator it = find(key);
+				if (it != end())
+				{
+					return (it->second);
+				}
+				else
+				{
+					insert(make_pair(key,mapped_type()));
+					it = find(key);
+					return (it->second);
+				}
+			}
 
-			// map& operator=(const map& x);
+			map& operator=(const map& x)
+			{
+				if (this != &x)
+				{
+					value_comp() = x.value_comp();
+					_alloc = x.get_allocator();
+					_comp = x._comp;
+					n_alloc = x.n_alloc;
+					_size = 0;
+					insert(x.begin(), x.end());
+				}
+				return *this;
+			}
 
 
 			reverse_iterator rbegin(){return reverse_iterator(this->end());}
@@ -486,7 +515,7 @@ namespace ft
 			}
 			const_iterator upper_bound (const key_type& k) const {return const_iterator(upper_bound);}
 
-			// value_compare value_comp() const;
+			value_compare value_comp() const {return value_compare(_comp);}
 
 		private:
 

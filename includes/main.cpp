@@ -46,7 +46,7 @@ int main ()
 //   mymap.insert ( ft::pair<char,int>('a',100) );
 //   mymap.insert ( ft::pair<char,int>('a',100) );
 
-	mymap.insert ( ft::pair<char,int>('z',200) );
+	mymap.insert ( ft::pair<char,int>('z',203) );
 	mymap1.insert ( std::pair<char,int>('z',200) );
 	mymap.insert ( ft::pair<char,int>('k',200) );
 	mymap1.insert ( std::pair<char,int>('k',200) );
@@ -56,6 +56,29 @@ int main ()
 	mymap1.insert ( std::pair<char,int>('l',200) );
 	mymap.insert ( ft::pair<char,int>('e',200) );
 	mymap1.insert ( std::pair<char,int>('e',200) );
+	
+	
+	
+	ft::map<char, int> my= mymap;
+	// std::cout << mymap['h'] << std::endl;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// ft::pair<ft::map<char,int>::iterator,bool> ret;
 	// std::pair<std::map<char,int>::iterator,bool> ret1;
 	
@@ -69,13 +92,13 @@ int main ()
 	// std::cout << " with a value of " << ret1.first->first << " " << ret1.first->second << '\n';
 
 	// std::cout << "HELKO" << std::endl;
-	// for(ft::map<char,int>::reverse_iterator it = mymap.rbegin(); it != mymap.rend(); it++)
-	// {std::cout << it->first << "->" << it->second << std::endl;}
-	for (std::map<char, int>::iterator it=mymap1.begin(); it!=mymap1.end(); ++it)
+	for(ft::map<char,int>::reverse_iterator it = my.rbegin(); it != my.rend(); it++)
+	{std::cout << it->first << "->" << it->second << std::endl;}
+	for (ft::map<char, int>::iterator it=my.begin(); it!=my.end(); ++it)
    		 std::cout << it->first << " => " << it->second << '\n';
-	std::map<char,int>::iterator it = mymap1.begin();
-	it++;
-	mymap1.insert(it, mymap1.end());
+	// std::map<char,int>::iterator it = mymap1.begin();
+	// it++;
+	// mymap1.insert(it, mymap1.end());
 
 	// for(ft::map<char,int>::reverse_iterator it1 = mymap.rend(); it1 != mymap.rbegin(); it1--)
 	// {std::cout << it1->first << "->" << it1->second << std::endl;}
@@ -83,7 +106,7 @@ int main ()
 	// it-- ;
 
 	// std::cout << it->first << "->" << it->second << std::endl;
-	std::cout<< "--------------------------------------------------------" << std::endl;
+	// std::cout<< "--------------------------------------------------------" << std::endl;
 
 //   // second insert function version (with hint position):
 //   std::map<char,int>::iterator it = mymap.begin();
@@ -98,8 +121,8 @@ int main ()
 //   std::cout << "mymap contains:\n";
 //   ft::map<char, int>::iterator it=mymap.begin(); 
 //   ft::map<char, int>::iterator it1=mymap.end(); 
-  for (std::map<char, int>::iterator it=mymap1.begin(); it!=mymap1.end(); ++it)
-    std::cout << it->first << " => " << it->second << '\n';
+//   for (std::map<char, int>::iterator it=mymap1.begin(); it!=mymap1.end(); ++it)
+//     std::cout << it->first << " => " << it->second << '\n';
     // std::cout << it1->first << " => " << it1->second << '\n';
 
 //   std::cout << "anothermap contains:\n";
