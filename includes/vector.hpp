@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/09/12 19:10:28 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/09/12 19:33:28 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -369,8 +369,8 @@ template<class T, T v>
 			{
 				if (n > max_size())
 					throw std::length_error("Capacity allocated exceeds max_size()");
-				// else if (n > _cap)
-				// {
+				else if (n > _cap)
+				{
 						pointer t_vec = t_alloc.allocate(n);
 						for (_index = 0; _index < _size; ++_index)
 						{
@@ -382,7 +382,7 @@ template<class T, T v>
 						_alloc = t_alloc;
 						_vec = t_vec;
 						_cap = n;
-				// }	
+				}	
 					
 			}
 
@@ -610,6 +610,9 @@ template<class T, T v>
 					t_alloc.construct(temp + t_size + index, *it);
 					index++;
 				}
+				for (size_type index1 = 0; index1 < _size; ++index1)
+					_alloc.destroy(_vec + index1);
+				_alloc.deallocate(_vec, _cap);
 				t_size = t_size + index;
 				_alloc = t_alloc;
 				_vec = temp;
