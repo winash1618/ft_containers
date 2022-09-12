@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/09/10 15:03:57 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/09/12 19:10:28 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,12 +172,18 @@ template<class T, T v>
 			{
 				if (first > last)
 					throw std::length_error("vector");
-				size_type size = ft::distance(first, last);
-				allocate(size);
-				for (size_type index = 0; index < size; ++index)
+				// size_type size = ft::distance(first, last);
+				for (InputIterator it = first; it != last; it++)
+				{
+					++_size;
+				// std::cout << "size = " << _size << std::endl;
+				}
+				_vec = _alloc.allocate(_size);
+				_cap = _size;
+				for (size_type index = 0; index < _size; ++index)
 				{
 					_alloc.construct(_vec + index, *(first + index));
-					++_size;
+					// ++_size;
 				}
 			}
 			
@@ -231,6 +237,15 @@ template<class T, T v>
 				_size--;
 				// _vec[_size] = 0;
 				return (position);
+			}
+			
+			 value_type* data()
+			 {
+				return (_vec);
+			 }
+			const value_type* data() const
+			{
+				return (_vec);
 			}
 			iterator erase (iterator first, iterator last)
 			{
@@ -302,36 +317,34 @@ template<class T, T v>
 			{
 				if (!_cap)
 				{
-					_vec = _alloc.allocate(1, 0);
-					_alloc.construct(_vec, val);
-					_cap = 1;
-					_size = 1;
+					// _vec = _alloc.allocate(1);
+					// _alloc.construct(_vec, val);
+					// _cap = 1;
+					// _size = 1;
+					// return;
+					reserve(1);
 				}
-				else
+				if (_size + 1 > _cap)
 				{
-					if (_size + 1 > _cap)
-					{
-						Allocator t_alloc1 ;
-						pointer t_vec = t_alloc1.allocate(_size * 2);
-						for (size_type index = 0; index < _size; ++index)
-						{
-							t_alloc1.construct(t_vec + index, _vec[index]);
-						}
-						t_alloc1.construct(t_vec + _size, val);
-						for (size_type index= 0; index < _size; ++index)
-							_alloc.destroy(_vec + index);
-						_alloc.deallocate(_vec, _cap);
-						_alloc = t_alloc1;
-						_vec = t_vec;
-						_cap = _size * 2;
-						_size++;
-					}
-					else
-					{
-						_alloc.construct(_vec + _size, val);
-						_size += 1;
-					}
+					// Allocator t_alloc1 ;
+					// pointer t_vec = t_alloc1.allocate(_size * 2);
+					// for (size_type index = 0; index < _size; ++index)
+					// {
+					// 	t_alloc1.construct(t_vec + index, _vec[index]);
+					// }
+					// t_alloc1.construct(t_vec + _size, val);
+					// for (size_type index= 0; index < _size; ++index)
+					// 	_alloc.destroy(_vec + index);
+					// _alloc.deallocate(_vec, _cap);
+					// _alloc = t_alloc1;
+					// _vec = t_vec;
+					// _cap = _size * 2;
+					// _size++;
+					// return;
+					reserve(_cap * 2);
 				}
+				_alloc.construct(_vec + _size, val);
+				_size += 1;
 			}
 			
 			// Iterators
@@ -356,20 +369,20 @@ template<class T, T v>
 			{
 				if (n > max_size())
 					throw std::length_error("Capacity allocated exceeds max_size()");
-				else if (n > _cap)
-				{
-						temp = t_alloc.allocate(n, 0);
+				// else if (n > _cap)
+				// {
+						pointer t_vec = t_alloc.allocate(n);
 						for (_index = 0; _index < _size; ++_index)
 						{
-							t_alloc.construct(temp + _index, _vec[_index]);
+							t_alloc.construct(t_vec + _index, _vec[_index]);
 						}
-						_alloc.deallocate(_vec, _cap);
 						for (_index = 0; _index < _size; ++_index)
 							_alloc.destroy(_vec + _index);
+						_alloc.deallocate(_vec, _cap);
 						_alloc = t_alloc;
-						_vec = temp;
+						_vec = t_vec;
 						_cap = n;
-				}	
+				// }	
 					
 			}
 
@@ -484,7 +497,7 @@ template<class T, T v>
 				if (_size + 1 <= _cap)
 				{
 					_alloc.construct(_vec + _size, val);
-					_cap = _size + 1;
+					// _cap = _size + 1;
 					_size++;
 					for (iterator it = position; it < end(); it++)
 					{
@@ -502,9 +515,9 @@ template<class T, T v>
 						t_alloc.construct(temp + index1, _vec[index1]);
 					}
 					t_alloc.construct(temp + _size, val);
-					_alloc.deallocate(_vec, _cap);
 					for (size_type index1 = 0; index1 < _size; ++index1)
 						_alloc.destroy(_vec + index1);
+					_alloc.deallocate(_vec, _cap);
 					_alloc = t_alloc;
 					_vec = temp;
 					_cap = _size * 2;
