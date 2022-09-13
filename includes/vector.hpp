@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/09/12 19:33:28 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/09/13 18:21:45 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -771,7 +771,7 @@ template<class T, T v>
 			x.swap(y);
 		}
 		template <class T, class Alloc>
-		bool operator== (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+		bool operator==(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 		{
 			if (lhs.size() == rhs.size())
 			{
