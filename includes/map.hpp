@@ -38,16 +38,16 @@ namespace ft
 	{
 
 		public:
-			typedef Key													key_type;
-			typedef T													mapped_type;
-			typedef ft::pair<const key_type, mapped_type>				value_type;
-			typedef Compare												key_compare;
-			typedef Alloc												allocator_type;
-			typedef value_type&											reference;
-			typedef const value_type&									const_reference;
-			
-			class value_compare
-				: public std::binary_function<value_type, value_type, bool>
+			typedef Key																	key_type;
+			typedef T																	mapped_type;
+			typedef ft::pair<const key_type, mapped_type>								value_type;
+			typedef Compare																key_compare;
+			typedef Alloc																allocator_type;
+			typedef value_type&															reference;
+			typedef const value_type&													const_reference;
+
+		class value_compare
+			: public std::binary_function<value_type, value_type, bool>
 			{
 				friend class map;
 				protected:
@@ -60,30 +60,29 @@ namespace ft
 			};
 		// https://stackoverflow.com/questions/14148756/what-does-template-rebind-do
 		private:
-			typedef pair<key_type, mapped_type>                             __value_type;
-			typedef typename allocator_type::template rebind<__value_type>::other __allocator_type;
-			typedef RBTreeNode<value_type>	Node;
-			typedef Node					__node_pointer;
-			typedef typename __allocator_type::template rebind<__node_pointer>::other __node_allocator;
+			typedef pair<key_type, mapped_type>											__value_type;
+			typedef typename allocator_type::template rebind<__value_type>::other		__allocator_type;
+			typedef RBTreeNode<value_type>												Node;
+			typedef Node																__node_pointer;
+			typedef typename __allocator_type::template rebind<__node_pointer>::other	__node_allocator;
 
 		public:
-			typedef typename allocator_type::pointer						pointer;
-			typedef typename allocator_type::const_pointer					const_pointer;
-			typedef typename allocator_type::size_type						size_type;
-			typedef typename allocator_type::difference_type				difference_type;
-			typedef typename __node_allocator::pointer						node_pointer;
-			typedef ft::__tree_iterator<value_type, node_pointer> 			iterator;
-			typedef ft::__tree_iterator<value_type, node_pointer>			const_iterator;
-			typedef ft::reverse_iterator<iterator>						reverse_iterator;
-			typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
-			
+			typedef typename allocator_type::pointer									pointer;
+			typedef typename allocator_type::const_pointer								const_pointer;
+			typedef typename allocator_type::size_type									size_type;
+			typedef typename allocator_type::difference_type							difference_type;
+			typedef typename __node_allocator::pointer									node_pointer;
+			typedef ft::__tree_iterator<value_type, node_pointer> 						iterator;
+			typedef ft::__tree_iterator<value_type, node_pointer>						const_iterator;
+			typedef ft::reverse_iterator<iterator>										reverse_iterator;
+			typedef ft::reverse_iterator<const_iterator>								const_reverse_iterator;
+
 		private:
-			node_pointer _root;
-			node_pointer _head;
-			key_compare _comp;
-			allocator_type _alloc;
-			__node_allocator	n_alloc;
-			size_type _size;
+			node_pointer																_root;
+			key_compare																	_comp;
+			allocator_type																_alloc;
+			__node_allocator															n_alloc;
+			size_type																	_size;
 			
 
 		public:
@@ -177,16 +176,7 @@ namespace ft
 				return const_iterator(right, right->_right);
 			}
 
-			pair<const_iterator,const_iterator> equal_range (const key_type& k) const
-			{
-				return ft::pair<const_iterator, const_iterator>(lower_bound(k), upper_bound(k));
-			}
-			pair<iterator,iterator>             equal_range (const key_type& k)
-			{
-				return ft::pair<iterator, iterator>(lower_bound(k), upper_bound(k));
-			}
 
-				
 			// void erase (iterator position);
 			// size_type erase (const key_type& k);
 			// void erase (iterator first, iterator last);
@@ -215,17 +205,23 @@ namespace ft
 				return (end());
 			}
 
-			const_iterator find (const key_type& k) const
-			{
-				return (const_iterator(find(k)));
-			}
-			
-			allocator_type get_allocator() const {return (this->_alloc);}
-			key_compare key_comp() const {return (this->_comp);}
+			pair<const_iterator,const_iterator> equal_range (const key_type& k) const		{return ft::pair<const_iterator, const_iterator>(lower_bound(k), upper_bound(k));}
+			pair<iterator,iterator> equal_range (const key_type& k)							{return ft::pair<iterator, iterator>(lower_bound(k), upper_bound(k));}
+			const_iterator find (const key_type& k) const									{return (const_iterator(find(k)));}
+			allocator_type get_allocator() const											{return (this->_alloc);}
+			key_compare key_comp() const													{return (this->_comp);}
+			const_iterator lower_bound (const key_type& k) const							{return const_iterator(lower_bound(k));}
+			size_type max_size() const														{return (n_alloc.max_size());}
+			reverse_iterator rbegin()														{return reverse_iterator(this->end());}
+			const_reverse_iterator rbegin() const											{return const_reverse_iterator(this->end());}
+			reverse_iterator rend()															{return reverse_iterator(this->begin()); }
+			const_reverse_iterator rend() const												{return const_reverse_iterator(this->begin()); };
+			size_type size() const															{return (_size);}
+			const_iterator upper_bound (const key_type& k) const							{return const_iterator(upper_bound);}
+			value_compare value_comp() const												{return value_compare(_comp);}
 
 			// single element insert
 			ft::pair<iterator,bool> insert (const value_type& val)
-			// void insert (const value_type& val)
 			{
 				// when the size of the map is empty.
 				// this will add new element to the map and return true since there is new allocation.
@@ -237,12 +233,9 @@ namespace ft
 					n_alloc.construct(_root, temp);
 					_root->_color = BLACK;
 					ft::pair<iterator, bool> t = ft::make_pair<iterator, bool>(iterator(_root), true);
-				
 					_size++;
 					return t;
-					
 				}
-				
 				// this is searching for a match in the current map element if there
 				// is a match it will return with false since there is no allocation.
 				node_pointer cur = _root;
@@ -405,7 +398,8 @@ namespace ft
 			// with hint insert	
 			iterator insert (iterator position, const value_type& val)
 			{
-
+				(void)position;
+				return (insert(val).first);
 			}
 			// range insert
 			template <class InputIterator>
@@ -416,8 +410,6 @@ namespace ft
 					insert(*it);
 				}
 			}
-
-
 
 			iterator lower_bound (const key_type& k)
 			{
@@ -436,22 +428,6 @@ namespace ft
 				if (__result)
 					return iterator(__result);
 				return (end());
-				// iterator it = find(k);
-				// iterator temp = it;
-				// if (it != nullptr)
-				// {
-				// 	--it;
-				// 	if (it != nullptr)
-				// 		return (it);
-				// 	return (temp);
-				// }
-				// return (end());
-			}
-			const_iterator lower_bound (const key_type& k) const {return const_iterator(lower_bound(k));}
-
-			size_type max_size() const
-			{
-				return (n_alloc.max_size()); 
 			}
 
 			mapped_type& operator[] (const key_type& key)
@@ -484,16 +460,24 @@ namespace ft
 			}
 
 
-			reverse_iterator rbegin(){return reverse_iterator(this->end());}
-			const_reverse_iterator rbegin() const{return const_reverse_iterator(this->end());}
-
-
-			reverse_iterator rend(){return reverse_iterator(this->begin()); }
-			const_reverse_iterator rend() const{return const_reverse_iterator(this->begin()); };
-
-			size_type size() const{return (_size);}
-
-			// void swap (map& x);
+			void swap (map& x)
+			{
+				node_pointer		t_root = x._root;
+				key_compare			t_comp = x._comp;
+				allocator_type		t_alloc = x._alloc;
+				__node_allocator	tn_alloc = x.n_alloc;
+				size_type			t_size = x._size;
+				x._root = _root;
+				x._comp = _comp;
+				x._alloc = _alloc;
+				x.n_alloc = n_alloc;
+				x.t_size = _size;
+				_root = t_root;
+				_comp = t_comp;
+				_alloc = t_alloc;
+				n_alloc = tn_alloc;
+				_size = t_size;
+			}
 
 			iterator upper_bound (const key_type& k)
 			{
@@ -513,9 +497,6 @@ namespace ft
 					return iterator(__result);
 				return (end());
 			}
-			const_iterator upper_bound (const key_type& k) const {return const_iterator(upper_bound);}
-
-			value_compare value_comp() const {return value_compare(_comp);}
 
 		private:
 
