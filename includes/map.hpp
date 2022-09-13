@@ -91,18 +91,37 @@ namespace ft
 			{
 				std::cout << "Map default constructor called" << std::endl;
 			}
-			// template <class InputIterator>
-			// map (InputIterator first, InputIterator last,
-			// 	const key_compare& comp = key_compare(),
-			// 	const allocator_type& alloc = allocator_type());	
+			template <class InputIterator>
+			map (InputIterator first, InputIterator last,
+				const key_compare& comp = key_compare(),
+				const allocator_type& alloc = allocator_type()) : _comp(comp), _alloc(alloc)
+			{
+				insert(first, last);
+			}
 			map (const map& x)
 			{
-				
+				std::cout << "Map copy constructor called" << std::endl;
 				*this = x;
 				return;
 			}
 
 			~map() {destroy(_root);}
+
+			map& operator=(const map& x)
+			{
+				std::cout << "Map copy assignment operator called" << std::endl;
+				if (this != &x)
+				{
+					value_comp() = x.value_comp();
+					_alloc = x.get_allocator();
+					_comp = x._comp;
+					n_alloc = x.n_alloc;
+					_size = 0;
+					_root = nullptr;
+					insert(x.begin(), x.end());
+				}
+				return *this;
+			}
 
 			iterator begin()
 			{
@@ -460,22 +479,6 @@ namespace ft
 					it = find(key);
 					return (it->second);
 				}
-			}
-
-			map& operator=(const map& x)
-			{
-				
-				if (this != &x)
-				{
-					value_comp() = x.value_comp();
-					_alloc = x.get_allocator();
-					_comp = x._comp;
-					n_alloc = x.n_alloc;
-					_size = 0;
-					_root = nullptr;
-					insert(x.begin(), x.end());
-				}
-				return *this;
 			}
 
 			void swap (map& x)
