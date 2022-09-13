@@ -21,13 +21,7 @@ namespace ft
 		
 		T _data;
 		color_t _color;
-		RBTreeNode(const T& data)
-				:_left(nullptr)
-				,_right(nullptr)
-				,_parent(nullptr)
-				,_data(data)
-				,_color(RED)
-		{}
+		RBTreeNode(const T& data) : _left(nullptr), _right(nullptr), _parent(nullptr), _data(data), _color(RED) {}
 	};
 	
 	template < class Key,                                     // map::key_type
@@ -451,7 +445,7 @@ namespace ft
 				node_pointer __result = nullptr;
 				while (__root != nullptr)
 				{
-					if (!_comp(__root->_data.first, k))
+					if (_comp( k, __root->_data.first))
 					{
 						__result = __root;
 						__root = __root->_left;
@@ -459,9 +453,8 @@ namespace ft
 					else
 						__root = __root->_right;
 				}
-				if (__result->_right)
-					return iterator(__result->_right);
-				return iterator(__result);
+				if (__result)
+					return iterator(__result);
 				return (end());
 			}
 

@@ -128,84 +128,78 @@ int main ()
 //   std::cout << "anothermap contains:\n";
 //   for (it=anothermap.begin(); it!=anothermap.end(); ++it)
 //     std::cout << it->first << " => " << it->second << '\n';
-ft::map<char,int> mymap;
-  ft::map<char,int>::iterator itlow,itup;
+// ft::map<char,int> mymap;
+//   ft::map<char,int>::iterator itlow,itup;
 
-  mymap['a']=20;
-  mymap['b']=40;
-  mymap['c']=60;
-  mymap['d']=80;
-  mymap['e']=100;
-  mymap['t']=44;
-  mymap['*']=63;
-  mymap['@']=82;
-  mymap['-']=120;
-  for(ft::map<char, int>::iterator it = mymap.begin(); it != mymap.end(); it++)
-{
-	std::cout << it->first << "->" << it->second << std::endl;
-}
-  itlow=mymap.lower_bound ('a');  // itlow points to b
-  itup=mymap.upper_bound ('t');   // itup points to e (not d!)
-
-	std::cout << itlow->first << "<->" << itup->first << std::endl;
-std::map<char,int> mymap1;
-  std::map<char,int>::iterator itlow1,itup1;
-
-  mymap1['a']=20;
-  mymap1['b']=40;
-  mymap1['c']=60;
-  mymap1['d']=80;
-  mymap1['e']=100;
-  mymap1['t']=44;
-  mymap1['*']=63;
-  mymap1['@']=82;
-  mymap1['-']=120;
- for(std::map<char, int>::iterator it = mymap1.begin(); it != mymap1.end(); it++)
-{
-	std::cout << it->first << "->" << it->second << std::endl;
-}
-  itlow1=mymap1.lower_bound ('a');  // itlow points to b
-  itup1=mymap1.upper_bound ('t');   // itup points to e (not d!)
-
-	std::cout << itlow1->first << "<->" << itup1->first << std::endl;
-// ft::map<std::string,int> mymap;
-//   ft::map<std::string,int>::iterator itlow,itup;
-
-//   mymap["fa"]=20;
-//   mymap["fb"]=40;
-//   mymap["fd"]=60;
-//   mymap["fs"]=80;
-//   mymap["fw"]=100;
-//   mymap["fq"]=44;
-//   mymap["fe"]=63;
-//   mymap["fq"]=82;
-//   mymap["ft"]=120;
-//   for(ft::map<std::string, int>::reverse_iterator it = mymap.rbegin(); it != mymap.rend(); it++)
+//   mymap['a']=20;
+//   mymap['b']=40;
+//   mymap['c']=60;
+//   mymap['d']=80;
+//   mymap['e']=100;
+//   mymap['t']=44;
+//   for(ft::map<char, int>::iterator it = mymap.begin(); it != mymap.end(); it++)
 // {
 // 	std::cout << it->first << "->" << it->second << std::endl;
 // }
-//   itlow=mymap.lower_bound ("fs");  // itlow points to b
-//   itup=mymap.upper_bound ("fq");   // itup points to e (not d!)
+//   itlow=mymap.lower_bound ('d');  // itlow points to b
+//   itup=mymap.upper_bound ('c');   // itup points to e (not d!)
 
 // 	std::cout << itlow->first << "<->" << itup->first << std::endl;
-// std::map<std::string,int> mymap1;
-//   std::map<std::string,int>::iterator itlow1,itup1;
+// std::map<char,int> mymap1;
+//   std::map<char,int>::iterator itlow1,itup1;
 
-//   mymap1["fa"]=20;
-//   mymap1["fb"]=40;
-//   mymap1["fd"]=60;
-//   mymap1["fs"]=80;
-//   mymap1["fw"]=100;
-//   mymap1["fq"]=44;
-//   mymap1["fe"]=63;
-//   mymap1["fq"]=82;
-//   mymap1["ft"]=120;
-//  for(std::map<std::string, int>::reverse_iterator it = mymap1.rbegin(); it != mymap1.rend(); it++)
-// 	{std::cout << it->first << "->" << it->second << std::endl;}
-//   itlow1=mymap1.lower_bound ("fs");  // itlow points to b
-//   itup1=mymap1.upper_bound ("fq");   // itup points to e (not d!)
+//   mymap1['a']=20;
+//   mymap1['b']=40;
+//   mymap1['c']=60;
+//   mymap1['d']=80;
+//   mymap1['e']=100;
+//   mymap1['t']=44;
+//  for(std::map<char, int>::iterator it = mymap1.begin(); it != mymap1.end(); it++)
+// {
+// 	std::cout << it->first << "->" << it->second << std::endl;
+// }
+//   itlow1=mymap1.lower_bound ('d');  // itlow points to b
+//   itup1=mymap1.upper_bound ('c');   // itup points to e (not d!)
 
 // 	std::cout << itlow1->first << "<->" << itup1->first << std::endl;
+ft::map<std::string,int> mymap;
+  ft::map<std::string,int>::iterator itlow,itup;
+
+  mymap["fa"]=20;
+  mymap["fb"]=40;
+  mymap["fd"]=60;
+  mymap["fs"]=80;
+  mymap["fw"]=100;
+  mymap["fq"]=44;
+  mymap["fe"]=63;
+  mymap["fq"]=82;
+  mymap["ft"]=120;
+  for(ft::map<std::string, int>::reverse_iterator it = mymap.rbegin(); it != mymap.rend(); it++)
+{
+	std::cout << it->first << "->" << it->second << std::endl;
+}
+  itlow=mymap.lower_bound ("fs");  // itlow points to b
+  itup=mymap.upper_bound ("fq");   // itup points to e (not d!)
+
+	std::cout << itlow->first << "<->" << itup->first << std::endl;
+std::map<std::string,int> mymap1;
+  std::map<std::string,int>::iterator itlow1,itup1;
+
+  mymap1["fa"]=20;
+  mymap1["fb"]=40;
+  mymap1["fd"]=60;
+  mymap1["fs"]=80;
+  mymap1["fw"]=100;
+  mymap1["fq"]=44;
+  mymap1["fe"]=63;
+  mymap1["fq"]=82;
+  mymap1["ft"]=120;
+ for(std::map<std::string, int>::reverse_iterator it = mymap1.rbegin(); it != mymap1.rend(); it++)
+	{std::cout << it->first << "->" << it->second << std::endl;}
+  itlow1=mymap1.lower_bound ("fs");  // itlow points to b
+  itup1=mymap1.upper_bound ("fq");   // itup points to e (not d!)
+
+	std::cout << itlow1->first << "<->" << itup1->first << std::endl;
   return 0;
 }
 
