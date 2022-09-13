@@ -133,9 +133,24 @@ namespace ft
 				return const_iterator(right, left);
 			}
 
-
-			//clear the map
-			void clear() {destroy(_root); _size = 0; _root = nullptr;}
+			iterator end()
+			{
+				node_pointer right = _root;
+				while (right && right->_right)
+				{
+					right = right->_right;
+				}
+				return iterator(right, right->_right);
+			}
+			const_iterator end() const
+			{
+				node_pointer right = _root;
+				while (right && right->_right)
+				{
+					right = right->_right;
+				}
+				return const_iterator(right, right->_right);
+			}
 
 			size_type count (const key_type& k) const
 			{
@@ -156,30 +171,6 @@ namespace ft
 					return true;
 				return false;
 			}
-
-			iterator end()
-			{
-				node_pointer right = _root;
-				while (right && right->_right)
-				{
-					right = right->_right;
-				}
-				return iterator(right, right->_right);
-			}
-			const_iterator end() const
-			{
-				node_pointer right = _root;
-				while (right && right->_right)
-				{
-					right = right->_right;
-				}
-				return const_iterator(right, right->_right);
-			}
-
-
-			// void erase (iterator position);
-			// size_type erase (const key_type& k);
-			// void erase (iterator first, iterator last);
 
 			iterator find (const key_type& k)
 			{
@@ -207,18 +198,19 @@ namespace ft
 
 			pair<const_iterator,const_iterator> equal_range (const key_type& k) const		{return ft::pair<const_iterator, const_iterator>(lower_bound(k), upper_bound(k));}
 			pair<iterator,iterator> equal_range (const key_type& k)							{return ft::pair<iterator, iterator>(lower_bound(k), upper_bound(k));}
+			const_iterator lower_bound (const key_type& k) const							{return const_iterator(lower_bound(k));}
+			const_iterator upper_bound (const key_type& k) const							{return const_iterator(upper_bound);}
 			const_iterator find (const key_type& k) const									{return (const_iterator(find(k)));}
 			allocator_type get_allocator() const											{return (this->_alloc);}
 			key_compare key_comp() const													{return (this->_comp);}
-			const_iterator lower_bound (const key_type& k) const							{return const_iterator(lower_bound(k));}
+			value_compare value_comp() const												{return value_compare(_comp);}
+			size_type size() const															{return (_size);}
 			size_type max_size() const														{return (n_alloc.max_size());}
 			reverse_iterator rbegin()														{return reverse_iterator(this->end());}
-			const_reverse_iterator rbegin() const											{return const_reverse_iterator(this->end());}
 			reverse_iterator rend()															{return reverse_iterator(this->begin()); }
+			const_reverse_iterator rbegin() const											{return const_reverse_iterator(this->end());}
 			const_reverse_iterator rend() const												{return const_reverse_iterator(this->begin()); };
-			size_type size() const															{return (_size);}
-			const_iterator upper_bound (const key_type& k) const							{return const_iterator(upper_bound);}
-			value_compare value_comp() const												{return value_compare(_comp);}
+			void clear()																	{destroy(_root); _size = 0; _root = nullptr;}
 
 			// single element insert
 			ft::pair<iterator,bool> insert (const value_type& val)
@@ -430,6 +422,25 @@ namespace ft
 				return (end());
 			}
 
+			iterator upper_bound (const key_type& k)
+			{
+				node_pointer __root = _root;
+				node_pointer __result = nullptr;
+				while (__root != nullptr)
+				{
+					if (_comp(__root->data.first, k))
+					{
+						__result = __root;
+						__root = __root->_left;
+					}
+					else
+						__root = __root->_right;
+				}
+				if (__result)
+					return iterator(__result);
+				return (end());
+			}
+
 			mapped_type& operator[] (const key_type& key)
 			{
 				iterator it = find(key);
@@ -459,7 +470,6 @@ namespace ft
 				return *this;
 			}
 
-
 			void swap (map& x)
 			{
 				node_pointer		t_root = x._root;
@@ -479,24 +489,9 @@ namespace ft
 				_size = t_size;
 			}
 
-			iterator upper_bound (const key_type& k)
-			{
-				node_pointer __root = _root;
-				node_pointer __result = nullptr;
-				while (__root != nullptr)
-				{
-					if (_comp(__root->data.first, k))
-					{
-						__result = __root;
-						__root = __root->_left;
-					}
-					else
-						__root = __root->_right;
-				}
-				if (__result)
-					return iterator(__result);
-				return (end());
-			}
+			// void erase (iterator position);
+			// size_type erase (const key_type& k);
+			// void erase (iterator first, iterator last);
 
 		private:
 
@@ -643,7 +638,10 @@ namespace ft
 		bool operator>= ( const map<Key,T,Compare,Alloc>& lhs,
 							const map<Key,T,Compare,Alloc>& rhs );
 		template <class Key, class T, class Compare, class Alloc>
-		void swap (map<Key,T,Compare,Alloc>& x, map<Key,T,Compare,Alloc>& y);
+		void swap (map<Key,T,Compare,Alloc>& x, map<Key,T,Compare,Alloc>& y)
+		{
+			x.swap(y);
+		}
 
 }
 #endif
