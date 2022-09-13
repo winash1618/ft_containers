@@ -461,7 +461,7 @@ namespace ft
 				}
 				if (__result->_right)
 					return iterator(__result->_right);
-				return (__result);
+				return iterator(__result);
 				return (end());
 			}
 

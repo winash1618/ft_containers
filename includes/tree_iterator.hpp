@@ -10,7 +10,7 @@ namespace ft
 	template <class _NodePtr>
 	inline
 	bool
-	__tree_is_left_child(_NodePtr __x)
+	tree_is_left_child(_NodePtr __x)
 	{
 		if (__x != nullptr )
 			if (__x->_parent != nullptr)
@@ -23,7 +23,7 @@ namespace ft
 	template <class _NodePtr>
 	inline
 	_NodePtr
-	__tree_min(_NodePtr __x)
+	tree_min(_NodePtr __x)
 	{
 		while (__x->_left != nullptr)
 			__x = __x->_left;
@@ -35,7 +35,7 @@ namespace ft
 	template <class _NodePtr>
 	inline
 	_NodePtr
-	__tree_max(_NodePtr __x)
+	tree_max(_NodePtr __x)
 	{
 		while (__x->_right != nullptr)
 			__x = __x->_right;
@@ -46,11 +46,11 @@ namespace ft
 	// Precondition:  __x != nullptr.
 	template <class _NodePtr>
 	_NodePtr
-	__tree_next(_NodePtr __x)
+	tree_next(_NodePtr __x)
 	{
 		if (__x->_right != nullptr)
-			return __tree_min(__x->_right);
-		while (!__tree_is_left_child(__x) && __x->_parent)
+			return tree_min(__x->_right);
+		while (!tree_is_left_child(__x) && __x->_parent)
 		{
 			__x = __x->_parent;
 		}
@@ -61,11 +61,11 @@ namespace ft
 	// Precondition:  __x != nullptr.
 	template <class _NodePtr>
 	_NodePtr
-	__tree_prev(_NodePtr __x)
+	tree_prev(_NodePtr __x)
 	{
 		if (__x->_left != nullptr)
-			return __tree_max(__x->_left);
-		while (__tree_is_left_child(__x))
+			return tree_max(__x->_left);
+		while (tree_is_left_child(__x))
 			__x = __x->_parent;
 		return __x->_parent;
 	}
@@ -101,7 +101,7 @@ namespace ft
 
 			__tree_iterator& operator++()
 			{
-				__ptr_ = __tree_next(__ptr_);
+				__ptr_ = tree_next(__ptr_);
 				return *this;
 			}
 			__tree_iterator operator++(int)
@@ -118,7 +118,7 @@ namespace ft
 					__ptr_ = __end_;
 					return *this;
 				}
-				__ptr_ = __tree_prev(__ptr_);
+				__ptr_ = tree_prev(__ptr_);
 				return *this;
 			}
 			__tree_iterator operator--(int)

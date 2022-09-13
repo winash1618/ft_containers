@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:27:34 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/09/10 12:20:21 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/09/13 14:23:43 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ namespace ft
 	private:
 	void operator&() const;    /* Can't take address of nullptr */
 
-	} nullptr_f = {};   
+	} nullptr_f = {};
 	template <class Iterator>
 	class reverse_iterator
 		// : public ft::iterator<typename ft::iterator_traits<Iterator>::iterator_category,
