@@ -97,6 +97,7 @@ namespace ft
 			// 	const allocator_type& alloc = allocator_type());	
 			map (const map& x)
 			{
+				
 				*this = x;
 				return;
 			}
@@ -219,6 +220,9 @@ namespace ft
 				// this will add new element to the map and return true since there is new allocation.
 				// std::cout << "I am inside insert" << std::endl;
 				if (_root == nullptr)
+				{std::cout << _size << "<-> size" << std::endl;
+				std::cout << val.first << "<-> val" << std::endl;}
+				if (_root == nullptr)
 				{
 					_root = n_alloc.allocate(1);
 					ft::RBTreeNode<value_type> temp(val);
@@ -226,6 +230,7 @@ namespace ft
 					_root->_color = BLACK;
 					ft::pair<iterator, bool> t = ft::make_pair<iterator, bool>(iterator(_root), true);
 					_size++;
+					
 					return t;
 				}
 				// this is searching for a match in the current map element if there
@@ -384,6 +389,7 @@ namespace ft
 						}
 					}
 				}
+				_size++;
 				_root->_color = BLACK;
 				return ft::make_pair(iterator(newnode), true);
 			}
@@ -458,6 +464,7 @@ namespace ft
 
 			map& operator=(const map& x)
 			{
+				
 				if (this != &x)
 				{
 					value_comp() = x.value_comp();
@@ -465,6 +472,7 @@ namespace ft
 					_comp = x._comp;
 					n_alloc = x.n_alloc;
 					_size = 0;
+					_root = nullptr;
 					insert(x.begin(), x.end());
 				}
 				return *this;

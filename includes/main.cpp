@@ -56,10 +56,10 @@ int main ()
 	mymap1.insert ( std::pair<char,int>('l',200) );
 	mymap.insert ( ft::pair<char,int>('e',200) );
 	mymap1.insert ( std::pair<char,int>('e',200) );
+	std::cout << "size : " << mymap.size() << std::endl;
 	
 	
-	
-	ft::map<char, int> my= mymap;
+	ft::map<char, int> my = mymap;
 	// std::cout << mymap['h'] << std::endl;
 	
 	
