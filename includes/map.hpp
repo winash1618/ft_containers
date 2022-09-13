@@ -45,9 +45,7 @@ namespace ft
 			typedef Alloc																allocator_type;
 			typedef value_type&															reference;
 			typedef const value_type&													const_reference;
-
-		class value_compare
-			: public std::binary_function<value_type, value_type, bool>
+			class value_compare : public std::binary_function<value_type, value_type, bool>
 			{
 				friend class map;
 				protected:
@@ -83,7 +81,6 @@ namespace ft
 			allocator_type																_alloc;
 			__node_allocator															n_alloc;
 			size_type																	_size;
-			
 
 		public:
 			explicit map (const key_compare& comp = key_compare(),
@@ -160,7 +157,7 @@ namespace ft
 				{
 					right = right->_right;
 				}
-				return iterator(right, right->_right);
+				return iterator(right, nullptr);
 			}
 			const_iterator end() const
 			{
@@ -169,7 +166,7 @@ namespace ft
 				{
 					right = right->_right;
 				}
-				return const_iterator(right, right->_right);
+				return const_iterator(right, nullptr);
 			}
 
 			size_type count (const key_type& k) const
@@ -238,9 +235,9 @@ namespace ft
 				// when the size of the map is empty.
 				// this will add new element to the map and return true since there is new allocation.
 				// std::cout << "I am inside insert" << std::endl;
-				if (_root == nullptr)
-				{std::cout << _size << "<-> size" << std::endl;
-				std::cout << val.first << "<-> val" << std::endl;}
+				// if (_root == nullptr)
+				// {std::cout << _size << "<-> size" << std::endl;
+				// std::cout << val.first << "<-> val" << std::endl;}
 				if (_root == nullptr)
 				{
 					_root = n_alloc.allocate(1);
@@ -432,9 +429,10 @@ namespace ft
 			{
 				node_pointer __root = _root;
 				node_pointer __result = nullptr;
+				std::cout << "i am inside " << std::endl;
 				while (__root != nullptr)
 				{
-					if (!_comp(__root->data.first, k))
+					if (!_comp(__root->_data.first, k))
 					{
 						__result = __root;
 						__root = __root->_left;
@@ -453,7 +451,7 @@ namespace ft
 				node_pointer __result = nullptr;
 				while (__root != nullptr)
 				{
-					if (_comp(__root->data.first, k))
+					if (!_comp(__root->_data.first, k))
 					{
 						__result = __root;
 						__root = __root->_left;
@@ -461,8 +459,9 @@ namespace ft
 					else
 						__root = __root->_right;
 				}
-				if (__result)
-					return iterator(__result);
+				if (__result->_right)
+					return iterator(__result->_right);
+				return (__result);
 				return (end());
 			}
 
@@ -475,7 +474,7 @@ namespace ft
 				}
 				else
 				{
-					insert(make_pair(key,mapped_type()));
+					insert(ft::make_pair(key,mapped_type()));
 					it = find(key);
 					return (it->second);
 				}
