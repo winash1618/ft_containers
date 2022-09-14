@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/09/13 18:21:45 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/09/14 13:17:37 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,14 +176,12 @@ template<class T, T v>
 				for (InputIterator it = first; it != last; it++)
 				{
 					++_size;
-				// std::cout << "size = " << _size << std::endl;
 				}
 				_vec = _alloc.allocate(_size);
 				_cap = _size;
 				for (size_type index = 0; index < _size; ++index)
 				{
 					_alloc.construct(_vec + index, *(first + index));
-					// ++_size;
 				}
 			}
 			

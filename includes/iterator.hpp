@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 10:50:33 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/08/31 14:46:42 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/09/14 14:26:30 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,19 @@ namespace ft
 			typedef ft::random_access_iterator_tag	iterator_category;
 			iterator() : _iterator(){}
 			iterator(T* iter) : _iterator( iter ){}
-
+			iterator(const iterator& x)
+			{
+				*this = x;
+			}
+			
+			iterator& operator=(const iterator<T>& __u) // commented for linux working fine in mac
+			{ 
+				if (this != &__u) 
+				{
+					this->_iterator = __u._iterator;
+				}
+				return *this;
+			}
 			reference operator*() const { 
 				return *_iterator; 
 			}

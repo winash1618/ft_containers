@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:27:34 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/09/13 14:23:43 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/09/14 14:26:04 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,23 @@ namespace ft
 		// reverse_iterator(const reverse_iterator<U>& u);
 		// template <class U> 
 		// reverse_iterator& operator=(const reverse_iterator<U>& u);//c++11
+		reverse_iterator(const reverse_iterator& x)
+		{
+			*this = x;
+		}
+		
+		reverse_iterator& operator=(const reverse_iterator<Iterator>& __u) // commented for linux working fine in mac
+		{ 
+			if (this != &__u) 
+			{
+				_iter = current = __u.base();
+			}
+			return *this;
+		}
 		Iterator base() const
 		{
 			return current;
 		}
-		reverse_iterator& operator=(const reverse_iterator<Iterator>& __u)
-            { _iter = current = __u.base(); return *this; }
 		reference operator*() const
 		{
 			Iterator tmp = current;
