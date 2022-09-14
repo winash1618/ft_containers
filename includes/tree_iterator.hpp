@@ -78,9 +78,9 @@ namespace ft
 		private:
 			typedef _NodePtr				__node_pointer;
 			// value_type						__val; commenting this fixed the assignment operator overload error in ft::pair
+		public:
 			__node_pointer					__ptr_;
 			__node_pointer					__end_;
-		public:
 			typedef value_type& reference;
 			typedef value_type* pointer;
 			typedef ft::bidirectional_iterator_tag	iterator_category;

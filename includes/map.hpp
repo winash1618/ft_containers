@@ -222,7 +222,17 @@ namespace ft
 			const_reverse_iterator rbegin() const											{return const_reverse_iterator(this->end());}
 			const_reverse_iterator rend() const												{return const_reverse_iterator(this->begin()); };
 			void clear()																	{destroy(_root); _size = 0; _root = nullptr;}
+			const mapped_type& at (const key_type& k) const									{return at(k);}
 
+			// at function
+			mapped_type& at (const key_type& k)
+			{
+				node_pointer __nd;
+				__nd = const_cast<node_pointer>(find(k).__ptr_);
+				if (__nd == nullptr)
+					throw std::out_of_range("map::at:  key not found");
+				return (__nd->_data.second);
+			}
 			// single element insert
 			ft::pair<iterator,bool> insert (const value_type& val)
 			{
@@ -492,9 +502,23 @@ namespace ft
 				_size = t_size;
 			}
 
-			// void erase (iterator position);
-			// size_type erase (const key_type& k);
-			// void erase (iterator first, iterator last);
+			void erase (iterator position)
+			{
+
+			}
+			size_type erase (const key_type& k)
+			{
+				node_pointer __nd;
+				__nd = const_cast<node_pointer>(find(k).__ptr_);
+				if(__nd)
+				{
+					erase(find(k));
+				}
+			}
+			void erase (iterator first, iterator last)
+			{
+				while ()
+			}
 
 		private:
 
@@ -616,7 +640,6 @@ namespace ft
 					subL->_parent = parentParent;
 				}
 			}
-			
 	};
 		template <class Key, class T, class Compare, class Alloc>
 		bool operator== ( const map<Key,T,Compare,Alloc>& lhs,
