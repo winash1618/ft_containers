@@ -516,7 +516,7 @@ namespace ft
 				P = __node->_parent;
 				if (tree_is_left_child(__node))
 					P->_left = nullptr;
-				else
+				else if (P && P->_right)
 					P->_right = nullptr;
 				bool dir;
 				goto Start_D;      // jump into the loop
@@ -526,81 +526,81 @@ namespace ft
 					Start_D:
 						if (tree_is_left_child(__node))
 							S = P->_right;
-						else
+						else if (P && P->_left)
 							S = P->_left;
 						if (tree_is_left_child(__node))
 							D = P->_right;
-						else
+						else if (P && P->_left)
 							D = P->_left;
 						if (tree_is_left_child(__node))
 							C = P->_left;
-						else
-						C = P->_right;
-						if (S->_color == RED)
-							goto Case_D3; // S red ===> P+C+D black
-							// S is black:
-						if (D != nullptr && D->_color == RED) // Not considered black
-							goto Case_D6; // D red && and S black
-						if (C != nullptr && C->_color == RED) // not considered black
-							goto Case_D5; // C red and S + D black
-						// Here both nephews are == nullptr (first iteration) or black later.
-						if (P->_color == RED)
-							goto Case_D4; // P red and C + S + D = black
-						// Case_D1 (P+C+S+D black):
-						S->_color = RED;
-						__node = P; // new current node (maybe the root)
+						else if (P && P->_right)
+							C = P->_right;
+						// if (S->_color == RED)
+						// 	goto Case_D3; // S red ===> P+C+D black
+						// 	// S is black:
+						// if (D != nullptr && D->_color == RED) // Not considered black
+						// 	goto Case_D6; // D red && and S black
+						// if (C != nullptr && C->_color == RED) // not considered black
+						// 	goto Case_D5; // C red and S + D black
+						// // Here both nephews are == nullptr (first iteration) or black later.
+						// if (P->_color == RED)
+						// 	goto Case_D4; // P red and C + S + D = black
+						// // Case_D1 (P+C+S+D black):
+						// S->_color = RED;
+						// __node = P; // new current node (maybe the root)
 						// iterate 1 black level
 						//   (= 1 tree level) higher
 					} while ((P = __node->_parent) != nullptr);
-					// end of the (do while)-loop
-					// Case_D2 (P == NULL):
-  					return; // deletion complete
-					Case_D3: // S red && P+C+D black:
-						if (dir)
-							RotateL(P); // P may be the root
-						else
-							RotateR(P);
-						P->_color = RED;
-						S->_color = BLACK;
-						S = C; // != NIL
-						// now: P red && S black
-						if (!dir)
-							D = S->_left; // distant nephew
-						else
-							D = S->_right;
-						if (D != nullptr && D->_color == RED)
-							goto Case_D6;      // D red && S black
-						if(dir)
-							C = S->_left; // close   nephew
-						else
-							C = S->_right;
-						if (C != nullptr && C->_color == RED)
-							goto Case_D5;      // C red && S+D black
-						// Otherwise C+D considered black.
-						// fall through to Case_D4
-					Case_D4: // P red && S+C+D black:
-						S->_color = RED;
-						P->_color = BLACK;
-						return; // deletion complete
-					Case_D5: // C red && S+D black:
-						if (!dir)
-							RotateL(S);
-						else
-							RotateR(S);
-						S->_color = RED;
-						C->_color = BLACK;
-						D = S;
-						S = C;
-						// now: D red && S black
-						// fall through to Case_D6
-					Case_D6: // D red && S black:
-						if (dir)
-							RotateL(P);
-						else
-							RotateR(P);
-						S->_color = P->_color;
-						P->_color = BLACK;
-						D->_color = BLACK;
+				// 	// end of the (do while)-loop
+				// 	// Case_D2 (P == NULL):
+  				// 	return; // deletion complete
+				// 	Case_D3: // S red && P+C+D black:
+				// 		if (dir)
+				// 			RotateL(P); // P may be the root
+				// 		else
+				// 			RotateR(P);
+				// 		P->_color = RED;
+				// 		S->_color = BLACK;
+				// 		S = C; // != NIL
+				// 		// now: P red && S black
+				// 		if (!dir)
+				// 			D = S->_left; // distant nephew
+				// 		else
+				// 			D = S->_right;
+				// 		if (D != nullptr && D->_color == RED)
+				// 			goto Case_D6;      // D red && S black
+				// 		if(dir)
+				// 			C = S->_left; // close   nephew
+				// 		else
+				// 			C = S->_right;
+				// 		if (C != nullptr && C->_color == RED)
+				// 			goto Case_D5;      // C red && S+D black
+				// 		// Otherwise C+D considered black.
+				// 		// fall through to Case_D4
+				// 	Case_D4: // P red && S+C+D black:
+				// 		S->_color = RED;
+				// 		P->_color = BLACK;
+				// 		return; // deletion complete
+				// 	Case_D5: // C red && S+D black:
+				// 		if (!dir)
+				// 			RotateL(S);
+				// 		else
+				// 			RotateR(S);
+				// 		S->_color = RED;
+				// 		C->_color = BLACK;
+				// 		D = S;
+				// 		S = C;
+				// 		// now: D red && S black
+				// 		// fall through to Case_D6
+				// 	Case_D6: // D red && S black:
+				// 		if (dir)
+				// 			RotateL(P);
+				// 		else
+				// 			RotateR(P);
+				// 		S->_color = P->_color;
+				// 		P->_color = BLACK;
+				// 		D->_color = BLACK;
 						return; // deletion complete
 			}
 			
