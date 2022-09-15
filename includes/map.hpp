@@ -502,22 +502,116 @@ namespace ft
 				_size = t_size;
 			}
 
-			void erase (iterator position)
+			void erase(iterator position)
 			{
+				node_pointer __root; // -> red–black tree
+				node_pointer __node; // -> node to be deleted
+				node_pointer __node_p; // -> parent node of __node
+				node_pointer __node_s; // -> sibling of __node
+				node_pointer __node_c; // -> close nephew
+				node_pointer __node_d; // -> distant nephew
 				
+				__node = const_cast<node_pointer>(position);
+				__root = _root;
+				__node_p = __node->_parent;
+				if (tree_is_left_child(__node))
+					__node_p->_left = nullptr;
+				else
+					__node_p->_right = nullptr;
+				bool dir;
+				goto Start_D;      // jump into the loop
+				// start of the (do while)-loop:
+				do {
+					dir = tree_is_left_child(__node);
+					Start_D:
+						if (tree_is_left_child(__node))
+							__node_s = __node_p->_right;
+						else
+							__node_s = __node_p->_left;
+						if (tree_is_left_child(__node))
+							__node_d = __node_p->_right;
+						else
+							__node_d = __node_p->_left;
+						if (tree_is_left_child(__node))
+							__node_c = __node_p->_left;
+						else
+						__node_c = __node_p->_right;
+						if (__node_s->_color == RED)
+							goto Case_D3; // __node_s red ===> __node_p+__node_c+__node_d black
+							// __node_s is black:
+						if (__node_d != nullptr && __node_d->color == RED) // Not considered black
+							goto Case_D6; // __node_d red && and __node_s black
+						if (__node_c != nullptr && __node_c->color == RED) // not considered black
+							goto Case_D5; // __node_c red and __node_s + __node_d black
+						// Here both nephews are == nullptr (first iteration) or black later.
+						if (__node_p->color == RED)
+							goto Case_D4; // __node_p red and __node_c + __node_s + __node_d = black
+						// Case_D1 (P+C+S+D black):
+						__node_s->_color = RED;
+						__node = __node_p; // new current node (maybe the root)
+						// iterate 1 black level
+						//   (= 1 tree level) higher
+					} while ((__node_p = __node->_parent) != nullptr);
+					// end of the (do while)-loop
+					// Case_D2 (__node_p == NULL):
+  					return; // deletion complete
+					Case_D3: // S red && P+C+D black:
+						if (dir)
+							rotateL(__node_p); // P may be the root
+						else
+							rotateR(__node_p);
+						P->color = RED;
+						S->color = BLACK;
+						S = C; // != NIL
+						// now: P red && S black
+						D = S->child[1-dir]; // distant nephew
+						if (D != NIL && D->color == RED)
+							goto Case_D6;      // D red && S black
+						C = S->child[  dir]; // close   nephew
+						if (C != NIL && C->color == RED)
+							goto Case_D5;      // C red && S+D black
+						// Otherwise C+D considered black.
+						// fall through to Case_D4
+					Case_D4: // P red && S+C+D black:
+						S->color = RED;
+						P->color = BLACK;
+						return; // deletion complete
+					Case_D5: // C red && S+D black:
+						if (!dir)
+							rotateL(__node_s);
+						else
+							rotateR(__node_s);
+						S->color = RED;
+						C->color = BLACK;
+						D = S;
+						S = C;
+						// now: D red && S black
+						// fall through to Case_D6
+					Case_D6: // D red && S black:
+						if (dir)
+							rotateL(__node_p);
+						else
+							rotateR(__node_p);
+						S->color = P->color;
+						P->color = BLACK;
+						D->color = BLACK;
+						return; // deletion complete
 			}
+			
 			size_type erase (const key_type& k)
 			{
 				node_pointer __nd;
 				__nd = const_cast<node_pointer>(find(k).__ptr_);
 				if(__nd)
-				{
 					erase(find(k));
-				}
 			}
 			void erase (iterator first, iterator last)
 			{
-				while ()
+				while (first != last)
+				{
+					erase(first);
+					first++;
+				}
 			}
 
 		private:
