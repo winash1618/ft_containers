@@ -240,8 +240,14 @@ ft::map<char,int> mymap;
   mymap['d']=40;
   mymap['e']=50;
   mymap['f']=60;
+  mymap['g']=10;
+  mymap['h']=20;
+  mymap['i']=30;
+  mymap['j']=40;
+  mymap['k']=50;
+  mymap['l']=60;
 
-  it=mymap.find('b');
+  it=mymap.find('e');
   mymap.erase (it); 
   for (it=mymap.begin(); it!=mymap.end(); ++it)
     std::cout << it->first << " => " << it->second << '\n';

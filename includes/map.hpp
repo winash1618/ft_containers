@@ -512,6 +512,7 @@ namespace ft
 				__root = _root;
 				if (!__node || !__root)
 					return ;
+				
 				rbDelete(__node);
 			}
 			
@@ -715,7 +716,14 @@ namespace ft
 				u->_parent->_left = v;
 			else
 				u->_parent->_right = v;
-			v->_parent = u->_parent;
+			if (v)
+				v->_parent = u->_parent;
+		}
+		node_pointer treeMin(node_pointer x)
+		{
+			while (x->_left)
+				x = x->_left;
+			return (x);
 		}
 		void rbDelete(node_pointer z)
 		{
@@ -734,7 +742,7 @@ namespace ft
 			}
 			else
 			{
-				y = tree_min(z->_right);
+				y = treeMin(z->_right);
 				y_orginal_color = y->_color;
 				x = y->_right;
 			}
@@ -748,16 +756,19 @@ namespace ft
 			}
 			rbTransplant(z, y);
 			y->_left = z->_left;
-			y->_left->_parent = y;
+			if (y->_left->_parent)
+				y->_left->_parent = y;
 			y->_color = z->_color;
-			if (y_orginal_color == BLACK)
+			if (x && y_orginal_color == BLACK)
 				rbDeleteFixup(x);
 		}
 		void rbDeleteFixup(node_pointer x)
 		{
 			node_pointer w = nullptr;
+			
 			while (x != _root && x->_color == BLACK)
 			{
+				
 				if (x == x->_parent->_right)
 				{
 					w = x->_parent->_right;
