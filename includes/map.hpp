@@ -501,125 +501,205 @@ namespace ft
 				n_alloc = tn_alloc;
 				_size = t_size;
 			}
-
+			
+			// Precondition:  __root != nullptr && __node != nullptr.
+			//                __tree_invariant(__root) == true.
+			//                __node == __root or == a direct or indirect child of __root.
+			// Effects:  unlinks __node from the tree rooted at __root, rebalancing as needed.
+			// Postcondition: __tree_invariant(end_node->__left_) == true && end_node->__left_
+			//                nor any of its children refer to __node.  end_node->__left_
+			//                may be different than the value passed in as __root.
 			void erase(iterator position)
 			{
 				node_pointer __root; // -> red–black tree
 				node_pointer __node; // -> node to be deleted
-				node_pointer P; // -> parent node of __node
-				node_pointer S; // -> sibling of __node
-				node_pointer C; // -> close nephew
-				node_pointer D; // -> distant nephew
+
 
 				__node = const_cast<node_pointer>(position.__ptr_);
 				__root = _root;
-				P = __node->_parent;
-				if (tree_is_left_child(__node))
-					P->_left = nullptr;
-				else if (P && P->_right)
-					P->_right = nullptr;
-				bool dir;
-				goto Start_D;      // jump into the loop
-				// start of the (do while)-loop:
-				do {
-					dir = tree_is_left_child(__node);
-					Start_D:
-						if (tree_is_left_child(__node))
-							S = P->_right;
-						else if (P && P->_left)
-							S = P->_left;
-						if (tree_is_left_child(__node))
-							D = P->_right;
-						else if (P && P->_left)
-							D = P->_left;
-						if (tree_is_left_child(__node))
-							C = P->_left;
-						else if (P && P->_right)
-							C = P->_right;
-						
-						if (S && S->_color == RED)
-						{
-							std::cout << "Case_D3" << std::endl;
-							goto Case_D3; // S red ===> P+C+D black
-						}
-						
-							// S is black:
-						if (D != nullptr && D->_color == RED) // Not considered black
-						{
-							std::cout << "Case_D6" << std::endl;
-							goto Case_D6; // D red && and S black
-						}
-						
-						if (C != nullptr && C->_color == RED) // not considered black
-						{
-							std::cout << "Case_D5" << std::endl;
-							goto Case_D5; // C red and S + D black
-						}
-						
-						// Here both nephews are == nullptr (first iteration) or black later.
-						if ( P && P->_color == RED)
-						{
-							std::cout << "Case_D4" << std::endl;
-							goto Case_D4; // P red and C + S + D = black
-						}
-						std::cout << "Start_D" << std::endl;
-						// Case_D1 (P+C+S+D black):
-						if (S)
-							S->_color = RED;
-						__node = P; // new current node (maybe the root)
-						// iterate 1 black level
-						//   (= 1 tree level) higher
-					} while (__node && (P = __node->_parent) != nullptr);
-					// end of the (do while)-loop
-					// Case_D2 (P == NULL):
-  					return; // deletion complete
-					Case_D3: // S red && P+C+D black:
-						if (dir)
-							RotateL(P); // P may be the root
-						else
-							RotateR(P);
-						P->_color = RED;
-						S->_color = BLACK;
-						S = C; // != NIL
-						// now: P red && S black
-						if (!dir)
-							D = S->_left; // distant nephew
-						else
-							D = S->_right;
-						if (D != nullptr && D->_color == RED)
-							goto Case_D6;      // D red && S black
-						if(dir)
-							C = S->_left; // close   nephew
-						else
-							C = S->_right;
-						if (C != nullptr && C->_color == RED)
-							goto Case_D5;      // C red && S+D black
-						// Otherwise C+D considered black.
-						// fall through to Case_D4
-					Case_D4: // P red && S+C+D black:
-						S->_color = RED;
-						P->_color = BLACK;
-						return; // deletion complete
-					Case_D5: // C red && S+D black:
-						if (!dir)
-							RotateL(S);
-						else
-							RotateR(S);
-						S->_color = RED;
-						C->_color = BLACK;
-						D = S;
-						S = C;
-						// now: D red && S black
-						// fall through to Case_D6
-					Case_D6: // D red && S black:
-						if (dir)
-							RotateL(P);
-						else
-							RotateR(P);
-						S->_color = P->_color;
-						P->_color = BLACK;
-						D->_color = BLACK;
-						return; // deletion complete
+				if (!__node || !__root)
+					return ;
+				 // __node will be removed from the tree.  Client still needs to destruct/deallocate it
+				// __y is either __node, or if __node has two children, __tree_next(__node).
+				// __y will have at most one child.
+				// __y will be the initial hole in the tree (make the hole at a leaf)
+				node_pointer __y = (__node->_left == nullptr || __node->_right == nullptr) ?
+								__node : tree_next(__node);
+				// __x is __y's possibly null single child
+				node_pointer __x = __y->_left != nullptr ? __y->_left : __y->_right;
+				// __w is __x's possibly null uncle (will become __x's sibling)
+				node_pointer __w = nullptr;
+				// link __x to __y's parent, and find __w
+				if (__x != nullptr)
+					__x->_parent = __y->_parent;
+				if (tree_is_left_child(__y))
+				{
+					__y->_parent->_left = __x;
+					if (__y != __root)
+						__w = __y->_parent->_right;
+					else
+						__root = __x;  // __w == nullptr
+				}
+				else
+				{
+					__y->_parent->_right = __x;
+					// __y can't be root if it is a right child
+					__w = __y->_parent->_left;
+				}
+				bool __removed_black = __y->_color;
+				// If we didn't remove __node, do so now by splicing in __y for __node,
+				//    but copy __node's color.  This does not impact __x or __w.
+				if (__y != __node)
+				{
+					// __node->_left != nulptr but __node->_right might == __x == nullptr 
+					__y->_parent = __node->_parent;
+					if (tree_is_left_child(__node))
+						__y->_parent->_left = __y;
+					else
+						__y->_parent->_right = __y;
+					__y->_left = __node->_left;
+					__y->_left->_parent = __y;
+					__y->_right = __node->_right;
+					if (__y->_right != nullptr)
+						__y->_right->_parent = __y;
+					__y->_color = __node->_color;
+					if (__root == __node)
+						__root = __y;
+				}
+				// // There is no need to rebalance if we removed a red, or if we removed
+				// //     the last node.
+				// if (__removed_black && __root != nullptr)
+				// {
+				// 	// Rebalance:
+				// 	// __x has an implicit black color (transferred from the removed __y)
+				// 	//    associated with it, no matter what its color is.
+				// 	// If __x is __root (in which case it can't be null), it is supposed
+				// 	//    to be black anyway, and if it is doubly black, then the double
+				// 	//    can just be ignored.
+				// 	// If __x is red (in which case it can't be null), then it can absorb
+				// 	//    the implicit black just by setting its color to black.
+				// 	// Since __y was black and only had one child (which __x points to), __x
+				// 	//   is either red with no children, else null, otherwise __y would have
+				// 	//   different black heights under left and right pointers.
+				// 	// if (__x == __root || __x != nullptr && !__x->_color)
+				// 	if (__x != nullptr)
+				// 		__x->_color = BLACK;
+				// 	else
+				// 	{
+				// 		//  Else __x isn't root, and is "doubly black", even though it may
+				// 		//     be null.  __w can not be null here, else the parent would
+				// 		//     see a black height >= 2 on the __x side and a black height
+				// 		//     of 1 on the __w side (__w must be a non-null black or a red
+				// 		//     with a non-null black child).
+				// 		while (true)
+				// 		{
+				// 			if (!tree_is_left_child(__w))  // if x is left child
+				// 			{
+				// 				if (!__w->_color)
+				// 				{
+				// 					__w->_color = BLACK;
+				// 					__w->_parent->_color = RED;
+				// 					RotateL(__w->_parent);
+				// 					// __x is still valid
+				// 					// reset __root only if necessary
+				// 					if (__root == __w->_left)
+				// 						__root = __w;
+				// 					// reset sibling, and it still can't be null
+				// 					__w = __w->_left->_right;
+				// 				}
+				// 				// __w->_color is now true, __w may have null children
+				// 				if ((__w->_left  == nullptr || __w->_left->_color) &&
+				// 					(__w->_right == nullptr || __w->_right->_color))
+				// 				{
+				// 					__w->_color = RED;
+				// 					__x = __w->_parent;
+				// 					// __x can no longer be null
+				// 					if (__x == __root || !__x->_color)
+				// 					{
+				// 						__x->_color = BLACK;
+				// 						break;
+				// 					}
+				// 					// reset sibling, and it still can't be null
+				// 					__w = tree_is_left_child(__x) ?
+				// 								__x->_parent->_right : 
+				// 								__x->_parent->_left; 
+				// 					// continue;
+				// 				}
+				// 				else  // __w has a red child
+				// 				{
+				// 					if (__w->_right == nullptr || __w->_right->_color)
+				// 					{
+				// 						// __w left child is non-null and red
+				// 						__w->_left->_color = BLACK;
+				// 						__w->_color = RED;
+				// 						RotateR(__w);
+				// 						// __w is known not to be root, so root hasn't changed
+				// 						// reset sibling, and it still can't be null
+				// 						__w = __w->_parent;
+				// 					}
+				// 					// __w has a right red child, left child may be null
+				// 					__w->_color = __w->_parent->_color;
+				// 					__w->_parent->_color = BLACK;
+				// 					__w->_right->_color = BLACK;
+				// 					RotateL(__w->_parent);
+				// 					break;
+				// 				}
+				// 			}
+				// 			else
+				// 			{
+				// 				if (!__w->_color)
+				// 				{
+				// 					__w->_color = BLACK;
+				// 					__w->_parent->_color = RED;
+				// 					RotateR(__w->_parent);
+				// 					// __x is still valid
+				// 					// reset __root only if necessary
+				// 					if (__root == __w->_right)
+				// 						__root = __w;
+				// 					// reset sibling, and it still can't be null
+				// 					__w = __w->_right->_left;
+				// 				}
+				// 				// __w->_color is now BLACK, __w may have null children
+				// 				if ((__w->_left  == nullptr || __w->_left->_color) &&
+				// 					(__w->_right == nullptr || __w->_right->_color))
+				// 				{
+				// 					__w->_color = RED;
+				// 					__x = __w->_parent;
+				// 					// __x can no longer be null
+				// 					if (!__x->_color || __x == __root)
+				// 					{
+				// 						__x->_color = BLACK;
+				// 						break;
+				// 					}
+				// 					// reset sibling, and it still can't be null
+				// 					__w = tree_is_left_child(__x) ?
+				// 								__x->_parent->_right : 
+				// 								__x->_parent->_left; 
+				// 					// continue;
+				// 				}
+				// 				else  // __w has a red child
+				// 				{
+				// 					if (__w->_left == nullptr || __w->_left->_color)
+				// 					{
+				// 						// __w right child is non-null and red
+				// 						__w->_right->_color = BLACK;
+				// 						__w->_color = RED;
+				// 						RotateL(__w);
+				// 						// __w is known not to be root, so root hasn't changed
+				// 						// reset sibling, and it still can't be null
+				// 						__w = __w->_parent;
+				// 					}
+				// 					// __w has a left red child, right child may be null
+				// 					__w->_color = __w->_parent->_color;
+				// 					__w->_parent->_color = BLACK;
+				// 					__w->_left->_color = BLACK;
+				// 					RotateR(__w->_parent);
+				// 					break;
+				// 				}
+				// 			}
+				// 		}
+				// 	}
+				// }
 			}
 			
 			size_type erase (const key_type& k)
