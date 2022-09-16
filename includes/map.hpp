@@ -512,8 +512,20 @@ namespace ft
 				__root = _root;
 				if (!__node || !__root)
 					return ;
-				
-				rbDelete(__node);
+				if (!__node->_right && !__node->_left)
+				{
+					int node_color = __node->_color;
+					node_pointer p = __node->_parent;
+					removeEmpty(__node);
+					if (node_color == BLACK)
+					{
+						if (p->_left)
+						{
+							p->_left->_color = RED;
+							p->_color = BLACK;
+						}
+					}
+				}
 			}
 			
 			size_type erase (const key_type& k)
@@ -534,6 +546,15 @@ namespace ft
 
 		private:
 
+			void removeEmpty(node_pointer __node)
+			{
+				if (tree_is_left_child(__node))
+					__node->_parent->_left = nullptr;
+				else
+					__node->_parent->_right = nullptr;
+				n_alloc.destroy(__node);
+				n_alloc.deallocate(__node, 1);
+			}
 			void destroy(node_pointer __nd)
 			{
 				if (__nd != nullptr)
@@ -698,136 +719,6 @@ namespace ft
 			y->_parent = x;
 		}
 
-		/**
-		 * @brief In order to move subtrees around within the 
-		 * binary search tree, we define a subroutine TRANSPLANT, 
-		 * which replaces one subtree as a child of its parent with 
-		 * another subtree. When TRANSPLANT replaces the subtree 
-		 * rooted at node u with the subtree rooted at node , node 
-		 * u’s parent becomes node ’s parent, and u’s parent ends up 
-		 * having  as its appropriate child.
-		 * -
-		 */
-		void rbTransplant(node_pointer u, node_pointer v)
-		{
-			if (!u->_parent)
-				_root = v;
-			else if (u == u->_parent->_left)
-				u->_parent->_left = v;
-			else
-				u->_parent->_right = v;
-			if (v)
-				v->_parent = u->_parent;
-		}
-		node_pointer treeMin(node_pointer x)
-		{
-			while (x->_left)
-				x = x->_left;
-			return (x);
-		}
-		void rbDelete(node_pointer z)
-		{
-			node_pointer y = z;
-			node_pointer x = nullptr;
-			int y_orginal_color = y->_color;
-			if (!z->_left)
-			{
-				x = z->_right;
-				rbTransplant(z, z->_right);
-			}
-			else if (!z->_right)
-			{
-				x = z->_left;
-				rbTransplant(z, z->_left);
-			}
-			else
-			{
-				y = treeMin(z->_right);
-				y_orginal_color = y->_color;
-				x = y->_right;
-			}
-			if (y->_parent == z)
-				x->_parent = y;
-			else
-			{
-				rbTransplant(y, y->_right);
-				y->_right = z->_right;
-				y->_right->_parent = y;
-			}
-			rbTransplant(z, y);
-			y->_left = z->_left;
-			if (y->_left->_parent)
-				y->_left->_parent = y;
-			y->_color = z->_color;
-			if (x && y_orginal_color == BLACK)
-				rbDeleteFixup(x);
-		}
-		void rbDeleteFixup(node_pointer x)
-		{
-			node_pointer w = nullptr;
-			
-			while (x != _root && x->_color == BLACK)
-			{
-				
-				if (x == x->_parent->_right)
-				{
-					w = x->_parent->_right;
-					if (w->_color == RED)
-					{
-						w->_color = BLACK;
-						x->_parent->_color = RED;
-						leftRotate(x->_parent);
-						w = x->_parent->_right;
-					}
-					if (w->_left->_color == BLACK && w->_right->_color == BLACK)
-					{
-						w->_color = RED;
-						x = x->_parent;
-					}
-					else if (w->_right->_color == BLACK)
-					{
-						w->_left->_color = BLACK;
-						w->_color = RED;
-						rightRotate(w);
-						w = x->_parent->_right;
-					}
-					w->_color = x->_parent->_color;
-					x->_parent->_color = BLACK;
-					w->_right->_color = BLACK;
-					leftRotate(x->_parent);
-					x = _root;
-				}
-				else
-				{
-					w = x->_parent->_left;
-					if (w->_color == RED)
-					{
-						w->_color = BLACK;
-						x->_parent->_color = RED;
-						leftRotate(x->_parent);
-						w = x->_parent->_left;
-					}
-					if (w->_right->_color == BLACK && w->_left->_color == BLACK)
-					{
-						w->_color = RED;
-						x = x->_parent;
-					}
-					else if (w->_left->_color == BLACK)
-					{
-						w->_right->_color = BLACK;
-						w->_color = RED;
-						rightRotate(w);
-						w = x->_parent->_left;
-					}
-					w->_color = x->_parent->_color;
-					x->_parent->_color = BLACK;
-					w->_left->_color = BLACK;
-					leftRotate(x->_parent);
-					x = _root;
-				}
-			}
-			x->_color = BLACK;
-		}
 
 	};
 		template <class Key, class T, class Compare, class Alloc>
