@@ -502,13 +502,6 @@ namespace ft
 				_size = t_size;
 			}
 			
-			// Precondition:  __root != nullptr && __node != nullptr.
-			//                __tree_invariant(__root) == true.
-			//                __node == __root or == a direct or indirect child of __root.
-			// Effects:  unlinks __node from the tree rooted at __root, rebalancing as needed.
-			// Postcondition: __tree_invariant(end_node->__left_) == true && end_node->__left_
-			//                nor any of its children refer to __node.  end_node->__left_
-			//                may be different than the value passed in as __root.
 			void erase(iterator position)
 			{
 				node_pointer __root; // -> red–black tree
@@ -519,187 +512,7 @@ namespace ft
 				__root = _root;
 				if (!__node || !__root)
 					return ;
-				 // __node will be removed from the tree.  Client still needs to destruct/deallocate it
-				// __y is either __node, or if __node has two children, __tree_next(__node).
-				// __y will have at most one child.
-				// __y will be the initial hole in the tree (make the hole at a leaf)
-				node_pointer __y = (__node->_left == nullptr || __node->_right == nullptr) ?
-								__node : tree_next(__node);
-				// __x is __y's possibly null single child
-				node_pointer __x = __y->_left != nullptr ? __y->_left : __y->_right;
-				// __w is __x's possibly null uncle (will become __x's sibling)
-				node_pointer __w = nullptr;
-				// link __x to __y's parent, and find __w
-				if (__x != nullptr)
-					__x->_parent = __y->_parent;
-				if (tree_is_left_child(__y))
-				{
-					__y->_parent->_left = __x;
-					if (__y != __root)
-						__w = __y->_parent->_right;
-					else
-						__root = __x;  // __w == nullptr
-				}
-				else
-				{
-					__y->_parent->_right = __x;
-					// __y can't be root if it is a right child
-					__w = __y->_parent->_left;
-				}
-				bool __removed_black = __y->_color;
-				// If we didn't remove __node, do so now by splicing in __y for __node,
-				//    but copy __node's color.  This does not impact __x or __w.
-				if (__y != __node)
-				{
-					// __node->_left != nulptr but __node->_right might == __x == nullptr 
-					__y->_parent = __node->_parent;
-					if (tree_is_left_child(__node))
-						__y->_parent->_left = __y;
-					else
-						__y->_parent->_right = __y;
-					__y->_left = __node->_left;
-					__y->_left->_parent = __y;
-					__y->_right = __node->_right;
-					if (__y->_right != nullptr)
-						__y->_right->_parent = __y;
-					__y->_color = __node->_color;
-					if (__root == __node)
-						__root = __y;
-				}
-				// // There is no need to rebalance if we removed a red, or if we removed
-				// //     the last node.
-				// if (__removed_black && __root != nullptr)
-				// {
-				// 	// Rebalance:
-				// 	// __x has an implicit black color (transferred from the removed __y)
-				// 	//    associated with it, no matter what its color is.
-				// 	// If __x is __root (in which case it can't be null), it is supposed
-				// 	//    to be black anyway, and if it is doubly black, then the double
-				// 	//    can just be ignored.
-				// 	// If __x is red (in which case it can't be null), then it can absorb
-				// 	//    the implicit black just by setting its color to black.
-				// 	// Since __y was black and only had one child (which __x points to), __x
-				// 	//   is either red with no children, else null, otherwise __y would have
-				// 	//   different black heights under left and right pointers.
-				// 	// if (__x == __root || __x != nullptr && !__x->_color)
-				// 	if (__x != nullptr)
-				// 		__x->_color = BLACK;
-				// 	else
-				// 	{
-				// 		//  Else __x isn't root, and is "doubly black", even though it may
-				// 		//     be null.  __w can not be null here, else the parent would
-				// 		//     see a black height >= 2 on the __x side and a black height
-				// 		//     of 1 on the __w side (__w must be a non-null black or a red
-				// 		//     with a non-null black child).
-				// 		while (true)
-				// 		{
-				// 			if (!tree_is_left_child(__w))  // if x is left child
-				// 			{
-				// 				if (!__w->_color)
-				// 				{
-				// 					__w->_color = BLACK;
-				// 					__w->_parent->_color = RED;
-				// 					RotateL(__w->_parent);
-				// 					// __x is still valid
-				// 					// reset __root only if necessary
-				// 					if (__root == __w->_left)
-				// 						__root = __w;
-				// 					// reset sibling, and it still can't be null
-				// 					__w = __w->_left->_right;
-				// 				}
-				// 				// __w->_color is now true, __w may have null children
-				// 				if ((__w->_left  == nullptr || __w->_left->_color) &&
-				// 					(__w->_right == nullptr || __w->_right->_color))
-				// 				{
-				// 					__w->_color = RED;
-				// 					__x = __w->_parent;
-				// 					// __x can no longer be null
-				// 					if (__x == __root || !__x->_color)
-				// 					{
-				// 						__x->_color = BLACK;
-				// 						break;
-				// 					}
-				// 					// reset sibling, and it still can't be null
-				// 					__w = tree_is_left_child(__x) ?
-				// 								__x->_parent->_right : 
-				// 								__x->_parent->_left; 
-				// 					// continue;
-				// 				}
-				// 				else  // __w has a red child
-				// 				{
-				// 					if (__w->_right == nullptr || __w->_right->_color)
-				// 					{
-				// 						// __w left child is non-null and red
-				// 						__w->_left->_color = BLACK;
-				// 						__w->_color = RED;
-				// 						RotateR(__w);
-				// 						// __w is known not to be root, so root hasn't changed
-				// 						// reset sibling, and it still can't be null
-				// 						__w = __w->_parent;
-				// 					}
-				// 					// __w has a right red child, left child may be null
-				// 					__w->_color = __w->_parent->_color;
-				// 					__w->_parent->_color = BLACK;
-				// 					__w->_right->_color = BLACK;
-				// 					RotateL(__w->_parent);
-				// 					break;
-				// 				}
-				// 			}
-				// 			else
-				// 			{
-				// 				if (!__w->_color)
-				// 				{
-				// 					__w->_color = BLACK;
-				// 					__w->_parent->_color = RED;
-				// 					RotateR(__w->_parent);
-				// 					// __x is still valid
-				// 					// reset __root only if necessary
-				// 					if (__root == __w->_right)
-				// 						__root = __w;
-				// 					// reset sibling, and it still can't be null
-				// 					__w = __w->_right->_left;
-				// 				}
-				// 				// __w->_color is now BLACK, __w may have null children
-				// 				if ((__w->_left  == nullptr || __w->_left->_color) &&
-				// 					(__w->_right == nullptr || __w->_right->_color))
-				// 				{
-				// 					__w->_color = RED;
-				// 					__x = __w->_parent;
-				// 					// __x can no longer be null
-				// 					if (!__x->_color || __x == __root)
-				// 					{
-				// 						__x->_color = BLACK;
-				// 						break;
-				// 					}
-				// 					// reset sibling, and it still can't be null
-				// 					__w = tree_is_left_child(__x) ?
-				// 								__x->_parent->_right : 
-				// 								__x->_parent->_left; 
-				// 					// continue;
-				// 				}
-				// 				else  // __w has a red child
-				// 				{
-				// 					if (__w->_left == nullptr || __w->_left->_color)
-				// 					{
-				// 						// __w right child is non-null and red
-				// 						__w->_right->_color = BLACK;
-				// 						__w->_color = RED;
-				// 						RotateL(__w);
-				// 						// __w is known not to be root, so root hasn't changed
-				// 						// reset sibling, and it still can't be null
-				// 						__w = __w->_parent;
-				// 					}
-				// 					// __w has a left red child, right child may be null
-				// 					__w->_color = __w->_parent->_color;
-				// 					__w->_parent->_color = BLACK;
-				// 					__w->_left->_color = BLACK;
-				// 					RotateR(__w->_parent);
-				// 					break;
-				// 				}
-				// 			}
-				// 		}
-				// 	}
-				// }
+				rbDelete(__node);
 			}
 			
 			size_type erase (const key_type& k)
@@ -838,6 +651,173 @@ namespace ft
 					subL->_parent = parentParent;
 				}
 			}
+			/*       leftRotate <==                   
+			|							|
+			y							x
+		  /   \  					  /   \
+		 x     a					 a     y
+	   /   \							 /   \
+	  b     c							b      c
+                     ==> rightRotate                      */
+		void leftRotate(node_pointer x)
+		{
+			if (x->_right || !_root->_parent)
+				return ;
+			node_pointer y = x->_right; // sey y
+			x->_right = y->_left;  // turn y’s left subtree into x’s right subtree
+			if (!y->_left) 
+				y->_left->_parent = x;
+			y->_parent = x->_parent;  // link x’s parent to y
+			if (!x->_parent)
+				_root = y;
+			else if (x == x->_parent->_left)
+				x->_parent->_left = y;
+			else
+				x->_parent->_right = y;
+			y->_left = x;  // put x on y’s left
+			x->_parent = y;
+		}
+
+		void rightRotate(node_pointer y)
+		{
+			if (y->_left || !_root->_parent)
+				return ;
+			node_pointer x = y->_left; // sey y
+			y->_left = x->_right;  // turn y’s left subtree into x’s right subtree
+			if (!x->_right) 
+				x->_right->_parent = y;
+			x->_parent = y->_parent;  // link x’s parent to y
+			if (!y->_parent)
+				_root = x;
+			else if (y == y->_parent->_right)
+				y->_parent->_right = x;
+			else
+				y->_parent->_left = x;
+			x->_right = y;  // put x on y’s left
+			y->_parent = x;
+		}
+
+		/**
+		 * @brief In order to move subtrees around within the 
+		 * binary search tree, we define a subroutine TRANSPLANT, 
+		 * which replaces one subtree as a child of its parent with 
+		 * another subtree. When TRANSPLANT replaces the subtree 
+		 * rooted at node u with the subtree rooted at node , node 
+		 * u’s parent becomes node ’s parent, and u’s parent ends up 
+		 * having  as its appropriate child.
+		 * -
+		 */
+		void rbTransplant(node_pointer u, node_pointer v)
+		{
+			if (!u->_parent)
+				_root = v;
+			else if (u == u->_parent->_left)
+				u->_parent->_left = v;
+			else
+				u->_parent->_right = v;
+			v->_parent = u->_parent;
+		}
+		void rbDelete(node_pointer z)
+		{
+			node_pointer y = z;
+			node_pointer x = nullptr;
+			int y_orginal_color = y->_color;
+			if (!z->_left)
+			{
+				x = z->_right;
+				rbTransplant(z, z->_right);
+			}
+			else if (!z->_right)
+			{
+				x = z->_left;
+				rbTransplant(z, z->_left);
+			}
+			else
+			{
+				y = tree_min(z->_right);
+				y_orginal_color = y->_color;
+				x = y->_right;
+			}
+			if (y->_parent == z)
+				x->_parent = y;
+			else
+			{
+				rbTransplant(y, y->_right);
+				y->_right = z->_right;
+				y->_right->_parent = y;
+			}
+			rbTransplant(z, y);
+			y->_left = z->_left;
+			y->_left->_parent = y;
+			y->_color = z->_color;
+			if (y_orginal_color == BLACK)
+				rbDeleteFixup(x);
+		}
+		void rbDeleteFixup(node_pointer x)
+		{
+			node_pointer w = nullptr;
+			while (x != _root && x->_color == BLACK)
+			{
+				if (x == x->_parent->_right)
+				{
+					w = x->_parent->_right;
+					if (w->_color == RED)
+					{
+						w->_color = BLACK;
+						x->_parent->_color = RED;
+						leftRotate(x->_parent);
+						w = x->_parent->_right;
+					}
+					if (w->_left->_color == BLACK && w->_right->_color == BLACK)
+					{
+						w->_color = RED;
+						x = x->_parent;
+					}
+					else if (w->_right->_color == BLACK)
+					{
+						w->_left->_color = BLACK;
+						w->_color = RED;
+						rightRotate(w);
+						w = x->_parent->_right;
+					}
+					w->_color = x->_parent->_color;
+					x->_parent->_color = BLACK;
+					w->_right->_color = BLACK;
+					leftRotate(x->_parent);
+					x = _root;
+				}
+				else
+				{
+					w = x->_parent->_left;
+					if (w->_color == RED)
+					{
+						w->_color = BLACK;
+						x->_parent->_color = RED;
+						leftRotate(x->_parent);
+						w = x->_parent->_left;
+					}
+					if (w->_right->_color == BLACK && w->_left->_color == BLACK)
+					{
+						w->_color = RED;
+						x = x->_parent;
+					}
+					else if (w->_left->_color == BLACK)
+					{
+						w->_right->_color = BLACK;
+						w->_color = RED;
+						rightRotate(w);
+						w = x->_parent->_left;
+					}
+					w->_color = x->_parent->_color;
+					x->_parent->_color = BLACK;
+					w->_left->_color = BLACK;
+					leftRotate(x->_parent);
+					x = _root;
+				}
+			}
+			x->_color = BLACK;
+		}
+
 	};
 		template <class Key, class T, class Compare, class Alloc>
 		bool operator== ( const map<Key,T,Compare,Alloc>& lhs,
