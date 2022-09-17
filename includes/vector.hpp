@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/09/14 13:17:37 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/09/17 16:40:12 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include "iterator.hpp"
 #include "iterator_traits.hpp"
 #include "reverse_iterator.hpp"
+#include "pair.hpp"
 namespace ft
 {
 	//https://stackoverflow.com/questions/44517556/how-to-define-our-own-nullptr-in-c98
@@ -771,16 +772,17 @@ template<class T, T v>
 		template <class T, class Alloc>
 		bool operator==(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 		{
-			if (lhs.size() == rhs.size())
-			{
-				for (size_t index = 0; index < lhs.size(); index++)
-				{
-					if (lhs[index] != rhs[index])
-						return (false);
-				}
-				return (true);
-			}
-			return (false);
+			// if (lhs.size() == rhs.size())
+			// {
+			// 	for (size_t index = 0; index < lhs.size(); index++)
+			// 	{
+			// 		if (lhs[index] != rhs[index])
+			// 			return (false);
+			// 	}
+			// 	return (true);
+			// }
+			// return (false);
+			return lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin());
 		}
 		template <class T, class Alloc>
 		bool operator!= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
@@ -791,12 +793,13 @@ template<class T, T v>
 		bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 		{
 			//src https://en.cppreference.com/w/cpp/algorithm/lexicographical_compare
-			for ( ; (lhs.begin() != lhs.end()) && (rhs.begin() != rhs.end()); ++(lhs.begin()), (void) ++(rhs.begin()) ) 
-			{
-				if (*(lhs.begin()) < *(rhs.begin())) return true;
-				if (*(rhs.begin()) < *(lhs.begin())) return false;
-			}
-			return (lhs.begin() == lhs.end()) && (rhs.begin() != rhs.end());
+			// for ( ; (lhs.begin() != lhs.end()) && (rhs.begin() != rhs.end()); ++(lhs.begin()), (void) ++(rhs.begin()) ) 
+			// {
+			// 	if (*(lhs.begin()) < *(rhs.begin())) return true;
+			// 	if (*(rhs.begin()) < *(lhs.begin())) return false;
+			// }
+			// return (lhs.begin() == lhs.end()) && (rhs.begin() != rhs.end());
+			return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 		}
 		template <class T, class Alloc>
 		bool operator<= (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)

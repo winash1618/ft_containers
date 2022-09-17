@@ -21,7 +21,7 @@ namespace ft
 		
 		T _data;
 		color_t _color;
-		RBTreeNode(const T& data) : _left(nullptr), _right(nullptr), _parent(nullptr), _data(data), _color(RED) {}
+		RBTreeNode(const T& data) : _left(nullptr_f), _right(nullptr_f), _parent(nullptr_f), _data(data), _color(RED) {}
 	};
 	
 	template < class Key,                                     // map::key_type
@@ -78,7 +78,7 @@ namespace ft
 
 		public:
 			explicit map (const key_compare& comp = key_compare(),
-			const allocator_type& alloc = allocator_type()) : _root(nullptr), _alloc(alloc), _size(0)
+			const allocator_type& alloc = allocator_type()) : _root(nullptr_f), _alloc(alloc), _size(0)
 			{
 				std::cout << "Map default constructor called" << std::endl;
 			}
@@ -108,7 +108,7 @@ namespace ft
 					_comp = x._comp;
 					n_alloc = x.n_alloc;
 					_size = 0;
-					_root = nullptr;
+					_root = nullptr_f;
 					insert(x.begin(), x.end());
 				}
 				return *this;
@@ -151,7 +151,7 @@ namespace ft
 				{
 					right = right->_right;
 				}
-				return iterator(right, nullptr);
+				return iterator(right, nullptr_f);
 			}
 			const_iterator end() const
 			{
@@ -160,7 +160,7 @@ namespace ft
 				{
 					right = right->_right;
 				}
-				return const_iterator(right, nullptr);
+				return const_iterator(right, nullptr_f);
 			}
 
 			size_type count (const key_type& k) const
@@ -186,7 +186,7 @@ namespace ft
 			iterator find (const key_type& k)
 			{
 				node_pointer cur = _root;
-				node_pointer parent = nullptr;
+				node_pointer parent = nullptr_f;
 				while (cur)
 				{
 					if (cur->_data.first < k)
@@ -221,7 +221,7 @@ namespace ft
 			reverse_iterator rend()															{return reverse_iterator(this->begin()); }
 			const_reverse_iterator rbegin() const											{return const_reverse_iterator(this->end());}
 			const_reverse_iterator rend() const												{return const_reverse_iterator(this->begin()); };
-			void clear()																	{destroy(_root); _size = 0; _root = nullptr;}
+			void clear()																	{destroy(_root); _size = 0; _root = nullptr_f;}
 			const mapped_type& at (const key_type& k) const									{return at(k);}
 
 			// at function
@@ -229,7 +229,7 @@ namespace ft
 			{
 				node_pointer __nd;
 				__nd = const_cast<node_pointer>(find(k).__ptr_);
-				if (__nd == nullptr)
+				if (__nd == nullptr_f)
 					throw std::out_of_range("map::at:  key not found");
 				return (__nd->_data.second);
 			}
@@ -239,10 +239,10 @@ namespace ft
 				// when the size of the map is empty.
 				// this will add new element to the map and return true since there is new allocation.
 				// std::cout << "I am inside insert" << std::endl;
-				// if (_root == nullptr)
+				// if (_root == nullptr_f)
 				// {std::cout << _size << "<-> size" << std::endl;
 				// std::cout << val.first << "<-> val" << std::endl;}
-				if (_root == nullptr)
+				if (_root == nullptr_f)
 				{
 					_root = n_alloc.allocate(1);
 					ft::RBTreeNode<value_type> temp(val);
@@ -256,7 +256,7 @@ namespace ft
 				// this is searching for a match in the current map element if there
 				// is a match it will return with false since there is no allocation.
 				node_pointer cur = _root;
-				node_pointer parent = nullptr;
+				node_pointer parent = nullptr_f;
 				while (cur)
 				{
 					if (cur->_data.first < val.first)
@@ -432,9 +432,9 @@ namespace ft
 			iterator lower_bound (const key_type& k)
 			{
 				node_pointer __root = _root;
-				node_pointer __result = nullptr;
+				node_pointer __result = nullptr_f;
 				std::cout << "i am inside " << std::endl;
-				while (__root != nullptr)
+				while (__root != nullptr_f)
 				{
 					if (!_comp(__root->_data.first, k))
 					{
@@ -452,8 +452,8 @@ namespace ft
 			iterator upper_bound (const key_type& k)
 			{
 				node_pointer __root = _root;
-				node_pointer __result = nullptr;
-				while (__root != nullptr)
+				node_pointer __result = nullptr_f;
+				while (__root != nullptr_f)
 				{
 					if (_comp( k, __root->_data.first))
 					{
@@ -512,7 +512,10 @@ namespace ft
 				__root = _root;
 				if (!__node || !__root)
 					return ;
+				n_alloc.destroy(__node);
 				tree_remove( __node);
+				n_alloc.deallocate(__node, 1);
+				_size--;
 			}
 			
 			size_type erase (const key_type& k)
@@ -521,13 +524,15 @@ namespace ft
 				__nd = const_cast<node_pointer>(find(k).__ptr_);
 				if(__nd)
 					erase(find(k));
+				return _size;
 			}
 			void erase (iterator first, iterator last)
 			{
 				while (first != last)
 				{
-					erase(first);
+					iterator temp = first;
 					first++;
+					erase(temp);
 				}
 			}
 
@@ -536,7 +541,7 @@ namespace ft
 
 			void destroy(node_pointer __nd)
 			{
-				if (__nd != nullptr)
+				if (__nd != nullptr_f)
 				{
 					destroy(__nd->_left);
 					destroy(__nd->_right);
@@ -589,7 +594,7 @@ namespace ft
 				if (_root == parent)
 				{
 					_root = subR;
-					_root -> _parent = nullptr;
+					_root -> _parent = nullptr_f;
 				}
 				else
 				{
@@ -641,7 +646,7 @@ namespace ft
 				if (_root == parent)
 				{
 					_root = subL;
-					_root->_parent = nullptr;
+					_root->_parent = nullptr_f;
 				}
 				else
 				{
@@ -660,21 +665,21 @@ namespace ft
 				// __y will have at most one child.
 				// __y will be the initial hole in the tree (make the hole at a leaf)
 				bool __removed_black = false;
-				node_pointer __y = (__z->_left == nullptr || __z->_right == nullptr) ?
+				node_pointer __y = (__z->_left == nullptr_f || __z->_right == nullptr_f) ?
 								__z : tree_next(__z);
 				// __x is __y's possibly null single child
-				node_pointer __x = __y->_left != nullptr ? __y->_left : __y->_right;
+				node_pointer __x = __y->_left != nullptr_f ? __y->_left : __y->_right;
 				// __w is __x's possibly null uncle (will become __x's sibling)
-				node_pointer __w = nullptr;
+				node_pointer __w = nullptr_f;
 				// link __x to __y's parent, and find __w
-				if (__x != nullptr)
+				if (__x != nullptr_f)
 					__x->_parent = __y->_parent;
 				if (__y == _root)
 					_root = __x;
 				if (tree_is_left_child(__y))
 				{
 					__y->_parent->_left = __x;
-					__w = __y->_parent->_right;// __w == nullptr
+					__w = __y->_parent->_right;// __w == nullptr_f
 				}
 				else
 				{
@@ -689,19 +694,19 @@ namespace ft
 				//    but copy __z's color.  This does not impact __x or __w.
 				if (_root == __z)
 				{
-					// __z->_left != nulptr but __z->_right might == __x == nullptr 
+					// __z->_left != nulptr but __z->_right might == __x == nullptr_f 
 					__y->_parent = __z->_parent;
 					__y->_left = __z->_left;
 					__y->_left->_parent = __y;
 					__y->_right = __z->_right;
-					if (__y->_right != nullptr)
+					if (__y->_right != nullptr_f)
 						__y->_right->_parent = __y;
 					__y->_color = __z->_color;
 					_root = __y;
 				}
 				else if (__y != __z)
 				{
-					// __z->_left != nulptr but __z->_right might == __x == nullptr 
+					// __z->_left != nulptr but __z->_right might == __x == nullptr_f 
 					__y->_parent = __z->_parent;
 					if (tree_is_left_child(__z))
 						__y->_parent->_left = __y;
@@ -710,7 +715,7 @@ namespace ft
 					__y->_left = __z->_left;
 					__y->_left->_parent = __y;
 					__y->_right = __z->_right;
-					if (__y->_right != nullptr)
+					if (__y->_right != nullptr_f)
 						__y->_right->_parent = __y;
 					__y->_color = __z->_color;
 					// if (_root == __z)
@@ -718,7 +723,7 @@ namespace ft
 				}
 				// There is no need to rebalance if we removed a red, or if we removed
 				//     the last node.
-				if (__removed_black && _root != nullptr)
+				if (__removed_black && _root != nullptr_f)
 				{
 					// Rebalance:
 					// __x has an implicit black color (transferred from the removed __y)
@@ -731,8 +736,8 @@ namespace ft
 					// Since __y was black and only had one child (which __x points to), __x
 					//   is either red with no children, else null, otherwise __y would have
 					//   different black heights under left and right pointers.
-					// if (__x == _root || __x != nullptr && !__x->_color)
-					if (__x != nullptr)
+					// if (__x == _root || __x != nullptr_f && !__x->_color)
+					if (__x != nullptr_f)
 						__x->_color = BLACK;
 					else
 					{
@@ -758,8 +763,8 @@ namespace ft
 									__w = __w->_left->_right;
 								}
 								// __w->_color is now BLACK, __w may have null children
-								if ((__w->_left  == nullptr || __w->_left->_color == BLACK) &&
-									(__w->_right == nullptr || __w->_right->_color == BLACK))
+								if ((__w->_left  == nullptr_f || __w->_left->_color == BLACK) &&
+									(__w->_right == nullptr_f || __w->_right->_color == BLACK))
 								{
 									__w->_color = RED;
 									__x = __w->_parent;
@@ -777,7 +782,7 @@ namespace ft
 								}
 								else  // __w has a red child
 								{
-									if (__w->_right == nullptr || __w->_right->_color == BLACK)
+									if (__w->_right == nullptr_f || __w->_right->_color == BLACK)
 									{
 										// __w left child is non-null and red
 										__w->_left->_color = BLACK;
@@ -810,8 +815,8 @@ namespace ft
 									__w = __w->_right->_left;
 								}
 								// __w->_color is now BLACK, __w may have null children
-								if ((__w->_left  == nullptr || __w->_left->_color == BLACK) &&
-									(__w->_right == nullptr || __w->_right->_color == BLACK))
+								if ((__w->_left  == nullptr_f || __w->_left->_color == BLACK) &&
+									(__w->_right == nullptr_f || __w->_right->_color == BLACK))
 								{
 									__w->_color = RED;
 									__x = __w->_parent;
@@ -829,7 +834,7 @@ namespace ft
 								}
 								else  // __w has a red child
 								{
-									if (__w->_left == nullptr || __w->_left->_color  == BLACK)
+									if (__w->_left == nullptr_f || __w->_left->_color  == BLACK)
 									{
 										// __w right child is non-null and red
 										__w->_right->_color = BLACK;
@@ -900,27 +905,43 @@ namespace ft
 
 	};
 		template <class Key, class T, class Compare, class Alloc>
-		bool operator== ( const map<Key,T,Compare,Alloc>& lhs,
-							const map<Key,T,Compare,Alloc>& rhs );
+		inline bool operator== ( const map<Key,T,Compare,Alloc>& lhs,
+							const map<Key,T,Compare,Alloc>& rhs )
+		{
+			return lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin());
+		}
+
 		template <class Key, class T, class Compare, class Alloc>
-		bool operator!= ( const map<Key,T,Compare,Alloc>& lhs,
-							const map<Key,T,Compare,Alloc>& rhs );
+		inline bool operator!= ( const map<Key,T,Compare,Alloc>& lhs,
+							const map<Key,T,Compare,Alloc>& rhs )
+		{
+			return !(lhs == rhs);
+		}
 			
 		template <class Key, class T, class Compare, class Alloc>
-		bool operator<  ( const map<Key,T,Compare,Alloc>& lhs,
-							const map<Key,T,Compare,Alloc>& rhs );
-		
+		inline bool operator<  ( const map<Key,T,Compare,Alloc>& lhs,
+							const map<Key,T,Compare,Alloc>& rhs )
+		{
+			return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+		}
 		template <class Key, class T, class Compare, class Alloc>
-		bool operator<= ( const map<Key,T,Compare,Alloc>& lhs,
-							const map<Key,T,Compare,Alloc>& rhs );
-			
+		inline bool operator<= ( const map<Key,T,Compare,Alloc>& lhs,
+							const map<Key,T,Compare,Alloc>& rhs )
+		{
+			return !(rhs < lhs);
+		}
 		template <class Key, class T, class Compare, class Alloc>
-		bool operator>  ( const map<Key,T,Compare,Alloc>& lhs,
-							const map<Key,T,Compare,Alloc>& rhs );
-		
+		inline bool operator>  ( const map<Key,T,Compare,Alloc>& lhs,
+							const map<Key,T,Compare,Alloc>& rhs )
+		{
+			return rhs < lhs;
+		}
 		template <class Key, class T, class Compare, class Alloc>
-		bool operator>= ( const map<Key,T,Compare,Alloc>& lhs,
-							const map<Key,T,Compare,Alloc>& rhs );
+		inline bool operator>= ( const map<Key,T,Compare,Alloc>& lhs,
+							const map<Key,T,Compare,Alloc>& rhs )
+		{
+			return !(lhs < rhs);
+		}
 		template <class Key, class T, class Compare, class Alloc>
 		void swap (map<Key,T,Compare,Alloc>& x, map<Key,T,Compare,Alloc>& y)
 		{
