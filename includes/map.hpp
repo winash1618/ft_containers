@@ -669,13 +669,12 @@ namespace ft
 				// link __x to __y's parent, and find __w
 				if (__x != nullptr)
 					__x->_parent = __y->_parent;
+				if (__y == _root)
+					_root = __x;
 				if (tree_is_left_child(__y))
 				{
 					__y->_parent->_left = __x;
-					if (__y != _root)
-						__w = __y->_parent->_right;
-					else
-						_root = __x;  // __w == nullptr
+					__w = __y->_parent->_right;// __w == nullptr
 				}
 				else
 				{
@@ -688,7 +687,19 @@ namespace ft
 					__removed_black = true;
 				// If we didn't remove __z, do so now by splicing in __y for __z,
 				//    but copy __z's color.  This does not impact __x or __w.
-				if (__y != __z)
+				if (_root == __z)
+				{
+					// __z->_left != nulptr but __z->_right might == __x == nullptr 
+					__y->_parent = __z->_parent;
+					__y->_left = __z->_left;
+					__y->_left->_parent = __y;
+					__y->_right = __z->_right;
+					if (__y->_right != nullptr)
+						__y->_right->_parent = __y;
+					__y->_color = __z->_color;
+					_root = __y;
+				}
+				else if (__y != __z)
 				{
 					// __z->_left != nulptr but __z->_right might == __x == nullptr 
 					__y->_parent = __z->_parent;
@@ -702,8 +713,8 @@ namespace ft
 					if (__y->_right != nullptr)
 						__y->_right->_parent = __y;
 					__y->_color = __z->_color;
-					if (_root == __z)
-						_root = __y;
+					// if (_root == __z)
+					// 	_root = __y;
 				}
 				// There is no need to rebalance if we removed a red, or if we removed
 				//     the last node.
