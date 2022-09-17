@@ -88,7 +88,7 @@ namespace ft
 
 			__tree_iterator() {}
 			__tree_iterator(__node_pointer ptr): __ptr_(ptr) {}
-			__tree_iterator(__node_pointer end, __node_pointer ptr):__end_(end), __ptr_(ptr) {}
+			__tree_iterator(__node_pointer end, __node_pointer ptr):__ptr_(ptr), __end_(end) {}
 
 			reference operator*() const
 			{

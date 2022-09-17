@@ -78,9 +78,8 @@ namespace ft
 
 		public:
 			explicit map (const key_compare& comp = key_compare(),
-			const allocator_type& alloc = allocator_type()) : _root(nullptr_f), _alloc(alloc), _size(0)
+			const allocator_type& alloc = allocator_type()) : _root(nullptr_f), _comp(comp), _alloc(alloc), _size(0)
 			{
-				std::cout << "Map default constructor called" << std::endl;
 			}
 			template <class InputIterator>
 			map (InputIterator first, InputIterator last,
@@ -91,7 +90,6 @@ namespace ft
 			}
 			map (const map& x)
 			{
-				std::cout << "Map copy constructor called" << std::endl;
 				*this = x;
 				return;
 			}
@@ -100,7 +98,6 @@ namespace ft
 
 			map& operator=(const map& x)
 			{
-				std::cout << "Map copy assignment operator called" << std::endl;
 				if (this != &x)
 				{
 					value_comp() = x.value_comp();
@@ -210,7 +207,7 @@ namespace ft
 			pair<const_iterator,const_iterator> equal_range (const key_type& k) const		{return ft::pair<const_iterator, const_iterator>(lower_bound(k), upper_bound(k));}
 			pair<iterator,iterator> equal_range (const key_type& k)							{return ft::pair<iterator, iterator>(lower_bound(k), upper_bound(k));}
 			const_iterator lower_bound (const key_type& k) const							{return const_iterator(lower_bound(k));}
-			const_iterator upper_bound (const key_type& k) const							{return const_iterator(upper_bound);}
+			const_iterator upper_bound (const key_type& k) const							{return const_iterator(upper_bound(k));}
 			const_iterator find (const key_type& k) const									{return (const_iterator(find(k)));}
 			allocator_type get_allocator() const											{return (this->_alloc);}
 			key_compare key_comp() const													{return (this->_comp);}
