@@ -247,7 +247,7 @@ ft::map<char,int> mymap;
   mymap['k']=50;
   mymap['l']=60;
 
-  it=mymap.find('l');
+  it=mymap.find('d');
   mymap.erase (it); 
   for (it=mymap.begin(); it!=mymap.end(); ++it)
     std::cout << it->first << " => " << it->second << '\n';
