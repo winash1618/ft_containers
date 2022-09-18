@@ -1,5 +1,6 @@
 # SRC = v_erase_test.cpp
-SRC = m_construct_test.cpp
+SRC = m_construct_test.cpp m_at_test.cpp m_begin_test.cpp m_clear_test.cpp \
+		m_count_test.cpp m_empty_test.cpp
 
 SRC_DIR = tests/map_tests/
 

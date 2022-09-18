@@ -430,7 +430,6 @@ namespace ft
 			{
 				node_pointer __root = _root;
 				node_pointer __result = nullptr_f;
-				std::cout << "i am inside " << std::endl;
 				while (__root != nullptr_f)
 				{
 					if (!_comp(__root->_data.first, k))
@@ -505,6 +504,7 @@ namespace ft
 				node_pointer __node; // -> node to be deleted
 
 
+				
 				__node = const_cast<node_pointer>(position.__ptr_);
 				__root = _root;
 				if (!__node || !__root)
@@ -661,6 +661,13 @@ namespace ft
 				// __y is either __z, or if __z has two children, tree_next(__z).
 				// __y will have at most one child.
 				// __y will be the initial hole in the tree (make the hole at a leaf)
+				// std::cout << _size << std::endl;
+				// if (_size == 1)
+				// {
+				// 	std::cout << "HI" << std::endl;
+				// 	_root = nullptr_f;
+				// 	return ;
+				// }
 				bool __removed_black = false;
 				node_pointer __y = (__z->_left == nullptr_f || __z->_right == nullptr_f) ?
 								__z : tree_next(__z);
@@ -673,7 +680,7 @@ namespace ft
 					__x->_parent = __y->_parent;
 				if (__y == _root)
 					_root = __x;
-				if (tree_is_left_child(__y))
+				else if (tree_is_left_child(__y))
 				{
 					__y->_parent->_left = __x;
 					__w = __y->_parent->_right;// __w == nullptr_f
