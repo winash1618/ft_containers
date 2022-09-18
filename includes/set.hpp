@@ -4,11 +4,24 @@
 # include <iostream>
 # include <algorithm>
 # include <functional>
-# include "tree_iterator.hpp"
+# include "set_iterator.hpp"
 # include "reverse_iterator.hpp"
 
 namespace ft
 {
+	enum color_t { BLACK, RED };
+
+	template<class T>
+	struct RBTreeNode
+	{
+		RBTreeNode<T>* _left;
+		RBTreeNode<T>* _right;
+		RBTreeNode<T>* _parent;
+		
+		T _data;
+		color_t _color;
+		RBTreeNode(const T& data) : _left(nullptr_f), _right(nullptr_f), _parent(nullptr_f), _data(data), _color(RED) {}
+	};
 template < class T,                        // set::key_type/value_type
 			class Compare = std::less<T>,        // set::key_compare/value_compare
 			class Alloc = std::allocator<T>      // set::allocator_type
@@ -35,8 +48,8 @@ template < class T,                        // set::key_type/value_type
 				typedef typename allocator_type::size_type									size_type;
 				typedef typename allocator_type::difference_type							difference_type;
 				typedef typename __node_allocator::pointer									node_pointer;
-				typedef ft::__tree_iterator<value_type, node_pointer> 						iterator;
-				typedef ft::__tree_iterator<value_type, node_pointer>						const_iterator;
+				typedef ft::set_iterator<value_type, node_pointer>							iterator;
+				typedef ft::set_iterator<value_type, node_pointer>							const_iterator;
 				typedef ft::reverse_iterator<iterator>										reverse_iterator;
 				typedef ft::reverse_iterator<const_iterator>								const_reverse_iterator;
 			private:
@@ -54,8 +67,9 @@ template < class T,                        // set::key_type/value_type
 				template <class InputIterator>
 				set (InputIterator first, InputIterator last,
 					const key_compare& comp = key_compare(),
-					const allocator_type& alloc = allocator_type()) : _comp(comp), _alloc(alloc)
+					const allocator_type& alloc = allocator_type()) : _root(nullptr_f), _comp(comp), _alloc(alloc), _size(0)
 				{
+					// std::cout << "HI" << std::endl;
 					insert(first, last);
 				}
 				set (const set& x)
@@ -76,6 +90,7 @@ template < class T,                        // set::key_type/value_type
 						n_alloc = x.n_alloc;
 						_size = 0;
 						_root = nullptr_f;
+						
 						insert(x.begin(), x.end());
 					}
 					return *this;
@@ -200,8 +215,10 @@ template < class T,                        // set::key_type/value_type
 					// if (_root == nullptr_f)
 					// {std::cout << _size << "<-> size" << std::endl;
 					// std::cout << val.first << "<-> val" << std::endl;}
-					if (_root == nullptr_f)
+					// std::cout << _size << std::endl;
+					if (_root == nullptr_f || !_size)
 					{
+						// std::cout << "HI" << std::endl;
 						_root = n_alloc.allocate(1);
 						ft::RBTreeNode<value_type> temp(val);
 						n_alloc.construct(_root, temp);
@@ -217,6 +234,7 @@ template < class T,                        // set::key_type/value_type
 					node_pointer parent = nullptr_f;
 					while (cur)
 					{
+						
 						if (cur->_data < val)
 						{
 							parent = cur;
@@ -383,6 +401,7 @@ template < class T,                        // set::key_type/value_type
 				{
 					for(InputIterator it = first; it != last; it++)
 					{
+						// std::cout << *it <<  std::endl;
 						insert(*it);
 					}
 				}
