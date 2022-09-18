@@ -490,7 +490,7 @@ namespace ft
 				x._comp = _comp;
 				x._alloc = _alloc;
 				x.n_alloc = n_alloc;
-				x.t_size = _size;
+				x._size = _size;
 				_root = t_root;
 				_comp = t_comp;
 				_alloc = t_alloc;
