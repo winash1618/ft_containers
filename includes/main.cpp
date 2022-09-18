@@ -3,7 +3,9 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <set>
 #include <iterator>
+#include "set.hpp"
 
 
 
@@ -354,42 +356,112 @@ int main ()
 // 	if (foo<=bar) std::cout << "foo is less than or equal to bar\n";
 // 	if (foo>=bar) std::cout << "foo is greater than or equal to bar\n";
 // }
+// {
+// 	std::map<char,int> mymap;
+
+// 	mymap['a']=10;
+// 	mymap['b']=20;
+// 	mymap['c']=30;
+
+// 	while (!mymap.empty())
+// 	{
+// 		std::cout << mymap.begin()->first << " => " << mymap.begin()->second << '\n';
+// 		mymap.erase(mymap.begin());
+// 	}
+
+// }
+
+// std::cout << "=================================================" << std::endl;
+// {
+// 	ft::map<char,int> mymap;
+
+// 	mymap['a']=10;
+// 	mymap['b']=20;
+// 	mymap['c']=30;
+
+// 	while (!mymap.empty())
+// 	{
+// 		std::cout << "BI" << std::endl;
+// 		std::cout << mymap.begin()->first << " => " << mymap.begin()->second << '\n';
+// 		mymap.erase(mymap.begin());
+// 	}
+// }
+
+//   return 0;
+// }
+
+// {
+//   int myints[] = {75,23,65,42,13};
+//   ft::set<int> myset (myints,myints+5);
+
+//   std::cout << "myset contains:";
+//   for (ft::set<int>::iterator it=myset.begin(); it!=myset.end(); ++it)
+//     std::cout << ' ' << *it;
+
+//   std::cout << '\n';
+
+//   return 0;
+// }
+// std::cout << "=================================================" << std::endl;
+
+// {
+//   int myints[] = {75,23,65,42,13};
+//   std::set<int> myset (myints,myints+5);
+
+//   std::cout << "myset contains:";
+//   for (std::set<int>::iterator it=myset.begin(); it!=myset.end(); ++it)
+//     std::cout << ' ' << *it;
+
+//   std::cout << '\n';
+
+//   return 0;
+// }
+
 {
-	std::map<char,int> mymap;
+	 std::set<int> myset;
+	std::set<int>::iterator it;
 
-	mymap['a']=10;
-	mymap['b']=20;
-	mymap['c']=30;
+	// insert some values:
+	for (int i=1; i<10; i++) myset.insert(i*10);  // 10 20 30 40 50 60 70 80 90
 
-	while (!mymap.empty())
-	{
-		std::cout << mymap.begin()->first << " => " << mymap.begin()->second << '\n';
-		mymap.erase(mymap.begin());
-	}
+	it = myset.begin();
+	++it;                                         // "it" points now to 20
 
+	myset.erase (it);
+
+	myset.erase (40);
+
+	it = myset.find (60);
+	myset.erase (it, myset.end());
+
+	std::cout << "myset contains:";
+	for (it=myset.begin(); it!=myset.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
 }
-
 std::cout << "=================================================" << std::endl;
 {
-	ft::map<char,int> mymap;
+	 ft::set<int> myset;
+	ft::set<int>::iterator it;
 
-	mymap['a']=10;
-	mymap['b']=20;
-	mymap['c']=30;
+	// insert some values:
+	for (int i=1; i<10; i++) myset.insert(i*10);  // 10 20 30 40 50 60 70 80 90
 
-	while (!mymap.empty())
-	{
-		std::cout << "BI" << std::endl;
-		std::cout << mymap.begin()->first << " => " << mymap.begin()->second << '\n';
-		mymap.erase(mymap.begin());
-	}
+	it = myset.begin();
+	++it;                                         // "it" points now to 20
+
+	myset.erase (it);
+
+	myset.erase (40);
+
+	it = myset.find (60);
+	myset.erase (it, myset.end());
+
+	std::cout << "myset contains:";
+	for (it=myset.begin(); it!=myset.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
 }
-
-  return 0;
-}
-
-
-
 
 
 // #include "pair.hpp"      // std::pair, std::make_pair
@@ -425,5 +497,5 @@ std::cout << "=================================================" << std::endl;
 //   if (foo<=bar) std::cout << "foo is less than or equal to bar\n";
 //   if (foo>=bar) std::cout << "foo is greater than or equal to bar\n";
 
-//   return 0;
-// }
+  return 0;
+}
