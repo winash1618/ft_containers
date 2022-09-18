@@ -1,5 +1,8 @@
 # SRC = v_erase_test.cpp
-SRC = set_construct_test.cpp 
+SRC = set_construct_test.cpp set_begin_test.cpp set_clear_test.cpp \
+		set_count_test.cpp set_empty_test.cpp set_end_test.cpp \
+		set_equal_range_test.cpp set_erase_test.cpp set_find_test.cpp \
+		set_get_allocator_test.cpp set_insert_test.cpp
 
 SRC_DIR = tests/set_tests/
 

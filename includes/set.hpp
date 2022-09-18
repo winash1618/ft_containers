@@ -151,7 +151,7 @@ template < class T,                        // set::key_type/value_type
 					iterator search = begin();
 					while (search != end())
 					{
-						if ( search->first == k)
+						if ( *search == k)
 							counter++;
 						search++;
 					}
@@ -412,7 +412,7 @@ template < class T,                        // set::key_type/value_type
 					node_pointer __result = nullptr_f;
 					while (__root != nullptr_f)
 					{
-						if (!_comp(__root->_data.first, k))
+						if (!_comp(__root->_data, k))
 						{
 							__result = __root;
 							__root = __root->_left;
@@ -431,7 +431,7 @@ template < class T,                        // set::key_type/value_type
 					node_pointer __result = nullptr_f;
 					while (__root != nullptr_f)
 					{
-						if (_comp( k, __root->_data.first))
+						if (_comp( k, __root->_data))
 						{
 							__result = __root;
 							__root = __root->_left;
