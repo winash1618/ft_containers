@@ -2,7 +2,7 @@
 SRC = m_construct_test.cpp m_at_test.cpp m_begin_test.cpp m_clear_test.cpp \
 		m_count_test.cpp m_empty_test.cpp m_end_test.cpp m_equal_range_test.cpp \
 		m_erase_test.cpp m_find_test.cpp m_get_allocator_test.cpp m_insert_test.cpp \
-		m_key_comp_test.cpp
+		m_key_comp_test.cpp m_lower_bound_test.cpp
 
 SRC_DIR = tests/map_tests/
 
