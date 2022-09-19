@@ -6,14 +6,14 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/09/17 16:40:12 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/09/19 10:43:21 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 #include <iostream>
-#include <iterator>
+// #include <iterator>
 #include <algorithm>
 #include <cassert>
 #include <cstddef>
@@ -159,7 +159,7 @@ template<class T, T v>
 			
 			// fill constructor
 			explicit vector (size_type len, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
-			 : _alloc(alloc)
+			 :  _alloc(alloc), _cap(0)
 			{
 				allocate(len);
 				construct_at_end(len, val);
@@ -187,7 +187,7 @@ template<class T, T v>
 			}
 			
 			// Copy constructor
-			vector (const vector& x) : _size(0)
+			vector (const vector& x) : _size(0), _cap(0)
 			{
 				_alloc = x.get_allocator();
 				copy(x);

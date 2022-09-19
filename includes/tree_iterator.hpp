@@ -2,7 +2,6 @@
 # define TREE_ITERATOR_HPP
 
 #include "iterator_traits.hpp"
-#include "map.hpp"
 namespace ft
 {
 	// Returns:  true if __x is a left child of its parent, else false
