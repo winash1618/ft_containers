@@ -1,5 +1,6 @@
 # SRC = v_erase_test.cpp
-SRC = st_construct_test.cpp 
+SRC = st_construct_test.cpp st_empty_test.cpp st_pop_test.cpp \
+		st_push_test.cpp st_size_test.cpp st_top_test.cpp
 
 SRC_DIR = tests/stack_tests/
 

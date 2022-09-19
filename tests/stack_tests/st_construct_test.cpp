@@ -3,17 +3,19 @@
 #include <stack>          // std::stack
 #include <vector>         // std::vector
 #include <deque>          // std::deque
+#include "vector.hpp"
+#include "stack.hpp"
 
 int main ()
 {
   std::deque<int> mydeque (3,100);          // deque with 3 elements
   std::vector<int> myvector (2,200);        // vector with 2 elements
 
-  std::stack<int> first;                    // empty stack
-  std::stack<int> second (mydeque);         // stack initialized to copy of deque
+  CT::stack<int> first;                    // empty stack
+  CT::stack<int, std::deque<int> > second (mydeque);         // stack initialized to copy of deque
 
-  std::stack<int,std::vector<int> > third;  // empty stack using vector
-  std::stack<int,std::vector<int> > fourth (myvector);
+  CT::stack<int,std::vector<int> > third;  // empty stack using vector
+  CT::stack<int,std::vector<int> > fourth (myvector);
 
   std::cout << "size of first: " << first.size() << '\n';
   std::cout << "size of second: " << second.size() << '\n';

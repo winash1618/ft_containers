@@ -1,14 +1,8 @@
 # SRC = v_erase_test.cpp
-SRC = set_construct_test.cpp set_begin_test.cpp set_clear_test.cpp \
-		set_count_test.cpp set_empty_test.cpp set_end_test.cpp \
-		set_equal_range_test.cpp set_erase_test.cpp set_find_test.cpp \
-		set_get_allocator_test.cpp set_insert_test.cpp set_key_comp_test.cpp \
-		set_lower_bound_test.cpp set_max_size_test.cpp set_operator=_test.cpp \
-		set_rbegin_test.cpp set_rend_test.cpp set_size_test.cpp set_swap_test.cpp \
-		set_upper_bound_test.cpp set_value_comp_test.cpp set_relational_operators_test.cpp \
-		set_non_member_swap_test.cpp
+SRC = st_construct_test.cpp st_empty_test.cpp st_pop_test.cpp \
+		st_push_test.cpp st_size_test.cpp st_top_test.cpp
 
-SRC_DIR = tests/set_tests/
+SRC_DIR = tests/stack_tests/
 
 EXE = $(SRC:.cpp=)
 
