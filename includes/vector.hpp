@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/09/19 10:43:21 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/09/19 17:34:11 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ template<class T, T v>
 			}
 			
 			// Copy constructor
-			vector (const vector& x) : _size(0), _cap(0)
+			vector (const vector& x) :  _cap(0), _size(0)
 			{
 				_alloc = x.get_allocator();
 				copy(x);
@@ -230,11 +230,8 @@ template<class T, T v>
 			{
 				_alloc.destroy(_vec + (begin() - position));
 				for(size_type index = begin() - position; index < _size - 1; index++)
-				{
 					_alloc.construct(_vec + index, *(_vec + index + 1));
-				}
 				_size--;
-				// _vec[_size] = 0;
 				return (position);
 			}
 			
@@ -248,35 +245,8 @@ template<class T, T v>
 			}
 			iterator erase (iterator first, iterator last)
 			{
-				// size_type j = 0;
-				// size_type old_size = _size;
-				// iterator t_end = end();
-				// _size = begin() - first;
-				// // std::cout << " size : " << _size << std::endl;
-				// // std::cout << " end : " << *t_end << std::endl;
-				// for (iterator i = first; i != t_end ; i++)
-				// {
-				// 	// std::cout << "f " << *(last + j) << std::endl;
-				// 	*i = *(last + j);
-				// 	j++;
-				// 	_size++;
-				// 	if (last + j == t_end)
-				// 		break;
-				// }
-				// for (size_type i = _size; i < old_size; i++)
-				// {
-				// 	_vec[i] = 0;
-				// }
-				// // _size = 10;
-				// // std::cout << "d " << old_size << " " << _size << std::endl;
-				// return (first);
-				
-	
 				size_type siz = begin() - first;
 				size_type len = begin() - end();
-				// (void)last;
-				// (void)index;
-				// std::cout << " size : " << siz << std::endl;
 				if (len > 0)
 				{
 					size_type index = 0;
@@ -315,33 +285,9 @@ template<class T, T v>
 			void push_back (const value_type& val)
 			{
 				if (!_cap)
-				{
-					// _vec = _alloc.allocate(1);
-					// _alloc.construct(_vec, val);
-					// _cap = 1;
-					// _size = 1;
-					// return;
 					reserve(1);
-				}
 				if (_size + 1 > _cap)
-				{
-					// Allocator t_alloc1 ;
-					// pointer t_vec = t_alloc1.allocate(_size * 2);
-					// for (size_type index = 0; index < _size; ++index)
-					// {
-					// 	t_alloc1.construct(t_vec + index, _vec[index]);
-					// }
-					// t_alloc1.construct(t_vec + _size, val);
-					// for (size_type index= 0; index < _size; ++index)
-					// 	_alloc.destroy(_vec + index);
-					// _alloc.deallocate(_vec, _cap);
-					// _alloc = t_alloc1;
-					// _vec = t_vec;
-					// _cap = _size * 2;
-					// _size++;
-					// return;
 					reserve(_cap * 2);
-				}
 				_alloc.construct(_vec + _size, val);
 				_size += 1;
 			}
@@ -372,9 +318,7 @@ template<class T, T v>
 				{
 						pointer t_vec = t_alloc.allocate(n);
 						for (_index = 0; _index < _size; ++_index)
-						{
 							t_alloc.construct(t_vec + _index, _vec[_index]);
-						}
 						for (_index = 0; _index < _size; ++_index)
 							_alloc.destroy(_vec + _index);
 						_alloc.deallocate(_vec, _cap);
@@ -399,12 +343,9 @@ template<class T, T v>
 			reference       at(size_type n)
 			{
 				if (n < size() && n >= 0)
-				{
 					return (_vec[n]);
-				}
 				else
 					throw std::out_of_range("Index out of range");
-				// return (n < size() ? _vec[n] : throw std::out_of_range("Index out of range"));
 			}
 			
 			const_reference at(size_type n) const {return (n < size() ? _vec[n] : throw std::out_of_range("Index out of range"));}
@@ -430,7 +371,6 @@ template<class T, T v>
 				for (size_type index = 0; index < n; ++index)
 				{
 					_alloc.construct(_vec + index, val);
-					//std::cout << _vec[index] << std::endl;
 					++_size;
 				}
 			}
@@ -440,45 +380,28 @@ template<class T, T v>
 			{
 
 				if (n > max_size())
-				{
 					throw std::length_error("vector");
-				}
 				if (n < _size)
 				{
 					for(size_type index = n; index < _size; index++)
-					{
 						_alloc.destroy(_vec + index);
-					}
 					_size = n;
 				}
 				else if (n >= _size && n < _cap )
 				{
-					// std::cout << "i am inside else if" << std::endl;
-					// if (!val)
-					// 	val = 0;
 					for(size_type index = _size; index < n; index++)
-					{
 						_alloc.construct(_vec + index, val);
-					}
 					_size = n;
 				}
 				else
 				{
-					// if (!val)
-					// 	val = 0;
 					if (n > max_size())
 						throw std::length_error("Capacity allocated exceeds max_size()");
-
 					temp = t_alloc.allocate(n);
 					for (size_type index = 0; index < _size; ++index)
-					{
 						t_alloc.construct(temp + index, _vec[index]);
-					}
 					for (size_type index = _size; index < n; ++index)
-					{
 						t_alloc.construct(temp + index, val);
-					}
-					
 					for (size_type index = 0; index < _size; ++index)
 						_alloc.destroy(_vec + index);
 					_alloc.deallocate(_vec, _cap);
@@ -510,9 +433,7 @@ template<class T, T v>
 					size_type i = begin() - position;
 					temp = t_alloc.allocate(_size * 2, 0);
 					for (size_type index1 = 0; index1 < _size; ++index1)
-					{
 						t_alloc.construct(temp + index1, _vec[index1]);
-					}
 					t_alloc.construct(temp + _size, val);
 					for (size_type index1 = 0; index1 < _size; ++index1)
 						_alloc.destroy(_vec + index1);
@@ -553,9 +474,7 @@ template<class T, T v>
 					index++;
 				}
 				for (index = 0; index < n; index++)
-				{
 					t_alloc.construct(temp + t_size + index, val);
-				}
 				t_size = t_size + index;
 				index = 0;
 				for (iterator it = position; it != end(); it++)
@@ -733,13 +652,12 @@ template<class T, T v>
 			{
 				_size = other.size();
 				for (size_type index=0; index < _size; ++index)
-				{
 					this->_alloc.construct(this->_vec + index, *(other._vec + index));
-				}
 			}
 			void copy(const vector& other)
 			{
-				if (other._vec) {
+				if (other._vec)
+				{
 					allocate(other._size);
 					uninitialized_alloc_copy(other);
 				}
@@ -756,12 +674,6 @@ template<class T, T v>
 					return ms;
 				return std::max<size_type>(2*cap, new_size);
 			}
-			// destruct_at_end(pointer __new_last)
-			// {
-			// 	pointer __soon_to_be_end = end();
-			// 	while (__new_last != __soon_to_be_end)
-			// 		__alloc_traits::destroy(__alloc(), _VSTD::__to_address(--__soon_to_be_end));
-			// }
 		} ;
 		// Non-member function overloads
 		template <class T, class Alloc>
@@ -772,16 +684,6 @@ template<class T, T v>
 		template <class T, class Alloc>
 		bool operator==(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 		{
-			// if (lhs.size() == rhs.size())
-			// {
-			// 	for (size_t index = 0; index < lhs.size(); index++)
-			// 	{
-			// 		if (lhs[index] != rhs[index])
-			// 			return (false);
-			// 	}
-			// 	return (true);
-			// }
-			// return (false);
 			return lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin());
 		}
 		template <class T, class Alloc>
@@ -793,12 +695,6 @@ template<class T, T v>
 		bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 		{
 			//src https://en.cppreference.com/w/cpp/algorithm/lexicographical_compare
-			// for ( ; (lhs.begin() != lhs.end()) && (rhs.begin() != rhs.end()); ++(lhs.begin()), (void) ++(rhs.begin()) ) 
-			// {
-			// 	if (*(lhs.begin()) < *(rhs.begin())) return true;
-			// 	if (*(rhs.begin()) < *(lhs.begin())) return false;
-			// }
-			// return (lhs.begin() == lhs.end()) && (rhs.begin() != rhs.end());
 			return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 		}
 		template <class T, class Alloc>
@@ -816,6 +712,5 @@ template<class T, T v>
 		{
 			return !(lhs < rhs);
 		}
-		// #include "vector.cpp" // include separate implementation file inside namespace
 }
 #endif

@@ -22,6 +22,18 @@ In this project, you will implement a few container types of the C++ standard te
 - https://blog.csdn.net/weixin_45599288/article/details/122520861
 - https://www.cs.usfca.edu/~galles/visualization/RedBlack.html
 - https://www.tenouk.com/Sitemap.html
+- https://www.cs.usfca.edu/~galles/visualization/RedBlack.html
+- https://sd.blackball.lv/library/Introduction_to_Algorithms_Third_Edition_(2009).pdf
+- https://medium.com/analytics-vidhya/deletion-in-red-black-rb-tree-92301e1474e
+
+
+### Algorithms
+- https://www.youtube.com/channel/UCDYPS1xn3IB_B5NyWIIsfow/playlists
+- https://sites.google.com/site/marywootters/teaching
+- https://web.stanford.edu/class/cs106x/index.html
+- https://www.youtube.com/channel/UCJA7QhEAg51tdUQojlqL_9A/playlists
+- https://www.youtube.com/c/JennyslecturesCSITNETJRF/playlists
+
 
 - map concepts : understandings through practice
 	- the new node inserting will allways be red.
