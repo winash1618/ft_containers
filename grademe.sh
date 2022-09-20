@@ -6,7 +6,7 @@ do
     case $opt in
         "vector")
             echo "you chose vector test"
-			cat make_vector > Makefile
+			cat ./Makefiles/make_vector > Makefile
 			make re
 			DEFAULT='\033[0m'
 			RED='\033[1;31m'
@@ -58,7 +58,7 @@ do
             ;;
         "stack")
             echo "you chose stack test"
-			cat make_stack > Makefile
+			cat ./Makefiles/make_stack > Makefile
 			make re
 			DEFAULT='\033[0m'
 			RED='\033[1;31m'
@@ -110,7 +110,7 @@ do
             ;;
         "map")
             echo "you chose map test"
-			cat make_map > Makefile
+			cat ./Makefiles/make_map > Makefile
 			make re
 			DEFAULT='\033[0m'
 			RED='\033[1;31m'
@@ -162,7 +162,7 @@ do
             ;;
         "set")
             echo "you chose set test"
-			cat make_set > Makefile
+			cat ./Makefiles/make_set > Makefile
 			make re
 			DEFAULT='\033[0m'
 			RED='\033[1;31m'
