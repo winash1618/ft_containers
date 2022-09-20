@@ -654,6 +654,155 @@ namespace ft
 					subL->_parent = parentParent;
 				}
 			}
+			void leftRotate(NodePtr x)
+			{
+				NodePtr y = x->right;
+				x->right = y->left;
+				if (y->left != TNULL) {
+				y->left->parent = x;
+				}
+				y->parent = x->parent;
+				if (x->parent == nullptr) {
+				this->root = y;
+				} else if (x == x->parent->left) {
+				x->parent->left = y;
+				} else {
+				x->parent->right = y;
+				}
+				y->left = x;
+				x->parent = y;
+			}
+
+			void rightRotate(NodePtr x)
+			{
+				NodePtr y = x->left;
+				x->left = y->right;
+				if (y->right != TNULL) {
+				y->right->parent = x;
+				}
+				y->parent = x->parent;
+				if (x->parent == nullptr) {
+				this->root = y;
+				} else if (x == x->parent->right) {
+				x->parent->right = y;
+				} else {
+				x->parent->left = y;
+				}
+				y->right = x;
+				x->parent = y;
+			}
+			void DeleteFix(node_pointer x)
+			{
+				node_pointer w;
+				while (x != _root && x->_color == BLACK)
+				{
+					if (tree_is_left_child(x))
+					{
+						w = x->_parent->_right;
+						if (w->_color == RED)
+						{
+							w->_color = BLACK;
+							x->_parent->_color = RED;
+							leftRotate(x->_parent);
+							w = x->_parent->_right;
+						}
+						if (w->_right && w->_right->_color == BLACK && w->_left && w->_left->_color == BLACK)
+						{
+							w->_color = RED;
+							x = x->_parent;
+						}
+						else 
+						{
+							if (w->_right && w->_right->_color == BLACK)
+							{
+								if (w->_left)
+									w->_left->_color = BLACK;
+								w->_color = RED;
+								rightRotate(w);
+								w = x->_parent->_right;
+							}
+							w->_color = x->_parent->_color;
+							x->_parent->_color = BLACK;
+							w->_right->_color = BLACK;
+							leftRotate(x->_parent);
+							x = _root;
+						}
+					}
+					else
+					{
+						w = x->_parent->_left;
+						if (w->_color == RED)
+						{
+							w->_color = BLACK;
+							x->_parent->_color = RED;
+							rightRotate(x->_parent);
+							w = x->_parent->_left;
+						}
+						if (w->_left && w->_left->_color == BLACK && w->_right && w->_right->_color == BLACK)
+						{
+							w->_color = RED;
+							x = x->_parent;
+						}
+						else
+						{
+							if (w->_left && w->_left->_color == BLACK)
+							{
+								if (w->_right)
+									w->_right->_color = BLACK;
+								w->_color = RED;
+								leftRotate(w);
+								w = x->_parent->_left;
+							}
+							w->_color = x->_parent->_color;
+							x->_parent->_color = BLACK;
+							w->_left->_color = BLACK;
+							rightRotate(x->_parent);
+							x = _root;
+						}
+					}
+				}
+				 x->_color = BLACK;
+			}
+
+			void rbdelete(node_pointer nodeToBeDeleted)
+			{
+				node_pointer x;
+				node_pointer y;
+
+				int originalColor = nodeToBeDeleted->_color;
+				if (nodeToBeDeleted->_left == nullptr_f )
+				{
+					x = nodeToBeDeleted->_right;
+					rbTransplant(nodeToBeDeleted, x) // Transplant nodeToBeDeleted with x.
+				}
+				else if (nodeToBeDeleted->_right == nullptr_f)
+				{
+					x = nodeToBeDeleted->_left;
+					rbTransplant(nodeToBeDeleted, x) // Transplant nodeToBeDeleted with x.
+				}
+				else
+				{
+					y = tree_min(nodeToBeDeleted->_right);
+					originalColor =y->_color;
+					x = y->_right;
+					if(y->_parent == nodeToBeDeleted)
+					{
+						x->_parent = y;
+					}
+					else
+					{
+						rbTransplant(y, y->right);// transplant y with rightChild of y.
+						y->_right = nodeToBeDeleted->_right;
+						y->_right->_parent = y;
+					}
+					 rbTransplant(nodeToBeDeleted, y);// Transplant nodeToBeDeleted with y.
+					y->_left = nodeToBeDeleted->_left;
+					y->_left->_parent = y;
+					y->_color = nodeToBeDeleted->_color;
+				}
+				if (originalColor == BLACK)
+					DeleteFix(x);
+			}
 
 			void tree_remove(node_pointer __z)
 			{

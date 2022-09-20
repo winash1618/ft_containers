@@ -25,6 +25,7 @@ In this project, you will implement a few container types of the C++ standard te
 - https://www.cs.usfca.edu/~galles/visualization/RedBlack.html
 - https://sd.blackball.lv/library/Introduction_to_Algorithms_Third_Edition_(2009).pdf
 - https://medium.com/analytics-vidhya/deletion-in-red-black-rb-tree-92301e1474e
+- https://stackoverflow.com/questions/14148756/what-does-template-rebind-do
 
 
 ### Algorithms
