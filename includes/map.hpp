@@ -6,7 +6,7 @@
 # include <functional>
 # include "tree_iterator.hpp"
 # include "reverse_iterator.hpp"
-# define DEBUG 1
+# define DEBUG_1 1
 
 namespace ft
 {
@@ -502,7 +502,7 @@ namespace ft
 			void erase(iterator position)
 			{
 				node_pointer __node; // -> node to be deleted
-				
+
 				__node = const_cast<node_pointer>(position.__ptr_);
 				if (!__node || !_root)
 					return ;
@@ -820,8 +820,16 @@ namespace ft
 				// __y is either __z, or if __z has two children, tree_next(__z).
 				// __y will have at most one child.
 				// __y will be the initial hole in the tree (make the hole at a leaf)
-				#if DEBUG
+				#if DEBUG_1
+				std::cout << "********************************************************" << std::endl;
+				std::cout << "*********************** DEBUG CASE1 ********************" << std::endl;
+				std::cout << "********************************************************" << std::endl;
+				std::cout << "case : node to be deleted -> left == null and node to be deleted -> right = null" << std::endl;
+				std::cout << "root = " << _root->_data.first << std::endl;
+				std::cout << "root->right = " << _root->_right->_data.first << std::endl;
+				std::cout << "root->left = " << _root->_left->_data.first << std::endl;
 				std::cout << "node to be deleted = " << __z->_data.first << std::endl;
+				std::cout << "------------------------------------------------" << std::endl;
 				#endif
 				bool __removed_black = false;
 				node_pointer __y = (__z->_left == nullptr_f || __z->_right == nullptr_f) ?
@@ -831,6 +839,16 @@ namespace ft
 				// __w is __x's possibly null uncle (will become __x's sibling)
 				node_pointer __w = nullptr_f;
 				// link __x to __y's parent, and find __w
+				#if DEBUG_1
+					if (__y)
+						std::cout << "y = " << __y->_data.first << std::endl;
+					else
+						std::cout << "y is a nullptr" << std::endl;
+					if (__x)
+						std::cout << "x = " << __x->_data.first << std::endl;
+					else
+						std::cout << "x is a nullptr" <<std::endl;
+				#endif
 				if (__x != nullptr_f)
 					__x->_parent = __y->_parent;
 				if (__y == _root)
@@ -839,20 +857,35 @@ namespace ft
 				{
 					__y->_parent->_left = __x;
 					__w = __y->_parent->_right;// __w == nullptr_f
+				#if DEBUG_1
+					std::cout << "y is the left child" << std::endl;
+					std::cout << "	so we are going to set __y->_parent->_left = __x" << std::endl;
+					std::cout << "	w = " << __w->_data.first << std::endl;
+					std::cout << "------------------------------------------------" << std::endl;
+				#endif
+				
 				}
 				else
 				{
 					__y->_parent->_right = __x;
 					// __y can't be root if it is a right child
 					__w = __y->_parent->_left;
+					#if DEBUG_1
+						std::cout << "y is the left child" << std::endl;
+						std::cout << "so we are going to set __y->_parent->_right = __x" << std::endl;
+						std::cout << "w = " << __w->_data.first << std::endl;
+						std::cout << "------------------------------------------------" << std::endl;
+					#endif
 				}
-				
 				if (__y->_color == BLACK)
 					__removed_black = true;
 				// If we didn't remove __z, do so now by splicing in __y for __z,
 				//    but copy __z's color.   
 				if (_root == __z)
 				{
+					#if DEBUG_1
+						std::cout << "node to be deleted == root" << std::endl;
+					#endif
 					// __z->_left != nulptr but __z->_right might == __x == nullptr_f 
 					__y->_parent = __z->_parent;
 					__y->_left = __z->_left;
@@ -865,6 +898,10 @@ namespace ft
 				}
 				else if (__y != __z)
 				{
+					#if DEBUG_1
+						std::cout << "y != node to be deleted" << std::endl;
+					#endif
+
 					// __z->_left != nulptr but __z->_right might == __x == nullptr_f 
 					__y->_parent = __z->_parent;
 					if (tree_is_left_child(__z))
@@ -880,39 +917,74 @@ namespace ft
 					// if (_root == __z)
 					// 	_root = __y;
 				}
+
+				#if DEBUG_1
+					if (__y->_parent)
+						std::cout << "y->parent = " << __y->_parent->_data.first << std::endl;
+					else
+						std::cout << "y->parent is nullptr" << std::endl;
+
+					if (__y->_left)
+						std::cout << "y->left = " << __y->_left->_data.first << std::endl;
+					else
+						std::cout << "y->left is nullptr" << std::endl;
+					if (__y->_right)
+						std::cout << "y->right = " << __y->_right->_data.first << std::endl;
+					else
+						std::cout << "y->right is nullptr" << std::endl;
+					if (__y->_color == BLACK)
+						std::cout << "y->color = BLACK" << std::endl;
+					else
+						std::cout << "y->color = RED" << std::endl;
+					std::cout << "Your node is detached from tree, you still need to clear it" << std::endl;
+					std::cout << "------------------------------------------------------" << std::endl;
+					if (__removed_black && _root != nullptr_f)
+						std::cout << "We removed a black node and root != nullptr, means we need to rebalance" << std::endl;
+					else
+						std::cout << "There is no need to rebalance since we removed a red, or if we removed last node" << std::endl;
+				#endif
+				
 				// There is no need to rebalance if we removed a red, or if we removed
 				//     the last node.
 				if (__removed_black && _root != nullptr_f)
 				{
-					// Rebalance:
-					// __x has an implicit black color (transferred from the removed __y)
-					//    associated with it, no matter what its color is.
-					// If __x is _root (in which case it can't be null), it is supposed
-					//    to be black anyway, and if it is doubly black, then the double
-					//    can just be ignored.
-					// If __x is red (in which case it can't be null), then it can absorb
-					//    the implicit black just by setting its color to black.
-					// Since __y was black and only had one child (which __x points to), __x
-					//   is either red with no children, else null, otherwise __y would have
-					//   different black heights under left and right pointers.
-					// if (__x == _root || __x != nullptr_f && !__x->_color)
+					#if DEBUG_1
+						std::cout << "**********************************************" << std::endl;
+						std::cout << "************* Rebalancing Begins *************" << std::endl;
+						std::cout << "**********************************************" << std::endl;
+						if (__x != nullptr)
+							std::cout << "set x->color = BLACK and rebalancing done." << std::endl;
+						else
+							std::cout << "since x == nullptr, more work is needed inorder to rebalance." << std::endl;
+					#endif
 					if (__x != nullptr_f)
 						__x->_color = BLACK;
 					else
 					{
-						//  Else __x isn't root, and is "doubly black", even though it may
-						//     be null.  __w can not be null here, else the parent would
-						//     see a black height >= 2 on the __x side and a black height
-						//     of 1 on the __w side (__w must be a non-null black or a red
-						//     with a non-null black child).
 						while (true)
 						{
 							if (!tree_is_left_child(__w))  // if x is left child
 							{
+								#if DEBUG_1
+									std::cout << "	w is right child of it's parent" << std::endl;
+									std::cout << "	w = " << __w->_data.first << std::endl;
+									if (__w->_color == BLACK)
+										std::cout << "	w->color = BLACK" << std::endl;
+									else
+										std::cout << "	w->color = RED" << std::endl;
+									std::cout << "------------------------------------------------------" << std::endl;
+								#endif
 								if (__w->_color == RED)
 								{
 									__w->_color = BLACK;
 									__w->_parent->_color = RED;
+									#if DEBUG_1
+										std::cout << "	since w->color = RED we are going to do following" << std::endl;
+										std::cout << "		change w->color to BLACK" << std::endl;
+										std::cout << "		change w->parent->color to RED" << std::endl;
+										std::cout << "		rotating left" << std::endl;
+										std::cout << "------------------------------------------------------" << std::endl;
+									#endif
 									RotateL(__w->_parent);
 									// __x is still valid
 									// reset _root only if necessary
