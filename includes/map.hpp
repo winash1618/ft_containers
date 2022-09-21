@@ -6,6 +6,7 @@
 # include <functional>
 # include "tree_iterator.hpp"
 # include "reverse_iterator.hpp"
+# define DEBUG 1
 
 namespace ft
 {
@@ -500,17 +501,14 @@ namespace ft
 			
 			void erase(iterator position)
 			{
-				node_pointer __root; // -> red–black tree
 				node_pointer __node; // -> node to be deleted
-
-
 				
 				__node = const_cast<node_pointer>(position.__ptr_);
-				__root = _root;
-				if (!__node || !__root)
+				if (!__node || !_root)
 					return ;
 				n_alloc.destroy(__node);
-				tree_remove( __node);
+				tree_remove(__node);
+				// rbdelete( __node);
 				n_alloc.deallocate(__node, 1);
 				_size--;
 			}
@@ -654,155 +652,167 @@ namespace ft
 					subL->_parent = parentParent;
 				}
 			}
-			void leftRotate(NodePtr x)
-			{
-				NodePtr y = x->right;
-				x->right = y->left;
-				if (y->left != TNULL) {
-				y->left->parent = x;
-				}
-				y->parent = x->parent;
-				if (x->parent == nullptr) {
-				this->root = y;
-				} else if (x == x->parent->left) {
-				x->parent->left = y;
-				} else {
-				x->parent->right = y;
-				}
-				y->left = x;
-				x->parent = y;
-			}
+			// void leftRotate(node_pointer x)
+			// {
+			// 	node_pointer y = x->_right;
+			// 	x->_right = y->_left;
+			// 	if (y->_left != nullptr_f) {
+			// 	y->_left->_parent = x;
+			// 	}
+			// 	y->_parent = x->_parent;
+			// 	if (x->_parent == nullptr_f) {
+			// 	this->_root = y;
+			// 	} else if (x == x->_parent->_left) {
+			// 	x->_parent->_left = y;
+			// 	} else {
+			// 	x->_parent->_right = y;
+			// 	}
+			// 	y->_left = x;
+			// 	x->_parent = y;
+			// }
 
-			void rightRotate(NodePtr x)
-			{
-				NodePtr y = x->left;
-				x->left = y->right;
-				if (y->right != TNULL) {
-				y->right->parent = x;
-				}
-				y->parent = x->parent;
-				if (x->parent == nullptr) {
-				this->root = y;
-				} else if (x == x->parent->right) {
-				x->parent->right = y;
-				} else {
-				x->parent->left = y;
-				}
-				y->right = x;
-				x->parent = y;
-			}
-			void DeleteFix(node_pointer x)
-			{
-				node_pointer w;
-				while (x != _root && x->_color == BLACK)
-				{
-					if (tree_is_left_child(x))
-					{
-						w = x->_parent->_right;
-						if (w->_color == RED)
-						{
-							w->_color = BLACK;
-							x->_parent->_color = RED;
-							leftRotate(x->_parent);
-							w = x->_parent->_right;
-						}
-						if (w->_right && w->_right->_color == BLACK && w->_left && w->_left->_color == BLACK)
-						{
-							w->_color = RED;
-							x = x->_parent;
-						}
-						else 
-						{
-							if (w->_right && w->_right->_color == BLACK)
-							{
-								if (w->_left)
-									w->_left->_color = BLACK;
-								w->_color = RED;
-								rightRotate(w);
-								w = x->_parent->_right;
-							}
-							w->_color = x->_parent->_color;
-							x->_parent->_color = BLACK;
-							w->_right->_color = BLACK;
-							leftRotate(x->_parent);
-							x = _root;
-						}
-					}
-					else
-					{
-						w = x->_parent->_left;
-						if (w->_color == RED)
-						{
-							w->_color = BLACK;
-							x->_parent->_color = RED;
-							rightRotate(x->_parent);
-							w = x->_parent->_left;
-						}
-						if (w->_left && w->_left->_color == BLACK && w->_right && w->_right->_color == BLACK)
-						{
-							w->_color = RED;
-							x = x->_parent;
-						}
-						else
-						{
-							if (w->_left && w->_left->_color == BLACK)
-							{
-								if (w->_right)
-									w->_right->_color = BLACK;
-								w->_color = RED;
-								leftRotate(w);
-								w = x->_parent->_left;
-							}
-							w->_color = x->_parent->_color;
-							x->_parent->_color = BLACK;
-							w->_left->_color = BLACK;
-							rightRotate(x->_parent);
-							x = _root;
-						}
-					}
-				}
-				 x->_color = BLACK;
-			}
+			// void rightRotate(node_pointer x)
+			// {
+			// 	node_pointer y = x->_left;
+			// 	x->_left = y->_right;
+			// 	if (y->_right != nullptr_f) {
+			// 	y->_right->_parent = x;
+			// 	}
+			// 	y->_parent = x->_parent;
+			// 	if (x->_parent == nullptr_f) {
+			// 	this->_root = y;
+			// 	} else if (x == x->_parent->_right) {
+			// 	x->_parent->_right = y;
+			// 	} else {
+			// 	x->_parent->_left = y;
+			// 	}
+			// 	y->_right = x;
+			// 	x->_parent = y;
+			// }
+			// void DeleteFix(node_pointer x)
+			// {
+			// 	node_pointer w;
+			// 	while (x != _root && x->_color == BLACK)
+			// 	{
+			// 		if (tree_is_left_child(x))
+			// 		{
+			// 			w = x->_parent->_right;
+			// 			if (w->_color == RED)
+			// 			{
+			// 				w->_color = BLACK;
+			// 				x->_parent->_color = RED;
+			// 				leftRotate(x->_parent);
+			// 				w = x->_parent->_right;
+			// 			}
+			// 			if (w->_right && w->_right->_color == BLACK && w->_left && w->_left->_color == BLACK)
+			// 			{
+			// 				w->_color = RED;
+			// 				x = x->_parent;
+			// 			}
+			// 			else 
+			// 			{
+			// 				if (w->_right && w->_right->_color == BLACK)
+			// 				{
+			// 					if (w->_left)
+			// 						w->_left->_color = BLACK;
+			// 					w->_color = RED;
+			// 					rightRotate(w);
+			// 					w = x->_parent->_right;
+			// 				}
+			// 				w->_color = x->_parent->_color;
+			// 				x->_parent->_color = BLACK;
+			// 				w->_right->_color = BLACK;
+			// 				leftRotate(x->_parent);
+			// 				x = _root;
+			// 			}
+			// 		}
+			// 		else
+			// 		{
+			// 			w = x->_parent->_left;
+			// 			if (w->_color == RED)
+			// 			{
+			// 				w->_color = BLACK;
+			// 				x->_parent->_color = RED;
+			// 				rightRotate(x->_parent);
+			// 				w = x->_parent->_left;
+			// 			}
+			// 			if (w->_left && w->_left->_color == BLACK && w->_right && w->_right->_color == BLACK)
+			// 			{
+			// 				w->_color = RED;
+			// 				x = x->_parent;
+			// 			}
+			// 			else
+			// 			{
+			// 				if (w->_left && w->_left->_color == BLACK)
+			// 				{
+			// 					if (w->_right)
+			// 						w->_right->_color = BLACK;
+			// 					w->_color = RED;
+			// 					leftRotate(w);
+			// 					w = x->_parent->_left;
+			// 				}
+			// 				w->_color = x->_parent->_color;
+			// 				x->_parent->_color = BLACK;
+			// 				w->_left->_color = BLACK;
+			// 				rightRotate(x->_parent);
+			// 				x = _root;
+			// 			}
+			// 		}
+			// 	}
+			// 	 x->_color = BLACK;
+			// }
 
-			void rbdelete(node_pointer nodeToBeDeleted)
-			{
-				node_pointer x;
-				node_pointer y;
+			// void rbTransplant(node_pointer u, node_pointer v)
+			// {
+			// 	if (u->_parent == nullptr_f) {
+			// 	_root = v;
+			// 	} else if (u == u->_parent->_left) {
+			// 	u->_parent->_left = v;
+			// 	} else {
+			// 	u->_parent->_right = v;
+			// 	}
+			// 	if (v != nullptr_f)
+			// 		v->_parent = u->_parent;
+			// }
+			// void rbdelete(node_pointer nodeToBeDeleted)
+			// {
+			// 	node_pointer x;
+			// 	node_pointer y;
 
-				int originalColor = nodeToBeDeleted->_color;
-				if (nodeToBeDeleted->_left == nullptr_f )
-				{
-					x = nodeToBeDeleted->_right;
-					rbTransplant(nodeToBeDeleted, x) // Transplant nodeToBeDeleted with x.
-				}
-				else if (nodeToBeDeleted->_right == nullptr_f)
-				{
-					x = nodeToBeDeleted->_left;
-					rbTransplant(nodeToBeDeleted, x) // Transplant nodeToBeDeleted with x.
-				}
-				else
-				{
-					y = tree_min(nodeToBeDeleted->_right);
-					originalColor =y->_color;
-					x = y->_right;
-					if(y->_parent == nodeToBeDeleted)
-					{
-						x->_parent = y;
-					}
-					else
-					{
-						rbTransplant(y, y->right);// transplant y with rightChild of y.
-						y->_right = nodeToBeDeleted->_right;
-						y->_right->_parent = y;
-					}
-					 rbTransplant(nodeToBeDeleted, y);// Transplant nodeToBeDeleted with y.
-					y->_left = nodeToBeDeleted->_left;
-					y->_left->_parent = y;
-					y->_color = nodeToBeDeleted->_color;
-				}
-				if (originalColor == BLACK)
-					DeleteFix(x);
-			}
+			// 	int originalColor = nodeToBeDeleted->_color;
+			// 	if (nodeToBeDeleted->_left == nullptr_f )
+			// 	{
+			// 		x = nodeToBeDeleted->_right;
+			// 		rbTransplant(nodeToBeDeleted, x); // Transplant nodeToBeDeleted with x.
+			// 	}
+			// 	else if (nodeToBeDeleted->_right == nullptr_f)
+			// 	{
+			// 		x = nodeToBeDeleted->_left;
+			// 		rbTransplant(nodeToBeDeleted, x); // Transplant nodeToBeDeleted with x.
+			// 	}
+			// 	else
+			// 	{
+			// 		y = tree_min(nodeToBeDeleted->_right);
+			// 		originalColor =y->_color;
+			// 		x = y->_right;
+			// 		if(y->_parent == nodeToBeDeleted)
+			// 		{
+			// 			x->_parent = y;
+			// 		}
+			// 		else
+			// 		{
+			// 			rbTransplant(y, y->_right);// transplant y with rightChild of y.
+			// 			y->_right = nodeToBeDeleted->_right;
+			// 			y->_right->_parent = y;
+			// 		}
+			// 		 rbTransplant(nodeToBeDeleted, y);// Transplant nodeToBeDeleted with y.
+			// 		y->_left = nodeToBeDeleted->_left;
+			// 		y->_left->_parent = y;
+			// 		y->_color = nodeToBeDeleted->_color;
+			// 	}
+			// 	if (originalColor == BLACK)
+			// 		DeleteFix(x);
+			// }
 
 			void tree_remove(node_pointer __z)
 			{
@@ -810,13 +820,9 @@ namespace ft
 				// __y is either __z, or if __z has two children, tree_next(__z).
 				// __y will have at most one child.
 				// __y will be the initial hole in the tree (make the hole at a leaf)
-				// std::cout << _size << std::endl;
-				// if (_size == 1)
-				// {
-				// 	std::cout << "HI" << std::endl;
-				// 	_root = nullptr_f;
-				// 	return ;
-				// }
+				#if DEBUG
+				std::cout << "node to be deleted = " << __z->_data.first << std::endl;
+				#endif
 				bool __removed_black = false;
 				node_pointer __y = (__z->_left == nullptr_f || __z->_right == nullptr_f) ?
 								__z : tree_next(__z);
@@ -844,7 +850,7 @@ namespace ft
 				if (__y->_color == BLACK)
 					__removed_black = true;
 				// If we didn't remove __z, do so now by splicing in __y for __z,
-				//    but copy __z's color.  This does not impact __x or __w.
+				//    but copy __z's color.   
 				if (_root == __z)
 				{
 					// __z->_left != nulptr but __z->_right might == __x == nullptr_f 
@@ -1017,43 +1023,43 @@ namespace ft
 	   /   \							 /   \
 	  b     c							b      c
                      ==> rightRotate                      */
-		void leftRotate(node_pointer x)
-		{
-			if (x->_right || !_root->_parent)
-				return ;
-			node_pointer y = x->_right; // sey y
-			x->_right = y->_left;  // turn y’s left subtree into x’s right subtree
-			if (!y->_left) 
-				y->_left->_parent = x;
-			y->_parent = x->_parent;  // link x’s parent to y
-			if (!x->_parent)
-				_root = y;
-			else if (x == x->_parent->_left)
-				x->_parent->_left = y;
-			else
-				x->_parent->_right = y;
-			y->_left = x;  // put x on y’s left
-			x->_parent = y;
-		}
+		// void leftRotate(node_pointer x)
+		// {
+		// 	if (x->_right || !_root->_parent)
+		// 		return ;
+		// 	node_pointer y = x->_right; // sey y
+		// 	x->_right = y->_left;  // turn y’s left subtree into x’s right subtree
+		// 	if (!y->_left) 
+		// 		y->_left->_parent = x;
+		// 	y->_parent = x->_parent;  // link x’s parent to y
+		// 	if (!x->_parent)
+		// 		_root = y;
+		// 	else if (x == x->_parent->_left)
+		// 		x->_parent->_left = y;
+		// 	else
+		// 		x->_parent->_right = y;
+		// 	y->_left = x;  // put x on y’s left
+		// 	x->_parent = y;
+		// }
 
-		void rightRotate(node_pointer y)
-		{
-			if (y->_left || !_root->_parent)
-				return ;
-			node_pointer x = y->_left; // sey y
-			y->_left = x->_right;  // turn y’s left subtree into x’s right subtree
-			if (!x->_right) 
-				x->_right->_parent = y;
-			x->_parent = y->_parent;  // link x’s parent to y
-			if (!y->_parent)
-				_root = x;
-			else if (y == y->_parent->_right)
-				y->_parent->_right = x;
-			else
-				y->_parent->_left = x;
-			x->_right = y;  // put x on y’s left
-			y->_parent = x;
-		}
+		// void rightRotate(node_pointer y)
+		// {
+		// 	if (y->_left || !_root->_parent)
+		// 		return ;
+		// 	node_pointer x = y->_left; // sey y
+		// 	y->_left = x->_right;  // turn y’s left subtree into x’s right subtree
+		// 	if (!x->_right) 
+		// 		x->_right->_parent = y;
+		// 	x->_parent = y->_parent;  // link x’s parent to y
+		// 	if (!y->_parent)
+		// 		_root = x;
+		// 	else if (y == y->_parent->_right)
+		// 		y->_parent->_right = x;
+		// 	else
+		// 		y->_parent->_left = x;
+		// 	x->_right = y;  // put x on y’s left
+		// 	y->_parent = x;
+		// }
 
 
 	};

@@ -1,20 +1,20 @@
-// #include "pair.hpp"
-// #include "map.hpp"
-// #include "stack.hpp"
-// #include <iostream>
-// #include <string>
-// #include <map>
-// #include <set>
-// #include <iterator>
-// #include "set.hpp"
+#include "pair.hpp"
+#include "map.hpp"
+#include "stack.hpp"
+#include <iostream>
+#include <string>
+#include <map>
+#include <set>
+#include <iterator>
+#include "set.hpp"
 
 
 
 
 
 
-// int main ()
-// {
+int main ()
+{
 //   std::map<int,int> mymap;
 
 //   mymap[54] = 1005;
@@ -328,6 +328,30 @@
 //   for (it=mymap.begin(); it!=mymap.end(); ++it)
 //     std::cout << it->first << " => " << it->second << '\n';
 // }
+{
+ft::map<int, int> mymap;
+  ft::map<int, int>::iterator it;
+
+  // insert some values:
+  mymap[40]=10;
+  mymap[55]=20;
+  mymap[65]=30;
+  mymap[60]=40;
+  mymap[57]=50;
+  mymap[75]=60;
+
+  it=mymap.find(40);
+  mymap.erase (it);                   // erasing by iterator
+
+//   mymap.erase ('c');                  // erasing by key
+
+//   it=mymap.find ('e');
+//   mymap.erase ( it, mymap.end() );    // erasing by range
+
+  // show content:
+  for (it=mymap.begin(); it!=mymap.end(); ++it)
+    std::cout << it->first << " => " << it->second << '\n';
+}
 
 // {
 // 	std::map<char,int> foo,bar;
@@ -389,8 +413,8 @@
 // 	}
 // }
 
-//   return 0;
-// }
+  return 0;
+}
 
 // {
 //   int myints[] = {75,23,65,42,13};
@@ -501,8 +525,8 @@
 // 	ft::stack<int> mystack;
 // 		for (int i=0; i<5; ++i) mystack.push(i);
 // 	std::cout << mystack.top() << std::endl;
-  return 0;
-}
+//   return 0;
+// }
 
 // #include "stack.hpp"
 // #include <iostream>

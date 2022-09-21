@@ -2,6 +2,8 @@
 # define TREE_ITERATOR_HPP
 
 #include "iterator_traits.hpp"
+#include "reverse_iterator.hpp"
+
 namespace ft
 {
 	// Returns:  true if __x is a left child of its parent, else false
@@ -11,43 +13,43 @@ namespace ft
 	bool
 	tree_is_left_child(_NodePtr __x)
 	{
-		if (__x != nullptr )
-			if (__x->_parent != nullptr)
+		if (__x != nullptr_f )
+			if (__x->_parent != nullptr_f)
 				return __x == __x->_parent->_left;
 		return 0;
 	}
 
 	// Returns:  pointer to the left-most node under __x.
-	// Precondition:  __x != nullptr.
+	// Precondition:  __x != nullptr_f.
 	template <class _NodePtr>
 	inline
 	_NodePtr
 	tree_min(_NodePtr __x)
 	{
-		while (__x->_left != nullptr)
+		while (__x->_left != nullptr_f)
 			__x = __x->_left;
 		return __x;
 	}
 
 	// Returns:  pointer to the right-most node under __x.
-	// Precondition:  __x != nullptr.
+	// Precondition:  __x != nullptr_f.
 	template <class _NodePtr>
 	inline
 	_NodePtr
 	tree_max(_NodePtr __x)
 	{
-		while (__x->_right != nullptr)
+		while (__x->_right != nullptr_f)
 			__x = __x->_right;
 		return __x;
 	}
 
 	// Returns:  pointer to the next in-order node after __x.
-	// Precondition:  __x != nullptr.
+	// Precondition:  __x != nullptr_f.
 	template <class _NodePtr>
 	_NodePtr
 	tree_next(_NodePtr __x)
 	{
-		if (__x->_right != nullptr)
+		if (__x->_right != nullptr_f)
 			return tree_min(__x->_right);
 		while (!tree_is_left_child(__x) && __x->_parent)
 		{
@@ -57,12 +59,12 @@ namespace ft
 	}
 
 	// Returns:  pointer to the previous in-order node before __x.
-	// Precondition:  __x != nullptr.
+	// Precondition:  __x != nullptr_f.
 	template <class _NodePtr>
 	_NodePtr
 	tree_prev(_NodePtr __x)
 	{
-		if (__x->_left != nullptr)
+		if (__x->_left != nullptr_f)
 			return tree_max(__x->_left);
 		while (tree_is_left_child(__x))
 			__x = __x->_parent;
