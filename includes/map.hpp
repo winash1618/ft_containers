@@ -7,6 +7,7 @@
 # include "tree_iterator.hpp"
 # include "reverse_iterator.hpp"
 # define DEBUG_1 1
+# define DEBUG_R 1
 
 namespace ft
 {
@@ -550,6 +551,22 @@ namespace ft
 				node_pointer subR = parent->_right;
 				node_pointer subRL = subR->_left;
 				node_pointer parentParent = parent->_parent;
+
+				#if DEBUG_R
+					std::cout << "************ Rotating Left ****************" << std::endl;
+					if (subR)
+						std::cout << "subR = parent->right = " << subR->_data.first << std::endl;
+					else
+						std::cout << "subR = parent->right = nullptr" << std::endl;
+					if (subRL)
+						std::cout << "subRL = subR->left = " << subRL->_data.first << std::endl;
+					else
+						std::cout << "subRL = subR->left = nullptr" << std::endl;
+					if (parentParent)
+						std::cout << "parentParent = parent->_parent = " << parentParent->_data.first << std::endl;
+					else
+						std::cout << "parentParent = parent->_parent = nullptr" << std::endl;
+				#endif
 							// initial tree
 								/*parentParent
 									  |
@@ -562,6 +579,20 @@ namespace ft
 				parent->_right = subRL;
 				subR->_left = parent;
 				parent->_parent = subR;
+				#if DEBUG_R
+					if (parent->_right)
+						std::cout << "parent->right = subRL = " << parent->_right->_data.first << std::endl;
+					else
+						std::cout << "parent->right = subRL = nullptr" << std::endl;
+					if (subR->_left)
+						std::cout << "subR->left = parent = " << subR->_left->_data.first << std::endl;
+					else
+						std::cout << "subR->left = parent = nullptr" << std::endl;
+					if (parent->_parent)
+						std::cout << "parent->_parent = subR = " << parent->_parent->_data.first << std::endl;
+					else
+						std::cout << "parent->_parent = subR = nullptr" << std::endl;
+				#endif
 									/*
 									parent
 									/	\
@@ -581,6 +612,12 @@ namespace ft
 
 				if (subRL)
 					subRL->_parent = parent;
+				#if DEBUG_R
+					if (subRL && subRL->_parent)
+						std::cout << "subRL->_parent = parent = " << subRL->_parent->_data.first << std::endl;
+					else 
+						std::cout << "subRL->_parent = nullptr" << std::endl;
+				#endif
 									/*
 									parent
 									  |
@@ -982,26 +1019,52 @@ namespace ft
 										std::cout << "	since w->color = RED we are going to do following" << std::endl;
 										std::cout << "		change w->color to BLACK" << std::endl;
 										std::cout << "		change w->parent->color to RED" << std::endl;
-										std::cout << "		rotating left" << std::endl;
 										std::cout << "------------------------------------------------------" << std::endl;
+										std::cout << "		before rotation" << std::endl;
+										std::cout << "		w = " << __w->_data.first << std::endl;
+
 									#endif
 									RotateL(__w->_parent);
+									#if DEBUG_1
+									std::cout << "**********************************************" << std::endl;
+									std::cout << "		After rotation" << std::endl;
+									std::cout << "		w = " << __w->_data.first << std::endl;
+									std::cout << "		Now set w = w->left->right" << std::endl;
+									#endif
 									// __x is still valid
 									// reset _root only if necessary
 									if (_root == __w->_left)
 										_root = __w;
 									// reset sibling, and it still can't be null
 									__w = __w->_left->_right;
+									#if DEBUG_1
+										std::cout << "		new w = " << __w->_data.first << std::endl;
+									#endif
+
 								}
 								// __w->_color is now BLACK, __w may have null children
 								if ((__w->_left  == nullptr_f || __w->_left->_color == BLACK) &&
 									(__w->_right == nullptr_f || __w->_right->_color == BLACK))
 								{
+									#if DEBUG_1
+										std::cout << "		if ((__w->_left  == nullptr_f || __w->_left->_color == BLACK) &&" << std::endl 
+												  << "		(__w->_right == nullptr_f || __w->_right->_color == BLACK))" << std::endl
+												  << "		We are inside the above if condition :" << std::endl;
+									#endif
 									__w->_color = RED;
 									__x = __w->_parent;
+									#if DEBUG_1
+										std::cout << "		set w->color = RED" << std::endl;
+										std::cout << "		set x = w->parent = " << __x << std::endl;
+									#endif
 									// __x can no longer be null
 									if (__x == _root || __x->_color == RED)
 									{
+										std::cout << "		*****************************************" << std::endl;
+										std::cout << "		if (__x == _root || __x->_color == RED)" << std::endl
+												  << "		since the above if condition is true" << std::endl
+												  << "		we are going to set x->color to BLACK" << std::endl
+												  << "		and break out of the while loop" << std::endl;
 										__x->_color = BLACK;
 										break;
 									}
