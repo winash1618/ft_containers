@@ -9,19 +9,19 @@
 
 namespace ft
 {
-	// enum color_t { BLACK, RED };
+	enum color_t { BLACK, RED };
 
-	// template<class T>
-	// struct RBTreeNode
-	// {
-	// 	RBTreeNode<T>* _left;
-	// 	RBTreeNode<T>* _right;
-	// 	RBTreeNode<T>* _parent;
+	template<class T>
+	struct RBTreeNode
+	{
+		RBTreeNode<T>* _left;
+		RBTreeNode<T>* _right;
+		RBTreeNode<T>* _parent;
 		
-	// 	T _data;
-	// 	color_t _color;
-	// 	RBTreeNode(const T& data) : _left(nullptr_f), _right(nullptr_f), _parent(nullptr_f), _data(data), _color(RED) {}
-	// };
+		T _data;
+		color_t _color;
+		RBTreeNode(const T& data) : _left(nullptr_f), _right(nullptr_f), _parent(nullptr_f), _data(data), _color(RED) {}
+	};
 template < class T,                        // set::key_type/value_type
 			class Compare = std::less<T>,        // set::key_compare/value_compare
 			class Alloc = std::allocator<T>      // set::allocator_type
@@ -188,12 +188,108 @@ template < class T,                        // set::key_type/value_type
 					}
 					return (end());
 				}
+				const_iterator find (const key_type& k) const
+				{
+					node_pointer cur = _root;
+					node_pointer parent = nullptr_f;
+					while (cur)
+					{
+						if (cur->_data < k)
+						{
+							parent = cur;
+							cur = cur->_right;
+						}
+						else if (cur->_data > k)
+						{
+							parent = cur;
+							cur = cur->_left;
+						}
+						else
+						{
+							return (iterator(cur));
+						}
+					}
+					return (end());
+				}
+
+
+				iterator lower_bound (const key_type& k)
+				{
+					node_pointer __root = _root;
+					node_pointer __result = nullptr_f;
+					while (__root != nullptr_f)
+					{
+						if (!_comp(__root->_data, k))
+						{
+							__result = __root;
+							__root = __root->_left;
+						}
+						else
+							__root = __root->_right;
+					}
+					if (__result)
+						return iterator(__result);
+					return (end());
+				}
+
+				iterator upper_bound (const key_type& k)
+				{
+					node_pointer __root = _root;
+					node_pointer __result = nullptr_f;
+					while (__root != nullptr_f)
+					{
+						if (_comp( k, __root->_data))
+						{
+							__result = __root;
+							__root = __root->_left;
+						}
+						else
+							__root = __root->_right;
+					}
+					if (__result)
+						return iterator(__result);
+					return (end());
+				}
+				const_iterator lower_bound (const key_type& k) const
+				{
+					node_pointer __root = _root;
+					node_pointer __result = nullptr_f;
+					while (__root != nullptr_f)
+					{
+						if (!_comp(__root->_data, k))
+						{
+							__result = __root;
+							__root = __root->_left;
+						}
+						else
+							__root = __root->_right;
+					}
+					if (__result)
+						return iterator(__result);
+					return (end());
+				}
+				const_iterator upper_bound (const key_type& k) const
+				{
+					node_pointer __root = _root;
+					node_pointer __result = nullptr_f;
+					while (__root != nullptr_f)
+					{
+						if (_comp( k, __root->_data))
+						{
+							__result = __root;
+							__root = __root->_left;
+						}
+						else
+							__root = __root->_right;
+					}
+					if (__result)
+						return iterator(__result);
+					return (end());
+				}
+
 
 				pair<const_iterator,const_iterator> equal_range (const key_type& k) const		{return ft::pair<const_iterator, const_iterator>(lower_bound(k), upper_bound(k));}
 				pair<iterator,iterator> equal_range (const key_type& k)							{return ft::pair<iterator, iterator>(lower_bound(k), upper_bound(k));}
-				const_iterator lower_bound (const key_type& k) const							{return const_iterator(lower_bound(k));}
-				const_iterator upper_bound (const key_type& k) const							{return const_iterator(upper_bound(k));}
-				const_iterator find (const key_type& k) const									{return (const_iterator(find(k)));}
 				allocator_type get_allocator() const											{return (this->_alloc);}
 				key_compare key_comp() const													{return (this->_comp);}
 				value_compare value_comp() const												{return value_compare(_comp);}
@@ -404,44 +500,6 @@ template < class T,                        // set::key_type/value_type
 						// std::cout << *it <<  std::endl;
 						insert(*it);
 					}
-				}
-
-				iterator lower_bound (const key_type& k)
-				{
-					node_pointer __root = _root;
-					node_pointer __result = nullptr_f;
-					while (__root != nullptr_f)
-					{
-						if (!_comp(__root->_data, k))
-						{
-							__result = __root;
-							__root = __root->_left;
-						}
-						else
-							__root = __root->_right;
-					}
-					if (__result)
-						return iterator(__result);
-					return (end());
-				}
-
-				iterator upper_bound (const key_type& k)
-				{
-					node_pointer __root = _root;
-					node_pointer __result = nullptr_f;
-					while (__root != nullptr_f)
-					{
-						if (_comp( k, __root->_data))
-						{
-							__result = __root;
-							__root = __root->_left;
-						}
-						else
-							__root = __root->_right;
-					}
-					if (__result)
-						return iterator(__result);
-					return (end());
 				}
 
 

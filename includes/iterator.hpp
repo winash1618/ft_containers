@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 10:50:33 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/10/06 09:22:47 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/10/06 10:59:31 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "iterator_traits.hpp"
 namespace ft
 {
-	template<typename T>
+	template<class T>
 	class iterator 
 	{
 		private:
@@ -173,49 +173,49 @@ namespace ft
 	bool
 	operator>(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter2>& y) 
 	{
-		return y < x;
+		return y.base() < x.base();
 	}
 
 	template <class _Iter1, class _Iter2>
 	bool
 	operator>=(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter2>& y) 
 	{
-		return !(x < y);
+		return !(x.base() < y.base());
 	}
 
 	template <class _Iter1, class _Iter2>
 	bool
 	operator<=(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter2>& y) 
 	{
-		return !(y < x);
+		return !(y.base() < x.base());
 	}
 
 	template <class _Iter1>
 	bool
 	operator!=(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter1>& y) 
 	{
-		return !(x == y);
+		return !(x.base() == y.base());
 	}
 
 	template <class _Iter1>
 	bool
 	operator>(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter1>& y) 
 	{
-		return y < x;
+		return y.base() < x.base();
 	}
 
 	template <class _Iter1>
 	bool
 	operator>=(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter1>& y) 
 	{
-		return !(x < y);
+		return !(x.base() < y.base());
 	}
 
 	template <class _Iter1>
 	bool
 	operator<=(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter1>& y) 
 	{
-		return !(y < x);
+		return !(y.base() < x.base());
 	}
 
 	

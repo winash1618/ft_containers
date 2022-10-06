@@ -130,6 +130,8 @@ namespace ft
 
 			const_iterator begin() const
 			{
+				// if (_root == nullptr_f)
+				// 	throw std::length_error("map size is zero");
 				node_pointer left = _root;
 				while (left && left->_left)
 				{
@@ -205,12 +207,104 @@ namespace ft
 				}
 				return (end());
 			}
+			const_iterator find (const key_type& k) const
+			{
+				node_pointer cur = _root;
+				node_pointer parent = nullptr_f;
+				while (cur)
+				{
+					if (cur->_data.first < k)
+					{
+						parent = cur;
+						cur = cur->_right;
+					}
+					else if (cur->_data.first > k)
+					{
+						parent = cur;
+						cur = cur->_left;
+					}
+					else
+					{
+						return (iterator(cur));
+					}
+				}
+				return (end());
+			}
+			iterator lower_bound (const key_type& k)
+			{
+				node_pointer __root = _root;
+				node_pointer __result = nullptr_f;
+				while (__root != nullptr_f)
+				{
+					if (!_comp(__root->_data.first, k))
+					{
+						__result = __root;
+						__root = __root->_left;
+					}
+					else
+						__root = __root->_right;
+				}
+				if (__result)
+					return iterator(__result);
+				return (end());
+			}
 
+			iterator upper_bound (const key_type& k)
+			{
+				node_pointer __root = _root;
+				node_pointer __result = nullptr_f;
+				while (__root != nullptr_f)
+				{
+					if (_comp( k, __root->_data.first))
+					{
+						__result = __root;
+						__root = __root->_left;
+					}
+					else
+						__root = __root->_right;
+				}
+				if (__result)
+					return iterator(__result);
+				return (end());
+			}
+			const_iterator lower_bound (const key_type& k) const
+			{
+				node_pointer __root = _root;
+				node_pointer __result = nullptr_f;
+				while (__root != nullptr_f)
+				{
+					if (!_comp(__root->_data.first, k))
+					{
+						__result = __root;
+						__root = __root->_left;
+					}
+					else
+						__root = __root->_right;
+				}
+				if (__result)
+					return iterator(__result);
+				return (end());
+			}
+			const_iterator upper_bound (const key_type& k) const
+			{
+				node_pointer __root = _root;
+				node_pointer __result = nullptr_f;
+				while (__root != nullptr_f)
+				{
+					if (_comp( k, __root->_data.first))
+					{
+						__result = __root;
+						__root = __root->_left;
+					}
+					else
+						__root = __root->_right;
+				}
+				if (__result)
+					return iterator(__result);
+				return (end());
+			}
 			pair<const_iterator,const_iterator> equal_range (const key_type& k) const		{return ft::pair<const_iterator, const_iterator>(lower_bound(k), upper_bound(k));}
 			pair<iterator,iterator> equal_range (const key_type& k)							{return ft::pair<iterator, iterator>(lower_bound(k), upper_bound(k));}
-			const_iterator lower_bound (const key_type& k) const							{return const_iterator(lower_bound(k));}
-			const_iterator upper_bound (const key_type& k) const							{return const_iterator(upper_bound(k));}
-			const_iterator find (const key_type& k) const									{return (const_iterator(find(k)));}
 			allocator_type get_allocator() const											{return (this->_alloc);}
 			key_compare key_comp() const													{return (this->_comp);}
 			value_compare value_comp() const												{return value_compare(_comp);}
@@ -241,6 +335,7 @@ namespace ft
 				// if (_root == nullptr_f)
 				// {std::cout << _size << "<-> size" << std::endl;
 				// std::cout << val.first << "<-> val" << std::endl;}
+				
 				if (_root == nullptr_f)
 				{
 					_root = n_alloc.allocate(1);
@@ -248,7 +343,7 @@ namespace ft
 					n_alloc.construct(_root, temp);
 					_root->_color = BLACK;
 					ft::pair<iterator, bool> t = ft::make_pair<iterator, bool>(iterator(_root), true);
-					_size++;
+					_size = 1;
 					
 					return t;
 				}
@@ -424,47 +519,12 @@ namespace ft
 			{
 				for(InputIterator it = first; it != last; it++)
 				{
+					// std::cout << last->first ;
+					// std::cout << " " << it->first << std::endl;
 					insert(*it);
 				}
 			}
 
-			iterator lower_bound (const key_type& k)
-			{
-				node_pointer __root = _root;
-				node_pointer __result = nullptr_f;
-				while (__root != nullptr_f)
-				{
-					if (!_comp(__root->_data.first, k))
-					{
-						__result = __root;
-						__root = __root->_left;
-					}
-					else
-						__root = __root->_right;
-				}
-				if (__result)
-					return iterator(__result);
-				return (end());
-			}
-
-			iterator upper_bound (const key_type& k)
-			{
-				node_pointer __root = _root;
-				node_pointer __result = nullptr_f;
-				while (__root != nullptr_f)
-				{
-					if (_comp( k, __root->_data.first))
-					{
-						__result = __root;
-						__root = __root->_left;
-					}
-					else
-						__root = __root->_right;
-				}
-				if (__result)
-					return iterator(__result);
-				return (end());
-			}
 
 			mapped_type& operator[] (const key_type& key)
 			{

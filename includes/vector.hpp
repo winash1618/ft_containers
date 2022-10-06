@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/10/06 08:56:01 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/10/06 10:43:44 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define VECTOR_HPP
 #include <iostream>
 // #include <iterator>
-#include <algorithm>
 #include <cassert>
 #include <cstddef>
 #include <limits>
