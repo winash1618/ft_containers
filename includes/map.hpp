@@ -6,8 +6,8 @@
 # include <functional>
 # include "tree_iterator.hpp"
 # include "reverse_iterator.hpp"
-# define DEBUG_1 1
-# define DEBUG_R 1
+# define DEBUG_1 0
+# define DEBUG_R 0
 
 namespace ft
 {
@@ -1060,12 +1060,14 @@ namespace ft
 									// __x can no longer be null
 									if (__x == _root || __x->_color == RED)
 									{
+										#if DEBUG_1
 										std::cout << "		*****************************************" << std::endl;
 										std::cout << "		if (__x == _root || __x->_color == RED)" << std::endl
 												  << "		since the above if condition is true" << std::endl
 												  << "		we are going to set x->color to BLACK" << std::endl
 												  << "		and break out of the while loop" << std::endl;
 										__x->_color = BLACK;
+										#endif
 										break;
 									}
 									// reset sibling, and it still can't be null

@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:27:34 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/09/14 14:26:04 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/10/06 08:33:29 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ namespace ft
 		Iterator current;
 	public:
 		typedef Iterator                                            iterator_type;
-		typedef typename ft::iterator_traits<Iterator>::difference_type difference_type;
+		typedef std::ptrdiff_t								difference_type;
 		typedef typename ft::iterator_traits<Iterator>::reference       reference;
 		typedef typename ft::iterator_traits<Iterator>::pointer         pointer;
 		typedef typename ft::iterator_traits<Iterator>::value_type         value_type;
@@ -58,8 +58,8 @@ namespace ft
 
 		reverse_iterator(): _iter(), current(){}
 		explicit reverse_iterator(Iterator x) : _iter(x), current(x) {}
-		// template <class U> 
-		// reverse_iterator(const reverse_iterator<U>& u);
+		template <class U> 
+		reverse_iterator(const reverse_iterator<U>& u):_iter(u.base()), current(u.base()) {}
 		// template <class U> 
 		// reverse_iterator& operator=(const reverse_iterator<U>& u);//c++11
 		reverse_iterator(const reverse_iterator& x)
@@ -122,7 +122,7 @@ namespace ft
 		}
 		reference         operator[](difference_type n) const
 		{
-			return(_iter[n - 1]);
+			return *(*this + n);
 		}
 		// bool operator==(const reverse_iterator& rhs) const {return _iter==rhs._iter;}
 		// 	bool operator!=(const reverse_iterator& rhs) const {return _iter!=rhs._iter;}
@@ -177,6 +177,19 @@ operator<=(const reverse_iterator<_Iter1>& __x, const reverse_iterator<_Iter2>& 
 {
     return __x.base() >= __y.base();
 }
+
+template <class _Iter1, class _Iter2>
+	typename ft::reverse_iterator<_Iter1>::difference_type
+	operator-(const ft::reverse_iterator<_Iter1>& __x, const ft::reverse_iterator<_Iter2>& __y) 
+	{
+		return __y.base() - __x.base();
+	}
+template <class _Iter1, class _Iter2>
+	typename ft::reverse_iterator<_Iter1>::difference_type
+	operator+(const ft::reverse_iterator<_Iter1>& __x, const ft::reverse_iterator<_Iter2>& __y) 
+	{
+		return __x.base() + __y.base();
+	}
 
 	
 	// Non member functions

@@ -41,6 +41,18 @@ namespace ft
 	void pop(){
 		return (c.pop_back());
 	}
+	template <class T1, class C>
+  friend bool operator==(const stack<T1, C>& x, const stack<T1, C>& y);
+template <class T1, class C>
+  friend bool operator< (const stack<T1, C>& x, const stack<T1, C>& y);
+template <class T1, class C>
+  friend bool operator!=(const stack<T1, C>& x, const stack<T1, C>& y);
+template <class T1, class C>
+  friend bool operator> (const stack<T1, C>& x, const stack<T1, C>& y);
+template <class T1, class C>
+  friend bool operator>=(const stack<T1, C>& x, const stack<T1, C>& y);
+template <class T1, class C>
+  friend bool operator<=(const stack<T1, C>& x, const stack<T1, C>& y);
 
 };
 
@@ -79,7 +91,7 @@ template <class T, class Container>
 template <class T, class Container>
   void swap(stack<T, Container>& x, stack<T, Container>& y)
   {
-	x.c.swap(y.c);
+	x.swap(y);
   }
 }
 #endif

@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 10:50:33 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/09/14 14:26:30 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/10/06 09:22:47 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 namespace ft
 {
 	template<typename T>
-	class iterator
+	class iterator 
 	{
 		private:
 			T* _iterator;
@@ -33,6 +33,11 @@ namespace ft
 			iterator(const iterator& x)
 			{
 				*this = x;
+			}
+			template<typename X>
+			iterator(const iterator<X>& u):_iterator(u.base())
+			{
+				
 			}
 			
 			iterator& operator=(const iterator<T>& __u) // commented for linux working fine in mac
@@ -83,7 +88,7 @@ namespace ft
 			}
 			
 			difference_type operator-(const iterator& other) const { 
-				return std::distance(_iterator, other._iterator); 
+				return std::distance(other._iterator, _iterator); 
 			}
 			// difference_type operator-(const __wrap_iter& other) const { 
 			// 	return std::distance(_iterator, other._iterator); 
@@ -141,137 +146,109 @@ namespace ft
 	}
 	//--------------------------------------------------------------------//
 
-	//----------------iterator function----------------------------------//
-	template <class _InputIter>
-	void __advance(_InputIter& i,
-				typename ft::iterator_traits<_InputIter>::difference_type n, input_iterator_tag)
-	{
-		for (; n > 0; --n)
-			++i;
-	}
-
-	template <class _BiDirIter>
-	void __advance(_BiDirIter& i,
-				typename ft::iterator_traits<_BiDirIter>::difference_type n, bidirectional_iterator_tag)
-	{
-		if (n >= 0)
-			for (; n > 0; --n)
-				++i;
-		else
-			for (; n < 0; ++n)
-				--i;
-	}
-
-	template <class _RandIter>
-	void __advance(_RandIter& i,
-				typename ft::iterator_traits<_RandIter>::difference_type n, random_access_iterator_tag)
-	{
-		i += n;
-	}
-
-	template <class _InputIter>
-	void advance(_InputIter& i,
-				typename ft::iterator_traits<_InputIter>::difference_type n)
-	{
-		assert(n >= 0 && "Attempt to advance(it, -n) on a non-bidi iterator");
-		__advance(i, n, typename ft::iterator_traits<_InputIter>::iterator_category());
-	}
-
 
 
 	template <class _Iter1, class _Iter2>
 	bool
-	operator==(const iterator<_Iter1>& __x, const iterator<_Iter2>& __y) 
+	operator==(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter2>& y) 
 	{
-		return __x.base() == __y.base();
+		return x.base() == y.base();
 	}
 
 	template <class _Iter1, class _Iter2>
 	bool
-	operator<(const iterator<_Iter1>& __x, const iterator<_Iter2>& __y) 
+	operator<(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter2>& y) 
 	{
-		return __x.base() < __y.base();
+		return x.base() < y.base();
 	}
 
 	template <class _Iter1, class _Iter2>
 	bool
-	operator!=(const iterator<_Iter1>& __x, const iterator<_Iter2>& __y) 
+	operator!=(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter2>& y) 
 	{
-		return !(__x == __y);
+		return !(x == y);
 	}
 
 	template <class _Iter1, class _Iter2>
 	bool
-	operator>(const iterator<_Iter1>& __x, const iterator<_Iter2>& __y) 
+	operator>(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter2>& y) 
 	{
-		return __y < __x;
+		return y < x;
 	}
 
 	template <class _Iter1, class _Iter2>
 	bool
-	operator>=(const iterator<_Iter1>& __x, const iterator<_Iter2>& __y) 
+	operator>=(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter2>& y) 
 	{
-		return !(__x < __y);
+		return !(x < y);
 	}
 
 	template <class _Iter1, class _Iter2>
 	bool
-	operator<=(const iterator<_Iter1>& __x, const iterator<_Iter2>& __y) 
+	operator<=(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter2>& y) 
 	{
-		return !(__y < __x);
+		return !(y < x);
 	}
 
 	template <class _Iter1>
 	bool
-	operator!=(const iterator<_Iter1>& __x, const iterator<_Iter1>& __y) 
+	operator!=(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter1>& y) 
 	{
-		return !(__x == __y);
+		return !(x == y);
 	}
 
 	template <class _Iter1>
 	bool
-	operator>(const iterator<_Iter1>& __x, const iterator<_Iter1>& __y) 
+	operator>(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter1>& y) 
 	{
-		return __y < __x;
+		return y < x;
 	}
 
 	template <class _Iter1>
 	bool
-	operator>=(const iterator<_Iter1>& __x, const iterator<_Iter1>& __y) 
+	operator>=(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter1>& y) 
 	{
-		return !(__x < __y);
+		return !(x < y);
 	}
 
 	template <class _Iter1>
 	bool
-	operator<=(const iterator<_Iter1>& __x, const iterator<_Iter1>& __y) 
+	operator<=(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter1>& y) 
 	{
-		return !(__y < __x);
+		return !(y < x);
 	}
 
 	
 	template <class _Iter1, class _Iter2>
-	typename iterator<_Iter1>::difference_type
-	operator-(const iterator<_Iter1>& __x, const iterator<_Iter2>& __y) 
+	typename ft::iterator<_Iter1>::difference_type
+	operator-(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter2>& y) 
 	{
-		return __x.base() - __y.base();
+		return x.base() - y.base();
 	}
 
 	template <class _Iter>
 	_Iter
-	operator+(_Iter __n,
-			std::size_t __x) 
+	operator+(_Iter n,
+			std::size_t x) 
 	{
-		__n += __x;
-		return __n;
+		n += x;
+		return n;
 	}
 	template <class _Iter>
 	_Iter
-	operator-(_Iter __n,
-			std::size_t __x) 
+	operator+(
+			std::size_t x,  _Iter n) 
 	{
-		__n -= __x;
-		return __n;
+		n += x;
+		return n;
+	}
+	template <class _Iter>
+	_Iter
+	operator-(_Iter n,
+			std::size_t x) 
+	{
+		n -= x;
+		return n;
 	}
 }
 #endif

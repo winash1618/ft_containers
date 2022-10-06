@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/09/19 17:34:11 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/10/06 08:56:01 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ template<class T, T v>
 			typedef typename allocator_type::pointer					pointer;
 			typedef typename allocator_type::const_pointer				const_pointer;
 			typedef ft::iterator<value_type>							iterator;
-			typedef ft::iterator<const value_type>							const_iterator;
+			typedef ft::iterator<const value_type>						const_iterator;
 			typedef typename allocator_type::size_type					size_type;
 			typedef typename allocator_type::difference_type			difference_type;
 			typedef ft::reverse_iterator<iterator>						reverse_iterator;
@@ -228,8 +228,8 @@ template<class T, T v>
 			// erase
 			iterator erase (iterator position)
 			{
-				_alloc.destroy(_vec + (begin() - position));
-				for(size_type index = begin() - position; index < _size - 1; index++)
+				_alloc.destroy(_vec + (position - begin()));
+				for(size_type index = position - begin(); index < _size - 1; index++)
 					_alloc.construct(_vec + index, *(_vec + index + 1));
 				_size--;
 				return (position);
@@ -245,8 +245,8 @@ template<class T, T v>
 			}
 			iterator erase (iterator first, iterator last)
 			{
-				size_type siz = begin() - first;
-				size_type len = begin() - end();
+				size_type siz = first - begin();
+				size_type len = end() - begin();
 				if (len > 0)
 				{
 					size_type index = 0;
@@ -359,6 +359,7 @@ template<class T, T v>
 					throw std::length_error("vector");
 				size_type size = ft::distance(first, last);
 				allocate(size);
+				_size = 0;
 				for (size_type index = 0; index < size; ++index)
 				{
 					_alloc.construct(_vec + index, *(first + index));
@@ -368,6 +369,7 @@ template<class T, T v>
 			void assign (size_type n, const value_type& val)
 			{
 				allocate(n);
+				_size = 0;
 				for (size_type index = 0; index < n; ++index)
 				{
 					_alloc.construct(_vec + index, val);
@@ -430,7 +432,7 @@ template<class T, T v>
 				}
 				else
 				{
-					size_type i = begin() - position;
+					size_type i = position - begin();
 					temp = t_alloc.allocate(_size * 2, 0);
 					for (size_type index1 = 0; index1 < _size; ++index1)
 						t_alloc.construct(temp + index1, _vec[index1]);
