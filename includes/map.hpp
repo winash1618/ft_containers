@@ -67,7 +67,7 @@ namespace ft
 			typedef typename allocator_type::difference_type							difference_type;
 			typedef typename __node_allocator::pointer									node_pointer;
 			typedef ft::__tree_iterator<value_type, node_pointer> 						iterator;
-			typedef ft::__tree_iterator<value_type, node_pointer>						const_iterator;
+			typedef ft::__const_tree_iterator<value_type, node_pointer>			const_iterator;
 			typedef ft::reverse_iterator<iterator>										reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>								const_reverse_iterator;
 
@@ -86,7 +86,7 @@ namespace ft
 			template <class InputIterator>
 			map (InputIterator first, InputIterator last,
 				const key_compare& comp = key_compare(),
-				const allocator_type& alloc = allocator_type()) : _comp(comp), _alloc(alloc)
+				const allocator_type& alloc = allocator_type()) :_root(nullptr_f), _comp(comp), _alloc(alloc)
 			{
 				insert(first, last);
 			}
@@ -132,6 +132,7 @@ namespace ft
 			{
 				// if (_root == nullptr_f)
 				// 	throw std::length_error("map size is zero");
+				// std::cout << "const Iterator called" << std::endl;
 				node_pointer left = _root;
 				while (left && left->_left)
 				{
@@ -282,7 +283,7 @@ namespace ft
 						__root = __root->_right;
 				}
 				if (__result)
-					return iterator(__result);
+					return const_iterator(__result);
 				return (end());
 			}
 			const_iterator upper_bound (const key_type& k) const
@@ -300,7 +301,7 @@ namespace ft
 						__root = __root->_right;
 				}
 				if (__result)
-					return iterator(__result);
+					return const_iterator(__result);
 				return (end());
 			}
 			pair<const_iterator,const_iterator> equal_range (const key_type& k) const		{return ft::pair<const_iterator, const_iterator>(lower_bound(k), upper_bound(k));}
@@ -335,7 +336,6 @@ namespace ft
 				// if (_root == nullptr_f)
 				// {std::cout << _size << "<-> size" << std::endl;
 				// std::cout << val.first << "<-> val" << std::endl;}
-				
 				if (_root == nullptr_f)
 				{
 					_root = n_alloc.allocate(1);
@@ -517,11 +517,14 @@ namespace ft
 			template <class InputIterator>
 			void insert (InputIterator first, InputIterator last)
 			{
-				for(InputIterator it = first; it != last; it++)
+				InputIterator it = first;
+				while (it != last)
 				{
 					// std::cout << last->first ;
-					// std::cout << " " << it->first << std::endl;
+					// std::cout << it->first << std::endl;
 					insert(*it);
+					// std::cout << "Hi" << std::endl;
+					it++;
 				}
 			}
 
@@ -568,6 +571,7 @@ namespace ft
 				if (!__node || !_root)
 					return ;
 				n_alloc.destroy(__node);
+					
 				tree_remove(__node);
 				// rbdelete( __node);
 				n_alloc.deallocate(__node, 1);
@@ -578,9 +582,10 @@ namespace ft
 			{
 				node_pointer __nd;
 				__nd = const_cast<node_pointer>(find(k).__ptr_);
+				// std::cout << "hi2" << std::endl;
 				if(__nd)
 					erase(find(k));
-				return _size;
+				return 1;
 			}
 			void erase (iterator first, iterator last)
 			{
@@ -588,6 +593,8 @@ namespace ft
 				{
 					iterator temp = first;
 					first++;
+					// std::cout << temp->first << std::endl;
+					// std::cout << "hi1" << std::endl;
 					erase(temp);
 				}
 			}
@@ -928,6 +935,7 @@ namespace ft
 				std::cout << "node to be deleted = " << __z->_data.first << std::endl;
 				std::cout << "------------------------------------------------" << std::endl;
 				#endif
+				
 				bool __removed_black = false;
 				node_pointer __y = (__z->_left == nullptr_f || __z->_right == nullptr_f) ?
 								__z : tree_next(__z);
@@ -946,6 +954,7 @@ namespace ft
 					else
 						std::cout << "x is a nullptr" <<std::endl;
 				#endif
+				
 				if (__x != nullptr_f)
 					__x->_parent = __y->_parent;
 				if (__y == _root)
@@ -974,6 +983,7 @@ namespace ft
 						std::cout << "------------------------------------------------" << std::endl;
 					#endif
 				}
+				
 				if (__y->_color == BLACK)
 					__removed_black = true;
 				// If we didn't remove __z, do so now by splicing in __y for __z,
@@ -1045,6 +1055,7 @@ namespace ft
 				//     the last node.
 				if (__removed_black && _root != nullptr_f)
 				{
+					
 					#if DEBUG_1
 						std::cout << "**********************************************" << std::endl;
 						std::cout << "************* Rebalancing Begins *************" << std::endl;
@@ -1058,10 +1069,13 @@ namespace ft
 						__x->_color = BLACK;
 					else
 					{
+						
 						while (true)
 						{
+							
 							if (!tree_is_left_child(__w))  // if x is left child
 							{
+								
 								#if DEBUG_1
 									std::cout << "	w is right child of it's parent" << std::endl;
 									std::cout << "	w = " << __w->_data.first << std::endl;
@@ -1102,6 +1116,8 @@ namespace ft
 									#endif
 
 								}
+								if (__w == nullptr_f)
+									break;
 								// __w->_color is now BLACK, __w may have null children
 								if ((__w->_left  == nullptr_f || __w->_left->_color == BLACK) &&
 									(__w->_right == nullptr_f || __w->_right->_color == BLACK))
@@ -1158,8 +1174,10 @@ namespace ft
 							}
 							else
 							{
+								
 								if (__w->_color == RED)
 								{
+									
 									__w->_color = BLACK;
 									__w->_parent->_color = RED;
 									RotateR(__w->_parent);
@@ -1168,12 +1186,17 @@ namespace ft
 									if (_root == __w->_right)
 										_root = __w;
 									// reset sibling, and it still can't be null
+								// 	std::cout << __w->_color  << " his" << std::endl;
+								
 									__w = __w->_right->_left;
 								}
+								if (__w == nullptr_f)
+									break;
 								// __w->_color is now BLACK, __w may have null children
 								if ((__w->_left  == nullptr_f || __w->_left->_color == BLACK) &&
 									(__w->_right == nullptr_f || __w->_right->_color == BLACK))
 								{
+									
 									__w->_color = RED;
 									__x = __w->_parent;
 									// __x can no longer be null
@@ -1190,6 +1213,7 @@ namespace ft
 								}
 								else  // __w has a red child
 								{
+									
 									if (__w->_left == nullptr_f || __w->_left->_color  == BLACK)
 									{
 										// __w right child is non-null and red
