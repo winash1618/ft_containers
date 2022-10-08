@@ -114,7 +114,7 @@ namespace ft
 
 			__tree_iterator& operator--()
 			{
-				if (__ptr_ == nullptr)
+				if (__ptr_ == nullptr_f)
 				{
 					__ptr_ = __end_;
 					return *this;
@@ -180,7 +180,7 @@ namespace ft
 
 			__const_tree_iterator& operator--()
 			{
-				if (__ptr_ == nullptr)
+				if (__ptr_ == nullptr_f)
 				{
 					__ptr_ = __end_;
 					return *this;

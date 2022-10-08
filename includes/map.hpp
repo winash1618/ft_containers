@@ -67,7 +67,7 @@ namespace ft
 			typedef typename allocator_type::difference_type							difference_type;
 			typedef typename __node_allocator::pointer									node_pointer;
 			typedef ft::__tree_iterator<value_type, node_pointer> 						iterator;
-			typedef ft::__const_tree_iterator<value_type, node_pointer>			const_iterator;
+			typedef ft::__tree_iterator<value_type, node_pointer>			const_iterator;
 			typedef ft::reverse_iterator<iterator>										reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>								const_reverse_iterator;
 
@@ -187,15 +187,28 @@ namespace ft
 
 			iterator find (const key_type& k)
 			{
+				// std::cout << "==========================" << std::endl;
+				// for (iterator it = begin(); it != end(); it++)
+				// {
+				// 	std::cout << it->first << std::endl;
+				// }
+				// std::cout << "----------------==========" << std::endl;
 				node_pointer cur = _root;
 				node_pointer parent = nullptr_f;
-				while (cur)
+				while (cur != nullptr_f)
 				{
+					
+					// std::cout << "HI" << std::endl;
+					//  if (_comp(k, cur->_data.first))
+					
 					if (cur->_data.first < k)
 					{
 						parent = cur;
 						cur = cur->_right;
+						
+						
 					}
+					// else if (_comp(cur->_data.first, k))
 					else if (cur->_data.first > k)
 					{
 						parent = cur;
@@ -203,8 +216,10 @@ namespace ft
 					}
 					else
 					{
+						
 						return (iterator(cur));
 					}
+					
 				}
 				return (end());
 			}
@@ -214,11 +229,16 @@ namespace ft
 				node_pointer parent = nullptr_f;
 				while (cur)
 				{
+					
+					//  if (_comp(k, cur->_data.first))
+					// if (!_comp(cur->_data.first, k))
 					if (cur->_data.first < k)
 					{
 						parent = cur;
 						cur = cur->_right;
 					}
+					// else if (_comp(cur->_data.first, k))
+					// else if (_comp(cur->_data.first, k))
 					else if (cur->_data.first > k)
 					{
 						parent = cur;
@@ -336,6 +356,7 @@ namespace ft
 				// if (_root == nullptr_f)
 				// {std::cout << _size << "<-> size" << std::endl;
 				// std::cout << val.first << "<-> val" << std::endl;}
+				// std::cout << val.first << std::endl;
 				if (_root == nullptr_f)
 				{
 					_root = n_alloc.allocate(1);
@@ -347,12 +368,14 @@ namespace ft
 					
 					return t;
 				}
+				
 				// this is searching for a match in the current map element if there
 				// is a match it will return with false since there is no allocation.
 				node_pointer cur = _root;
 				node_pointer parent = nullptr_f;
 				while (cur)
 				{
+					
 					if (cur->_data.first < val.first)
 					{
 						parent = cur;
@@ -368,12 +391,18 @@ namespace ft
 						return ft::make_pair(iterator(cur), false);
 					}
 				}
+				
 				// Here we create a new node and place it in the right place and then balance the tree.
 				cur = n_alloc.allocate(1);
 				ft::RBTreeNode<value_type> temp(val);
 				n_alloc.construct(cur, temp);
 				node_pointer newnode = cur;
 				newnode->_color = RED;
+				
+				// std::cout << val.first << " " << parent->_data.first << std::endl;
+				// std::cout << _comp(val.first, parent->_data.first) << std::endl;
+				// if (_comp(parent->_data.first, val.first))
+				// if (_comp(val.first, parent->_data.first))
 				if (parent->_data.first < val.first) // due to the above while the parent reach next to the null leaf. we will check where to place the node (left or right) and place the node.
 				{
 					parent->_right = newnode;
@@ -505,6 +534,8 @@ namespace ft
 				}
 				_size++;
 				_root->_color = BLACK;
+				// std::cout << _size << std::endl;
+				
 				return ft::make_pair(iterator(newnode), true);
 			}
 			// with hint insert	
@@ -540,6 +571,7 @@ namespace ft
 				{
 					insert(ft::make_pair(key,mapped_type()));
 					it = find(key);
+					// std::cout << find(key)->second << std::endl;
 					return (it->second);
 				}
 			}

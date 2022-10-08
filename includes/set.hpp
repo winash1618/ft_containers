@@ -9,19 +9,19 @@
 
 namespace ft
 {
-	enum color_t { BLACK, RED };
+	// enum color_t { BLACK, RED };
 
-	template<class T>
-	struct RBTreeNode
-	{
-		RBTreeNode<T>* _left;
-		RBTreeNode<T>* _right;
-		RBTreeNode<T>* _parent;
+	// template<class T>
+	// struct RBTreeNode
+	// {
+	// 	RBTreeNode<T>* _left;
+	// 	RBTreeNode<T>* _right;
+	// 	RBTreeNode<T>* _parent;
 		
-		T _data;
-		color_t _color;
-		RBTreeNode(const T& data) : _left(nullptr_f), _right(nullptr_f), _parent(nullptr_f), _data(data), _color(RED) {}
-	};
+	// 	T _data;
+	// 	color_t _color;
+	// 	RBTreeNode(const T& data) : _left(nullptr_f), _right(nullptr_f), _parent(nullptr_f), _data(data), _color(RED) {}
+	// };
 template < class T,                        // set::key_type/value_type
 			class Compare = std::less<T>,        // set::key_compare/value_compare
 			class Alloc = std::allocator<T>      // set::allocator_type
