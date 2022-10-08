@@ -67,7 +67,7 @@ namespace ft
 			typedef typename allocator_type::difference_type							difference_type;
 			typedef typename __node_allocator::pointer									node_pointer;
 			typedef ft::__tree_iterator<value_type, node_pointer> 						iterator;
-			typedef ft::__tree_iterator<value_type, node_pointer>			const_iterator;
+			typedef ft::__tree_iterator<value_type, node_pointer>					const_iterator;
 			typedef ft::reverse_iterator<iterator>										reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>								const_reverse_iterator;
 
@@ -631,8 +631,12 @@ namespace ft
 				__nd = const_cast<node_pointer>(find(k).__ptr_);
 				// std::cout << "hi2" << std::endl;
 				if(__nd)
+				{
 					erase(find(k));
-				return 1;
+					return 1;
+
+				}
+				return 0;
 			}
 			void erase (iterator first, iterator last)
 			{

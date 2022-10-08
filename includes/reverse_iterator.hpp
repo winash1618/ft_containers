@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:27:34 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/10/06 08:33:29 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/10/08 13:46:41 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ namespace ft
 	protected:
 		Iterator current;
 	public:
-		typedef Iterator                                            iterator_type;
-		typedef std::ptrdiff_t								difference_type;
-		typedef typename ft::iterator_traits<Iterator>::reference       reference;
-		typedef typename ft::iterator_traits<Iterator>::pointer         pointer;
-		typedef typename ft::iterator_traits<Iterator>::value_type         value_type;
-		typedef typename ft::iterator_traits<Iterator>::iterator_category         iterator_category;
+		typedef Iterator															iterator_type;
+		typedef std::ptrdiff_t														difference_type;
+		typedef typename ft::iterator_traits<Iterator>::reference					reference;
+		typedef typename ft::iterator_traits<Iterator>::pointer						pointer;
+		typedef typename ft::iterator_traits<Iterator>::value_type					value_type;
+		typedef typename ft::iterator_traits<Iterator>::iterator_category			iterator_category;
 		
 
 		reverse_iterator(): _iter(), current(){}

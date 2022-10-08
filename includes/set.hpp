@@ -9,19 +9,20 @@
 
 namespace ft
 {
-	// enum color_t { BLACK, RED };
 
-	// template<class T>
-	// struct RBTreeNode
-	// {
-	// 	RBTreeNode<T>* _left;
-	// 	RBTreeNode<T>* _right;
-	// 	RBTreeNode<T>* _parent;
+	enum color_t { BLACK, RED };
+
+	template<class T>
+	struct RBTreeNode
+	{
+		RBTreeNode<T>* _left;
+		RBTreeNode<T>* _right;
+		RBTreeNode<T>* _parent;
 		
-	// 	T _data;
-	// 	color_t _color;
-	// 	RBTreeNode(const T& data) : _left(nullptr_f), _right(nullptr_f), _parent(nullptr_f), _data(data), _color(RED) {}
-	// };
+		T _data;
+		color_t _color;
+		RBTreeNode(const T& data) : _left(nullptr_f), _right(nullptr_f), _parent(nullptr_f), _data(data), _color(RED) {}
+	};
 template < class T,                        // set::key_type/value_type
 			class Compare = std::less<T>,        // set::key_compare/value_compare
 			class Alloc = std::allocator<T>      // set::allocator_type
@@ -171,12 +172,14 @@ template < class T,                        // set::key_type/value_type
 					node_pointer parent = nullptr_f;
 					while (cur)
 					{
-						if (cur->_data < k)
+						if (_comp(cur->_data, k))
+						// if (cur->_data < k)
 						{
 							parent = cur;
 							cur = cur->_right;
 						}
-						else if (cur->_data > k)
+						else if (_comp(k, cur->_data))
+						// else if (cur->_data > k)
 						{
 							parent = cur;
 							cur = cur->_left;
@@ -194,12 +197,14 @@ template < class T,                        // set::key_type/value_type
 					node_pointer parent = nullptr_f;
 					while (cur)
 					{
-						if (cur->_data < k)
+						if (_comp(cur->_data, k))
+						// if (cur->_data < k)
 						{
 							parent = cur;
 							cur = cur->_right;
 						}
-						else if (cur->_data > k)
+						else if (_comp(k, cur->_data))
+						// else if (cur->_data > k)
 						{
 							parent = cur;
 							cur = cur->_left;
@@ -265,7 +270,7 @@ template < class T,                        // set::key_type/value_type
 							__root = __root->_right;
 					}
 					if (__result)
-						return iterator(__result);
+						return const_iterator(__result);
 					return (end());
 				}
 				const_iterator upper_bound (const key_type& k) const
@@ -283,7 +288,7 @@ template < class T,                        // set::key_type/value_type
 							__root = __root->_right;
 					}
 					if (__result)
-						return iterator(__result);
+						return const_iterator(__result);
 					return (end());
 				}
 
@@ -330,13 +335,14 @@ template < class T,                        // set::key_type/value_type
 					node_pointer parent = nullptr_f;
 					while (cur)
 					{
-						
-						if (cur->_data < val)
+						if (_comp(cur->_data, val))
+						// if (cur->_data < val)
 						{
 							parent = cur;
 							cur = cur->_right;
 						}
-						else if (cur->_data > val)
+						else if (_comp(val, cur->_data))
+						// else if (cur->_data > val)
 						{
 							parent = cur;
 							cur = cur->_left;
@@ -352,7 +358,8 @@ template < class T,                        // set::key_type/value_type
 					n_alloc.construct(cur, temp);
 					node_pointer newnode = cur;
 					newnode->_color = RED;
-					if (parent->_data < val) // due to the above while the parent reach next to the null leaf. we will check where to place the node (left or right) and place the node.
+					if (_comp(parent->_data, val))
+					// if (parent->_data < val) // due to the above while the parent reach next to the null leaf. we will check where to place the node (left or right) and place the node.
 					{
 						parent->_right = newnode;
 						newnode->_parent = parent;
@@ -544,8 +551,11 @@ template < class T,                        // set::key_type/value_type
 					node_pointer __nd;
 					__nd = const_cast<node_pointer>(find(k).__ptr_);
 					if(__nd)
+					{
 						erase(find(k));
-					return _size;
+						return (1);
+					}
+					return 0;
 				}
 				void erase (iterator first, iterator last)
 				{
@@ -790,6 +800,8 @@ template < class T,                        // set::key_type/value_type
 										// reset sibling, and it still can't be null
 										__w = __w->_left->_right;
 									}
+									if (__w == nullptr_f)
+										break;
 									// __w->_color is now BLACK, __w may have null children
 									if ((__w->_left  == nullptr_f || __w->_left->_color == BLACK) &&
 										(__w->_right == nullptr_f || __w->_right->_color == BLACK))
@@ -842,6 +854,8 @@ template < class T,                        // set::key_type/value_type
 										// reset sibling, and it still can't be null
 										__w = __w->_right->_left;
 									}
+									if (__w == nullptr_f)
+										break;
 									// __w->_color is now BLACK, __w may have null children
 									if ((__w->_left  == nullptr_f || __w->_left->_color == BLACK) &&
 										(__w->_right == nullptr_f || __w->_right->_color == BLACK))
