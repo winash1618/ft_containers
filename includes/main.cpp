@@ -333,7 +333,7 @@ int main ()
 //     std::cout << it->first << " => " << it->second << '\n';
 // }
 {
-ft::map<int, std::string> mp;
+ft::map<int, std::string, ft_more> mp;
 //   ft::map<int, int>::iterator it;
 
 //   // insert some values:
@@ -366,6 +366,47 @@ ft::map<int, std::string> mp;
 	// std::cout << mp[12] << std::endl;
 	mp[27] = "bee";
 	mp[90] = "8";
+
+for (ft::map<int, std::string, ft_more>::iterator it = mp.begin(); it != mp.end(); it++)
+	std::cout << it->first << std::endl;
+std::cout << std::endl;
+}
+{
+std::map<int, std::string, ft_more> mp;
+//   ft::map<int, int>::iterator it;
+
+//   // insert some values:
+//   mymap[40]=10;
+//   mymap[55]=20;
+//   mymap[65]=30;
+//   mymap[60]=40;
+//   mymap[57]=50;
+//   mymap[75]=60;
+
+//   it=mymap.find(40);
+//   mymap.erase (it);                   // erasing by iterator
+
+// //   mymap.erase ('c');                  // erasing by key
+
+// //   it=mymap.find ('e');
+// //   mymap.erase ( it, mymap.end() );    // erasing by range
+
+//   // show content:
+//   for (it=mymap.begin(); it!=mymap.end(); ++it)
+//     std::cout << it->first << " => " << it->second << '\n';
+
+// ft_mp mp;
+
+	mp[42] = "fgzgxfn";
+	mp[25] = "funny";
+	mp[80] = "hey";
+	// std::cout << "hi" << std::endl;
+	mp[12] = "no";
+	// std::cout << mp[12] << std::endl;
+	mp[27] = "bee";
+	mp[90] = "8";
+for (std::map<int, std::string, ft_more>::iterator it = mp.begin(); it != mp.end(); it++)
+	std::cout << it->first << std::endl;
 }
 
 // {

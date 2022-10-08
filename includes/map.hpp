@@ -192,24 +192,34 @@ namespace ft
 				// {
 				// 	std::cout << it->first << std::endl;
 				// }
+				// // static int i;
 				// std::cout << "----------------==========" << std::endl;
 				node_pointer cur = _root;
 				node_pointer parent = nullptr_f;
+					// std::cout << "------------------------------" << std::endl;
+				// std::cout << "i am here " << i << " times" << std::endl;
+				// i++;
 				while (cur != nullptr_f)
 				{
 					
 					// std::cout << "HI" << std::endl;
+					// std::cout << cur->_data.first << " " << k << std::endl;
+					// std::cout << _comp(cur->_data.first, k) << std::endl;
 					//  if (_comp(k, cur->_data.first))
-					
-					if (cur->_data.first < k)
+					if (_comp(cur->_data.first, k))
+					//  if (!_comp(cur->_data.first, k))
+					// if (cur->_data.first < k)
 					{
 						parent = cur;
+						// std::cout << &cur->_right << std::endl;
 						cur = cur->_right;
-						
-						
+
 					}
+					else if (_comp(k, cur->_data.first))
 					// else if (_comp(cur->_data.first, k))
-					else if (cur->_data.first > k)
+					// else if (_comp(k, cur->_data.first))
+					// else if (_comp(cur->_data.first, k))
+					// else if (cur->_data.first > k)
 					{
 						parent = cur;
 						cur = cur->_left;
@@ -217,10 +227,12 @@ namespace ft
 					else
 					{
 						
+					// std::cout << "------------------------------" << std::endl;
 						return (iterator(cur));
 					}
 					
 				}
+				// std::cout << "i am here " << i << " times" << std::endl;
 				return (end());
 			}
 			const_iterator find (const key_type& k) const
@@ -375,13 +387,14 @@ namespace ft
 				node_pointer parent = nullptr_f;
 				while (cur)
 				{
-					
-					if (cur->_data.first < val.first)
+					if (_comp(cur->_data.first, val.first))
+					// if (cur->_data.first < val.first)
 					{
 						parent = cur;
 						cur = cur->_right;
 					}
-					else if (cur->_data.first > val.first)
+					else if (_comp(val.first, cur->_data.first))
+					// else if (cur->_data.first > val.first)
 					{
 						parent = cur;
 						cur = cur->_left;
@@ -400,10 +413,12 @@ namespace ft
 				newnode->_color = RED;
 				
 				// std::cout << val.first << " " << parent->_data.first << std::endl;
+				// std::cout << parent->_data.first << " " << val.first << std::endl;
 				// std::cout << _comp(val.first, parent->_data.first) << std::endl;
-				// if (_comp(parent->_data.first, val.first))
+				// std::cout << _comp(parent->_data.first, val.first) << std::endl;
+				if (_comp(parent->_data.first, val.first))
 				// if (_comp(val.first, parent->_data.first))
-				if (parent->_data.first < val.first) // due to the above while the parent reach next to the null leaf. we will check where to place the node (left or right) and place the node.
+				// if (parent->_data.first < val.first) // due to the above while the parent reach next to the null leaf. we will check where to place the node (left or right) and place the node.
 				{
 					parent->_right = newnode;
 					newnode->_parent = parent;
