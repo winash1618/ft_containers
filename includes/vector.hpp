@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/10/06 10:43:44 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/10/10 20:09:58 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,10 +292,10 @@ template<class T, T v>
 			}
 			
 			// Iterators
-			iterator	begin() {return iterator(_vec);}
-			const_iterator         begin()   const {return const_iterator(_vec);}
-			iterator               end() {return iterator(_vec + size());}
-			const_iterator         end()     const {return const_iterator(_vec + size()); }
+			iterator               begin()              {return iterator(_vec);}
+			const_iterator         begin()   const      {return const_iterator(_vec);}
+			iterator               end()                {return iterator(_vec + size());}
+			const_iterator         end()     const      {return const_iterator(_vec + size()); }
 			
 			//reverse Iterators
 			reverse_iterator       rbegin() {return reverse_iterator(this->end());}

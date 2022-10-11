@@ -12,19 +12,19 @@
 namespace ft
 {
 	
-	enum color_t { BLACK, RED };
+	// enum color_t { BLACK, RED };
 
-	template<class T>
-	struct RBTreeNode
-	{
-		RBTreeNode<T>* _left;
-		RBTreeNode<T>* _right;
-		RBTreeNode<T>* _parent;
+	// template<class T>
+	// struct RBTreeNode
+	// {
+	// 	RBTreeNode<T>* _left;
+	// 	RBTreeNode<T>* _right;
+	// 	RBTreeNode<T>* _parent;
 		
-		T _data;
-		color_t _color;
-		RBTreeNode(const T& data) : _left(nullptr_f), _right(nullptr_f), _parent(nullptr_f), _data(data), _color(RED) {}
-	};
+	// 	T _data;
+	// 	color_t _color;
+	// 	RBTreeNode(const T& data) : _left(nullptr_f), _right(nullptr_f), _parent(nullptr_f), _data(data), _color(RED) {}
+	// };
 	
 	template < class Key,                                     // map::key_type
 	class T,                                       // map::mapped_type
@@ -54,20 +54,24 @@ namespace ft
 			};
 		// https://stackoverflow.com/questions/14148756/what-does-template-rebind-do
 		private:
-			typedef pair<key_type, mapped_type>											__value_type;
-			typedef typename allocator_type::template rebind<__value_type>::other		__allocator_type;
+			// typedef pair<key_type, mapped_type>											__value_type;
+			// typedef typename allocator_type::template rebind<__value_type>::other		__allocator_type;
 			typedef RBTreeNode<value_type>												Node;
 			typedef Node																__node_pointer;
-			typedef typename __allocator_type::template rebind<__node_pointer>::other	__node_allocator;
+			typedef typename allocator_type::template rebind<__node_pointer>::other	__node_allocator;
 
 		public:
+			// typedef typename allocator_type::reference									reference;
+			// typedef typename allocator_type::const_reference							const_reference;
 			typedef typename allocator_type::pointer									pointer;
 			typedef typename allocator_type::const_pointer								const_pointer;
 			typedef typename allocator_type::size_type									size_type;
 			typedef typename allocator_type::difference_type							difference_type;
 			typedef typename __node_allocator::pointer									node_pointer;
-			typedef ft::__tree_iterator<value_type, node_pointer> 						iterator;
-			typedef ft::__tree_iterator<value_type, node_pointer>					const_iterator;
+			// typedef ft::__tree_iterator<value_type, node_pointer> 						iterator;
+			// typedef ft::__tree_iterator<value_type, node_pointer>						const_iterator;
+			typedef ft::__tree_iterator<allocator_type> 								iterator;
+			typedef ft::__const_tree_iterator<allocator_type>									const_iterator;
 			typedef ft::reverse_iterator<iterator>										reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>								const_reverse_iterator;
 
@@ -77,6 +81,7 @@ namespace ft
 			allocator_type																_alloc;
 			__node_allocator															n_alloc;
 			size_type																	_size;
+			iterator																	iter;
 
 		public:
 			explicit map (const key_compare& comp = key_compare(),
@@ -115,17 +120,19 @@ namespace ft
 
 			iterator begin()
 			{
-				node_pointer left = _root;
-				while (left && left->_left)
-				{
-					left = left->_left;
-				}
-				node_pointer right = _root;
-				while (right && right->_right)
-				{
-					right = right->_right;
-				}
-				return iterator(right, left);
+				// node_pointer left = _root;
+				// while (left && left->_left)
+				// {
+				// 	left = left->_left;
+				// }
+				// node_pointer right = _root;
+				// while (right && right->_right)
+				// {
+				// 	right = right->_right;
+				// }
+				// return iterator(right, left);
+				// std::cout << "I am in iterator begin " << std::endl;
+				return iterator(begin_right(), begin_left());
 			}
 
 			const_iterator begin() const
@@ -133,17 +140,19 @@ namespace ft
 				// if (_root == nullptr_f)
 				// 	throw std::length_error("map size is zero");
 				// std::cout << "const Iterator called" << std::endl;
-				node_pointer left = _root;
-				while (left && left->_left)
-				{
-					left = left->_left;
-				}
-				node_pointer right = _root;
-				while (right && right->_right)
-				{
-					right = right->_right;
-				}
-				return const_iterator(right, left);
+				// node_pointer left = _root;
+				// while (left && left->_left)
+				// {
+				// 	left = left->_left;
+				// }
+				// node_pointer right = _root;
+				// while (right && right->_right)
+				// {
+				// 	right = right->_right;
+				// }
+				// return const_iterator(right, left);
+				// std::cout << "I am in const_iterator begin " << std::endl;
+				return const_iterator(begin_right(), begin_left());
 			}
 
 			iterator end()
@@ -652,7 +661,42 @@ namespace ft
 
 		private:
 
-
+			const node_pointer begin_left(void) const
+			{
+				node_pointer left = _root;
+				while (left && left->_left)
+				{
+					left = left->_left;
+				}
+				return left;
+			}
+			const node_pointer begin_right(void) const
+			{
+				node_pointer right = _root;
+				while (right && right->_right)
+				{
+					right = right->_right;
+				}
+				return right;
+			}
+			node_pointer begin_left(void)
+			{
+				node_pointer left = _root;
+				while (left && left->_left)
+				{
+					left = left->_left;
+				}
+				return left;
+			}
+			node_pointer begin_right(void)
+			{
+				node_pointer right = _root;
+				while (right && right->_right)
+				{
+					right = right->_right;
+				}
+				return right;
+			}
 			void destroy(node_pointer __nd)
 			{
 				if (__nd != nullptr_f)
@@ -1332,7 +1376,7 @@ namespace ft
 		// 	x->_right = y;  // put x on y’s left
 		// 	y->_parent = x;
 		// }
-
+	
 
 	};
 		template <class Key, class T, class Compare, class Alloc>

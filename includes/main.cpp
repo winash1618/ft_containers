@@ -8,8 +8,6 @@
 #include <iterator>
 #include "set.hpp"
 
-
-
 struct ft_more {
 	bool	operator()(const int &first, const int &second) const {
 		return (first > second);
