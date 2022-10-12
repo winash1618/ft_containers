@@ -56,7 +56,7 @@ namespace ft
 		private:
 			// typedef pair<key_type, mapped_type>											__value_type;
 			// typedef typename allocator_type::template rebind<__value_type>::other		__allocator_type;
-			typedef RBTreeNode<value_type>												Node;
+			typedef ft::RBTreeNode<value_type>												Node;
 			typedef Node																__node_pointer;
 			typedef typename allocator_type::template rebind<__node_pointer>::other	__node_allocator;
 
@@ -71,7 +71,7 @@ namespace ft
 			// typedef ft::__tree_iterator<value_type, node_pointer> 						iterator;
 			// typedef ft::__tree_iterator<value_type, node_pointer>						const_iterator;
 			typedef ft::__tree_iterator<allocator_type> 								iterator;
-			typedef ft::__const_tree_iterator<allocator_type>									const_iterator;
+			typedef ft::__const_tree_iterator<allocator_type>							const_iterator;
 			typedef ft::reverse_iterator<iterator>										reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>								const_reverse_iterator;
 
@@ -177,7 +177,7 @@ namespace ft
 			size_type count (const key_type& k) const
 			{
 				size_type counter = 0;
-				iterator search = begin();
+				const_iterator search = begin();
 				while (search != end())
 				{
 					if ( search->first == k)
@@ -267,7 +267,7 @@ namespace ft
 					}
 					else
 					{
-						return (iterator(cur));
+						return (const_iterator(cur));
 					}
 				}
 				return (end());
