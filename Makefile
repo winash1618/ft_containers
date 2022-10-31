@@ -28,7 +28,7 @@ CC = c++
 
 RM = rm -rf
 
-CFLAGS = -Wall -Wextra -Werror -std=c++98 -g
+CFLAGS = -Wall -Wextra -Werror -std=c++98 -g -fsanitize=address
 
 all: $(FT) $(STD)
 

@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:27:34 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/10/12 16:21:13 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/10/31 20:24:46 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ namespace ft
 		template <class U> 
 		reverse_iterator(const reverse_iterator<U>& u):_iter(u.base()), current(u.base()) {}
 		// template <class U> 
-		// reverse_iterator& operator=(const reverse_iterator<U>& u);//c++11
+		// reverse_iterator& operator=(const reverse_iterator<U>& u)
 		reverse_iterator(const reverse_iterator& x)
 		{
 			*this = x;
@@ -219,6 +219,99 @@ namespace ft
 		// bool operator==(const reverse_iterator& rhs) const {return _iter==rhs._iter;}
 		// 	bool operator!=(const reverse_iterator& rhs) const {return _iter!=rhs._iter;}
 	};
+	
+	// template <class Iterator>
+	// class const_reverse_iterator
+	// 	// : public ft::iterator<typename ft::iterator_traits<Iterator>::iterator_category,
+	// 	// 				typename ft::iterator_traits<Iterator>::value_type,
+	// 	// 				typename ft::iterator_traits<Iterator>::difference_type,
+	// 	// 				typename ft::iterator_traits<Iterator>::pointer,
+	// 	// 				typename ft::iterator_traits<Iterator>::reference>
+	// {
+	// private:
+	// 	Iterator _iter;
+	// protected:
+	// 	Iterator current;
+	// public:
+	// 	typedef Iterator															iterator_type;
+	// 	typedef std::ptrdiff_t														difference_type;
+	// 	typedef typename ft::iterator_traits<Iterator>::reference					reference;
+	// 	typedef typename ft::iterator_traits<Iterator>::pointer						pointer;
+	// 	typedef typename ft::iterator_traits<Iterator>::value_type					value_type;
+	// 	typedef typename ft::iterator_traits<Iterator>::iterator_category			iterator_category;
+		
+
+	// 	const_reverse_iterator(): _iter(), current(){}
+	// 	explicit const_reverse_iterator(Iterator x) : _iter(x), current(x) {}
+	// 	template <class U> 
+	// 	const_reverse_iterator(const const_reverse_iterator<U>& u):_iter(u.base()), current(u.base()) {}
+	// 	// template <class U> 
+	// 	// const_reverse_iterator& operator=(const const_reverse_iterator<U>& u)
+	// 	const_reverse_iterator(const const_reverse_iterator& x)
+	// 	{
+	// 		*this = x;
+	// 	}
+		
+	// 	const_reverse_iterator& operator=(const const_reverse_iterator<Iterator>& __u) // commented for linux working fine in mac
+	// 	{ 
+	// 		if (this != &__u) 
+	// 		{
+	// 			_iter = current = __u.base();
+	// 		}
+	// 		return *this;
+	// 	}
+	// 	Iterator base() const
+	// 	{
+	// 		return current;
+	// 	}
+	// 	reference operator*() const
+	// 	{
+	// 		Iterator tmp = current;
+	// 		return *--tmp;
+	// 	}
+	// 	pointer   operator->() const
+	// 	{
+	// 		return &(operator*());
+	// 	}
+	// 	const_reverse_iterator& operator++()
+	// 	{
+	// 		--current; return *this;
+	// 	}
+	// 	const_reverse_iterator  operator++(int)
+	// 	{
+	// 		const_reverse_iterator tmp(*this); --current; return tmp;
+	// 	}
+	// 	const_reverse_iterator& operator--()
+	// 	{
+	// 		++current; return *this;
+	// 	}
+	// 	const_reverse_iterator  operator--(int)
+	// 	{
+	// 		const_reverse_iterator tmp(*this); ++current; return tmp;
+	// 	}
+	// 	const_reverse_iterator  operator+ (difference_type n) const
+	// 	{
+	// 		return const_reverse_iterator(current - n);
+	// 	}
+	// 	const_reverse_iterator& operator+=(difference_type n)
+	// 	{
+	// 		current -= n; return *this;
+	// 	}
+	// 	const_reverse_iterator  operator- (difference_type n) const
+	// 	{
+	// 		return const_reverse_iterator(current + n);
+	// 	}
+	// 	const_reverse_iterator& operator-=(difference_type n)
+	// 	{
+	// 		current += n; return *this;
+	// 	}
+	// 	reference         operator[](difference_type n) const
+	// 	{
+	// 		return *(*this + n);
+	// 	}
+	// 	// bool operator==(const const_reverse_iterator& rhs) const {return _iter==rhs._iter;}
+	// 	// 	bool operator!=(const const_reverse_iterator& rhs) const {return _iter!=rhs._iter;}
+	// };
 	
 
 

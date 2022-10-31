@@ -70,8 +70,8 @@ namespace ft
 			typedef typename __node_allocator::pointer									node_pointer;
 			// typedef ft::__tree_iterator<value_type, node_pointer> 						iterator;
 			// typedef ft::__tree_iterator<value_type, node_pointer>						const_iterator;
-			typedef ft::__tree_iterator<allocator_type> 								iterator;
-			typedef ft::__const_tree_iterator<allocator_type>							const_iterator;
+			typedef ft::__tree_iterator<value_type, allocator_type> 								iterator;
+			typedef ft::__const_tree_iterator<value_type, allocator_type>							const_iterator;
 			typedef ft::reverse_iterator<iterator>										reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>								const_reverse_iterator;
 
