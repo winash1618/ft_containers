@@ -260,11 +260,16 @@ namespace ft
 			__const_tree_iterator() {}
 			__const_tree_iterator(__node_pointer ptr): __ptr_(ptr) {}
 			__const_tree_iterator(__node_pointer end, __node_pointer ptr):__ptr_(ptr), __end_(end) {}
-			__const_tree_iterator(iterator iter):__iter(iter)
+			__const_tree_iterator(iterator  iter):__iter(iter)
 			{
 				__ptr_ = __iter.__ptr_;
 				__end_ = __iter.__end_;
 			}
+			// __const_tree_iterator(iterator const iter):__iter1(iter)
+			// {
+			// 	__ptr_ = __iter1.__ptr_;
+			// 	__end_ = __iter1.__end_;
+			// }
 			// __const_tree_iterator& operator=(const __const_tree_iterator<Alloc>& __u) // commented for linux working fine in mac
 			// { 
 			// 	if (this != &__u) 

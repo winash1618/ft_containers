@@ -6,23 +6,24 @@
 # include <functional>
 # include "set_iterator.hpp"
 # include "reverse_iterator.hpp"
+# include "const_set_iterator.hpp"
 
 namespace ft
 {
 
-	enum color_t { BLACK, RED };
+	// enum color_t { BLACK, RED };
 
-	template<class T>
-	struct RBTreeNode
-	{
-		RBTreeNode<T>* _left;
-		RBTreeNode<T>* _right;
-		RBTreeNode<T>* _parent;
+	// template<class T>
+	// struct RBTreeNode
+	// {
+	// 	RBTreeNode<T>* _left;
+	// 	RBTreeNode<T>* _right;
+	// 	RBTreeNode<T>* _parent;
 		
-		T _data;
-		color_t _color;
-		RBTreeNode(const T& data) : _left(nullptr_f), _right(nullptr_f), _parent(nullptr_f), _data(data), _color(RED) {}
-	};
+	// 	T _data;
+	// 	color_t _color;
+	// 	RBTreeNode(const T& data) : _left(nullptr_f), _right(nullptr_f), _parent(nullptr_f), _data(data), _color(RED) {}
+	// };
 template < class T,                        // set::key_type/value_type
 			class Compare = std::less<T>,        // set::key_compare/value_compare
 			class Alloc = std::allocator<T>      // set::allocator_type
@@ -49,8 +50,10 @@ template < class T,                        // set::key_type/value_type
 				typedef typename allocator_type::size_type									size_type;
 				typedef typename allocator_type::difference_type							difference_type;
 				typedef typename __node_allocator::pointer									node_pointer;
-				typedef ft::set_iterator<value_type, node_pointer>							iterator;
-				typedef ft::set_iterator<value_type, node_pointer>							const_iterator;
+				typedef ft::set_iterator<value_type, allocator_type>							iterator;
+				typedef ft::__const_set_iterator<value_type, allocator_type>							const_iterator;
+				// typedef ft::set_iterator<value_type, __node_pointer>							iterator;
+				// typedef ft::set_iterator<value_type, __node_pointer>							const_iterator;
 				typedef ft::reverse_iterator<iterator>										reverse_iterator;
 				typedef ft::reverse_iterator<const_iterator>								const_reverse_iterator;
 			private:
@@ -149,7 +152,7 @@ template < class T,                        // set::key_type/value_type
 				size_type count (const key_type& k) const
 				{
 					size_type counter = 0;
-					iterator search = begin();
+					const_iterator search = begin();
 					while (search != end())
 					{
 						if ( *search == k)
