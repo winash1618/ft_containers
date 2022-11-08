@@ -1,7 +1,7 @@
 #ifndef CONST_SET_ITERATOR_HPP
 # define CONST_SET_ITERATOR_HPP
 
-
+#include <set>
 #include "reverse_iterator.hpp"
 #include "set_iterator.hpp"
 #include "utils.hpp"
@@ -12,7 +12,8 @@ namespace ft
 	{
 		public:
 			typedef Alloc																allocator_type;
-			typedef typename allocator_type::value_type 								value_type;
+			// typedef typename allocator_type::value_type 								value_type;
+			typedef _V							 								value_type;
 			typedef ft::RBTreeNode<value_type>											Node;
 			typedef Node																node_pointer;
 			typedef typename allocator_type::template rebind<node_pointer>::other		__node_allocator;
@@ -20,8 +21,8 @@ namespace ft
 			typedef _NodePtr															__node_pointer;
 			__node_pointer																__ptr_;
 			__node_pointer																__end_;
-			typedef value_type&															reference;
-			typedef value_type*															pointer;
+			typedef const value_type&															reference;
+			typedef const value_type*															pointer;
 			typedef std::bidirectional_iterator_tag										iterator_category;
 			typedef std::ptrdiff_t														difference_type;
 			typedef ft::set_iterator<_V, allocator_type> 								iterator;
@@ -36,7 +37,6 @@ namespace ft
 			}
 			reference operator*() const
 			{
-				
 				return __ptr_->_data;
 			}
 			pointer operator->() const

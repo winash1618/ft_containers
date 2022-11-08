@@ -251,8 +251,8 @@ namespace ft
 			// value_type						__val; commenting this fixed the assignment operator overload error in ft::pair
 			__node_pointer																__ptr_;
 			__node_pointer																__end_;
-			typedef value_type&															reference;
-			typedef value_type*															pointer;
+			typedef const value_type&															reference;
+			typedef const value_type*															pointer;
 			typedef ft::bidirectional_iterator_tag										iterator_category;
 			typedef std::ptrdiff_t														difference_type;
 			typedef ft::__tree_iterator<_V, allocator_type> 							iterator;
