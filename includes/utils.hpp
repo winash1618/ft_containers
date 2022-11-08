@@ -1,6 +1,5 @@
 #ifndef UTILS_HPP
 # define UTILS_HPP
-
 namespace ft
 {
 	enum color_t { BLACK, RED };

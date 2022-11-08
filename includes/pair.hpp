@@ -54,12 +54,12 @@ namespace ft
 	template <class T1, class T2>
 	bool operator>= (const pair<T1,T2>& lhs, const pair<T1,T2>& rhs)
 	{ return !(lhs<rhs); }
+
 	template <class T1,class T2>
 	pair<T1,T2> make_pair (T1 x, T2 y)
 	{
 		return ( pair<T1,T2>(x,y) );
 	}
-
 
 	// std::equal
 	template<class InputIt1, class InputIt2>
@@ -73,6 +73,7 @@ namespace ft
 		}
 		return true;
 	}
+
 	template<class InputIt1, class InputIt2, class BinaryPredicate>
 	bool equal(InputIt1 first1, InputIt1 last1, 
 			InputIt2 first2, BinaryPredicate p)
@@ -84,6 +85,7 @@ namespace ft
 		}
 		return true;
 	}
+
 	// std::lexicographical compare
 	template<class InputIt1, class InputIt2>
 	bool lexicographical_compare(InputIt1 first1, InputIt1 last1,
@@ -95,6 +97,7 @@ namespace ft
 		}
 		return (first1 == last1) && (first2 != last2);
 	}
+
 	template<class InputIt1, class InputIt2, class Compare>
 	bool lexicographical_compare(InputIt1 first1, InputIt1 last1,
 								InputIt2 first2, InputIt2 last2,

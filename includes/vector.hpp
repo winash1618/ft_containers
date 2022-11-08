@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/10/10 20:09:58 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/11/08 13:32:41 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,141 +21,88 @@
 #include "iterator_traits.hpp"
 #include "reverse_iterator.hpp"
 #include "pair.hpp"
+#include "vec_utils.hpp"
 namespace ft
 {
-	//https://stackoverflow.com/questions/44517556/how-to-define-our-own-nullptr-in-c98
-	// const                         /* this is a const object...     */
-	// class nullptr_t
+	// template<class T>
+	// class vector_iterator 
 	// {
-	// public:
-	// template<class T>          /* convertible to any type       */
-	// operator T*() const        /* of null non-member            */
-	// 	{ return 0; }           /* pointer...                    */
+	// 	public:
+	// 		typedef _Iter                                                      iterator_type;
+	// 		typedef typename ft::iterator_traits<iterator_type>::iterator_category iterator_category;
+	// 		typedef typename ft::iterator_traits<iterator_type>::value_type        value_type;
+	// 		typedef typename ft::iterator_traits<iterator_type>::difference_type   difference_type;
+	// 		typedef typename ft::iterator_traits<iterator_type>::pointer           pointer;
+	// 		typedef typename ft::iterator_traits<iterator_type>::reference         reference;
+	// 	private:
+	// 		iterator_type __i;
+	// 	public:
+	// 		__wrap_iter() {}
+	// 		template <class _Up> 
+	// 		__wrap_iter(const __wrap_iter<_Up>& __u) 
+	// 			: __i(__u.base())
+	// 		{
+	// 		reference operator*() const 
+	// 		{
+	// 			return *__i;
+	// 		}
+	// 		pointer  operator->() const 
+	// 		{
+	// 			return (pointer)_VSTD::addressof(*__i);
+	// 		}
+	// 		__wrap_iter& operator++() 
+	// 		{
+	// 			++__i;
+	// 			return *this;
+	// 		}
+	// 		__wrap_iter  operator++(int) 
+	// 			{__wrap_iter __tmp(*this); ++(*this); return __tmp;}
 
-	// template<class C, class T> /* or any type of null           */
-	// 	operator T C::*() const /* member pointer...             */
-	// 	{ return 0; }   
+	// 		__wrap_iter& operator--() 
+	// 		{
+	// 			--__i;
+	// 			return *this;
+	// 		}
+	// 		__wrap_iter  operator--(int) 
+	// 			{__wrap_iter __tmp(*this); --(*this); return __tmp;}
+	// 		__wrap_iter  operator+ (difference_type __n) const 
+	// 			{__wrap_iter __w(*this); __w += __n; return __w;}
+	// 		__wrap_iter& operator+=(difference_type __n) 
+	// 		{
+	// 			__i += __n;
+	// 			return *this;
+	// 		}
+	// 		__wrap_iter  operator- (difference_type __n) const 
+	// 			{return *this + (-__n);}
+	// 		__wrap_iter& operator-=(difference_type __n) 
+	// 			{*this += -__n; return *this;}
+	// 		reference    operator[](difference_type __n) const 
+	// 		{
+	// 			return __i[__n];
+	// 		}
+	// 		iterator_type base() const  {return __i;}
 
-	// private:
-	// void operator&() const;    /* Can't take address of nullptr */
-
-	// } nullptr = {};   
-
-/*---------------std::is_integral----------------------------------------*/
-
-template<class T, T v>
-  	struct integral_constant {
-      const static T value = v;
-      typedef T value_type;
-      typedef integral_constant type;
-      operator value_type() const { return value; }
-      value_type operator()() const { return value; } //since c++14
-  };
-
-	typedef integral_constant<bool, true> true_type1;
-	typedef integral_constant<bool, false> false_type1;
-
-	template <class T>
-	struct is_integral : public false_type1{};
-
-	template <>
-	struct is_integral<bool> : public true_type1{};
-
-	template <>
-	struct is_integral<char> : public true_type1{};
-
-	template <>
-	struct is_integral<signed char> : public true_type1{};
-
-	template <>
-	struct is_integral<unsigned char> : public true_type1{};
-
-	template <>
-	struct is_integral<wchar_t> : public true_type1{};
-
-	template <>
-	struct is_integral<short> : public true_type1{};
-
-	template <>
-	struct is_integral<int> : public true_type1{};
-
-	template <>
-	struct is_integral<long> : public true_type1{};
-
-	template <>
-	struct is_integral<long long> : public true_type1{};
-
-	template <>
-	struct is_integral<unsigned short> : public true_type1{};
-
-	template <>
-	struct is_integral<unsigned int> : public true_type1{};
-
-	template <>
-	struct is_integral<unsigned long> : public true_type1{};
-
-	template <>
-	struct is_integral<unsigned long long> : public true_type1{};
-
-
-
-
-/*--------------implementation 1 of enable if-----------------------------*/
-	/* enable_if definitions */
-	template<bool B, class T>
-	struct enable_if {};
-
-	template<class T>
-	struct enable_if<true, T> {typedef T type;};
-
-	/* True type and False type*/
-	struct true_type {
-		static const bool value = true;
-	};
-
-	struct false_type {
-		static const bool value = false;
-	};
-
-	template<typename T>
-	int is_int() {
-	return false;
-	}
-
-	template<>
-	int is_int<int>() {
-	return true;
-}
-
-	
+	// };
 	template <class T, class Allocator = std::allocator<T> >
 	class vector
 	{
 		public:
-			/*--------------------------------------------------------------------*/
-			/*-------------------------member type--------------------------------*/
-			/*--------------------------------------------------------------------*/
 			typedef T													value_type;
 			typedef Allocator											allocator_type;
 			typedef typename allocator_type::reference					reference;
 			typedef typename allocator_type::const_reference			const_reference;
 			typedef typename allocator_type::pointer					pointer;
 			typedef typename allocator_type::const_pointer				const_pointer;
-			typedef ft::iterator<value_type>							iterator;
-			typedef ft::iterator<const value_type>						const_iterator;
+			typedef ft::iterator<pointer>							iterator;
+			typedef ft::iterator<const_pointer>						const_iterator;
 			typedef typename allocator_type::size_type					size_type;
 			typedef typename allocator_type::difference_type			difference_type;
 			typedef ft::reverse_iterator<iterator>						reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
 
-			
-			/*--------------------------------------------------------------------*/
-			/*-------------------------member functions---------------------------*/
-			/*--------------------------------------------------------------------*/
 			// Constructor
 			// empty container constructor
 			explicit vector (const allocator_type& alloc = allocator_type())  :  _vec(nullptr_f), _alloc(alloc), _cap(0), _size(0) {}
-			
 			// fill constructor
 			explicit vector (size_type len, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
 			 :  _alloc(alloc), _cap(0)
@@ -163,15 +110,14 @@ template<class T, T v>
 				allocate(len);
 				construct_at_end(len, val);
 			}
-			
 			// range constructor
 			template <class InputIterator>
 			vector (InputIterator first, InputIterator last,
 					const allocator_type& alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0) : 
 					_alloc(alloc), _cap(0), _size(0)
 			{
-				if (first > last)
-					throw std::length_error("vector");
+				// if (first > last)
+				// 	throw std::length_error("vector");
 				// size_type size = ft::distance(first, last);
 				for (InputIterator it = first; it != last; it++)
 				{
@@ -179,22 +125,20 @@ template<class T, T v>
 				}
 				_vec = _alloc.allocate(_size);
 				_cap = _size;
+				
 				for (size_type index = 0; index < _size; ++index)
 				{
-					_alloc.construct(_vec + index, *(first + index));
+					_alloc.construct(_vec + index, *(first++));
 				}
 			}
-			
 			// Copy constructor
 			vector (const vector& x) :  _cap(0), _size(0)
 			{
 				_alloc = x.get_allocator();
 				copy(x);
 			}
-			
 			// Destructor
 			~vector () {deallocate_and_destruct(_cap, _size);}
-
 			// Assignment operator
 			vector& operator=(const vector& x)
 			{
@@ -220,10 +164,9 @@ template<class T, T v>
 				}
 				return *this;
 			}
-			
-			// Allocator based function
-			allocator_type get_allocator() const {return (this->_alloc);}
-			
+			value_type* data()									{return (_vec);}
+			const value_type* data() const						{return (_vec);}
+			allocator_type get_allocator() const				{return (this->_alloc);}
 			// erase
 			iterator erase (iterator position)
 			{
@@ -232,15 +175,6 @@ template<class T, T v>
 					_alloc.construct(_vec + index, *(_vec + index + 1));
 				_size--;
 				return (position);
-			}
-			
-			 value_type* data()
-			 {
-				return (_vec);
-			 }
-			const value_type* data() const
-			{
-				return (_vec);
 			}
 			iterator erase (iterator first, iterator last)
 			{
@@ -315,15 +249,15 @@ template<class T, T v>
 					throw std::length_error("Capacity allocated exceeds max_size()");
 				else if (n > _cap)
 				{
-						pointer t_vec = t_alloc.allocate(n);
-						for (_index = 0; _index < _size; ++_index)
-							t_alloc.construct(t_vec + _index, _vec[_index]);
-						for (_index = 0; _index < _size; ++_index)
-							_alloc.destroy(_vec + _index);
-						_alloc.deallocate(_vec, _cap);
-						_alloc = t_alloc;
-						_vec = t_vec;
-						_cap = n;
+					pointer t_vec = t_alloc.allocate(n);
+					for (_index = 0; _index < _size; ++_index)
+						t_alloc.construct(t_vec + _index, _vec[_index]);
+					for (_index = 0; _index < _size; ++_index)
+						_alloc.destroy(_vec + _index);
+					_alloc.deallocate(_vec, _cap);
+					_alloc = t_alloc;
+					_vec = t_vec;
+					_cap = n;
 				}	
 					
 			}
@@ -354,14 +288,22 @@ template<class T, T v>
 			template <class InputIterator>
 			void assign (InputIterator first, InputIterator last , typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)
 			{
-				if (first > last)
-					throw std::length_error("vector");
-				size_type size = ft::distance(first, last);
+				// InputIterator it = first;
+				// if (it > last)
+				// 	throw std::length_error("vector");
+				// if (first > last)
+				// 	throw std::length_error("vector");
+				size_type size = 0;
+				for (InputIterator it = first; it != last; it++)
+				{
+					++size;
+				}
+				// s./ize_type size = ft::distance(first, last);
 				allocate(size);
 				_size = 0;
 				for (size_type index = 0; index < size; ++index)
 				{
-					_alloc.construct(_vec + index, *(first + index));
+					_alloc.construct(_vec + index, *(first++ ));
 					++_size;
 				}
 			}
@@ -495,13 +437,19 @@ template<class T, T v>
 			template <class InputIterator>
 			void insert (iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)
 			{
-				if (first > last)
-					throw std::length_error("vector");
+				// if (first > last)
+				// 	throw std::length_error("vector");
 				size_type t_cap;
-				if (_size + (size_type)(last - first) > _cap)
+				size_type size = 0;
+				for (InputIterator it = first; it != last; it++)
 				{
-					temp = t_alloc.allocate(recommend(_size + (size_type)(last - first)), 0);
-					t_cap = recommend(_size + (size_type)(last - first));
+					++size;
+				}
+				// iterator iter = static_cast<iterator>(first);
+				if (_size + size > _cap)
+				{
+					temp = t_alloc.allocate(recommend(_size + size), 0);
+					t_cap = recommend(_size + size);
 				}
 				else
 				{
@@ -695,7 +643,6 @@ template<class T, T v>
 		template <class T, class Alloc>
 		bool operator<  (const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 		{
-			//src https://en.cppreference.com/w/cpp/algorithm/lexicographical_compare
 			return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 		}
 		template <class T, class Alloc>
