@@ -6,15 +6,13 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 10:50:33 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/11/08 13:33:12 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/11/10 06:46:05 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ITERATOR_HPP
 # define ITERATOR_HPP
-
 #include "iterator_traits.hpp"
-#include <vector>
 namespace ft
 {
 	template<class _Iter>
@@ -208,6 +206,11 @@ namespace ft
 	// {
 	// 	return __distance(first, last, typename ft::iterator_traits<InputIter>::iterator_category());
 	// }
+
+
+
+	
+	
 	//--------------------------------------------------------------------//
 
 
@@ -216,37 +219,34 @@ namespace ft
 	bool
 	operator==(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter2>& y) 
 	{
+		
 		return x.base() == y.base();
 	}
-
+	template <class _Iter1, class _Iter2>
+	bool
+	operator!=(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter2>& y) 
+	{
+		
+		return !(x == y);
+	}
 	template <class _Iter1, class _Iter2>
 	bool
 	operator<(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter2>& y) 
 	{
 		return x.base() < y.base();
 	}
-
-	template <class _Iter1, class _Iter2>
-	bool
-	operator!=(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter2>& y) 
-	{
-		return !(x == y);
-	}
-
 	template <class _Iter1, class _Iter2>
 	bool
 	operator>(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter2>& y) 
 	{
-		return y.base() < x.base();
+		return y < x;
 	}
-
 	template <class _Iter1, class _Iter2>
 	bool
 	operator>=(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter2>& y) 
 	{
 		return !(x.base() < y.base());
 	}
-
 	template <class _Iter1, class _Iter2>
 	bool
 	operator<=(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter2>& y) 
@@ -254,27 +254,47 @@ namespace ft
 		return !(y.base() < x.base());
 	}
 
+
+
+
+
+
+
+
+
+
+	template <class _Iter1>
+	bool
+	operator==(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter1>& y) 
+	{
+		return x.base() == y.base();
+	}
 	template <class _Iter1>
 	bool
 	operator!=(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter1>& y) 
 	{
-		return !(x.base() == y.base());
+		// std::cout << "hfdsdf" << std::endl;
+		return !(x == y);
 	}
-
+	template <class _Iter1>
+	bool
+	operator<(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter1>& y) 
+	{
+		return (x.base() < y.base());
+	}
 	template <class _Iter1>
 	bool
 	operator>(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter1>& y) 
 	{
-		return y.base() < x.base();
+		// std::cout << "-----------" << std::endl;
+		return (y < x);
 	}
-
 	template <class _Iter1>
 	bool
 	operator>=(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter1>& y) 
 	{
 		return !(x.base() < y.base());
 	}
-
 	template <class _Iter1>
 	bool
 	operator<=(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter1>& y) 
@@ -282,14 +302,20 @@ namespace ft
 		return !(y.base() < x.base());
 	}
 
-	
+
+
+
+
+
+
+
+
 	template <class _Iter1, class _Iter2>
 	typename ft::iterator<_Iter1>::difference_type
 	operator-(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter2>& y) 
 	{
 		return x.base() - y.base();
 	}
-
 	template <class _Iterator>
 	_Iterator
 	operator+(_Iterator n,
@@ -314,5 +340,11 @@ namespace ft
 		n -= x;
 		return n;
 	}
+
+
+
+
+
+
 }
 #endif

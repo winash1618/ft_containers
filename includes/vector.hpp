@@ -6,13 +6,14 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/11/08 13:32:41 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/11/10 06:48:07 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 #include <iostream>
+#include <vector>
 // #include <iterator>
 #include <cassert>
 #include <cstddef>
@@ -24,65 +25,51 @@
 #include "vec_utils.hpp"
 namespace ft
 {
-	// template<class T>
-	// class vector_iterator 
-	// {
-	// 	public:
-	// 		typedef _Iter                                                      iterator_type;
-	// 		typedef typename ft::iterator_traits<iterator_type>::iterator_category iterator_category;
-	// 		typedef typename ft::iterator_traits<iterator_type>::value_type        value_type;
-	// 		typedef typename ft::iterator_traits<iterator_type>::difference_type   difference_type;
-	// 		typedef typename ft::iterator_traits<iterator_type>::pointer           pointer;
-	// 		typedef typename ft::iterator_traits<iterator_type>::reference         reference;
-	// 	private:
-	// 		iterator_type __i;
-	// 	public:
-	// 		__wrap_iter() {}
-	// 		template <class _Up> 
-	// 		__wrap_iter(const __wrap_iter<_Up>& __u) 
-	// 			: __i(__u.base())
-	// 		{
-	// 		reference operator*() const 
-	// 		{
-	// 			return *__i;
-	// 		}
-	// 		pointer  operator->() const 
-	// 		{
-	// 			return (pointer)_VSTD::addressof(*__i);
-	// 		}
-	// 		__wrap_iter& operator++() 
-	// 		{
-	// 			++__i;
-	// 			return *this;
-	// 		}
-	// 		__wrap_iter  operator++(int) 
-	// 			{__wrap_iter __tmp(*this); ++(*this); return __tmp;}
-
-	// 		__wrap_iter& operator--() 
-	// 		{
-	// 			--__i;
-	// 			return *this;
-	// 		}
-	// 		__wrap_iter  operator--(int) 
-	// 			{__wrap_iter __tmp(*this); --(*this); return __tmp;}
-	// 		__wrap_iter  operator+ (difference_type __n) const 
-	// 			{__wrap_iter __w(*this); __w += __n; return __w;}
-	// 		__wrap_iter& operator+=(difference_type __n) 
-	// 		{
-	// 			__i += __n;
-	// 			return *this;
-	// 		}
-	// 		__wrap_iter  operator- (difference_type __n) const 
-	// 			{return *this + (-__n);}
-	// 		__wrap_iter& operator-=(difference_type __n) 
-	// 			{*this += -__n; return *this;}
-	// 		reference    operator[](difference_type __n) const 
-	// 		{
-	// 			return __i[__n];
-	// 		}
-	// 		iterator_type base() const  {return __i;}
-
-	// };
+	// https://stackoverflow.com/questions/4307271/how-to-check-that-the-passed-iterator-is-a-random-access-iterator
+	template <class _RandIter>
+	void
+	__check_valid(_RandIter first, _RandIter last, std::random_access_iterator_tag)
+	{
+		if (first > last )
+					throw std::length_error("vector");
+	}
+	template <class _RandIter>
+	void
+	__check_valid(_RandIter first, _RandIter last, ft::input_iterator_tag)
+	{
+		(void)first;
+		(void)last;
+	}
+	template <class _RandIter>
+	void
+	__check_valid(_RandIter first, _RandIter last, ft::output_iterator_tag)
+	{
+		(void)first;
+		(void)last;
+	}
+	template <class _RandIter>
+	void
+	__check_valid(_RandIter first, _RandIter last, ft::forward_iterator_tag)
+	{
+		(void)first;
+		(void)last;
+	}
+	template <class _RandIter>
+	void
+	__check_valid(_RandIter first, _RandIter last, std::bidirectional_iterator_tag)
+	{
+		(void)first;
+		(void)last;
+	
+	}
+	
+	
+	template <class InputIter>
+	void
+	check_valid(InputIter first, InputIter last)
+	{
+		__check_valid(first, last, typename ft::iterator_traits<InputIter>::iterator_category());
+	}
 	template <class T, class Allocator = std::allocator<T> >
 	class vector
 	{
@@ -116,8 +103,10 @@ namespace ft
 					const allocator_type& alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0) : 
 					_alloc(alloc), _cap(0), _size(0)
 			{
-				// if (first > last)
+				
+				// if (first > last )
 				// 	throw std::length_error("vector");
+				ft::check_valid(first, last);
 				// size_type size = ft::distance(first, last);
 				for (InputIterator it = first; it != last; it++)
 				{
@@ -288,17 +277,43 @@ namespace ft
 			template <class InputIterator>
 			void assign (InputIterator first, InputIterator last , typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)
 			{
+				// size_type f = 0;
+				// size_type t = 0;
+				
+				// for (InputIterator iter = first; iter != last ; iter++)
+				// {
+				// 	if (*iter == *first || *iter == *last)
+				// 	{
+				// 		if (iter == first)
+				// 		{
+				// 			f = 1;
+				// 		}
+				// 		if (iter == last)
+				// 		{
+				// 			t = 1;
+				// 		}
+				// 	}
+				// }
+				// if (f == 0 || t == 0)
+				// {
+				// 	throw std::length_error("vector");
+				// }
 				// InputIterator it = first;
 				// if (it > last)
 				// 	throw std::length_error("vector");
-				// if (first > last)
+				// if (first != last)
+				// {
+				// 	std::cout << "say hi" << std::endl;
+				// }
+				ft::check_valid(first, last);
+				// if (last > first)
 				// 	throw std::length_error("vector");
 				size_type size = 0;
 				for (InputIterator it = first; it != last; it++)
 				{
 					++size;
 				}
-				// s./ize_type size = ft::distance(first, last);
+				// size_type size = ft::distance(first, last);
 				allocate(size);
 				_size = 0;
 				for (size_type index = 0; index < size; ++index)
@@ -317,11 +332,9 @@ namespace ft
 					++_size;
 				}
 			}
-
 			// resize
 			void resize (size_type n, value_type val = value_type())
 			{
-
 				if (n > max_size())
 					throw std::length_error("vector");
 				if (n < _size)

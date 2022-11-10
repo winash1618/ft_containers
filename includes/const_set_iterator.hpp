@@ -1,7 +1,7 @@
 #ifndef CONST_SET_ITERATOR_HPP
 # define CONST_SET_ITERATOR_HPP
 
-#include <set>
+
 #include "reverse_iterator.hpp"
 #include "set_iterator.hpp"
 #include "utils.hpp"
