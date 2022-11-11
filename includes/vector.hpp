@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/11/10 06:48:07 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/11/11 15:57:43 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,42 @@ namespace ft
 	}
 	template <class _RandIter>
 	void
+	__check_valid(_RandIter first, _RandIter last, std::input_iterator_tag)
+	{
+		(void)first;
+		(void)last;
+	}
+	template <class _RandIter>
+	void
+	__check_valid(_RandIter first, _RandIter last, std::output_iterator_tag)
+	{
+		(void)first;
+		(void)last;
+	}
+	template <class _RandIter>
+	void
+	__check_valid(_RandIter first, _RandIter last, std::forward_iterator_tag)
+	{
+		(void)first;
+		(void)last;
+	}
+	template <class _RandIter>
+	void
+	__check_valid(_RandIter first, _RandIter last, std::bidirectional_iterator_tag)
+	{
+		(void)first;
+		(void)last;
+
+	}
+	template <class _RandIter>
+	void
+	__check_valid(_RandIter first, _RandIter last, ft::random_access_iterator_tag)
+	{
+		if (first > last )
+					throw std::length_error("vector");
+	}
+	template <class _RandIter>
+	void
 	__check_valid(_RandIter first, _RandIter last, ft::input_iterator_tag)
 	{
 		(void)first;
@@ -56,14 +92,12 @@ namespace ft
 	}
 	template <class _RandIter>
 	void
-	__check_valid(_RandIter first, _RandIter last, std::bidirectional_iterator_tag)
+	__check_valid(_RandIter first, _RandIter last, ft::bidirectional_iterator_tag)
 	{
 		(void)first;
 		(void)last;
-	
+
 	}
-	
-	
 	template <class InputIter>
 	void
 	check_valid(InputIter first, InputIter last)
@@ -103,11 +137,7 @@ namespace ft
 					const allocator_type& alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0) : 
 					_alloc(alloc), _cap(0), _size(0)
 			{
-				
-				// if (first > last )
-				// 	throw std::length_error("vector");
 				ft::check_valid(first, last);
-				// size_type size = ft::distance(first, last);
 				for (InputIterator it = first; it != last; it++)
 				{
 					++_size;
@@ -247,8 +277,7 @@ namespace ft
 					_alloc = t_alloc;
 					_vec = t_vec;
 					_cap = n;
-				}	
-					
+				}
 			}
 
 			// Modifiers functions
@@ -277,48 +306,17 @@ namespace ft
 			template <class InputIterator>
 			void assign (InputIterator first, InputIterator last , typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)
 			{
-				// size_type f = 0;
-				// size_type t = 0;
-				
-				// for (InputIterator iter = first; iter != last ; iter++)
-				// {
-				// 	if (*iter == *first || *iter == *last)
-				// 	{
-				// 		if (iter == first)
-				// 		{
-				// 			f = 1;
-				// 		}
-				// 		if (iter == last)
-				// 		{
-				// 			t = 1;
-				// 		}
-				// 	}
-				// }
-				// if (f == 0 || t == 0)
-				// {
-				// 	throw std::length_error("vector");
-				// }
-				// InputIterator it = first;
-				// if (it > last)
-				// 	throw std::length_error("vector");
-				// if (first != last)
-				// {
-				// 	std::cout << "say hi" << std::endl;
-				// }
 				ft::check_valid(first, last);
-				// if (last > first)
-				// 	throw std::length_error("vector");
 				size_type size = 0;
 				for (InputIterator it = first; it != last; it++)
 				{
 					++size;
 				}
-				// size_type size = ft::distance(first, last);
 				allocate(size);
 				_size = 0;
 				for (size_type index = 0; index < size; ++index)
 				{
-					_alloc.construct(_vec + index, *(first++ ));
+					_alloc.construct(_vec + index, *(first++));
 					++_size;
 				}
 			}
@@ -365,7 +363,6 @@ namespace ft
 					_vec = temp;
 					_cap = recommend(n);
 					_size = n;
-
 				}
 			}
 			
@@ -450,8 +447,7 @@ namespace ft
 			template <class InputIterator>
 			void insert (iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)
 			{
-				// if (first > last)
-				// 	throw std::length_error("vector");
+				ft::check_valid(first, last);
 				size_type t_cap;
 				size_type size = 0;
 				for (InputIterator it = first; it != last; it++)
