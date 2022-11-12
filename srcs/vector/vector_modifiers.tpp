@@ -1,10 +1,23 @@
 #ifndef VECTOR_MODIFIERS_TPP
 # define VECTOR_MODIFIERS_TPP
 
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @tparam InputIterator 
+ * @param first 
+ * @param last 
+ */
 template<class Tp, class Allocator>
 template <class InputIterator>
 void
-ft::vector<Tp, Allocator>::assign (InputIterator first, InputIterator last , typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type*)
+ft::vector<Tp, Allocator>::assign
+(
+	InputIterator first,
+	InputIterator last,
+	typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type*)
 {
 	ft::check_valid(first, last);
 	size_type size = 0;
@@ -21,9 +34,21 @@ ft::vector<Tp, Allocator>::assign (InputIterator first, InputIterator last , typ
 	}
 }
 
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @param n 
+ * @param val 
+ */
 template<class Tp, class Allocator>
 void
-ft::vector<Tp, Allocator>::assign (typename ft::vector<Tp, Allocator>::size_type n, const typename ft::vector<Tp, Allocator>::value_type& val)
+ft::vector<Tp, Allocator>::assign
+(
+	typename ft::vector<Tp, Allocator>::size_type n,
+	const typename ft::vector<Tp, Allocator>::value_type& val
+)
 {
 	allocate(n);
 	_size = 0;
@@ -34,9 +59,17 @@ ft::vector<Tp, Allocator>::assign (typename ft::vector<Tp, Allocator>::size_type
 	}
 }
 
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @param val 
+ */
 template<class Tp, class Allocator>
 void
-ft::vector<Tp, Allocator>::push_back(const typename ft::vector<Tp, Allocator>::value_type& val)
+ft::vector<Tp, Allocator>::push_back
+(const typename ft::vector<Tp, Allocator>::value_type& val)
 {
 	if (!_cap)
 		reserve(1);
@@ -55,9 +88,22 @@ ft::vector<Tp, Allocator>::pop_back()
 	_alloc.destroy(&_vec[_size-- - 1]);
 }
 
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @param position 
+ * @param val 
+ * @return ft::vector<Tp, Allocator>::iterator 
+ */
 template<class Tp, class Allocator>
 typename ft::vector<Tp, Allocator>::iterator
-ft::vector<Tp, Allocator>::insert(typename ft::vector<Tp, Allocator>::iterator position, const typename ft::vector<Tp, Allocator>::value_type& val) // single element insert
+ft::vector<Tp, Allocator>::insert
+(
+	typename ft::vector<Tp, Allocator>::iterator position,
+	const typename ft::vector<Tp, Allocator>::value_type& val
+)
 {
 	if (_size + 1 <= _cap)
 	{
@@ -96,6 +142,15 @@ ft::vector<Tp, Allocator>::insert(typename ft::vector<Tp, Allocator>::iterator p
 	return (position);
 }
 
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @param position 
+ * @param n 
+ * @param val 
+ */
 template<class Tp, class Allocator>
 void
 ft::vector<Tp, Allocator>::insert
@@ -103,7 +158,7 @@ ft::vector<Tp, Allocator>::insert
 	typename ft::vector<Tp, Allocator>::iterator position,
 	typename ft::vector<Tp, Allocator>::size_type n, 
 	const typename ft::vector<Tp, Allocator>::value_type& val
-) // fill n index starting from iterator position
+)
 {
 	size_type t_cap;
 	if (_size + n > _cap)

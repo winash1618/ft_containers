@@ -1,6 +1,13 @@
 #ifndef VECTOR_UTILS_TPP
 # define VECTOR_UTILS_TPP
 
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @return ft::vector<Tp, Allocator>::allocator_type 
+ */
 template<class Tp, class Allocator>
 typename ft::vector<Tp, Allocator>::allocator_type
 ft::vector<Tp, Allocator>::get_allocator() const
@@ -8,6 +15,12 @@ ft::vector<Tp, Allocator>::get_allocator() const
 	return (this->_alloc);
 }
 
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ */
 template<class Tp, class Allocator>
 void ft::vector<Tp, Allocator>::print(void)
 {
@@ -21,6 +34,13 @@ void ft::vector<Tp, Allocator>::print(void)
 	std::cout << "Printing ends" << std::endl;
 }
 
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @param capacity 
+ */
 template<class Tp, class Allocator>
 void ft::vector<Tp, Allocator>::allocate(typename ft::vector<Tp, Allocator>::size_type capacity)
 {
@@ -30,6 +50,13 @@ void ft::vector<Tp, Allocator>::allocate(typename ft::vector<Tp, Allocator>::siz
 	_vec = _alloc.allocate(capacity, 0);
 }
 
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @param capacity 
+ */
 template<class Tp, class Allocator>
 void ft::vector<Tp, Allocator>::deallocate(std::size_t capacity)
 {
@@ -44,6 +71,14 @@ void ft::vector<Tp, Allocator>::reallocate(std::size_t old_cap, std::size_t new_
 	allocate(new_cap);
 }
 
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @param size 
+ * @param value 
+ */
 template<class Tp, class Allocator>
 void ft::vector<Tp, Allocator>::construct(std::size_t size, const typename ft::vector<Tp, Allocator>::value_type& value)
 {
@@ -52,6 +87,14 @@ void ft::vector<Tp, Allocator>::construct(std::size_t size, const typename ft::v
 		_alloc.construct(_vec + index, value);
 }
 
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @param size 
+ * @param value 
+ */
 template<class Tp, class Allocator>
 void ft::vector<Tp, Allocator>::construct_at_end(typename ft::vector<Tp, Allocator>::size_type size, const typename ft::vector<Tp, Allocator>::value_type& value)
 {
@@ -60,6 +103,13 @@ void ft::vector<Tp, Allocator>::construct_at_end(typename ft::vector<Tp, Allocat
 		_alloc.construct(_vec + index, value);
 }
 
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @param size 
+ */
 template<class Tp, class Allocator>
 void ft::vector<Tp, Allocator>::destruct(std::size_t size)
 {
@@ -68,6 +118,15 @@ void ft::vector<Tp, Allocator>::destruct(std::size_t size)
 	_size = 0;
 }
 
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @param capacity 
+ * @param size 
+ * @param value 
+ */
 template<class Tp, class Allocator>
 void ft::vector<Tp, Allocator>::allocate_and_copy_construct(std::size_t capacity, std::size_t size, const typename ft::vector<Tp, Allocator>::value_type& value)
 {
@@ -75,6 +134,14 @@ void ft::vector<Tp, Allocator>::allocate_and_copy_construct(std::size_t capacity
 	construct(size, value);
 }
 
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @param capacity 
+ * @param size 
+ */
 template<class Tp, class Allocator>
 void ft::vector<Tp, Allocator>::deallocate_and_destruct(std::size_t capacity, std::size_t size)
 {
@@ -82,6 +149,13 @@ void ft::vector<Tp, Allocator>::deallocate_and_destruct(std::size_t capacity, st
 	deallocate(capacity);
 }
 
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @param other 
+ */
 template<class Tp, class Allocator>
 void ft::vector<Tp, Allocator>::uninitialized_alloc_copy(const ft::vector<Tp, Allocator>& other)
 {
@@ -90,6 +164,13 @@ void ft::vector<Tp, Allocator>::uninitialized_alloc_copy(const ft::vector<Tp, Al
 		this->_alloc.construct(this->_vec + index, *(other._vec + index));
 }
 
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @param other 
+ */
 template<class Tp, class Allocator>
 void ft::vector<Tp, Allocator>::copy(const ft::vector<Tp, Allocator>& other)
 {
@@ -102,6 +183,14 @@ void ft::vector<Tp, Allocator>::copy(const ft::vector<Tp, Allocator>& other)
 		_vec = nullptr_f;
 }
 
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @param new_size 
+ * @return ft::vector<Tp, Allocator>::size_type 
+ */
 template<class Tp, class Allocator>
 typename ft::vector<Tp, Allocator>::size_type ft::vector<Tp, Allocator>::recommend(typename ft::vector<Tp, Allocator>::size_type new_size) const
 {

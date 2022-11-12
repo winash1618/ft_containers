@@ -1,7 +1,14 @@
 #ifndef VECTOR_ELEMENT_ACCESS_TPP
 # define VECTOR_ELEMENT_ACCESS_TPP
 
-// Modifiers functions
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @param index 
+ * @return ft::vector<Tp, Allocator>::reference 
+ */
 template<class Tp, class Allocator>
 typename ft::vector<Tp, Allocator>::reference
 ft::vector<Tp, Allocator>::operator[](typename ft::vector<Tp, Allocator>::size_type index)
@@ -9,6 +16,15 @@ ft::vector<Tp, Allocator>::operator[](typename ft::vector<Tp, Allocator>::size_t
 	assert(index < size() && "Index out of range1");
 	return _vec[index]; 
 }
+
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @param index 
+ * @return ft::vector<Tp, Allocator>::const_reference 
+ */
 template<class Tp, class Allocator>
 typename ft::vector<Tp, Allocator>::const_reference
 ft::vector<Tp, Allocator>::operator[](typename ft::vector<Tp, Allocator>::size_type index) const
@@ -16,6 +32,15 @@ ft::vector<Tp, Allocator>::operator[](typename ft::vector<Tp, Allocator>::size_t
 	assert(index < size() && "Index out of range2");
 	return _vec[index]; 
 }
+
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @param n 
+ * @return ft::vector<Tp, Allocator>::reference 
+ */
 template<class Tp, class Allocator>
 typename ft::vector<Tp, Allocator>::reference
 ft::vector<Tp, Allocator>::at(typename ft::vector<Tp, Allocator>::size_type n)
@@ -26,6 +51,14 @@ ft::vector<Tp, Allocator>::at(typename ft::vector<Tp, Allocator>::size_type n)
 		throw std::out_of_range("Index out of range");
 }
 
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @param n 
+ * @return ft::vector<Tp, Allocator>::const_reference 
+ */
 template<class Tp, class Allocator>
 typename ft::vector<Tp, Allocator>::const_reference
 ft::vector<Tp, Allocator>::at(typename ft::vector<Tp, Allocator>::size_type n) const
@@ -33,6 +66,13 @@ ft::vector<Tp, Allocator>::at(typename ft::vector<Tp, Allocator>::size_type n) c
 	return (n < size() ? _vec[n] : throw std::out_of_range("Index out of range"));
 }
 
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @return ft::vector<Tp, Allocator>::reference 
+ */
 template<class Tp, class Allocator>
 typename ft::vector<Tp, Allocator>::reference
 ft::vector<Tp, Allocator>::front()
@@ -41,6 +81,13 @@ ft::vector<Tp, Allocator>::front()
 	return *this->begin();
 }
 
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @return ft::vector<Tp, Allocator>::const_reference 
+ */
 template<class Tp, class Allocator>
 typename ft::vector<Tp, Allocator>::const_reference
 ft::vector<Tp, Allocator>::front() const
@@ -49,6 +96,13 @@ ft::vector<Tp, Allocator>::front() const
 	return *this->begin();
 }
 
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @return ft::vector<Tp, Allocator>::reference 
+ */
 template<class Tp, class Allocator>
 typename ft::vector<Tp, Allocator>::reference
 ft::vector<Tp, Allocator>::back()
@@ -57,6 +111,13 @@ ft::vector<Tp, Allocator>::back()
 	return *(_vec + size() - 1);
 }
 
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @return ft::vector<Tp, Allocator>::const_reference 
+ */
 template<class Tp, class Allocator>
 typename ft::vector<Tp, Allocator>::const_reference
 ft::vector<Tp, Allocator>::back() const
@@ -64,6 +125,14 @@ ft::vector<Tp, Allocator>::back() const
 	assert(!empty() && "back() called for empty vector");
 	return *(_vec + size() - 1);
 }
+
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @return ft::vector<Tp, Allocator>::value_type* 
+ */
 template<class Tp, class Allocator>
 typename ft::vector<Tp, Allocator>::value_type*
 ft::vector<Tp, Allocator>::data()
@@ -71,6 +140,13 @@ ft::vector<Tp, Allocator>::data()
 	return (_vec);
 }
 
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @return const ft::vector<Tp, Allocator>::value_type* 
+ */
 template<class Tp, class Allocator>
 const typename ft::vector<Tp, Allocator>::value_type*
 ft::vector<Tp, Allocator>:: data() const

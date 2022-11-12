@@ -1,6 +1,13 @@
 #ifndef VECTOR_ITERATORS_TPP
 # define VECTOR_ITERATORS_TPP
-// Iterators
+
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @return ft::vector<Tp, Allocator>::iterator 
+ */
 template<class Tp, class Allocator>
 typename ft::vector<Tp, Allocator>::iterator
 ft::vector<Tp, Allocator>::begin()
@@ -8,6 +15,13 @@ ft::vector<Tp, Allocator>::begin()
 	return iterator(_vec);
 }
 
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @return ft::vector<Tp, Allocator>::const_iterator 
+ */
 template<class Tp, class Allocator>
 typename ft::vector<Tp, Allocator>::const_iterator
 ft::vector<Tp, Allocator>::begin() const
@@ -15,7 +29,13 @@ ft::vector<Tp, Allocator>::begin() const
 	return const_iterator(_vec);
 }
 
-
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @return ft::vector<Tp, Allocator>::iterator 
+ */
 template<class Tp, class Allocator>
 typename ft::vector<Tp, Allocator>::iterator
 ft::vector<Tp, Allocator>::end()
@@ -23,7 +43,13 @@ ft::vector<Tp, Allocator>::end()
 	return iterator(_vec + size());
 }
 
-
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @return ft::vector<Tp, Allocator>::const_iterator 
+ */
 template<class Tp, class Allocator>
 typename ft::vector<Tp, Allocator>::const_iterator
 ft::vector<Tp, Allocator>::end() const
@@ -31,7 +57,13 @@ ft::vector<Tp, Allocator>::end() const
 	return const_iterator(_vec + size());
 }
 
-//reverse Iterators
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @return ft::vector<Tp, Allocator>::reverse_iterator 
+ */
 template<class Tp, class Allocator>
 typename ft::vector<Tp, Allocator>::reverse_iterator
 ft::vector<Tp, Allocator>::rbegin()
@@ -46,13 +78,27 @@ ft::vector<Tp, Allocator>::rbegin() const
 	return const_reverse_iterator(this->end());
 }
 
-
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @return ft::vector<Tp, Allocator>::reverse_iterator 
+ */
 template<class Tp, class Allocator>
 typename ft::vector<Tp, Allocator>::reverse_iterator
 ft::vector<Tp, Allocator>::rend()
 {
 	return reverse_iterator(this->begin());
 }
+
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @return ft::vector<Tp, Allocator>::const_reverse_iterator 
+ */
 template<class Tp, class Allocator>
 typename ft::vector<Tp, Allocator>::const_reverse_iterator
 ft::vector<Tp, Allocator>::rend() const

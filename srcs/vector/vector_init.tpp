@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 13:31:35 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/11/12 13:47:20 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/11/12 14:30:32 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@
  */
 template<class Tp, class Allocator>
 ft::vector<Tp, Allocator>::vector
-(const typename ft::vector<Tp, Allocator>::allocator_type& alloc )
-:_vec(ft::nullptr_f), _alloc(alloc), _cap(0), _size(0) {}
+(
+	const typename ft::vector<Tp, Allocator>::allocator_type& alloc
+) : _vec(ft::nullptr_f), _alloc(alloc), _cap(0), _size(0)
+{
+}
 
 /**
  * @brief Construct a new ft::vector<Tp, Allocator>::vector object
@@ -40,7 +43,7 @@ ft::vector<Tp, Allocator>::vector
 	typename ft::vector<Tp, Allocator>::size_type len,
 	const typename ft::vector<Tp, Allocator>::value_type& val,
 	const typename ft::vector<Tp, Allocator>::allocator_type& alloc
-):_alloc(alloc), _cap(0)
+) : _alloc(alloc), _cap(0)
 {
 	allocate(len);
 	construct_at_end(len, val);
@@ -66,7 +69,7 @@ ft::vector<Tp, Allocator>::vector
 	InputIterator last,
 	const ft::vector<Tp, Allocator>::allocator_type& alloc,
 	typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type*
-):_alloc(alloc), _cap(0), _size(0)
+) : _alloc(alloc), _cap(0), _size(0)
 {
 	ft::check_valid(first, last);
 	for (InputIterator it = first; it != last; it++)
@@ -104,7 +107,7 @@ ft::vector<Tp, Allocator>::vector (const ft::vector<Tp, Allocator>& x) :  _cap(0
  * @tparam Allocator 
  */
 template<class Tp, class Allocator>
-ft::vector<Tp, Allocator>::~vector ()
+ft::vector<Tp, Allocator>::~vector()
 {
 	deallocate_and_destruct(_cap, _size);
 }
@@ -118,7 +121,8 @@ ft::vector<Tp, Allocator>::~vector ()
  * @return ft::vector<Tp, Allocator>& equivalent to *this
  */
 template<class Tp, class Allocator>
-ft::vector<Tp, Allocator>& ft::vector<Tp, Allocator>::operator=(const ft::vector<Tp, Allocator>& x)
+ft::vector<Tp, Allocator>&
+ft::vector<Tp, Allocator>::operator=(const ft::vector<Tp, Allocator>& x)
 {
 	if (this == &x) 
 	{

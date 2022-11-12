@@ -1,8 +1,13 @@
 #ifndef VECTOR_CAPACITY_TPP
 # define VECTOR_CAPACITY_TPP
 
-
-// Capacity based functions
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @return ft::vector<Tp, Allocator>::size_type 
+ */
 template<class Tp, class Allocator>
 typename ft::vector<Tp, Allocator>::size_type
 ft::vector<Tp, Allocator>::size() const
@@ -10,6 +15,13 @@ ft::vector<Tp, Allocator>::size() const
 	return (this->_size);
 }
 
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @return ft::vector<Tp, Allocator>::size_type 
+ */
 template<class Tp, class Allocator>
 typename ft::vector<Tp, Allocator>::size_type
 ft::vector<Tp, Allocator>::max_size() const
@@ -17,9 +29,21 @@ ft::vector<Tp, Allocator>::max_size() const
 	return (_alloc.max_size());
 }
 
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @param n 
+ * @param val 
+ */
 template<class Tp, class Allocator>
 void
-ft::vector<Tp, Allocator>::resize (typename ft::vector<Tp, Allocator>::size_type n, typename ft::vector<Tp, Allocator>::value_type val)
+ft::vector<Tp, Allocator>::resize
+(
+	typename ft::vector<Tp, Allocator>::size_type n,
+	typename ft::vector<Tp, Allocator>::value_type val
+)
 {
 	if (n > max_size())
 		throw std::length_error("vector");
@@ -54,6 +78,13 @@ ft::vector<Tp, Allocator>::resize (typename ft::vector<Tp, Allocator>::size_type
 	}
 }
 
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @return ft::vector<Tp, Allocator>::size_type 
+ */
 template<class Tp, class Allocator>
 typename ft::vector<Tp, Allocator>::size_type
 ft::vector<Tp, Allocator>::capacity() const
@@ -61,6 +92,14 @@ ft::vector<Tp, Allocator>::capacity() const
 	return (this->_cap);
 }
 
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @return true 
+ * @return false 
+ */
 template<class Tp, class Allocator>
 bool
 ft::vector<Tp, Allocator>::empty() const
@@ -68,6 +107,13 @@ ft::vector<Tp, Allocator>::empty() const
 	return (_size == 0);
 }
 
+/**
+ * @brief 
+ * 
+ * @tparam Tp 
+ * @tparam Allocator 
+ * @param n 
+ */
 template<class Tp, class Allocator>
 void
 ft::vector<Tp, Allocator>::reserve(typename ft::vector<Tp, Allocator>::size_type n)
