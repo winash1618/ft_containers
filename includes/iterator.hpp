@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 10:50:33 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/11/11 14:55:47 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/11/12 09:31:46 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ namespace ft
 			}
 			pointer  operator->() const 
 			{
-				return (pointer)std::__addressof(*__i);
+				return (pointer)std::addressof(*__i);
 			}
 			iterator& operator++() 
 			{

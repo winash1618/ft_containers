@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/11/11 15:57:43 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/11/12 10:44:34 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,420 +123,439 @@ namespace ft
 
 			// Constructor
 			// empty container constructor
-			explicit vector (const allocator_type& alloc = allocator_type())  :  _vec(nullptr_f), _alloc(alloc), _cap(0), _size(0) {}
+			explicit vector (const allocator_type& alloc = allocator_type());
+			//   :  _vec(nullptr_f), _alloc(alloc), _cap(0), _size(0) {}
 			// fill constructor
-			explicit vector (size_type len, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
-			 :  _alloc(alloc), _cap(0)
-			{
-				allocate(len);
-				construct_at_end(len, val);
-			}
+			explicit vector (size_type len, const value_type& val = value_type(), const allocator_type& alloc = allocator_type());
+			//  :  _alloc(alloc), _cap(0)
+			// {
+			// 	allocate(len);
+			// 	construct_at_end(len, val);
+			// }
 			// range constructor
 			template <class InputIterator>
 			vector (InputIterator first, InputIterator last,
-					const allocator_type& alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0) : 
-					_alloc(alloc), _cap(0), _size(0)
-			{
-				ft::check_valid(first, last);
-				for (InputIterator it = first; it != last; it++)
-				{
-					++_size;
-				}
-				_vec = _alloc.allocate(_size);
-				_cap = _size;
+					const allocator_type& alloc = allocator_type(), typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0);
+					//  : _alloc(alloc), _cap(0), _size(0)
+			// {
+			// 	ft::check_valid(first, last);
+			// 	for (InputIterator it = first; it != last; it++)
+			// 	{
+			// 		++_size;
+			// 	}
+			// 	_vec = _alloc.allocate(_size);
+			// 	_cap = _size;
 				
-				for (size_type index = 0; index < _size; ++index)
-				{
-					_alloc.construct(_vec + index, *(first++));
-				}
-			}
+			// 	for (size_type index = 0; index < _size; ++index)
+			// 	{
+			// 		_alloc.construct(_vec + index, *(first++));
+			// 	}
+			// }
 			// Copy constructor
-			vector (const vector& x) :  _cap(0), _size(0)
-			{
-				_alloc = x.get_allocator();
-				copy(x);
-			}
+			vector (const vector& x);
+			// :  _cap(0), _size(0)
+			// {
+			// 	_alloc = x.get_allocator();
+			// 	copy(x);
+			// }
 			// Destructor
 			~vector () {deallocate_and_destruct(_cap, _size);}
 			// Assignment operator
-			vector& operator=(const vector& x)
-			{
-				if (this == &x) 
-				{
-					return *this;
-				}
-				destruct(size());
+			vector& operator=(const vector& x);
+			// {
+			// 	if (this == &x) 
+			// 	{
+			// 		return *this;
+			// 	}
+			// 	destruct(size());
 				
-				if (x._vec)
-				{
-					this->_alloc = x.get_allocator();
-					if (x.size() > this->capacity())
-					{
-						reallocate(this->capacity(), x.size());
-					}
-					uninitialized_alloc_copy(x);
-				}
-				else
-				{
-					_vec = nullptr_f;
-					_size = 0;
-				}
-				return *this;
-			}
-			value_type* data()									{return (_vec);}
-			const value_type* data() const						{return (_vec);}
-			allocator_type get_allocator() const				{return (this->_alloc);}
+			// 	if (x._vec)
+			// 	{
+			// 		this->_alloc = x.get_allocator();
+			// 		if (x.size() > this->capacity())
+			// 		{
+			// 			reallocate(this->capacity(), x.size());
+			// 		}
+			// 		uninitialized_alloc_copy(x);
+			// 	}
+			// 	else
+			// 	{
+			// 		_vec = nullptr_f;
+			// 		_size = 0;
+			// 	}
+			// 	return *this;
+			// }
+			value_type* data();
+			// {return (_vec);}
+			const value_type* data() const;
+			// {return (_vec);}
+			allocator_type get_allocator() const;
+			// {return (this->_alloc);}
 			// erase
-			iterator erase (iterator position)
-			{
-				_alloc.destroy(_vec + (position - begin()));
-				for(size_type index = position - begin(); index < _size - 1; index++)
-					_alloc.construct(_vec + index, *(_vec + index + 1));
-				_size--;
-				return (position);
-			}
-			iterator erase (iterator first, iterator last)
-			{
-				size_type siz = first - begin();
-				size_type len = end() - begin();
-				if (len > 0)
-				{
-					size_type index = 0;
-					iterator t_end = end();
-					for (iterator it = first; it != last; it++)
-					{
-						_alloc.destroy(_vec + siz + index);
-						index++;
-						_size--;
-					}
-					index = 0;
-					for (iterator it = first; it != last; it++)
-					{
-						if (last + index == t_end)
-							break;
-						_alloc.construct(_vec  + siz + index, *(last + index));
-						_alloc.destroy(_vec + siz + index);
-						index++;
-					}
-					if (last + index != t_end)
-					{
-						while (index < len)
-						{
-							if (last + index == t_end)
-							break;
-							_alloc.construct(_vec  + siz + index, *(last + index));
-							_alloc.destroy(_vec + siz + index);
-							index++;
-						}
-					}
-				}
-				return first;
-			}
+			iterator erase (iterator position);
+			// {
+			// 	_alloc.destroy(_vec + (position - begin()));
+			// 	for(size_type index = position - begin(); index < _size - 1; index++)
+			// 		_alloc.construct(_vec + index, *(_vec + index + 1));
+			// 	_size--;
+			// 	return (position);
+			// }
+			iterator erase (iterator first, iterator last);
+			// {
+			// 	size_type siz = first - begin();
+			// 	size_type len = end() - begin();
+			// 	if (len > 0)
+			// 	{
+			// 		size_type index = 0;
+			// 		iterator t_end = end();
+			// 		for (iterator it = first; it != last; it++)
+			// 		{
+			// 			_alloc.destroy(_vec + siz + index);
+			// 			index++;
+			// 			_size--;
+			// 		}
+			// 		index = 0;
+			// 		for (iterator it = first; it != last; it++)
+			// 		{
+			// 			if (last + index == t_end)
+			// 				break;
+			// 			_alloc.construct(_vec  + siz + index, *(last + index));
+			// 			_alloc.destroy(_vec + siz + index);
+			// 			index++;
+			// 		}
+			// 		if (last + index != t_end)
+			// 		{
+			// 			while (index < len)
+			// 			{
+			// 				if (last + index == t_end)
+			// 				break;
+			// 				_alloc.construct(_vec  + siz + index, *(last + index));
+			// 				_alloc.destroy(_vec + siz + index);
+			// 				index++;
+			// 			}
+			// 		}
+			// 	}
+			// 	return first;
+			// }
 
 			// push_back
-			void push_back (const value_type& val)
-			{
-				if (!_cap)
-					reserve(1);
-				if (_size + 1 > _cap)
-					reserve(_cap * 2);
-				_alloc.construct(_vec + _size, val);
-				_size += 1;
-			}
+			void push_back (const value_type& val);
+			// {
+			// 	if (!_cap)
+			// 		reserve(1);
+			// 	if (_size + 1 > _cap)
+			// 		reserve(_cap * 2);
+			// 	_alloc.construct(_vec + _size, val);
+			// 	_size += 1;
+			// }
 			
 			// Iterators
-			iterator               begin()              {return iterator(_vec);}
-			const_iterator         begin()   const      {return const_iterator(_vec);}
-			iterator               end()                {return iterator(_vec + size());}
-			const_iterator         end()     const      {return const_iterator(_vec + size()); }
+			iterator               begin();
+			            //   {return iterator(_vec);}
+			const_iterator         begin()   const;
+			    //   {return const_iterator(_vec);}
+			iterator               end();
+			            //   {return iterator(_vec + size());}
+			const_iterator         end()     const;
+			    //  {return const_iterator(_vec + size()); }
 			
 			//reverse Iterators
-			reverse_iterator       rbegin() {return reverse_iterator(this->end());}
-			const_reverse_iterator rbegin() const {return const_reverse_iterator(this->end());}
-			reverse_iterator       rend() {return reverse_iterator(this->begin());}
-			const_reverse_iterator rend() const {return const_reverse_iterator(this->begin());}
+			reverse_iterator       rbegin();
+			//  {return reverse_iterator(this->end());}
+			const_reverse_iterator rbegin() const;
+			// {return const_reverse_iterator(this->end());}
+			reverse_iterator       rend();
+			// {return reverse_iterator(this->begin());}
+			const_reverse_iterator rend() const;
+			// {return const_reverse_iterator(this->begin());}
 			
 			// Capacity based functions
-			size_type size() const {return (this->_size);}
-			size_type capacity() const {return (this->_cap);}
-			size_type max_size() const {return (_alloc.max_size());}
-			bool empty() const {return (_size == 0);}
+			size_type size() const;
+			//  {return (this->_size);}
+			size_type capacity() const;
+			//  {return (this->_cap);}
+			size_type max_size() const;
+			// {return (_alloc.max_size());}
+			bool empty() const;
+			// {return (_size == 0);}
 			
-			void reserve(size_type n)
-			{
-				if (n > max_size())
-					throw std::length_error("Capacity allocated exceeds max_size()");
-				else if (n > _cap)
-				{
-					pointer t_vec = t_alloc.allocate(n);
-					for (_index = 0; _index < _size; ++_index)
-						t_alloc.construct(t_vec + _index, _vec[_index]);
-					for (_index = 0; _index < _size; ++_index)
-						_alloc.destroy(_vec + _index);
-					_alloc.deallocate(_vec, _cap);
-					_alloc = t_alloc;
-					_vec = t_vec;
-					_cap = n;
-				}
-			}
+			void reserve(size_type n);
+			// {
+			// 	if (n > max_size())
+			// 		throw std::length_error("Capacity allocated exceeds max_size()");
+			// 	else if (n > _cap)
+			// 	{
+			// 		pointer t_vec = t_alloc.allocate(n);
+			// 		for (_index = 0; _index < _size; ++_index)
+			// 			t_alloc.construct(t_vec + _index, _vec[_index]);
+			// 		for (_index = 0; _index < _size; ++_index)
+			// 			_alloc.destroy(_vec + _index);
+			// 		_alloc.deallocate(_vec, _cap);
+			// 		_alloc = t_alloc;
+			// 		_vec = t_vec;
+			// 		_cap = n;
+			// 	}
+			// }
 
 			// Modifiers functions
-			reference       operator[](size_type index)
-			{
-				assert(index < size() && "Index out of range1");
-				return _vec[index]; 
-			}
-			const_reference operator[](size_type index) const
-			{
-				assert(index < size() && "Index out of range2");
-				return _vec[index]; 
-			}
-			reference       at(size_type n)
-			{
-				if (n < size() && n >= 0)
-					return (_vec[n]);
-				else
-					throw std::out_of_range("Index out of range");
-			}
+			reference       operator[](size_type index);
+			// {
+			// 	assert(index < size() && "Index out of range1");
+			// 	return _vec[index]; 
+			// }
+			const_reference operator[](size_type index) const;
+			// {
+			// 	assert(index < size() && "Index out of range2");
+			// 	return _vec[index]; 
+			// }
+			reference       at(size_type n);
+			// {
+			// 	if (n < size() && n >= 0)
+			// 		return (_vec[n]);
+			// 	else
+			// 		throw std::out_of_range("Index out of range");
+			// }
 			
-			const_reference at(size_type n) const {return (n < size() ? _vec[n] : throw std::out_of_range("Index out of range"));}
-			void clear() {destruct(_size);}
+			const_reference at(size_type n) const;
+			// {return (n < size() ? _vec[n] : throw std::out_of_range("Index out of range"));}
+			void clear();
+			// {destruct(_size);}
 
 			// assign functions:
 			template <class InputIterator>
-			void assign (InputIterator first, InputIterator last , typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)
-			{
-				ft::check_valid(first, last);
-				size_type size = 0;
-				for (InputIterator it = first; it != last; it++)
-				{
-					++size;
-				}
-				allocate(size);
-				_size = 0;
-				for (size_type index = 0; index < size; ++index)
-				{
-					_alloc.construct(_vec + index, *(first++));
-					++_size;
-				}
-			}
-			void assign (size_type n, const value_type& val)
-			{
-				allocate(n);
-				_size = 0;
-				for (size_type index = 0; index < n; ++index)
-				{
-					_alloc.construct(_vec + index, val);
-					++_size;
-				}
-			}
+			void assign (InputIterator first, InputIterator last , typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0);
+			// {
+			// 	ft::check_valid(first, last);
+			// 	size_type size = 0;
+			// 	for (InputIterator it = first; it != last; it++)
+			// 	{
+			// 		++size;
+			// 	}
+			// 	allocate(size);
+			// 	_size = 0;
+			// 	for (size_type index = 0; index < size; ++index)
+			// 	{
+			// 		_alloc.construct(_vec + index, *(first++));
+			// 		++_size;
+			// 	}
+			// }
+			void assign (size_type n, const value_type& val);
+			// {
+			// 	allocate(n);
+			// 	_size = 0;
+			// 	for (size_type index = 0; index < n; ++index)
+			// 	{
+			// 		_alloc.construct(_vec + index, val);
+			// 		++_size;
+			// 	}
+			// }
 			// resize
-			void resize (size_type n, value_type val = value_type())
-			{
-				if (n > max_size())
-					throw std::length_error("vector");
-				if (n < _size)
-				{
-					for(size_type index = n; index < _size; index++)
-						_alloc.destroy(_vec + index);
-					_size = n;
-				}
-				else if (n >= _size && n < _cap )
-				{
-					for(size_type index = _size; index < n; index++)
-						_alloc.construct(_vec + index, val);
-					_size = n;
-				}
-				else
-				{
-					if (n > max_size())
-						throw std::length_error("Capacity allocated exceeds max_size()");
-					temp = t_alloc.allocate(n);
-					for (size_type index = 0; index < _size; ++index)
-						t_alloc.construct(temp + index, _vec[index]);
-					for (size_type index = _size; index < n; ++index)
-						t_alloc.construct(temp + index, val);
-					for (size_type index = 0; index < _size; ++index)
-						_alloc.destroy(_vec + index);
-					_alloc.deallocate(_vec, _cap);
-					_alloc = t_alloc;
-					_vec = temp;
-					_cap = recommend(n);
-					_size = n;
-				}
-			}
+			void resize (size_type n, value_type val = value_type());
+			// {
+			// 	if (n > max_size())
+			// 		throw std::length_error("vector");
+			// 	if (n < _size)
+			// 	{
+			// 		for(size_type index = n; index < _size; index++)
+			// 			_alloc.destroy(_vec + index);
+			// 		_size = n;
+			// 	}
+			// 	else if (n >= _size && n < _cap )
+			// 	{
+			// 		for(size_type index = _size; index < n; index++)
+			// 			_alloc.construct(_vec + index, val);
+			// 		_size = n;
+			// 	}
+			// 	else
+			// 	{
+			// 		if (n > max_size())
+			// 			throw std::length_error("Capacity allocated exceeds max_size()");
+			// 		temp = t_alloc.allocate(n);
+			// 		for (size_type index = 0; index < _size; ++index)
+			// 			t_alloc.construct(temp + index, _vec[index]);
+			// 		for (size_type index = _size; index < n; ++index)
+			// 			t_alloc.construct(temp + index, val);
+			// 		for (size_type index = 0; index < _size; ++index)
+			// 			_alloc.destroy(_vec + index);
+			// 		_alloc.deallocate(_vec, _cap);
+			// 		_alloc = t_alloc;
+			// 		_vec = temp;
+			// 		_cap = recommend(n);
+			// 		_size = n;
+			// 	}
+			// }
 			
 			// // insert functions
-			iterator insert (iterator position, const value_type& val) // single element insert
-			{
-				if (_size + 1 <= _cap)
-				{
-					_alloc.construct(_vec + _size, val);
-					// _cap = _size + 1;
-					_size++;
-					for (iterator it = position; it < end(); it++)
-					{
-						value_type temp1 = back();
-						*(end() - 1) = *it;
-						*it = temp1;
-					}
-				}
-				else
-				{
-					size_type i = position - begin();
-					temp = t_alloc.allocate(_size * 2, 0);
-					for (size_type index1 = 0; index1 < _size; ++index1)
-						t_alloc.construct(temp + index1, _vec[index1]);
-					t_alloc.construct(temp + _size, val);
-					for (size_type index1 = 0; index1 < _size; ++index1)
-						_alloc.destroy(_vec + index1);
-					_alloc.deallocate(_vec, _cap);
-					_alloc = t_alloc;
-					_vec = temp;
-					_cap = _size * 2;
-					_size++;
-					position = begin() + i;
-					for (iterator it = position; it < end(); it++)
-					{
-						value_type temp1 = back();
-						*(end() - 1) = *it;
-						*it = temp1;
-					}
-				}
-				return (position);
-			}
-			void insert (iterator position, size_type n, const value_type& val) // fill n index starting from iterator position
-			{
-				size_type t_cap;
-				if (_size + n > _cap)
-				{
-					temp = t_alloc.allocate(recommend(_size + n), 0);
-					t_cap = recommend(_size + n);
-				}
-				else
-				{
-					temp = t_alloc.allocate(_cap, 0);
-					t_cap = _cap;
-				}
-				size_type index = 0;
-				size_type t_size = 0;
-				for (iterator it = begin(); it != position; it++)
-				{
-					t_alloc.construct(temp + index, *it);
-					t_size++;
-					index++;
-				}
-				for (index = 0; index < n; index++)
-					t_alloc.construct(temp + t_size + index, val);
-				t_size = t_size + index;
-				index = 0;
-				for (iterator it = position; it != end(); it++)
-				{
-					t_alloc.construct(temp + t_size + index, *it);
-					index++;
-				}
-				for (size_type index1 = 0; index1 < _size; ++index1)
-					_alloc.destroy(_vec + index1);
-				_alloc.deallocate(_vec, _cap);
-				t_size = t_size + index;
-				_alloc = t_alloc;
-				_vec = temp;
-				_size = t_size;
-				_cap = t_cap;
-			}
+			iterator insert (iterator position, const value_type& val); // single element insert
+			// {
+			// 	if (_size + 1 <= _cap)
+			// 	{
+			// 		_alloc.construct(_vec + _size, val);
+			// 		// _cap = _size + 1;
+			// 		_size++;
+			// 		for (iterator it = position; it < end(); it++)
+			// 		{
+			// 			value_type temp1 = back();
+			// 			*(end() - 1) = *it;
+			// 			*it = temp1;
+			// 		}
+			// 	}
+			// 	else
+			// 	{
+			// 		size_type i = position - begin();
+			// 		temp = t_alloc.allocate(_size * 2, 0);
+			// 		for (size_type index1 = 0; index1 < _size; ++index1)
+			// 			t_alloc.construct(temp + index1, _vec[index1]);
+			// 		t_alloc.construct(temp + _size, val);
+			// 		for (size_type index1 = 0; index1 < _size; ++index1)
+			// 			_alloc.destroy(_vec + index1);
+			// 		_alloc.deallocate(_vec, _cap);
+			// 		_alloc = t_alloc;
+			// 		_vec = temp;
+			// 		_cap = _size * 2;
+			// 		_size++;
+			// 		position = begin() + i;
+			// 		for (iterator it = position; it < end(); it++)
+			// 		{
+			// 			value_type temp1 = back();
+			// 			*(end() - 1) = *it;
+			// 			*it = temp1;
+			// 		}
+			// 	}
+			// 	return (position);
+			// }
+			void insert (iterator position, size_type n, const value_type& val); // fill n index starting from iterator position
+			// {
+			// 	size_type t_cap;
+			// 	if (_size + n > _cap)
+			// 	{
+			// 		temp = t_alloc.allocate(recommend(_size + n), 0);
+			// 		t_cap = recommend(_size + n);
+			// 	}
+			// 	else
+			// 	{
+			// 		temp = t_alloc.allocate(_cap, 0);
+			// 		t_cap = _cap;
+			// 	}
+			// 	size_type index = 0;
+			// 	size_type t_size = 0;
+			// 	for (iterator it = begin(); it != position; it++)
+			// 	{
+			// 		t_alloc.construct(temp + index, *it);
+			// 		t_size++;
+			// 		index++;
+			// 	}
+			// 	for (index = 0; index < n; index++)
+			// 		t_alloc.construct(temp + t_size + index, val);
+			// 	t_size = t_size + index;
+			// 	index = 0;
+			// 	for (iterator it = position; it != end(); it++)
+			// 	{
+			// 		t_alloc.construct(temp + t_size + index, *it);
+			// 		index++;
+			// 	}
+			// 	for (size_type index1 = 0; index1 < _size; ++index1)
+			// 		_alloc.destroy(_vec + index1);
+			// 	_alloc.deallocate(_vec, _cap);
+			// 	t_size = t_size + index;
+			// 	_alloc = t_alloc;
+			// 	_vec = temp;
+			// 	_size = t_size;
+			// 	_cap = t_cap;
+			// }
 			template <class InputIterator>
-			void insert (iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0)
-			{
-				ft::check_valid(first, last);
-				size_type t_cap;
-				size_type size = 0;
-				for (InputIterator it = first; it != last; it++)
-				{
-					++size;
-				}
-				// iterator iter = static_cast<iterator>(first);
-				if (_size + size > _cap)
-				{
-					temp = t_alloc.allocate(recommend(_size + size), 0);
-					t_cap = recommend(_size + size);
-				}
-				else
-				{
-					temp = t_alloc.allocate(_cap, 0);
-					t_cap = _cap;
-				}
-				size_type index = 0;
-				size_type t_size = 0;
-				for (iterator it = begin(); it != position; it++)
-				{
-					t_alloc.construct(temp + index, *it);
-					t_size++;
-					index++;
-				}
-				index = 0;
-				for (InputIterator it = first; it != last; it++)
-				{
-					t_alloc.construct(temp + t_size + index,*it);
-					index++;
-				}
-				t_size = t_size + index;
-				index = 0;
-				for (iterator it = position; it != end(); it++)
-				{
-					t_alloc.construct(temp + t_size + index, *it);
-					index++;
-				}
-				for (size_type index1 = 0; index1 < _size; ++index1)
-					_alloc.destroy(_vec + index1);
-				_alloc.deallocate(_vec, _cap);
-				t_size = t_size + index;
-				_alloc = t_alloc;
-				_vec = temp;
-				_size = t_size;
-				_cap = t_cap;
-			}
+			void insert (iterator position, InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0);
+			// {
+			// 	ft::check_valid(first, last);
+			// 	size_type t_cap;
+			// 	size_type size = 0;
+			// 	for (InputIterator it = first; it != last; it++)
+			// 	{
+			// 		++size;
+			// 	}
+			// 	// iterator iter = static_cast<iterator>(first);
+			// 	if (_size + size > _cap)
+			// 	{
+			// 		temp = t_alloc.allocate(recommend(_size + size), 0);
+			// 		t_cap = recommend(_size + size);
+			// 	}
+			// 	else
+			// 	{
+			// 		temp = t_alloc.allocate(_cap, 0);
+			// 		t_cap = _cap;
+			// 	}
+			// 	size_type index = 0;
+			// 	size_type t_size = 0;
+			// 	for (iterator it = begin(); it != position; it++)
+			// 	{
+			// 		t_alloc.construct(temp + index, *it);
+			// 		t_size++;
+			// 		index++;
+			// 	}
+			// 	index = 0;
+			// 	for (InputIterator it = first; it != last; it++)
+			// 	{
+			// 		t_alloc.construct(temp + t_size + index,*it);
+			// 		index++;
+			// 	}
+			// 	t_size = t_size + index;
+			// 	index = 0;
+			// 	for (iterator it = position; it != end(); it++)
+			// 	{
+			// 		t_alloc.construct(temp + t_size + index, *it);
+			// 		index++;
+			// 	}
+			// 	for (size_type index1 = 0; index1 < _size; ++index1)
+			// 		_alloc.destroy(_vec + index1);
+			// 	_alloc.deallocate(_vec, _cap);
+			// 	t_size = t_size + index;
+			// 	_alloc = t_alloc;
+			// 	_vec = temp;
+			// 	_size = t_size;
+			// 	_cap = t_cap;
+			// }
 			// popback and pushback
-			void pop_back()
-			{
-				if (_size  == 0)
-					throw std::out_of_range("can");
-				_alloc.destroy(&_vec[_size-- - 1]);
-			}
-			reference       front()
-			{
-				assert(!empty() && "front() called for empty vector");
-				return *this->begin();
-			}
-			const_reference front() const
-			{
-				assert(!empty() && "front() called for empty vector");
-				return *this->begin();
-			}
-			reference       back()
-			{
-				assert(!empty() && "back() called for empty vector");
-				return *(_vec + size() - 1);
-			}
-			const_reference back() const
-			{
-				assert(!empty() && "back() called for empty vector");
-				return *(_vec + size() - 1);
-			}
-			void swap (vector& x)
-			{
-				temp = x._vec;
-				t_alloc = x._alloc;
-				size_type t_size = x._size;
-				size_type t_cap = x._cap;
-				x._vec = _vec;
-				x._alloc = _alloc;
-				x._size = _size;
-				x._cap = _cap;
-				_vec = temp;
-				_alloc = t_alloc;
-				_size = t_size;
-				_cap = t_cap;
-			}
+			void pop_back();
+			// {
+			// 	if (_size  == 0)
+			// 		throw std::out_of_range("can");
+			// 	_alloc.destroy(&_vec[_size-- - 1]);
+			// }
+			reference       front();
+			// {
+			// 	assert(!empty() && "front() called for empty vector");
+			// 	return *this->begin();
+			// }
+			const_reference front() const;
+			// {
+			// 	assert(!empty() && "front() called for empty vector");
+			// 	return *this->begin();
+			// }
+			reference       back();
+			// {
+			// 	assert(!empty() && "back() called for empty vector");
+			// 	return *(_vec + size() - 1);
+			// }
+			const_reference back() const;
+			// {
+			// 	assert(!empty() && "back() called for empty vector");
+			// 	return *(_vec + size() - 1);
+			// }
+			void swap (vector& x);
+			// {
+			// 	temp = x._vec;
+			// 	t_alloc = x._alloc;
+			// 	size_type t_size = x._size;
+			// 	size_type t_cap = x._cap;
+			// 	x._vec = _vec;
+			// 	x._alloc = _alloc;
+			// 	x._size = _size;
+			// 	x._cap = _cap;
+			// 	_vec = temp;
+			// 	_alloc = t_alloc;
+			// 	_size = t_size;
+			// 	_cap = t_cap;
+			// }
 		private:
 			pointer temp;
 			pointer _vec; // 
@@ -670,4 +689,5 @@ namespace ft
 			return !(lhs < rhs);
 		}
 }
+#include "vector.tpp"
 #endif
