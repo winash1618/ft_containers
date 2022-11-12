@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 09:13:44 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/11/12 10:46:56 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/11/12 12:46:35 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,12 @@ ft::vector<Tp, Allocator>::vector (const ft::vector<Tp, Allocator>& x) :  _cap(0
 {
 	_alloc = x.get_allocator();
 	copy(x);
+}
+
+template<class Tp, class Allocator>
+ft::vector<Tp, Allocator>::~vector ()
+{
+	deallocate_and_destruct(_cap, _size);
 }
 // Assignment operator
 template<class Tp, class Allocator>
@@ -613,5 +619,111 @@ void ft::vector<Tp, Allocator>::swap (ft::vector<Tp, Allocator>& x)
 	_alloc = t_alloc;
 	_size = t_size;
 	_cap = t_cap;
+}
+
+template<class Tp, class Allocator>
+void ft::vector<Tp, Allocator>::print(void)
+{
+	size_type i = 0;
+	std::cout << "Printing starts" << std::endl;
+	while (i < _size)
+	{
+		std::cout << i << " th element = " << _vec[i] << std::endl;
+		i++;
+	}
+	std::cout << "Printing ends" << std::endl;
+}
+
+template<class Tp, class Allocator>
+void ft::vector<Tp, Allocator>::allocate(typename ft::vector<Tp, Allocator>::size_type capacity)
+{
+	if (capacity > max_size())
+		throw std::length_error("new size to allocate exceeds max_size()");
+	_cap = capacity;
+	_vec = _alloc.allocate(capacity, 0);
+}
+
+template<class Tp, class Allocator>
+void ft::vector<Tp, Allocator>::deallocate(std::size_t capacity)
+{
+	_alloc.deallocate(_vec, capacity);
+	_cap = 0;
+	_size = 0;
+}
+
+template<class Tp, class Allocator>
+void ft::vector<Tp, Allocator>::reallocate(std::size_t old_cap, std::size_t new_cap) {
+	deallocate(old_cap);
+	allocate(new_cap);
+}
+
+template<class Tp, class Allocator>
+void ft::vector<Tp, Allocator>::construct(std::size_t size, const typename ft::vector<Tp, Allocator>::value_type& value)
+{
+	_size = size;
+	for (std::size_t index = 0; index < size; ++index)
+		_alloc.construct(_vec + index, value);
+}
+
+template<class Tp, class Allocator>
+void ft::vector<Tp, Allocator>::construct_at_end(typename ft::vector<Tp, Allocator>::size_type size, const typename ft::vector<Tp, Allocator>::value_type& value)
+{
+	_size = size;
+	for (std::size_t index = 0; index < size; ++index)
+		_alloc.construct(_vec + index, value);
+}
+
+template<class Tp, class Allocator>
+void ft::vector<Tp, Allocator>::destruct(std::size_t size)
+{
+	for (std::size_t index = 0; index < size; ++index)
+		_alloc.destroy(_vec + index);
+	_size = 0;
+}
+
+template<class Tp, class Allocator>
+void ft::vector<Tp, Allocator>::allocate_and_copy_construct(std::size_t capacity, std::size_t size, const typename ft::vector<Tp, Allocator>::value_type& value)
+{
+	allocate(capacity);
+	construct(size, value);
+}
+
+template<class Tp, class Allocator>
+void ft::vector<Tp, Allocator>::deallocate_and_destruct(std::size_t capacity, std::size_t size)
+{
+	destruct(size);
+	deallocate(capacity);
+}
+
+template<class Tp, class Allocator>
+void ft::vector<Tp, Allocator>::uninitialized_alloc_copy(const ft::vector<Tp, Allocator>& other)
+{
+	_size = other.size();
+	for (size_type index=0; index < _size; ++index)
+		this->_alloc.construct(this->_vec + index, *(other._vec + index));
+}
+
+template<class Tp, class Allocator>
+void ft::vector<Tp, Allocator>::copy(const ft::vector<Tp, Allocator>& other)
+{
+	if (other._vec)
+	{
+		allocate(other._size);
+		uninitialized_alloc_copy(other);
+	}
+	else
+		_vec = nullptr_f;
+}
+
+template<class Tp, class Allocator>
+typename ft::vector<Tp, Allocator>::size_type ft::vector<Tp, Allocator>::recommend(typename ft::vector<Tp, Allocator>::size_type new_size) const
+{
+	const typename ft::vector<Tp, Allocator>::size_type ms = max_size();
+	if (new_size > ms)
+		throw std::length_error("new size to allocate exceeds max_size()");
+	const typename ft::vector<Tp, Allocator>::size_type cap = capacity();
+	if (cap >= ms / 2)
+		return ms;
+	return std::max<typename ft::vector<Tp, Allocator>::size_type>(2*cap, new_size);
 }
 #endif
