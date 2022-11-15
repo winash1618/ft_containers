@@ -18,7 +18,6 @@ namespace ft
 		typedef typename Iterator::reference reference;
 		typedef typename Iterator::iterator_category iterator_category;
 	};
-
 	template<class T>
 	struct iterator_traits<T*>
 	{
@@ -28,7 +27,6 @@ namespace ft
 		typedef T& reference;
 		typedef ft::random_access_iterator_tag iterator_category;
 	};
-
 	template <class T>
 	struct iterator_traits<const T*>
 	{

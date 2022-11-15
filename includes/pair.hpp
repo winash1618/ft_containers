@@ -17,7 +17,6 @@ namespace ft
 			template<class U1, class U2>
 			pair(const pair<U1, U2>& p): first(p.first)
 			{
-				
 				second = p.second;
 			}
 			pair& operator=(const pair& p) 
@@ -27,7 +26,6 @@ namespace ft
 					first = p.first;
 					second = p.second;
 				}
-				
 				return *this;
 			}
 	};
@@ -63,8 +61,7 @@ namespace ft
 
 	// std::equal
 	template<class InputIt1, class InputIt2>
-	bool equal(InputIt1 first1, InputIt1 last1, 
-			InputIt2 first2)
+	bool equal(InputIt1 first1, InputIt1 last1, InputIt2 first2)
 	{
 		for (; first1 != last1; ++first1, ++first2) {
 			if (!(*first1 == *first2)) {
@@ -75,8 +72,7 @@ namespace ft
 	}
 
 	template<class InputIt1, class InputIt2, class BinaryPredicate>
-	bool equal(InputIt1 first1, InputIt1 last1, 
-			InputIt2 first2, BinaryPredicate p)
+	bool equal(InputIt1 first1, InputIt1 last1, InputIt2 first2, BinaryPredicate p)
 	{
 		for (; first1 != last1; ++first1, ++first2) {
 			if (!p(*first1, *first2)) {
@@ -88,8 +84,7 @@ namespace ft
 
 	// std::lexicographical compare
 	template<class InputIt1, class InputIt2>
-	bool lexicographical_compare(InputIt1 first1, InputIt1 last1,
-								InputIt2 first2, InputIt2 last2)
+	bool lexicographical_compare(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2)
 	{
 		for ( ; (first1 != last1) && (first2 != last2); ++first1, (void) ++first2 ) {
 			if (*first1 < *first2) return true;
@@ -99,9 +94,7 @@ namespace ft
 	}
 
 	template<class InputIt1, class InputIt2, class Compare>
-	bool lexicographical_compare(InputIt1 first1, InputIt1 last1,
-								InputIt2 first2, InputIt2 last2,
-								Compare comp)
+	bool lexicographical_compare(InputIt1 first1, InputIt1 last1, InputIt2 first2, InputIt2 last2, Compare comp)
 	{
 		for ( ; (first1 != last1) && (first2 != last2); ++first1, (void) ++first2 ) {
 			if (comp(*first1, *first2)) return true;
