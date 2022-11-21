@@ -16,7 +16,8 @@ ft::vector<Tp, Allocator>::size() const
 }
 
 /**
- * @brief 
+ * @brief Returns the max size of the vector
+ * that can be allocated.
  * 
  * @tparam Tp 
  * @tparam Allocator 
@@ -97,8 +98,8 @@ ft::vector<Tp, Allocator>::capacity() const
  * 
  * @tparam Tp 
  * @tparam Allocator 
- * @return true 
- * @return false 
+ * @return true if size of vector is empty
+ * @return false if otherwise
  */
 template<class Tp, class Allocator>
 bool

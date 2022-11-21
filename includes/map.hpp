@@ -69,10 +69,11 @@ namespace ft
 			iterator																	iter;
 
 		public:
-			explicit map (const key_compare& comp = key_compare(),
-			const allocator_type& alloc = allocator_type()) : _root(nullptr_f), _comp(comp), _alloc(alloc), _size(0)
+			explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
+			 : _root(nullptr_f), _comp(comp), _alloc(alloc), _size(0)
 			{
 			}
+
 			template <class InputIterator>
 			map (InputIterator first, InputIterator last,
 				const key_compare& comp = key_compare(),
@@ -80,6 +81,7 @@ namespace ft
 			{
 				insert(first, last);
 			}
+
 			map (const map& x)
 			{
 				*this = x;
@@ -122,6 +124,7 @@ namespace ft
 				}
 				return iterator(right, nullptr_f);
 			}
+
 			const_iterator end() const
 			{
 				node_pointer right = _root;
@@ -177,6 +180,7 @@ namespace ft
 				}
 				return (end());
 			}
+
 			const_iterator find (const key_type& k) const
 			{
 				node_pointer cur = _root;
@@ -200,6 +204,7 @@ namespace ft
 				}
 				return (end());
 			}
+
 			iterator lower_bound (const key_type& k)
 			{
 				node_pointer __root = _root;
@@ -237,6 +242,7 @@ namespace ft
 					return iterator(__result);
 				return (end());
 			}
+
 			const_iterator lower_bound (const key_type& k) const
 			{
 				node_pointer __root = _root;
@@ -255,6 +261,7 @@ namespace ft
 					return const_iterator(__result);
 				return (end());
 			}
+
 			const_iterator upper_bound (const key_type& k) const
 			{
 				node_pointer __root = _root;
@@ -273,6 +280,7 @@ namespace ft
 					return const_iterator(__result);
 				return (end());
 			}
+
 			pair<const_iterator,const_iterator> equal_range (const key_type& k) const		{return ft::pair<const_iterator, const_iterator>(lower_bound(k), upper_bound(k));}
 			pair<iterator,iterator> equal_range (const key_type& k)							{return ft::pair<iterator, iterator>(lower_bound(k), upper_bound(k));}
 			allocator_type get_allocator() const											{return (this->_alloc);}
@@ -428,7 +436,6 @@ namespace ft
 				}
 			}
 
-
 			mapped_type& operator[] (const key_type& key)
 			{
 				iterator it = find(key);
@@ -462,7 +469,7 @@ namespace ft
 				n_alloc = tn_alloc;
 				_size = t_size;
 			}
-			
+
 			void erase(iterator position)
 			{
 				node_pointer __node; // -> node to be deleted
@@ -476,7 +483,7 @@ namespace ft
 				n_alloc.deallocate(__node, 1);
 				_size--;
 			}
-			
+
 			size_type erase (const key_type& k)
 			{
 				node_pointer __nd;
@@ -598,12 +605,12 @@ namespace ft
 					subL->_parent = parentParent;
 				}
 			}
-			
-			 void tree_remove(node_pointer delete_node)
+
+			void tree_remove(node_pointer delete_node)
 			{
 				bool removed_black = false;
 				node_pointer y = (delete_node->_left == nullptr_f || delete_node->_right == nullptr_f) ?
-								delete_node : tree_next(delete_node);
+								 delete_node : tree_next(delete_node);
 				node_pointer x = y->_left != nullptr_f ? y->_left : y->_right;
 				node_pointer w = nullptr_f;
 				if (x != nullptr_f)
@@ -634,7 +641,7 @@ namespace ft
 						balanceTreeAfterDelete(x, w);
 				}
 			}
-			
+
 			void removeYConnectionToDeleteNode(node_pointer y, node_pointer delete_node)
 			{
 				y->_parent = delete_node->_parent;
@@ -649,6 +656,7 @@ namespace ft
 					y->_right->_parent = y;
 				y->_color = delete_node->_color;
 			}
+
 			void changeY2Root(node_pointer y, node_pointer delete_node)
 			{
 				y->_parent = delete_node->_parent;
@@ -798,4 +806,5 @@ namespace ft
 		}
 
 }
+// #include "../srcs/map/map_init.tpp"
 #endif
