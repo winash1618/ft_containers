@@ -479,7 +479,7 @@ namespace ft
 					return ;
 				n_alloc.destroy(__node);
 					
-				tree_remove(__node);
+				map_remove(__node);
 				n_alloc.deallocate(__node, 1);
 				_size--;
 			}
@@ -606,7 +606,7 @@ namespace ft
 				}
 			}
 
-			void tree_remove(node_pointer delete_node)
+			void map_remove(node_pointer delete_node)
 			{
 				bool removed_black = false;
 				node_pointer y = (delete_node->_left == nullptr_f || delete_node->_right == nullptr_f) ?
@@ -615,7 +615,7 @@ namespace ft
 				node_pointer w = nullptr_f;
 				if (x != nullptr_f)
 					x->_parent = y->_parent;
-				if (y == _root)
+				if (y == _root) 
 					_root = x;
 				else if (tree_is_left_child(y))
 				{
@@ -668,6 +668,8 @@ namespace ft
 				y->_color = delete_node->_color;
 				_root = y;
 			}
+
+			
 			void balanceTreeAfterDelete(node_pointer x, node_pointer w)
 			{
 				while (true)

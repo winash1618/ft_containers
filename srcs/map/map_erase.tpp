@@ -3,7 +3,7 @@
 
 template <class Key, class T, class Compare, class Alloc>
 void 
-erase(iterator position)
+ft::map<Key, T, Compare, Alloc>::erase(iterator position)
 {
 	node_pointer __node; // -> node to be deleted
 
@@ -20,7 +20,7 @@ erase(iterator position)
 
 template <class Key, class T, class Compare, class Alloc>
 size_type
-erase(const key_type& k)
+ft::map<Key, T, Compare, Alloc>::erase(const key_type& k)
 {
 	node_pointer __nd;
 	__nd = const_cast<node_pointer>(find(k).__ptr_);
@@ -35,7 +35,7 @@ erase(const key_type& k)
 
 template <class Key, class T, class Compare, class Alloc>
 void
-erase (iterator first, iterator last)
+ft::map<Key, T, Compare, Alloc>::erase (iterator first, iterator last)
 {
 	while (first != last)
 	{

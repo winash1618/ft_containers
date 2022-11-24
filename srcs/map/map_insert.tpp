@@ -129,7 +129,7 @@ ft::map<Key, T, Compare, Alloc>::insert(iterator position, const value_type& val
 template <class Key, class T, class Compare, class Alloc>
 template <class InputIterator>
 void
-insert (InputIterator first, InputIterator last)
+ft::map<Key, T, Compare, Alloc>::insert (InputIterator first, InputIterator last)
 {
 	InputIterator it = first;
 	while (it != last)

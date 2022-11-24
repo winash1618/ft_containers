@@ -2,25 +2,44 @@
 # define MAP_INIT_TPP
 
 template <class Key, class T, class Compare, class Alloc>
-bool
-ft::map<Key, T, Compare, Alloc>::empty() const
+explicit ft::map<Key, T, Compare, Alloc>::map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
+	: _root(nullptr_f), _comp(comp), _alloc(alloc), _size(0)
 {
-	if (this->_size == 0)
-		return true;
-	return false;
 }
 
 template <class Key, class T, class Compare, class Alloc>
-typename ft::map<Key, T, Compare, Alloc>::iterator
-ft::map<Key, T, Compare, Alloc>::begin()
+template <class InputIterator>
+ft::map<Key, T, Compare, Alloc>::map (InputIterator first, InputIterator last,
+	const key_compare& comp = key_compare(),
+	const allocator_type& alloc = allocator_type()) :_root(nullptr_f), _comp(comp), _alloc(alloc)
 {
-	return iterator(begin_right(), begin_left());
+	insert(first, last);
 }
 
 template <class Key, class T, class Compare, class Alloc>
-typename ft::map<Key, T, Compare, Alloc>::const_iterator
-ft::map<Key, T, Compare, Alloc>::begin() const
+ft::map<Key, T, Compare, Alloc>::map (const ft::map<Key, T, Compare, Alloc>::map& x)
 {
-	return const_iterator(begin_right(), begin_left());
+	*this = x;
+	return;
 }
+
+template <class Key, class T, class Compare, class Alloc>
+ft::map<Key, T, Compare, Alloc>::~map() {destroy(_root);}
+
+template <class Key, class T, class Compare, class Alloc>
+ft::map<Key, T, Compare, Alloc>::map& operator=(const ft::map<Key, T, Compare, Alloc>::map& x)
+{
+	if (this != &x)
+	{
+		value_comp() = x.value_comp();
+		_alloc = x.get_allocator();
+		_comp = x._comp;
+		n_alloc = x.n_alloc;
+		_size = 0;
+		_root = nullptr_f;
+		insert(x.begin(), x.end());
+	}
+	return *this;
+}
+
 #endif
