@@ -3,7 +3,7 @@
 
 template <class Key, class T, class Compare, class Alloc>
 void
-ft::map<Key, T, Compare, Alloc>::swap (ft::map<Key, T, Compare, Alloc>::map& x)
+ft::map<Key, T, Compare, Alloc>::swap (map& x)
 {
 	node_pointer		t_root = x._root;
 	key_compare			t_comp = x._comp;

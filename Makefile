@@ -1,14 +1,14 @@
 # SRC = v_erase_test.cpp
-SRC = set_construct_test.cpp set_begin_test.cpp set_clear_test.cpp \
-		set_count_test.cpp set_empty_test.cpp set_end_test.cpp \
-		set_equal_range_test.cpp set_erase_test.cpp set_find_test.cpp \
-		set_get_allocator_test.cpp set_insert_test.cpp set_key_comp_test.cpp \
-		set_lower_bound_test.cpp set_max_size_test.cpp set_operator=_test.cpp \
-		set_rbegin_test.cpp set_rend_test.cpp set_size_test.cpp set_swap_test.cpp \
-		set_upper_bound_test.cpp set_value_comp_test.cpp set_relational_operators_test.cpp \
-		set_non_member_swap_test.cpp
+SRC = m_construct_test.cpp m_at_test.cpp m_begin_test.cpp m_clear_test.cpp \
+		m_count_test.cpp m_empty_test.cpp m_end_test.cpp m_equal_range_test.cpp \
+		m_erase_test.cpp m_find_test.cpp m_get_allocator_test.cpp m_insert_test.cpp \
+		m_key_comp_test.cpp m_lower_bound_test.cpp m_max_size_test.cpp \
+		m_operator[]_test.cpp m_operator=_test.cpp m_rbegin_test.cpp \
+		m_rend_test.cpp m_size_test.cpp m_swap_test.cpp m_upper_bound_test.cpp \
+		m_value_comp_test.cpp m_relational_operators_test.cpp \
+		m_non_member_swap_test.cpp
 
-SRC_DIR = tests/set_tests/
+SRC_DIR = tests/map_tests/
 
 EXE = $(SRC:.cpp=)
 

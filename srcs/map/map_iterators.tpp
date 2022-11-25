@@ -38,8 +38,31 @@ ft::map<Key, T, Compare, Alloc>::end() const
 	return const_iterator(right, nullptr_f);
 }
 
-reverse_iterator rbegin()														{return reverse_iterator(this->end());}
-			reverse_iterator rend()															{return reverse_iterator(this->begin()); }
-			const_reverse_iterator rbegin() const											{return const_reverse_iterator(this->end());}
-			const_reverse_iterator rend() const												{return const_reverse_iterator(this->begin()); };
+template <class Key, class T, class Compare, class Alloc>
+typename ft::map<Key, T, Compare, Alloc>::reverse_iterator
+ft::map<Key, T, Compare, Alloc>::rbegin()
+{
+	return reverse_iterator(this->end());
+}
+
+template <class Key, class T, class Compare, class Alloc>
+typename ft::map<Key, T, Compare, Alloc>::reverse_iterator
+ft::map<Key, T, Compare, Alloc>::rend()
+{
+	return reverse_iterator(this->begin());
+}
+
+template <class Key, class T, class Compare, class Alloc>
+typename ft::map<Key, T, Compare, Alloc>::const_reverse_iterator
+ft::map<Key, T, Compare, Alloc>::rbegin() const
+{
+	return const_reverse_iterator(this->end());
+}
+
+template <class Key, class T, class Compare, class Alloc>
+typename ft::map<Key, T, Compare, Alloc>::const_reverse_iterator
+ft::map<Key, T, Compare, Alloc>::rend() const
+{
+	return const_reverse_iterator(this->begin());
+};
 #endif

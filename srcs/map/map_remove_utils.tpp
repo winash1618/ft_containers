@@ -3,7 +3,7 @@
 
 template <class Key, class T, class Compare, class Alloc>
 void
-ft::map<Key, T, Compare, Alloc>::tree_remove(node_pointer delete_node)
+ft::map<Key, T, Compare, Alloc>::map_remove(typename ft::map<Key, T, Compare, Alloc>::node_pointer delete_node)
 {
 	bool removed_black = false;
 	node_pointer y = (delete_node->_left == nullptr_f || delete_node->_right == nullptr_f) ?
@@ -41,7 +41,7 @@ ft::map<Key, T, Compare, Alloc>::tree_remove(node_pointer delete_node)
 
 template <class Key, class T, class Compare, class Alloc>
 void
-ft::map<Key, T, Compare, Alloc>::removeYConnectionToDeleteNode(node_pointer y, node_pointer delete_node)
+ft::map<Key, T, Compare, Alloc>::removeYConnectionToDeleteNode(typename ft::map<Key, T, Compare, Alloc>::node_pointer y, typename ft::map<Key, T, Compare, Alloc>::node_pointer delete_node)
 {
 	y->_parent = delete_node->_parent;
 	if (tree_is_left_child(delete_node))
@@ -57,7 +57,7 @@ ft::map<Key, T, Compare, Alloc>::removeYConnectionToDeleteNode(node_pointer y, n
 }
 template <class Key, class T, class Compare, class Alloc>
 void
-ft::map<Key, T, Compare, Alloc>::changeY2Root(node_pointer y, node_pointer delete_node)
+ft::map<Key, T, Compare, Alloc>::changeY2Root(typename ft::map<Key, T, Compare, Alloc>::node_pointer y, typename ft::map<Key, T, Compare, Alloc>::node_pointer delete_node)
 {
 	y->_parent = delete_node->_parent;
 	y->_left = delete_node->_left;
@@ -71,7 +71,7 @@ ft::map<Key, T, Compare, Alloc>::changeY2Root(node_pointer y, node_pointer delet
 
 template <class Key, class T, class Compare, class Alloc>
 void
-ft::map<Key, T, Compare, Alloc>::balanceTreeAfterDelete(node_pointer x, node_pointer w)
+ft::map<Key, T, Compare, Alloc>::balanceTreeAfterDelete(typename ft::map<Key, T, Compare, Alloc>::node_pointer x, typename ft::map<Key, T, Compare, Alloc>::node_pointer w)
 {
 	while (true)
 	{

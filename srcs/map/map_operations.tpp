@@ -139,14 +139,14 @@ ft::map<Key, T, Compare, Alloc>::upper_bound(const typename ft::map<Key, T, Comp
 }
 
 template <class Key, class T, class Compare, class Alloc>
-ft::pair<const_iterator,const_iterator>
+ft::pair<typename ft::map<Key, T, Compare, Alloc>::const_iterator,typename ft::map<Key, T, Compare, Alloc>::const_iterator>
 ft::map<Key, T, Compare, Alloc>::equal_range(const typename ft::map<Key, T, Compare, Alloc>::key_type& k) const
 {
 	return ft::pair<const_iterator, const_iterator>(lower_bound(k), upper_bound(k));
 }
 
 template <class Key, class T, class Compare, class Alloc>
-ft::pair<iterator,iterator>
+ft::pair<typename ft::map<Key, T, Compare, Alloc>::iterator, typename ft::map<Key, T, Compare, Alloc>::iterator>
 ft::map<Key, T, Compare, Alloc>::equal_range (const typename ft::map<Key, T, Compare, Alloc>::key_type& k)
 {
 	return ft::pair<iterator, iterator>(lower_bound(k), upper_bound(k));

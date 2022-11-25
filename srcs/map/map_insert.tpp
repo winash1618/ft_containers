@@ -3,7 +3,7 @@
 
  
 template <class Key, class T, class Compare, class Alloc>
-ft::pair<iterator,bool>
+ft::pair<typename ft::map<Key, T, Compare, Alloc>::iterator, bool>
 ft::map<Key, T, Compare, Alloc>::insert (const value_type& val)
 {
 	if (_root == nullptr_f)

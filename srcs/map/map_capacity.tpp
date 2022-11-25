@@ -14,6 +14,7 @@ ft::map<Key, T, Compare, Alloc>::max_size() const
 {
 	return (this->n_alloc.max_size());
 }
+
 template <class Key, class T, class Compare, class Alloc>
 bool
 ft::map<Key, T, Compare, Alloc>::empty() const
