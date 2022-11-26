@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:27:34 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/11/07 15:39:16 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/11/26 14:59:36 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,22 @@
 
 namespace ft
 {
-	const                         /* this is a const object...     */
+	const
 	class nullptr_t
 	{
 		public:
-		template<class T>          /* convertible to any type       */
-		operator T*() const        /* of null non-member            */
-			{ return 0; }           /* pointer...                    */
-
-		template<class C, class T> /* or any type of null           */
-			operator T C::*() const /* member pointer...             */
-			{ return 0; }   
-
+		template<class T>
+		operator T*() const
+		{
+			return 0;
+		}
+		template<class C, class T>
+		operator T C::*() const
+		{
+			return 0;
+		}
 		private:
-		void operator&() const;    /* Can't take address of nullptr */
-
+		void operator&() const;
 	} nullptr_f = {};
 	template <class Iterator>
 	class reverse_const_iterator
@@ -54,8 +55,6 @@ namespace ft
 			explicit reverse_const_iterator(Iterator x) : _iter(x), current(x) {}
 			template <class U> 
 			reverse_const_iterator(const reverse_const_iterator<U>& u):_iter(u.base()), current(u.base()) {}
-			// template <class U> 
-			// reverse_const_iterator& operator=(const reverse_const_iterator<U>& u);//c++11
 			reverse_const_iterator(const reverse_const_iterator& x)
 			{
 				*this = x;
@@ -141,14 +140,12 @@ namespace ft
 			explicit reverse_iterator(Iterator x) : _iter(x), current(x) {}
 			template <class U> 
 			reverse_iterator(const reverse_iterator<U>& u):_iter(u.base()), current(u.base()) {}
-			// template <class U> 
-			// reverse_iterator& operator=(const reverse_iterator<U>& u)
 			reverse_iterator(const reverse_iterator& x)
 			{
 				*this = x;
 			}
 			
-			reverse_iterator& operator=(const reverse_iterator<Iterator>& __u) // commented for linux working fine in mac
+			reverse_iterator& operator=(const reverse_iterator<Iterator>& __u)
 			{ 
 				if (this != &__u) 
 				{

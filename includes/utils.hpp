@@ -15,8 +15,7 @@ namespace ft
 		color_t _color;
 		RBTreeNode(const T& data) : _left(nullptr_f), _right(nullptr_f), _parent(nullptr_f), _data(data), _color(RED) {}
 	};
-	// Returns:  true if current_node is a left child of its parent, else false
-	// Precondition:  current_node != nullptr.
+
 	template <class _NodePtr>
 	inline
 	bool
@@ -28,8 +27,6 @@ namespace ft
 		return 0;
 	}
 
-	// Returns:  pointer to the left-most node under current_node.
-	// Precondition:  current_node != nullptr.
 	template <class _NodePtr>
 	inline
 	_NodePtr
@@ -40,8 +37,6 @@ namespace ft
 		return current_node;
 	}
 
-	// Returns:  pointer to the right-most node under current_node.
-	// Precondition:  current_node != nullptr.
 	template <class _NodePtr>
 	inline
 	_NodePtr
@@ -52,8 +47,6 @@ namespace ft
 		return current_node;
 	}
 
-	// Returns:  pointer to the next in-order node after current_node.
-	// Precondition:  current_node != nullptr.
 	template <class _NodePtr>
 	_NodePtr
 	tree_next(_NodePtr current_node)
@@ -67,8 +60,6 @@ namespace ft
 		return current_node->_parent;
 	}
 
-	// Returns:  pointer to the previous in-order node before current_node.
-	// Precondition:  current_node != nullptr.
 	template <class _NodePtr>
 	_NodePtr
 	tree_prev(_NodePtr current_node)

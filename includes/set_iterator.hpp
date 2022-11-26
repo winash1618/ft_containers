@@ -2,7 +2,6 @@
 # define SET_ITERATOR_HPP
 
 #include "reverse_iterator.hpp"
-// #include "const_set_iterator.hpp"
 #include "utils.hpp"
 namespace ft
 {
@@ -23,25 +22,9 @@ namespace ft
 			typedef value_type* pointer;
 			typedef ft::bidirectional_iterator_tag	iterator_category;
 			typedef std::ptrdiff_t					difference_type;
-			// typedef ft::__const_set_iterator<_V, allocator_type> 							iterator;
-			// iterator																__iter;
 			set_iterator() {}
 			set_iterator(__node_pointer ptr): __ptr_(ptr) {}
 			set_iterator(__node_pointer end, __node_pointer ptr):__ptr_(ptr), __end_(end) {}
-			// set_iterator(iterator  iter):__iter(iter)
-			// {
-			// 	__ptr_ = __iter.__ptr_;
-			// 	__end_ = __iter.__end_;
-			// }
-			// set_iterator& operator=(const set_iterator<_V, _NodePtr>& __u) // commented for linux working fine in mac
-			// { 
-			// 	if (this != &__u) 
-			// 	{
-			// 		__ptr_ = static_cast<set_iterator<_V, _NodePtr> >(__u.__ptr_);
-			// 		__end_ = static_cast<set_iterator<_V, _NodePtr> >(__u.__end_);
-			// 	}
-			// 	return *this;
-			// }
 			reference operator*() const
 			{
 

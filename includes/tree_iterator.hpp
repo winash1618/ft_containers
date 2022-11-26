@@ -19,7 +19,6 @@ namespace ft
 			typedef typename allocator_type::template rebind<node_pointer>::other		__node_allocator;
 			typedef typename __node_allocator::pointer									_NodePtr;
 			typedef _NodePtr				__node_pointer;
-			// value_type						__val; commenting this fixed the assignment operator overload error in ft::pair
 			__node_pointer					__ptr_;
 			__node_pointer					__end_;
 			typedef value_type& reference;
@@ -30,15 +29,6 @@ namespace ft
 			__tree_iterator() {}
 			__tree_iterator(__node_pointer ptr): __ptr_(ptr) {}
 			__tree_iterator(__node_pointer end, __node_pointer ptr):__ptr_(ptr), __end_(end) {}
-			// __tree_iterator& operator=(const __tree_iterator<_V, _NodePtr>& __u) // commented for linux working fine in mac
-			// { 
-			// 	if (this != &__u) 
-			// 	{
-			// 		__ptr_ = static_cast<__tree_iterator<_V, _NodePtr> >(__u.__ptr_);
-			// 		__end_ = static_cast<__tree_iterator<_V, _NodePtr> >(__u.__end_);
-			// 	}
-			// 	return *this;
-			// }
 			reference operator*() const
 			{
 				return __ptr_->_data;
