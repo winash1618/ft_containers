@@ -1,8 +1,6 @@
 #ifndef MAP_ERASE_TPP
 # define MAP_ERASE_TPP
 
-
-
 template <class Key, class T, class Compare, class Alloc>
 void 
 ft::map<Key, T, Compare, Alloc>::erase(typename ft::map<Key, T, Compare, Alloc>::iterator position)
@@ -43,5 +41,14 @@ ft::map<Key, T, Compare, Alloc>::erase (typename ft::map<Key, T, Compare, Alloc>
 		first++;
 		ft::map<Key, T, Compare, Alloc>::erase(temp);
 	}
+}
+
+template <class Key, class T, class Compare, class Alloc>
+void
+ft::map<Key, T, Compare, Alloc>::clear()
+{
+	destroy(_root);
+	_size = 0;
+	_root = nullptr_f;
 }
 #endif
