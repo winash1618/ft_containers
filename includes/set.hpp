@@ -1,12 +1,12 @@
 #ifndef SET_HPP
 # define SET_HPP
-# include "pair.hpp"
+# include "utils/pair.hpp"
 # include <iostream>
 # include <algorithm>
 # include <functional>
-# include "set_iterator.hpp"
-# include "reverse_iterator.hpp"
-# include "const_set_iterator.hpp"
+# include "iterators/set_iterator.hpp"
+# include "iterators/reverse_iterator.hpp"
+# include "iterators/const_set_iterator.hpp"
 
 namespace ft
 {

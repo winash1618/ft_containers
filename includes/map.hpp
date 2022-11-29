@@ -1,11 +1,11 @@
 #ifndef MAP_HPP
 # define MAP_HPP
-# include "pair.hpp"
+# include "utils/pair.hpp"
 # include <iostream>
 # include <algorithm>
 # include <functional>
-# include "tree_iterator.hpp"
-# include "reverse_iterator.hpp"
+# include "iterators/tree_iterator.hpp"
+# include "iterators/reverse_iterator.hpp"
 # define DEBUG_1 0
 # define DEBUG_R 0
 

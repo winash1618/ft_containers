@@ -6,104 +6,25 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/11/12 14:21:37 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/11/29 16:04:53 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 #include <iostream>
-#include <vector>
+// #include <vector>
 // #include <iterator>
 #include <cassert>
 #include <cstddef>
 #include <limits>
-#include "iterator.hpp"
-#include "iterator_traits.hpp"
-#include "reverse_iterator.hpp"
-#include "pair.hpp"
-#include "vec_utils.hpp"
+#include "iterators/iterator.hpp"
+#include "iterators/iterator_traits.hpp"
+#include "iterators/reverse_iterator.hpp"
+#include "utils/pair.hpp"
+#include "utils/vec_utils.hpp"
 namespace ft
 {
-	// https://stackoverflow.com/questions/4307271/how-to-check-that-the-passed-iterator-is-a-random-access-iterator
-	template <class _RandIter>
-	void
-	__check_valid(_RandIter first, _RandIter last, std::random_access_iterator_tag)
-	{
-		if (first > last )
-					throw std::length_error("vector");
-	}
-	template <class _RandIter>
-	void
-	__check_valid(_RandIter first, _RandIter last, std::input_iterator_tag)
-	{
-		(void)first;
-		(void)last;
-	}
-	template <class _RandIter>
-	void
-	__check_valid(_RandIter first, _RandIter last, std::output_iterator_tag)
-	{
-		(void)first;
-		(void)last;
-	}
-	template <class _RandIter>
-	void
-	__check_valid(_RandIter first, _RandIter last, std::forward_iterator_tag)
-	{
-		(void)first;
-		(void)last;
-	}
-	template <class _RandIter>
-	void
-	__check_valid(_RandIter first, _RandIter last, std::bidirectional_iterator_tag)
-	{
-		(void)first;
-		(void)last;
-
-	}
-	template <class _RandIter>
-	void
-	__check_valid(_RandIter first, _RandIter last, ft::random_access_iterator_tag)
-	{
-		if (first > last )
-					throw std::length_error("vector");
-	}
-	template <class _RandIter>
-	void
-	__check_valid(_RandIter first, _RandIter last, ft::input_iterator_tag)
-	{
-		(void)first;
-		(void)last;
-	}
-	template <class _RandIter>
-	void
-	__check_valid(_RandIter first, _RandIter last, ft::output_iterator_tag)
-	{
-		(void)first;
-		(void)last;
-	}
-	template <class _RandIter>
-	void
-	__check_valid(_RandIter first, _RandIter last, ft::forward_iterator_tag)
-	{
-		(void)first;
-		(void)last;
-	}
-	template <class _RandIter>
-	void
-	__check_valid(_RandIter first, _RandIter last, ft::bidirectional_iterator_tag)
-	{
-		(void)first;
-		(void)last;
-
-	}
-	template <class InputIter>
-	void
-	check_valid(InputIter first, InputIter last)
-	{
-		__check_valid(first, last, typename ft::iterator_traits<InputIter>::iterator_category());
-	}
 	template <class T, class Allocator = std::allocator<T> >
 	class vector
 	{

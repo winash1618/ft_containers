@@ -87,6 +87,86 @@ namespace ft
 	int is_int<int>() {
 	return true;
 	}
+
+	// https://stackoverflow.com/questions/4307271/how-to-check-that-the-passed-iterator-is-a-random-access-iterator
+	template <class _RandIter>
+	void
+	__check_valid(_RandIter first, _RandIter last, std::random_access_iterator_tag)
+	{
+		if (first > last )
+					throw std::length_error("vector");
+	}
+	template <class _RandIter>
+	void
+	__check_valid(_RandIter first, _RandIter last, std::input_iterator_tag)
+	{
+		(void)first;
+		(void)last;
+	}
+	template <class _RandIter>
+	void
+	__check_valid(_RandIter first, _RandIter last, std::output_iterator_tag)
+	{
+		(void)first;
+		(void)last;
+	}
+	template <class _RandIter>
+	void
+	__check_valid(_RandIter first, _RandIter last, std::forward_iterator_tag)
+	{
+		(void)first;
+		(void)last;
+	}
+	template <class _RandIter>
+	void
+	__check_valid(_RandIter first, _RandIter last, std::bidirectional_iterator_tag)
+	{
+		(void)first;
+		(void)last;
+
+	}
+	template <class _RandIter>
+	void
+	__check_valid(_RandIter first, _RandIter last, ft::random_access_iterator_tag)
+	{
+		if (first > last )
+					throw std::length_error("vector");
+	}
+	template <class _RandIter>
+	void
+	__check_valid(_RandIter first, _RandIter last, ft::input_iterator_tag)
+	{
+		(void)first;
+		(void)last;
+	}
+	template <class _RandIter>
+	void
+	__check_valid(_RandIter first, _RandIter last, ft::output_iterator_tag)
+	{
+		(void)first;
+		(void)last;
+	}
+	template <class _RandIter>
+	void
+	__check_valid(_RandIter first, _RandIter last, ft::forward_iterator_tag)
+	{
+		(void)first;
+		(void)last;
+	}
+	template <class _RandIter>
+	void
+	__check_valid(_RandIter first, _RandIter last, ft::bidirectional_iterator_tag)
+	{
+		(void)first;
+		(void)last;
+
+	}
+	template <class InputIter>
+	void
+	check_valid(InputIter first, InputIter last)
+	{
+		__check_valid(first, last, typename ft::iterator_traits<InputIter>::iterator_category());
+	}
 	
 }
 #endif
