@@ -49,6 +49,6 @@ ft::map<Key, T, Compare, Alloc>::clear()
 {
 	destroy(_root);
 	_size = 0;
-	_root = nullptr_f;
+	// _root = _nil;
 }
 #endif

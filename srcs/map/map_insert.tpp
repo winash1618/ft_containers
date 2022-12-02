@@ -6,7 +6,7 @@ template <class Key, class T, class Compare, class Alloc>
 ft::pair<typename ft::map<Key, T, Compare, Alloc>::iterator, bool>
 ft::map<Key, T, Compare, Alloc>::insert (const value_type& val)
 {
-	if (_root == _nil)
+	if (_root === _nil)
 	{
 		_root = n_alloc.allocate(1);
 		ft::RBTreeNode<value_type> temp(val);
@@ -17,7 +17,6 @@ ft::map<Key, T, Compare, Alloc>::insert (const value_type& val)
 		_root->_color = BLACK;
 		ft::pair<iterator, bool> t = ft::make_pair<iterator, bool>(iterator(_root), true);
 		_size = 1;
-		
 		return t;
 	}
 	node_pointer cur = _root;

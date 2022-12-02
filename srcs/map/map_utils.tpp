@@ -61,5 +61,6 @@ ft::map<Key, T, Compare, Alloc>::destroy(node_pointer __nd)
 		__na.destroy(__nd);
 		__na.deallocate( __nd, 1);
 	}
+	__nd = _nil;
 }
 #endif
