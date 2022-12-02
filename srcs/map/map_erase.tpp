@@ -23,7 +23,7 @@ ft::map<Key, T, Compare, Alloc>::erase(const typename ft::map<Key, T, Compare, A
 {
 	node_pointer __nd;
 	__nd = const_cast<node_pointer>(find(k).__ptr_);
-	if(__nd)
+	if(__nd != _nil)
 	{
 		ft::map<Key, T, Compare, Alloc>::erase(find(k));
 		return 1;

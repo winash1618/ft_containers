@@ -13,16 +13,17 @@ namespace ft
 		
 		T _data;
 		color_t _color;
-		RBTreeNode(const T& data) : _left(nullptr_f), _right(nullptr_f), _parent(nullptr_f), _data(data), _color(RED) {}
+		RBTreeNode() : _left(), _right(), _parent(), _data(), _color(BLACK) {}
+		RBTreeNode(const T& data) : _left(), _right(), _parent(), _data(data), _color(RED) {}
 	};
 
 	template <class _NodePtr>
 	inline
 	bool
-	tree_is_left_child(_NodePtr current_node)
+	tree_is_left_child(_NodePtr current_node, _NodePtr nil_node)
 	{
-		if (current_node != nullptr_f )
-			if (current_node->_parent != nullptr_f)
+		if (current_node != nil_node )
+			if (current_node->_parent != nil_node)
 				return current_node == current_node->_parent->_left;
 		return 0;
 	}
@@ -30,9 +31,9 @@ namespace ft
 	template <class _NodePtr>
 	inline
 	_NodePtr
-	tree_min(_NodePtr current_node)
+	tree_min(_NodePtr current_node, _NodePtr nil_node)
 	{
-		while (current_node->_left != nullptr_f)
+		while (current_node->_left != nil_node)
 			current_node = current_node->_left;
 		return current_node;
 	}
@@ -40,20 +41,20 @@ namespace ft
 	template <class _NodePtr>
 	inline
 	_NodePtr
-	tree_max(_NodePtr current_node)
+	tree_max(_NodePtr current_node, _NodePtr nil_node)
 	{
-		while (current_node->_right != nullptr_f)
+		while (current_node->_right != nil_node)
 			current_node = current_node->_right;
 		return current_node;
 	}
 
 	template <class _NodePtr>
 	_NodePtr
-	tree_next(_NodePtr current_node)
+	tree_next(_NodePtr current_node, _NodePtr nil_node)
 	{
-		if (current_node->_right != nullptr_f)
-			return tree_min(current_node->_right);
-		while (!tree_is_left_child(current_node) && current_node->_parent)
+		if (current_node->_right != nil_node)
+			return tree_min(current_node->_right, nil_node);
+		while (!tree_is_left_child(current_node, nil_node) && current_node->_parent != nil_node)
 		{
 			current_node = current_node->_parent;
 		}
@@ -62,11 +63,11 @@ namespace ft
 
 	template <class _NodePtr>
 	_NodePtr
-	tree_prev(_NodePtr current_node)
+	tree_prev(_NodePtr current_node, _NodePtr nil_node)
 	{
-		if (current_node->_left != nullptr_f)
-			return tree_max(current_node->_left);
-		while (tree_is_left_child(current_node))
+		if (current_node->_left != nil_node)
+			return tree_max(current_node->_left, nil_node);
+		while (tree_is_left_child(current_node, nil_node))
 			current_node = current_node->_parent;
 		return current_node->_parent;
 	}

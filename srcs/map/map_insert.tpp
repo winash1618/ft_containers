@@ -6,11 +6,14 @@ template <class Key, class T, class Compare, class Alloc>
 ft::pair<typename ft::map<Key, T, Compare, Alloc>::iterator, bool>
 ft::map<Key, T, Compare, Alloc>::insert (const value_type& val)
 {
-	if (_root == nullptr_f)
+	if (_root == _nil)
 	{
 		_root = n_alloc.allocate(1);
 		ft::RBTreeNode<value_type> temp(val);
 		n_alloc.construct(_root, temp);
+		_root->_left = _nil;
+		_root->_right = _nil;
+		_root->_parent = _nil;
 		_root->_color = BLACK;
 		ft::pair<iterator, bool> t = ft::make_pair<iterator, bool>(iterator(_root), true);
 		_size = 1;
@@ -18,8 +21,8 @@ ft::map<Key, T, Compare, Alloc>::insert (const value_type& val)
 		return t;
 	}
 	node_pointer cur = _root;
-	node_pointer parent = nullptr_f;
-	while (cur)
+	node_pointer parent = _nil;
+	while (cur != _nil)
 	{
 		if (_comp(cur->_data.first, val.first))
 		{
@@ -39,6 +42,9 @@ ft::map<Key, T, Compare, Alloc>::insert (const value_type& val)
 	cur = n_alloc.allocate(1);
 	ft::RBTreeNode<value_type> temp(val);
 	n_alloc.construct(cur, temp);
+	cur->_left = _nil;
+	cur->_right = _nil;
+	cur->_parent = _nil;
 	node_pointer newnode = cur;
 	newnode->_color = RED;
 	if (_comp(parent->_data.first, val.first))
@@ -51,13 +57,13 @@ ft::map<Key, T, Compare, Alloc>::insert (const value_type& val)
 		parent->_left = newnode;
 		newnode->_parent = parent;
 	}
-	while (parent && parent->_color == RED)
+	while (parent != _nil && parent->_color == RED)
 	{
 		Node* grandParent = parent->_parent;
 		if (grandParent->_left == parent)
 		{
 			Node* uncle = grandParent->_right;
-			if (uncle && uncle->_color == RED)
+			if (uncle != _nil && uncle->_color == RED)
 			{
 				parent->_color = BLACK;
 				uncle->_color = BLACK;
@@ -86,7 +92,7 @@ ft::map<Key, T, Compare, Alloc>::insert (const value_type& val)
 		else
 		{
 			node_pointer uncle = grandParent->_left;
-			if (uncle && uncle->_color == RED)
+			if (uncle != _nil && uncle->_color == RED)
 			{
 				uncle->_color = BLACK;
 				parent->_color = BLACK;

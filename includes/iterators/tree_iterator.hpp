@@ -40,7 +40,7 @@ namespace ft
 
 			__tree_iterator& operator++()
 			{
-				__ptr_ = tree_next(__ptr_);
+				__ptr_ = tree_next(__ptr_, __end_);
 				return *this;
 			}
 			__tree_iterator operator++(int)
@@ -52,12 +52,12 @@ namespace ft
 
 			__tree_iterator& operator--()
 			{
-				if (__ptr_ == nullptr_f)
+				if (__ptr_ == __end_)
 				{
 					__ptr_ = __end_;
 					return *this;
 				}
-				__ptr_ = tree_prev(__ptr_);
+				__ptr_ = tree_prev(__ptr_, __end_);
 				return *this;
 			}
 			__tree_iterator operator--(int)
@@ -128,7 +128,7 @@ namespace ft
 
 			__const_tree_iterator& operator++()
 			{
-				__ptr_ = tree_next(__ptr_);
+				__ptr_ = tree_next(__ptr_, __end_);
 				return *this;
 			}
 			__const_tree_iterator operator++(int)
@@ -140,12 +140,12 @@ namespace ft
 
 			__const_tree_iterator& operator--()
 			{
-				if (__ptr_ == nullptr_f)
+				if (__ptr_ == __end_)
 				{
 					__ptr_ = __end_;
 					return *this;
 				}
-				__ptr_ = tree_prev(__ptr_);
+				__ptr_ = tree_prev(__ptr_, __end_);
 				return *this;
 			}
 			__const_tree_iterator operator--(int)

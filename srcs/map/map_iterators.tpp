@@ -4,14 +4,14 @@ template <class Key, class T, class Compare, class Alloc>
 typename ft::map<Key, T, Compare, Alloc>::iterator
 ft::map<Key, T, Compare, Alloc>::begin()
 {
-	return iterator(begin_right(), begin_left());
+	return iterator(_nil, begin_left());
 }
 
 template <class Key, class T, class Compare, class Alloc>
 typename ft::map<Key, T, Compare, Alloc>::const_iterator
 ft::map<Key, T, Compare, Alloc>::begin() const
 {
-	return const_iterator(begin_right(), begin_left());
+	return const_iterator(_nil, begin_left());
 }
 
 template <class Key, class T, class Compare, class Alloc>
@@ -19,11 +19,11 @@ typename ft::map<Key, T, Compare, Alloc>::iterator
 ft::map<Key, T, Compare, Alloc>::end()
 {
 	node_pointer right = _root;
-	while (right && right->_right)
+	while (right != _nil && right->_right != _nil)
 	{
 		right = right->_right;
 	}
-	return iterator(right, nullptr_f);
+	return iterator(right, _nil);
 }
 
 template <class Key, class T, class Compare, class Alloc>
@@ -31,11 +31,11 @@ typename ft::map<Key, T, Compare, Alloc>::const_iterator
 ft::map<Key, T, Compare, Alloc>::end() const
 {
 	node_pointer right = _root;
-	while (right && right->_right)
+	while (right != _nil && right->_right != _nil)
 	{
 		right = right->_right;
 	}
-	return const_iterator(right, nullptr_f);
+	return const_iterator(right, _nil);
 }
 
 template <class Key, class T, class Compare, class Alloc>

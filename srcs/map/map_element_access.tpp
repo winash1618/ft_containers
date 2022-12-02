@@ -14,7 +14,7 @@ ft::map<Key, T, Compare, Alloc>::at(const typename ft::map<Key, T, Compare, Allo
 {
 	node_pointer __nd;
 	__nd = const_cast<node_pointer>(find(k).__ptr_);
-	if (__nd == nullptr_f)
+	if (__nd == _nil)
 		throw std::out_of_range("map::at:  key not found");
 	return (__nd->_data.second);
 }

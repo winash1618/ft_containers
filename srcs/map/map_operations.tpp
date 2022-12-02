@@ -6,8 +6,8 @@ typename ft::map<Key, T, Compare, Alloc>::iterator
 ft::map<Key, T, Compare, Alloc>::find(const typename ft::map<Key, T, Compare, Alloc>::key_type& k)
 {
 	node_pointer cur = _root;
-	node_pointer parent = nullptr_f;
-	while (cur != nullptr_f)
+	node_pointer parent = _nil;
+	while (cur != _nil)
 	{
 		if (_comp(cur->_data.first, k))
 		{
@@ -34,7 +34,7 @@ typename ft::map<Key, T, Compare, Alloc>::const_iterator
 ft::map<Key, T, Compare, Alloc>::find (const typename ft::map<Key, T, Compare, Alloc>::key_type& k) const
 {
 	node_pointer cur = _root;
-	node_pointer parent = nullptr_f;
+	node_pointer parent = _nil;
 	while (cur)
 	{
 		if (cur->_data.first < k)
@@ -59,8 +59,8 @@ typename ft::map<Key, T, Compare, Alloc>::iterator
 ft::map<Key, T, Compare, Alloc>::lower_bound(const typename ft::map<Key, T, Compare, Alloc>::key_type& k)
 {
 	node_pointer __root = _root;
-	node_pointer __result = nullptr_f;
-	while (__root != nullptr_f)
+	node_pointer __result = _nil;
+	while (__root != _nil)
 	{
 		if (!_comp(__root->_data.first, k))
 		{
@@ -80,8 +80,8 @@ typename ft::map<Key, T, Compare, Alloc>::iterator
 ft::map<Key, T, Compare, Alloc>::upper_bound(const typename ft::map<Key, T, Compare, Alloc>::key_type& k)
 {
 	node_pointer __root = _root;
-	node_pointer __result = nullptr_f;
-	while (__root != nullptr_f)
+	node_pointer __result = _nil;
+	while (__root != _nil)
 	{
 		if (_comp( k, __root->_data.first))
 		{
@@ -101,8 +101,8 @@ typename ft::map<Key, T, Compare, Alloc>::const_iterator
 ft::map<Key, T, Compare, Alloc>::lower_bound(const typename ft::map<Key, T, Compare, Alloc>::key_type& k) const
 {
 	node_pointer __root = _root;
-	node_pointer __result = nullptr_f;
-	while (__root != nullptr_f)
+	node_pointer __result = _nil;
+	while (__root != _nil)
 	{
 		if (!_comp(__root->_data.first, k))
 		{
@@ -122,8 +122,8 @@ typename ft::map<Key, T, Compare, Alloc>::const_iterator
 ft::map<Key, T, Compare, Alloc>::upper_bound(const typename ft::map<Key, T, Compare, Alloc>::key_type& k) const
 {
 	node_pointer __root = _root;
-	node_pointer __result = nullptr_f;
-	while (__root != nullptr_f)
+	node_pointer __result = _nil;
+	while (__root != _nil)
 	{
 		if (_comp( k, __root->_data.first))
 		{

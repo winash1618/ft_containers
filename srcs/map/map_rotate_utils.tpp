@@ -11,12 +11,12 @@ ft::map<Key, T, Compare, Alloc>::RotateL(node_pointer parent)
 	parent->_right = subRL;
 	subR->_left = parent;
 	parent->_parent = subR;
-	if (subRL)
+	if (subRL != _nil)
 		subRL->_parent = parent;
 	if (_root == parent)
 	{
 		_root = subR;
-		_root -> _parent = nullptr_f;
+		_root -> _parent = _nil;
 	}
 	else
 	{
@@ -38,13 +38,13 @@ ft::map<Key, T, Compare, Alloc>::RotateR(node_pointer parent)
 
 	parent->_left = subLR;
 	subL->_right = parent;
-	if (subLR)
+	if (subLR != _nil)
 		subLR->_parent = parent;
 	parent->_parent = subL;
 	if (_root == parent)
 	{
 		_root = subL;
-		_root->_parent = nullptr_f;
+		_root->_parent = _nil;
 	}
 	else
 	{
