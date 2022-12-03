@@ -11,7 +11,6 @@ ft::map<Key, T, Compare, Alloc>::erase(typename ft::map<Key, T, Compare, Alloc>:
 	if (!__node || !_root)
 		return ;
 	n_alloc.destroy(__node);
-		
 	map_remove(__node);
 	n_alloc.deallocate(__node, 1);
 	_size--;
@@ -27,7 +26,6 @@ ft::map<Key, T, Compare, Alloc>::erase(const typename ft::map<Key, T, Compare, A
 	{
 		ft::map<Key, T, Compare, Alloc>::erase(find(k));
 		return 1;
-
 	}
 	return 0;
 }

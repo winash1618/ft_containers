@@ -24,7 +24,6 @@ ft::map<Key, T, Compare, Alloc>::find(const typename ft::map<Key, T, Compare, Al
 		{
 			return (iterator(cur));
 		}
-		
 	}
 	return (end());
 }

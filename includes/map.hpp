@@ -55,6 +55,7 @@ namespace ft
 
 		private:
 			node_pointer																_root;
+			node_pointer																_nil;
 			key_compare																	_comp;
 			allocator_type																_alloc;
 			__node_allocator															n_alloc;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reverse_iterator.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*   By: mkaruvan <mkaruvan@student.42abudhabi.a    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:27:34 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/11/26 14:59:36 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/03 16:57:18 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ namespace ft
 		private:
 		void operator&() const;
 	} nullptr_f = {};
+
 	template <class Iterator>
 	class reverse_const_iterator
 	{
@@ -49,7 +50,6 @@ namespace ft
 			typedef typename ft::iterator_traits<Iterator>::pointer						pointer;
 			typedef typename ft::iterator_traits<Iterator>::value_type					value_type;
 			typedef typename ft::iterator_traits<Iterator>::iterator_category			iterator_category;
-			
 
 			reverse_const_iterator(): _iter(), current(){}
 			explicit reverse_const_iterator(Iterator x) : _iter(x), current(x) {}
@@ -59,7 +59,7 @@ namespace ft
 			{
 				*this = x;
 			}
-			
+
 			reverse_const_iterator& operator=(const reverse_const_iterator<Iterator>& __u) // commented for linux working fine in mac
 			{ 
 				if (this != &__u) 

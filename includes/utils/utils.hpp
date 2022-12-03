@@ -2,7 +2,11 @@
 # define UTILS_HPP
 namespace ft
 {
-	enum color_t { BLACK, RED };
+	enum color_t
+	{
+		BLACK,
+		RED
+	};
 
 	template<class T>
 	struct RBTreeNode
@@ -14,6 +18,7 @@ namespace ft
 		T _data;
 		color_t _color;
 		RBTreeNode(const T& data) : _left(nullptr_f), _right(nullptr_f), _parent(nullptr_f), _data(data), _color(RED) {}
+		RBTreeNode() : _left(nullptr_f), _right(nullptr_f), _parent(nullptr_f), _data(), _color(BLACK) {}
 	};
 
 	template <class _NodePtr>
@@ -23,8 +28,8 @@ namespace ft
 	{
 		if (current_node != nullptr_f )
 			if (current_node->_parent != nullptr_f)
-				return current_node == current_node->_parent->_left;
-		return 0;
+				return (current_node == current_node->_parent->_left);
+		return (0);
 	}
 
 	template <class _NodePtr>
@@ -34,7 +39,7 @@ namespace ft
 	{
 		while (current_node->_left != nullptr_f)
 			current_node = current_node->_left;
-		return current_node;
+		return (current_node);
 	}
 
 	template <class _NodePtr>
@@ -44,7 +49,7 @@ namespace ft
 	{
 		while (current_node->_right != nullptr_f)
 			current_node = current_node->_right;
-		return current_node;
+		return (current_node);
 	}
 
 	template <class _NodePtr>
@@ -52,12 +57,12 @@ namespace ft
 	tree_next(_NodePtr current_node)
 	{
 		if (current_node->_right != nullptr_f)
-			return tree_min(current_node->_right);
+			return (tree_min(current_node->_right));
 		while (!tree_is_left_child(current_node) && current_node->_parent)
 		{
 			current_node = current_node->_parent;
 		}
-		return current_node->_parent;
+		return (current_node->_parent);
 	}
 
 	template <class _NodePtr>
@@ -65,10 +70,10 @@ namespace ft
 	tree_prev(_NodePtr current_node)
 	{
 		if (current_node->_left != nullptr_f)
-			return tree_max(current_node->_left);
+			return (tree_max(current_node->_left));
 		while (tree_is_left_child(current_node))
 			current_node = current_node->_parent;
-		return current_node->_parent;
+		return (current_node->_parent);
 	}
 }
 #endif
