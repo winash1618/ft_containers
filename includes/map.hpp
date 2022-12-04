@@ -105,6 +105,7 @@ namespace ft
 			size_type								erase(const key_type& k);
 			void									erase(iterator first, iterator last);
 		private:
+			void			rb_transplant(node_pointer u, node_pointer v);
 			const			node_pointer begin_left(void) const;
 			const			node_pointer begin_right(void) const;
 			node_pointer	begin_left(void);
