@@ -23,7 +23,7 @@ ft::map<Key, T, Compare, Alloc>::end()
 	{
 		right = right->_right;
 	}
-	return iterator(right, nullptr_f);
+	return iterator(right, nullptr_f,_nil);
 }
 
 template <class Key, class T, class Compare, class Alloc>
@@ -35,7 +35,7 @@ ft::map<Key, T, Compare, Alloc>::end() const
 	{
 		right = right->_right;
 	}
-	return const_iterator(right, nullptr_f);
+	return const_iterator(right, nullptr_f, _nil);
 }
 
 template <class Key, class T, class Compare, class Alloc>

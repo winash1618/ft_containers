@@ -21,6 +21,7 @@ namespace ft
 			typedef _NodePtr				__node_pointer;
 			__node_pointer					__ptr_;
 			__node_pointer					__end_;
+			__node_pointer					__nil_;
 			typedef value_type& reference;
 			typedef value_type* pointer;
 			typedef ft::bidirectional_iterator_tag	iterator_category;
@@ -29,12 +30,17 @@ namespace ft
 			__tree_iterator() {}
 			__tree_iterator(__node_pointer ptr): __ptr_(ptr) {}
 			__tree_iterator(__node_pointer end, __node_pointer ptr):__ptr_(ptr), __end_(end) {}
+			__tree_iterator(__node_pointer end, __node_pointer ptr, __node_pointer nil):__ptr_(ptr), __end_(end), __nil_(nil) {}
 			reference operator*() const
 			{
+				if (__ptr_ == nullptr_f)
+					return __nil_->_data;
 				return __ptr_->_data;
 			}
 			pointer operator->() const
 			{
+				if (__ptr_ == nullptr_f)
+					return &__nil_->_data;
 				return &__ptr_->_data;
 			}
 
@@ -62,7 +68,6 @@ namespace ft
 			}
 			__tree_iterator operator--(int)
 			{
-				
 				__tree_iterator __t(*this);
 				--(*this); 
 				return __t;
@@ -89,6 +94,7 @@ namespace ft
 			// value_type						__val; commenting this fixed the assignment operator overload error in ft::pair
 			__node_pointer																__ptr_;
 			__node_pointer																__end_;
+			__node_pointer																__nil_;
 			typedef const value_type&															reference;
 			typedef const value_type*															pointer;
 			typedef ft::bidirectional_iterator_tag										iterator_category;
@@ -98,6 +104,7 @@ namespace ft
 			__const_tree_iterator() {}
 			__const_tree_iterator(__node_pointer ptr): __ptr_(ptr) {}
 			__const_tree_iterator(__node_pointer end, __node_pointer ptr):__ptr_(ptr), __end_(end) {}
+			__const_tree_iterator(__node_pointer end, __node_pointer ptr, __node_pointer nil):__ptr_(ptr), __end_(end), __nil_(nil) {}
 			__const_tree_iterator(iterator  iter):__iter(iter)
 			{
 				__ptr_ = __iter.__ptr_;
@@ -114,15 +121,20 @@ namespace ft
 			// 	{
 			// 		__ptr_ = static_cast<__const_tree_iterator<Alloc> >(__u.__ptr_);
 			// 		__end_ = static_cast<__const_tree_iterator<Alloc> >(__u.__end_);
+			// 		__nil_ = static_cast<__const_tree_iterator<Alloc> >(__u.__nil_);
 			// 	}
 			// 	return *this;
 			// }
 			reference operator*() const
 			{
+				if (__ptr_ == nullptr_f)
+					return __nil_->_data;
 				return __ptr_->_data;
 			}
 			pointer operator->() const
 			{
+				if (__ptr_ == nullptr_f)
+					return &__nil_->_data;
 				return &__ptr_->_data;
 			}
 
@@ -150,7 +162,6 @@ namespace ft
 			}
 			__const_tree_iterator operator--(int)
 			{
-				
 				__const_tree_iterator __t(*this);
 				--(*this); 
 				return __t;

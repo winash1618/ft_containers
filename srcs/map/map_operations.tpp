@@ -6,18 +6,15 @@ typename ft::map<Key, T, Compare, Alloc>::iterator
 ft::map<Key, T, Compare, Alloc>::find(const typename ft::map<Key, T, Compare, Alloc>::key_type& k)
 {
 	node_pointer cur = _root;
-	node_pointer parent = nullptr_f;
 	while (cur != nullptr_f)
 	{
 		if (_comp(cur->_data.first, k))
 		{
-			parent = cur;
 			cur = cur->_right;
 
 		}
 		else if (_comp(k, cur->_data.first))
 		{
-			parent = cur;
 			cur = cur->_left;
 		}
 		else

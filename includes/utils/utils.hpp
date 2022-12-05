@@ -14,6 +14,7 @@ namespace ft
 		T _data;
 		color_t _color;
 		RBTreeNode(const T& data) : _left(nullptr_f), _right(nullptr_f), _parent(nullptr_f), _data(data), _color(RED) {}
+		RBTreeNode() : _left(nullptr_f), _right(nullptr_f), _parent(nullptr_f), _data(), _color(RED) {}
 	};
 
 	template <class _NodePtr>
