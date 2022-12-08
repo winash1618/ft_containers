@@ -37,7 +37,15 @@ namespace ft
 
 			set_iterator& operator++()
 			{
-				__ptr_ = tree_next(__ptr_);
+				__node_pointer current_node = __ptr_;
+				if (current_node->_right != nullptr_f)
+					__ptr_ = tree_min(current_node->_right);
+				else
+				{
+					while (!tree_is_left_child(current_node) && current_node->_parent)
+						current_node = current_node->_parent;
+					__ptr_ = current_node->_parent;
+				}
 				return *this;
 			}
 			set_iterator operator++(int)
@@ -54,7 +62,17 @@ namespace ft
 					__ptr_ = __end_;
 					return *this;
 				}
-				__ptr_ = tree_prev(__ptr_);
+				__node_pointer current_node = __ptr_;
+				if (current_node == nullptr_f)
+					__ptr_ = nullptr_f;
+				else if (current_node->_left != nullptr_f)
+					__ptr_ = tree_max(current_node->_left);
+				else
+				{
+					while (tree_is_left_child(current_node))
+					current_node = current_node->_parent;
+					__ptr_ =  current_node->_parent;
+				}
 				return *this;
 			}
 			set_iterator operator--(int)

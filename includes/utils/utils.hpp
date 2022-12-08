@@ -48,28 +48,30 @@ namespace ft
 		return current_node;
 	}
 
-	template <class _NodePtr>
-	_NodePtr
-	tree_next(_NodePtr current_node)
-	{
-		if (current_node->_right != nullptr_f)
-			return tree_min(current_node->_right);
-		while (!tree_is_left_child(current_node) && current_node->_parent)
-		{
-			current_node = current_node->_parent;
-		}
-		return current_node->_parent;
-	}
+	// template <class _NodePtr>
+	// _NodePtr
+	// tree_next(_NodePtr current_node)
+	// {
+	// 	if (current_node->_right != nullptr_f)
+	// 		return tree_min(current_node->_right);
+	// 	while (!tree_is_left_child(current_node) && current_node->_parent)
+	// 	{
+	// 		current_node = current_node->_parent;
+	// 	}
+	// 	return current_node->_parent;
+	// }
 
-	template <class _NodePtr>
-	_NodePtr
-	tree_prev(_NodePtr current_node)
-	{
-		if (current_node->_left != nullptr_f)
-			return tree_max(current_node->_left);
-		while (tree_is_left_child(current_node))
-			current_node = current_node->_parent;
-		return current_node->_parent;
-	}
+	// template <class _NodePtr>
+	// _NodePtr
+	// tree_prev(_NodePtr current_node)
+	// {
+	// 	if (current_node == nullptr_f)
+	// 		return  nullptr_f;
+	// 	if (current_node->_left != nullptr_f)
+	// 		return tree_max(current_node->_left);
+	// 	while (tree_is_left_child(current_node))
+	// 		current_node = current_node->_parent;
+	// 	return current_node->_parent;
+	// }
 }
 #endif

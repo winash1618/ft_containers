@@ -48,19 +48,17 @@ ft::vector<Tp, Allocator>::resize
 {
 	if (n > max_size())
 		throw std::length_error("vector");
-	if (n < _size)
-	{
-		for(size_type index = n; index < _size; index++)
-			_alloc.destroy(_vec + index);
-		_size = n;
-	}
-	else if (n >= _size && n < _cap )
-	{
-		for(size_type index = _size; index < n; index++)
-			_alloc.construct(_vec + index, val);
-		_size = n;
-	}
-	else
+	// if (n < _size)
+	// {
+	// 	for(size_type index = n; index < _size; index++)
+	// 		_alloc.destroy(_vec + index);
+	// 	_size = n;
+	// }
+	// else if (n >= _size && n < _cap )
+	// {
+	// 	
+	// }
+	else if (n > _size)
 	{
 		if (n > max_size())
 			throw std::length_error("Capacity allocated exceeds max_size()");
@@ -77,6 +75,12 @@ ft::vector<Tp, Allocator>::resize
 		_cap = recommend(n);
 		_size = n;
 	}
+	for(size_type index = _size; index < n; index++)
+			_alloc.construct(_vec + index, val);
+	for(size_type index = n; index < _size; index++)
+			_alloc.destroy(_vec + index);
+	_size = n;
+	// 	_size = n;
 }
 
 /**

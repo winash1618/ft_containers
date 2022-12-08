@@ -29,9 +29,9 @@ ft::map<Key, T, Compare, Alloc>::map (const map& x)
 template <class Key, class T, class Compare, class Alloc>
 ft::map<Key, T, Compare, Alloc>::~map() 
 {
-	__node_allocator __na;
-	__na.destroy(_nil);
-	__na.deallocate( _nil, 1);
+	// __node_allocator __na;
+	// __na.destroy(_nil);
+	// __na.deallocate( _nil, 1);
 	destroy(_root);
 }
 

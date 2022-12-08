@@ -5,9 +5,26 @@ void
 ft::set<T, Compare, Alloc>::set_remove(typename ft::set<T, Compare, Alloc>::node_pointer delete_node)
 {
 	bool removed_black = false;
-	node_pointer y = (delete_node->_left == nullptr_f || delete_node->_right == nullptr_f) ?
-						delete_node : tree_next(delete_node);
-	node_pointer x = y->_left != nullptr_f ? y->_left : y->_right;
+	node_pointer y;
+	if (delete_node->_left == nullptr_f || delete_node->_right == nullptr_f)
+		y = delete_node;
+	else
+	{
+		node_pointer current_node = delete_node;
+		if (current_node->_right != nullptr_f)
+			y = tree_min(current_node->_right);
+		else
+		{
+			while (!tree_is_left_child(current_node) && current_node->_parent)
+				current_node = current_node->_parent;
+			y = current_node->_parent;
+		}
+	}
+	node_pointer x;
+	if(y->_left != nullptr_f)
+		x = y->_left;
+	else
+		x = y->_right;
 	node_pointer w = nullptr_f;
 	if (x != nullptr_f)
 		x->_parent = y->_parent;
