@@ -13,10 +13,10 @@ ft::map<Key, T, Compare, Alloc>::map_remove(typename ft::map<Key, T, Compare, Al
 	{
 		node_pointer current_node = delete_node;
 		if (current_node->_right != nullptr_f)
-			y = tree_min(current_node->_right);
+			y = tree_min(current_node->_right, _nil);
 		else
 		{
-			while (!tree_is_left_child(current_node) && current_node->_parent)
+			while (!tree_is_left_child(current_node, _nil) && current_node->_parent)
 				current_node = current_node->_parent;
 			y = current_node->_parent;
 		}
@@ -31,7 +31,7 @@ ft::map<Key, T, Compare, Alloc>::map_remove(typename ft::map<Key, T, Compare, Al
 		x->_parent = y->_parent;
 	if (y == _root)
 		_root = x;
-	else if (tree_is_left_child(y))
+	else if (tree_is_left_child(y, _nil))
 	{
 		y->_parent->_left = x;
 		w = y->_parent->_right;
@@ -61,7 +61,7 @@ void
 ft::map<Key, T, Compare, Alloc>::removeYConnectionToDeleteNode(typename ft::map<Key, T, Compare, Alloc>::node_pointer y, typename ft::map<Key, T, Compare, Alloc>::node_pointer delete_node)
 {
 	y->_parent = delete_node->_parent;
-	if (tree_is_left_child(delete_node))
+	if (tree_is_left_child(delete_node, _nil))
 		y->_parent->_left = y;
 	else
 		y->_parent->_right = y;
@@ -92,7 +92,7 @@ ft::map<Key, T, Compare, Alloc>::balanceTreeAfterDelete(typename ft::map<Key, T,
 {
 	while (true)
 	{
-		if (!tree_is_left_child(w))
+		if (!tree_is_left_child(w, _nil))
 		{
 			if (w->_color == RED)
 			{
@@ -115,7 +115,7 @@ ft::map<Key, T, Compare, Alloc>::balanceTreeAfterDelete(typename ft::map<Key, T,
 					x->_color = BLACK;
 					break;
 				}
-				w = tree_is_left_child(x) ?
+				w = tree_is_left_child(x, _nil) ?
 							x->_parent->_right : 
 							x->_parent->_left; 
 			}
@@ -158,7 +158,7 @@ ft::map<Key, T, Compare, Alloc>::balanceTreeAfterDelete(typename ft::map<Key, T,
 					x->_color = BLACK;
 					break;
 				}
-				w = tree_is_left_child(x) ?
+				w = tree_is_left_child(x, _nil) ?
 							x->_parent->_right : 
 							x->_parent->_left; 
 			}

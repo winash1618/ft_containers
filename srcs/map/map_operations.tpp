@@ -19,7 +19,7 @@ ft::map<Key, T, Compare, Alloc>::find(const typename ft::map<Key, T, Compare, Al
 		}
 		else
 		{
-			return (iterator(cur));
+			return (iterator(nullptr_f, cur, _nil));
 		}
 		
 	}
@@ -46,7 +46,7 @@ ft::map<Key, T, Compare, Alloc>::find (const typename ft::map<Key, T, Compare, A
 		}
 		else
 		{
-			return (const_iterator(cur));
+			return (const_iterator(nullptr_f, cur, _nil));
 		}
 	}
 	return (end());
@@ -68,7 +68,7 @@ ft::map<Key, T, Compare, Alloc>::lower_bound(const typename ft::map<Key, T, Comp
 			__root = __root->_right;
 	}
 	if (__result)
-		return iterator(__result);
+		return iterator(nullptr_f, __result, _nil);
 	return (end());
 }
 
@@ -89,7 +89,7 @@ ft::map<Key, T, Compare, Alloc>::upper_bound(const typename ft::map<Key, T, Comp
 			__root = __root->_right;
 	}
 	if (__result)
-		return iterator(__result);
+		return iterator(nullptr_f, __result, _nil);
 	return (end());
 }
 
@@ -110,7 +110,7 @@ ft::map<Key, T, Compare, Alloc>::lower_bound(const typename ft::map<Key, T, Comp
 			__root = __root->_right;
 	}
 	if (__result)
-		return const_iterator(__result);
+		return const_iterator(nullptr_f, __result, _nil);
 	return (end());
 }
 
@@ -131,7 +131,7 @@ ft::map<Key, T, Compare, Alloc>::upper_bound(const typename ft::map<Key, T, Comp
 			__root = __root->_right;
 	}
 	if (__result)
-		return const_iterator(__result);
+		return const_iterator(nullptr_f, __result, _nil);
 	return (end());
 }
 

@@ -5,7 +5,7 @@ template <class Key, class T, class Compare, class Alloc>
 void 
 ft::map<Key, T, Compare, Alloc>::erase(typename ft::map<Key, T, Compare, Alloc>::iterator position)
 {
-	node_pointer __node; // -> node to be deleted
+	node_pointer __node;
 
 	__node = const_cast<node_pointer>(position.__ptr_);
 	if (!__node || !_root)

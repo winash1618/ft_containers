@@ -48,10 +48,10 @@ namespace ft
 			{
 				__node_pointer current_node = __ptr_;
 				if (current_node->_right != nullptr_f)
-					__ptr_ = tree_min(current_node->_right);
+					__ptr_ = tree_min(current_node->_right, __nil_);
 				else
 				{
-					while (!tree_is_left_child(current_node) && current_node->_parent)
+					while (!tree_is_left_child(current_node, __nil_) && current_node->_parent)
 						current_node = current_node->_parent;
 					__ptr_ = current_node->_parent;
 				}
@@ -75,10 +75,10 @@ namespace ft
 				if (current_node == nullptr_f)
 					__ptr_ = nullptr_f;
 				else if (current_node->_left != nullptr_f)
-					__ptr_ = tree_max(current_node->_left);
+					__ptr_ = tree_max(current_node->_left, __nil_);
 				else
 				{
-					while (tree_is_left_child(current_node))
+					while (tree_is_left_child(current_node, __nil_))
 					current_node = current_node->_parent;
 					__ptr_ =  current_node->_parent;
 				}
@@ -160,10 +160,10 @@ namespace ft
 			{
 				__node_pointer current_node = __ptr_;
 				if (current_node->_right != nullptr_f)
-					__ptr_ = tree_min(current_node->_right);
+					__ptr_ = tree_min(current_node->_right, __nil_);
 				else
 				{
-					while (!tree_is_left_child(current_node) && current_node->_parent)
+					while (!tree_is_left_child(current_node, __nil_) && current_node->_parent)
 						current_node = current_node->_parent;
 					__ptr_ = current_node->_parent;
 				}
@@ -187,10 +187,10 @@ namespace ft
 				if (current_node == nullptr_f)
 					__ptr_ = nullptr_f;
 				else if (current_node->_left != nullptr_f)
-					__ptr_ = tree_max(current_node->_left);
+					__ptr_ = tree_max(current_node->_left, __nil_);
 				else
 				{
-					while (tree_is_left_child(current_node))
+					while (tree_is_left_child(current_node, __nil_))
 					current_node = current_node->_parent;
 					__ptr_ =  current_node->_parent;
 				}

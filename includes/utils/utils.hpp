@@ -13,15 +13,16 @@ namespace ft
 		
 		T _data;
 		color_t _color;
-		RBTreeNode(const T& data) : _left(nullptr_f), _right(nullptr_f), _parent(nullptr_f), _data(data), _color(RED) {}
-		RBTreeNode() : _left(nullptr_f), _right(nullptr_f), _parent(nullptr_f), _data(), _color(RED) {}
+		RBTreeNode(const T& data) : _left(), _right(), _parent(), _data(data), _color(RED) {}
+		RBTreeNode() : _left(), _right(), _parent(), _data(), _color(RED) {}
 	};
 
 	template <class _NodePtr>
 	inline
 	bool
-	tree_is_left_child(_NodePtr current_node)
+	tree_is_left_child(_NodePtr current_node, _NodePtr nil)
 	{
+		(void)nil;
 		if (current_node != nullptr_f )
 			if (current_node->_parent != nullptr_f)
 				return current_node == current_node->_parent->_left;
@@ -31,8 +32,9 @@ namespace ft
 	template <class _NodePtr>
 	inline
 	_NodePtr
-	tree_min(_NodePtr current_node)
+	tree_min(_NodePtr current_node, _NodePtr nil)
 	{
+		(void)nil;
 		while (current_node->_left != nullptr_f)
 			current_node = current_node->_left;
 		return current_node;
@@ -41,8 +43,9 @@ namespace ft
 	template <class _NodePtr>
 	inline
 	_NodePtr
-	tree_max(_NodePtr current_node)
+	tree_max(_NodePtr current_node, _NodePtr nil)
 	{
+		(void)nil;
 		while (current_node->_right != nullptr_f)
 			current_node = current_node->_right;
 		return current_node;
