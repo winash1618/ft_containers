@@ -33,25 +33,38 @@ namespace ft
 			__tree_iterator(__node_pointer end, __node_pointer ptr, __node_pointer nil):__ptr_(ptr), __end_(end), __nil_(nil) {}
 			reference operator*() const
 			{
-				if (__ptr_ == nullptr_f)
-					return __nil_->_data;
+				// if (__ptr_ == __nil_)
+				// 	return __nil_->_data;
 				return __ptr_->_data;
 			}
 			pointer operator->() const
 			{
-				if (__ptr_ == nullptr_f)
-					return &__nil_->_data;
+				// if (__ptr_ == __nil_)
+				// 	return &__nil_->_data;
 				return &__ptr_->_data;
 			}
 
 			__tree_iterator& operator++()
 			{
 				__node_pointer current_node = __ptr_;
-				if (current_node->_right != nullptr_f)
+				// try
+				// {
+				// 	if (current_node == NULL || current_node == __end_)
+				// 		throw std::out_of_range("map::at:  key not found");
+				// }
+				// catch(const std::exception& e)
+				// {
+				// 	std::cerr << e.what() << '\n';
+				// 	exit(1);
+				// }
+				
+				if (current_node == NULL || current_node == __end_)
+					__ptr_ = __nil_;
+				else if (current_node->_right != __nil_)
 					__ptr_ = tree_min(current_node->_right, __nil_);
 				else
 				{
-					while (!tree_is_left_child(current_node, __nil_) && current_node->_parent)
+					while (!tree_is_left_child(current_node, __nil_) && current_node->_parent != __nil_)
 						current_node = current_node->_parent;
 					__ptr_ = current_node->_parent;
 				}
@@ -66,15 +79,27 @@ namespace ft
 
 			__tree_iterator& operator--()
 			{
-				if (__ptr_ == nullptr_f)
+				if (__ptr_ == __nil_ || __ptr_ == NULL)
 				{
 					__ptr_ = __end_;
 					return *this;
 				}
 				__node_pointer current_node = __ptr_;
-				if (current_node == nullptr_f)
-					__ptr_ = nullptr_f;
-				else if (current_node->_left != nullptr_f)
+				// try
+				// {
+				// 	// std::cout << "current_node: " << current_node->_data.first << std::endl;
+				// 	if (current_node == NULL)
+				// 		throw std::out_of_range("out of range iterator");
+				// }
+				// catch(const std::exception& e)
+				// {
+				// 	std::cerr << e.what() << '\n';
+				// 	exit(1);
+				// }
+				
+				if (current_node == __nil_)
+					__ptr_ = __nil_;
+				else if (current_node->_left != __nil_)
 					__ptr_ = tree_max(current_node->_left, __nil_);
 				else
 				{
@@ -127,6 +152,7 @@ namespace ft
 			{
 				__ptr_ = __iter.__ptr_;
 				__end_ = __iter.__end_;
+				__nil_ = __iter.__nil_;
 			}
 			// __const_tree_iterator(iterator const iter):__iter1(iter)
 			// {
@@ -145,21 +171,34 @@ namespace ft
 			// }
 			reference operator*() const
 			{
-				if (__ptr_ == nullptr_f)
-					return __nil_->_data;
+				// if (__ptr_ == __nil_)
+				// 	return __nil_->_data;
 				return __ptr_->_data;
 			}
 			pointer operator->() const
 			{
-				if (__ptr_ == nullptr_f)
-					return &__nil_->_data;
+				// if (__ptr_ == __nil_)
+				// 	return &__nil_->_data;
 				return &__ptr_->_data;
 			}
 
 			__const_tree_iterator& operator++()
 			{
 				__node_pointer current_node = __ptr_;
-				if (current_node->_right != nullptr_f)
+				if (current_node == NULL || current_node == __end_)
+					__ptr_ = __nil_;
+				// try
+				// {
+				// 	if (current_node->_right == __nil_)
+				// 		throw std::out_of_range("out of range");
+				// }
+				// catch(const std::exception& e)
+				// {
+				// 	std::cerr << e.what() << '\n';
+				// 	exit(1);
+				// }
+				
+				else if (current_node->_right != __nil_)
 					__ptr_ = tree_min(current_node->_right, __nil_);
 				else
 				{
@@ -178,15 +217,15 @@ namespace ft
 
 			__const_tree_iterator& operator--()
 			{
-				if (__ptr_ == nullptr_f)
+				if (__ptr_ == __nil_ || __ptr_ == NULL)
 				{
 					__ptr_ = __end_;
 					return *this;
 				}
 				__node_pointer current_node = __ptr_;
-				if (current_node == nullptr_f)
-					__ptr_ = nullptr_f;
-				else if (current_node->_left != nullptr_f)
+				if (current_node == __nil_)
+					__ptr_ = __nil_;
+				else if (current_node->_left != __nil_)
 					__ptr_ = tree_max(current_node->_left, __nil_);
 				else
 				{

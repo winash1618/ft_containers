@@ -22,9 +22,8 @@ namespace ft
 	bool
 	tree_is_left_child(_NodePtr current_node, _NodePtr nil)
 	{
-		(void)nil;
-		if (current_node != nullptr_f )
-			if (current_node->_parent != nullptr_f)
+		if (current_node != nil )
+			if (current_node->_parent != nil)
 				return current_node == current_node->_parent->_left;
 		return 0;
 	}
@@ -34,9 +33,12 @@ namespace ft
 	_NodePtr
 	tree_min(_NodePtr current_node, _NodePtr nil)
 	{
-		(void)nil;
-		while (current_node->_left != nullptr_f)
+		// std::cout << "tree_min" << current_node->_data.first << std::endl;
+		while (current_node->_left != nil)
+		{
+			// std::cout << "current_node: " << current_node << std::endl;
 			current_node = current_node->_left;
+		}
 		return current_node;
 	}
 
@@ -45,8 +47,7 @@ namespace ft
 	_NodePtr
 	tree_max(_NodePtr current_node, _NodePtr nil)
 	{
-		(void)nil;
-		while (current_node->_right != nullptr_f)
+		while (current_node->_right != nil)
 			current_node = current_node->_right;
 		return current_node;
 	}
@@ -55,7 +56,7 @@ namespace ft
 	// _NodePtr
 	// tree_next(_NodePtr current_node)
 	// {
-	// 	if (current_node->_right != nullptr_f)
+	// 	if (current_node->_right != nil)
 	// 		return tree_min(current_node->_right);
 	// 	while (!tree_is_left_child(current_node) && current_node->_parent)
 	// 	{
@@ -68,9 +69,9 @@ namespace ft
 	// _NodePtr
 	// tree_prev(_NodePtr current_node)
 	// {
-	// 	if (current_node == nullptr_f)
-	// 		return  nullptr_f;
-	// 	if (current_node->_left != nullptr_f)
+	// 	if (current_node == nil)
+	// 		return  nil;
+	// 	if (current_node->_left != nil)
 	// 		return tree_max(current_node->_left);
 	// 	while (tree_is_left_child(current_node))
 	// 		current_node = current_node->_parent;
