@@ -6,7 +6,9 @@ typename ft::map<Key, T, Compare, Alloc>::iterator
 ft::map<Key, T, Compare, Alloc>::find(const typename ft::map<Key, T, Compare, Alloc>::key_type& k)
 {
 	node_pointer cur = _root;
-	while (cur != nullptr_f)
+	if (cur == NULL)
+		return (iterator(_nil, _nil, _nil));
+	while (cur != _nil)
 	{
 		if (_comp(cur->_data.first, k))
 		{
@@ -19,7 +21,7 @@ ft::map<Key, T, Compare, Alloc>::find(const typename ft::map<Key, T, Compare, Al
 		}
 		else
 		{
-			return (iterator(nullptr_f, cur, _nil));
+			return (iterator(_nil, cur, _nil));
 		}
 		
 	}
@@ -31,8 +33,10 @@ typename ft::map<Key, T, Compare, Alloc>::const_iterator
 ft::map<Key, T, Compare, Alloc>::find (const typename ft::map<Key, T, Compare, Alloc>::key_type& k) const
 {
 	node_pointer cur = _root;
-	node_pointer parent = nullptr_f;
-	while (cur)
+	node_pointer parent = _nil;
+	if (cur == NULL)
+		return (iterator(_nil, _nil, _nil));
+	while (cur != _nil)
 	{
 		if (cur->_data.first < k)
 		{
@@ -46,7 +50,7 @@ ft::map<Key, T, Compare, Alloc>::find (const typename ft::map<Key, T, Compare, A
 		}
 		else
 		{
-			return (const_iterator(nullptr_f, cur, _nil));
+			return (const_iterator(_nil, cur, _nil));
 		}
 	}
 	return (end());
@@ -56,8 +60,9 @@ typename ft::map<Key, T, Compare, Alloc>::iterator
 ft::map<Key, T, Compare, Alloc>::lower_bound(const typename ft::map<Key, T, Compare, Alloc>::key_type& k)
 {
 	node_pointer __root = _root;
-	node_pointer __result = nullptr_f;
-	while (__root != nullptr_f)
+	node_pointer __result = _nil;
+
+	while (__root != _nil)
 	{
 		if (!_comp(__root->_data.first, k))
 		{
@@ -67,8 +72,8 @@ ft::map<Key, T, Compare, Alloc>::lower_bound(const typename ft::map<Key, T, Comp
 		else
 			__root = __root->_right;
 	}
-	if (__result)
-		return iterator(nullptr_f, __result, _nil);
+	if (__result != _nil)
+		return iterator(_nil, __result, _nil);
 	return (end());
 }
 
@@ -77,8 +82,8 @@ typename ft::map<Key, T, Compare, Alloc>::iterator
 ft::map<Key, T, Compare, Alloc>::upper_bound(const typename ft::map<Key, T, Compare, Alloc>::key_type& k)
 {
 	node_pointer __root = _root;
-	node_pointer __result = nullptr_f;
-	while (__root != nullptr_f)
+	node_pointer __result = _nil;
+	while (__root != _nil)
 	{
 		if (_comp( k, __root->_data.first))
 		{
@@ -88,8 +93,8 @@ ft::map<Key, T, Compare, Alloc>::upper_bound(const typename ft::map<Key, T, Comp
 		else
 			__root = __root->_right;
 	}
-	if (__result)
-		return iterator(nullptr_f, __result, _nil);
+	if (__result != _nil)
+		return iterator(_nil, __result, _nil);
 	return (end());
 }
 
@@ -98,8 +103,8 @@ typename ft::map<Key, T, Compare, Alloc>::const_iterator
 ft::map<Key, T, Compare, Alloc>::lower_bound(const typename ft::map<Key, T, Compare, Alloc>::key_type& k) const
 {
 	node_pointer __root = _root;
-	node_pointer __result = nullptr_f;
-	while (__root != nullptr_f)
+	node_pointer __result = _nil;
+	while (__root != _nil)
 	{
 		if (!_comp(__root->_data.first, k))
 		{
@@ -109,8 +114,8 @@ ft::map<Key, T, Compare, Alloc>::lower_bound(const typename ft::map<Key, T, Comp
 		else
 			__root = __root->_right;
 	}
-	if (__result)
-		return const_iterator(nullptr_f, __result, _nil);
+	if (__result != _nil)
+		return const_iterator(_nil, __result, _nil);
 	return (end());
 }
 
@@ -119,8 +124,8 @@ typename ft::map<Key, T, Compare, Alloc>::const_iterator
 ft::map<Key, T, Compare, Alloc>::upper_bound(const typename ft::map<Key, T, Compare, Alloc>::key_type& k) const
 {
 	node_pointer __root = _root;
-	node_pointer __result = nullptr_f;
-	while (__root != nullptr_f)
+	node_pointer __result = _nil;
+	while (__root != _nil)
 	{
 		if (_comp( k, __root->_data.first))
 		{
@@ -130,8 +135,8 @@ ft::map<Key, T, Compare, Alloc>::upper_bound(const typename ft::map<Key, T, Comp
 		else
 			__root = __root->_right;
 	}
-	if (__result)
-		return const_iterator(nullptr_f, __result, _nil);
+	if (__result != _nil)
+		return const_iterator(_nil, __result, _nil);
 	return (end());
 }
 

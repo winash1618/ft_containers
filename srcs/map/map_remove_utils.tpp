@@ -7,12 +7,12 @@ ft::map<Key, T, Compare, Alloc>::map_remove(typename ft::map<Key, T, Compare, Al
 {
 	bool removed_black = false;
 	node_pointer y;
-	if (delete_node->_left == nullptr_f || delete_node->_right == nullptr_f)
+	if (delete_node->_left == _nil || delete_node->_right == _nil)
 		y = delete_node;
 	else
 	{
 		node_pointer current_node = delete_node;
-		if (current_node->_right != nullptr_f)
+		if (current_node->_right != _nil)
 			y = tree_min(current_node->_right, _nil);
 		else
 		{
@@ -22,12 +22,12 @@ ft::map<Key, T, Compare, Alloc>::map_remove(typename ft::map<Key, T, Compare, Al
 		}
 	}
 	node_pointer x;
-	if(y->_left != nullptr_f)
+	if(y->_left != _nil)
 		x = y->_left;
 	else
 		x = y->_right;
-	node_pointer w = nullptr_f;
-	if (x != nullptr_f)
+	node_pointer w = _nil;
+	if (x != _nil)
 		x->_parent = y->_parent;
 	if (y == _root)
 		_root = x;
@@ -47,9 +47,9 @@ ft::map<Key, T, Compare, Alloc>::map_remove(typename ft::map<Key, T, Compare, Al
 		changeY2Root(y, delete_node);
 	else if (y != delete_node)
 		removeYConnectionToDeleteNode(y, delete_node);
-	if (removed_black && _root != nullptr_f)
+	if (removed_black && _root != _nil)
 	{
-		if (x != nullptr_f)
+		if (x != _nil)
 			x->_color = BLACK;
 		else
 			balanceTreeAfterDelete(x, w);
@@ -68,7 +68,7 @@ ft::map<Key, T, Compare, Alloc>::removeYConnectionToDeleteNode(typename ft::map<
 	y->_left = delete_node->_left;
 	y->_left->_parent = y;
 	y->_right = delete_node->_right;
-	if (y->_right != nullptr_f)
+	if (y->_right != _nil)
 		y->_right->_parent = y;
 	y->_color = delete_node->_color;
 }
@@ -80,7 +80,7 @@ ft::map<Key, T, Compare, Alloc>::changeY2Root(typename ft::map<Key, T, Compare, 
 	y->_left = delete_node->_left;
 	y->_left->_parent = y;
 	y->_right = delete_node->_right;
-	if (y->_right != nullptr_f)
+	if (y->_right != _nil)
 		y->_right->_parent = y;
 	y->_color = delete_node->_color;
 	_root = y;
@@ -103,10 +103,10 @@ ft::map<Key, T, Compare, Alloc>::balanceTreeAfterDelete(typename ft::map<Key, T,
 					_root = w;
 				w = w->_left->_right;
 			}
-			if (w == nullptr_f)
+			if (w == _nil)
 				break;
-			if ((w->_left  == nullptr_f || w->_left->_color == BLACK) &&
-				(w->_right == nullptr_f || w->_right->_color == BLACK))
+			if ((w->_left  == _nil || w->_left->_color == BLACK) &&
+				(w->_right == _nil || w->_right->_color == BLACK))
 			{
 				w->_color = RED;
 				x = w->_parent;
@@ -121,7 +121,7 @@ ft::map<Key, T, Compare, Alloc>::balanceTreeAfterDelete(typename ft::map<Key, T,
 			}
 			else
 			{
-				if (w->_right == nullptr_f || w->_right->_color == BLACK)
+				if (w->_right == _nil || w->_right->_color == BLACK)
 				{
 					w->_left->_color = BLACK;
 					w->_color = RED;
@@ -146,10 +146,10 @@ ft::map<Key, T, Compare, Alloc>::balanceTreeAfterDelete(typename ft::map<Key, T,
 					_root = w;
 				w = w->_right->_left;
 			}
-			if (w == nullptr_f)
+			if (w == _nil)
 				break;
-			if ((w->_left  == nullptr_f || w->_left->_color == BLACK) &&
-				(w->_right == nullptr_f || w->_right->_color == BLACK))
+			if ((w->_left  == _nil || w->_left->_color == BLACK) &&
+				(w->_right == _nil || w->_right->_color == BLACK))
 			{
 				w->_color = RED;
 				x = w->_parent;
@@ -164,7 +164,7 @@ ft::map<Key, T, Compare, Alloc>::balanceTreeAfterDelete(typename ft::map<Key, T,
 			}
 			else
 			{
-				if (w->_left == nullptr_f || w->_left->_color  == BLACK)
+				if (w->_left == _nil || w->_left->_color  == BLACK)
 				{
 					w->_right->_color = BLACK;
 					w->_color = RED;
