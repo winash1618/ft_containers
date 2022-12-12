@@ -21,6 +21,7 @@ namespace ft
 			typedef _NodePtr															__node_pointer;
 			__node_pointer																__ptr_;
 			__node_pointer																__end_;
+			__node_pointer																__nil_;
 			typedef const value_type&															reference;
 			typedef const value_type*															pointer;
 			typedef std::bidirectional_iterator_tag										iterator_category;
@@ -30,10 +31,12 @@ namespace ft
 			__const_set_iterator() {}
 			__const_set_iterator(__node_pointer ptr): __ptr_(ptr) {}
 			__const_set_iterator(__node_pointer end, __node_pointer ptr):__ptr_(ptr), __end_(end) {}
+			__const_set_iterator(__node_pointer end, __node_pointer ptr, __node_pointer nil):__ptr_(ptr), __end_(end), __nil_(nil) {}
 			__const_set_iterator(iterator  iter):__iter(iter)
 			{
 				__ptr_ = __iter.__ptr_;
 				__end_ = __iter.__end_;
+				__nil_ = __iter.__nil_;
 			}
 			reference operator*() const
 			{
@@ -48,11 +51,13 @@ namespace ft
 			__const_set_iterator& operator++()
 			{
 				__node_pointer current_node = __ptr_;
-				if (current_node->_right != nullptr_f)
-					__ptr_ = tree_min(current_node->_right);
+				if (current_node == NULL || current_node == __end_)
+					__ptr_ = __nil_;
+				else if (current_node->_right != __nil_)
+					__ptr_ = tree_min(current_node->_right, __nil_);
 				else
 				{
-					while (!tree_is_left_child(current_node) && current_node->_parent)
+					while (!tree_is_left_child(current_node, __nil_) && current_node->_parent)
 						current_node = current_node->_parent;
 					__ptr_ = current_node->_parent;
 				}
@@ -66,19 +71,19 @@ namespace ft
 			}
 			__const_set_iterator& operator--()
 			{
-				if (__ptr_ == nullptr_f)
+				if (__ptr_ == __nil_ || __ptr_ == NULL)
 				{
 					__ptr_ = __end_;
 					return *this;
 				}
 				__node_pointer current_node = __ptr_;
-				if (current_node == nullptr_f)
-					__ptr_ = nullptr_f;
-				else if (current_node->_left != nullptr_f)
-					__ptr_ = tree_max(current_node->_left);
+				if (current_node == __nil_)
+					__ptr_ = __nil_;
+				else if (current_node->_left != __nil_)
+					__ptr_ = tree_max(current_node->_left, __nil_);
 				else
 				{
-					while (tree_is_left_child(current_node))
+					while (tree_is_left_child(current_node, __nil_))
 					current_node = current_node->_parent;
 					__ptr_ =  current_node->_parent;
 				}
