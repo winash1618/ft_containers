@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <map>
-#include "pair.hpp"
 #include "map.hpp"
 
 int main ()
