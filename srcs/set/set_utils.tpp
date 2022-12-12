@@ -5,7 +5,7 @@ const typename ft::set<T, Compare, Alloc>::node_pointer
 ft::set<T, Compare, Alloc>::begin_left(void) const
 {
 	node_pointer left = _root;
-	while (left && left->_left)
+	while (left != _nil && left->_left != _nil)
 	{
 		left = left->_left;
 	}
@@ -17,7 +17,7 @@ const typename ft::set<T, Compare, Alloc>::node_pointer
 ft::set<T, Compare, Alloc>::begin_right(void) const
 {
 	node_pointer right = _root;
-	while (right && right->_right)
+	while (right != _nil && right->_right != _nil)
 	{
 		right = right->_right;
 	}
@@ -29,7 +29,7 @@ typename ft::set<T, Compare, Alloc>::node_pointer
 ft::set<T, Compare, Alloc>::begin_left(void)
 {
 	node_pointer left = _root;
-	while (left && left->_left)
+	while (left != _nil && left->_left != _nil)
 	{
 		left = left->_left;
 	}
@@ -41,7 +41,7 @@ typename ft::set<T, Compare, Alloc>::node_pointer
 ft::set<T, Compare, Alloc>::begin_right(void)
 {
 	node_pointer right = _root;
-	while (right && right->_right)
+	while (right != _nil && right->_right != _nil) 
 	{
 		right = right->_right;
 	}
@@ -52,7 +52,9 @@ template <class T, class Compare, class Alloc>
 void
 ft::set<T, Compare, Alloc>::destroy(node_pointer __nd)
 {
-	if (__nd != nullptr_f)
+	if (__nd == NULL)
+		return;
+	if (__nd != _nil)
 	{
 		destroy(__nd->_left);
 		destroy(__nd->_right);

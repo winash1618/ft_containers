@@ -6,31 +6,31 @@ ft::set<T, Compare, Alloc>::set_remove(typename ft::set<T, Compare, Alloc>::node
 {
 	bool removed_black = false;
 	node_pointer y;
-	if (delete_node->_left == nullptr_f || delete_node->_right == nullptr_f)
+	if (delete_node->_left == _nil || delete_node->_right == _nil)
 		y = delete_node;
 	else
 	{
 		node_pointer current_node = delete_node;
-		if (current_node->_right != nullptr_f)
-			y = tree_min(current_node->_right);
+		if (current_node->_right != _nil)
+			y = tree_min(current_node->_right, _nil);
 		else
 		{
-			while (!tree_is_left_child(current_node) && current_node->_parent)
+			while (!tree_is_left_child(current_node, _nil) && current_node->_parent)
 				current_node = current_node->_parent;
 			y = current_node->_parent;
 		}
 	}
 	node_pointer x;
-	if(y->_left != nullptr_f)
+	if(y->_left != _nil)
 		x = y->_left;
 	else
 		x = y->_right;
-	node_pointer w = nullptr_f;
-	if (x != nullptr_f)
+	node_pointer w = _nil;
+	if (x != _nil)
 		x->_parent = y->_parent;
 	if (y == _root)
 		_root = x;
-	else if (tree_is_left_child(y))
+	else if (tree_is_left_child(y, _nil))
 	{
 		y->_parent->_left = x;
 		w = y->_parent->_right;
@@ -46,9 +46,9 @@ ft::set<T, Compare, Alloc>::set_remove(typename ft::set<T, Compare, Alloc>::node
 		changeY2Root(y, delete_node);
 	else if (y != delete_node)
 		removeYConnectionToDeleteNode(y, delete_node);
-	if (removed_black && _root != nullptr_f)
+	if (removed_black && _root != _nil)
 	{
-		if (x != nullptr_f)
+		if (x != _nil)
 			x->_color = BLACK;
 		else
 			balanceTreeAfterDelete(x, w);
@@ -60,14 +60,14 @@ void
 ft::set<T, Compare, Alloc>::removeYConnectionToDeleteNode(typename ft::set<T, Compare, Alloc>::node_pointer y, typename ft::set<T, Compare, Alloc>::node_pointer delete_node)
 {
 	y->_parent = delete_node->_parent;
-	if (tree_is_left_child(delete_node))
+	if (tree_is_left_child(delete_node, _nil))
 		y->_parent->_left = y;
 	else
 		y->_parent->_right = y;
 	y->_left = delete_node->_left;
 	y->_left->_parent = y;
 	y->_right = delete_node->_right;
-	if (y->_right != nullptr_f)
+	if (y->_right != _nil)
 		y->_right->_parent = y;
 	y->_color = delete_node->_color;
 }
@@ -79,7 +79,7 @@ ft::set<T, Compare, Alloc>::changeY2Root(typename ft::set<T, Compare, Alloc>::no
 	y->_left = delete_node->_left;
 	y->_left->_parent = y;
 	y->_right = delete_node->_right;
-	if (y->_right != nullptr_f)
+	if (y->_right != _nil)
 		y->_right->_parent = y;
 	y->_color = delete_node->_color;
 	_root = y;
@@ -91,7 +91,7 @@ ft::set<T, Compare, Alloc>::balanceTreeAfterDelete(typename ft::set<T, Compare, 
 {
 	while (true)
 	{
-		if (!tree_is_left_child(w))
+		if (!tree_is_left_child(w, _nil))
 		{
 			if (w->_color == RED)
 			{
@@ -102,10 +102,10 @@ ft::set<T, Compare, Alloc>::balanceTreeAfterDelete(typename ft::set<T, Compare, 
 					_root = w;
 				w = w->_left->_right;
 			}
-			if (w == nullptr_f)
+			if (w == _nil)
 				break;
-			if ((w->_left  == nullptr_f || w->_left->_color == BLACK) &&
-				(w->_right == nullptr_f || w->_right->_color == BLACK))
+			if ((w->_left  == _nil || w->_left->_color == BLACK) &&
+				(w->_right == _nil || w->_right->_color == BLACK))
 			{
 				w->_color = RED;
 				x = w->_parent;
@@ -114,13 +114,13 @@ ft::set<T, Compare, Alloc>::balanceTreeAfterDelete(typename ft::set<T, Compare, 
 					x->_color = BLACK;
 					break;
 				}
-				w = tree_is_left_child(x) ?
+				w = tree_is_left_child(x, _nil) ?
 							x->_parent->_right : 
 							x->_parent->_left; 
 			}
 			else
 			{
-				if (w->_right == nullptr_f || w->_right->_color == BLACK)
+				if (w->_right == _nil || w->_right->_color == BLACK)
 				{
 					w->_left->_color = BLACK;
 					w->_color = RED;
@@ -145,10 +145,10 @@ ft::set<T, Compare, Alloc>::balanceTreeAfterDelete(typename ft::set<T, Compare, 
 					_root = w;
 				w = w->_right->_left;
 			}
-			if (w == nullptr_f)
+			if (w == _nil)
 				break;
-			if ((w->_left  == nullptr_f || w->_left->_color == BLACK) &&
-				(w->_right == nullptr_f || w->_right->_color == BLACK))
+			if ((w->_left  == _nil || w->_left->_color == BLACK) &&
+				(w->_right == _nil || w->_right->_color == BLACK))
 			{
 				w->_color = RED;
 				x = w->_parent;
@@ -157,13 +157,13 @@ ft::set<T, Compare, Alloc>::balanceTreeAfterDelete(typename ft::set<T, Compare, 
 					x->_color = BLACK;
 					break;
 				}
-				w = tree_is_left_child(x) ?
+				w = tree_is_left_child(x, _nil) ?
 							x->_parent->_right : 
 							x->_parent->_left; 
 			}
 			else
 			{
-				if (w->_left == nullptr_f || w->_left->_color  == BLACK)
+				if (w->_left == _nil || w->_left->_color  == BLACK)
 				{
 					w->_right->_color = BLACK;
 					w->_color = RED;
