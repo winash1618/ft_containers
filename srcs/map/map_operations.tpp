@@ -33,21 +33,14 @@ typename ft::map<Key, T, Compare, Alloc>::const_iterator
 ft::map<Key, T, Compare, Alloc>::find (const typename ft::map<Key, T, Compare, Alloc>::key_type& k) const
 {
 	node_pointer cur = _root;
-	node_pointer parent = _nil;
 	if (cur == NULL)
 		return (iterator(_nil, _nil, _nil));
 	while (cur != _nil)
 	{
 		if (cur->_data.first < k)
-		{
-			parent = cur;
 			cur = cur->_right;
-		}
 		else if (cur->_data.first > k)
-		{
-			parent = cur;
 			cur = cur->_left;
-		}
 		else
 		{
 			return (const_iterator(_nil, cur, _nil));

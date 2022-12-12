@@ -87,7 +87,7 @@ ft::map<Key, T, Compare, Alloc>::erase(const typename ft::map<Key, T, Compare, A
 	__nd = const_cast<node_pointer>(find(k).__ptr_);
 	if(__nd != _nil)
 	{
-		ft::map<Key, T, Compare, Alloc>::erase(find(k));
+		erase(find(k));
 		return 1;
 
 	}
@@ -101,7 +101,7 @@ ft::map<Key, T, Compare, Alloc>::erase (typename ft::map<Key, T, Compare, Alloc>
 	{
 		iterator temp = first;
 		first++;
-		ft::map<Key, T, Compare, Alloc>::erase(temp);
+		erase(temp);
 	}
 }
 

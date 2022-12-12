@@ -15,7 +15,7 @@ template <class Key, class T, class Compare, class Alloc>
 template <class InputIterator>
 ft::map<Key, T, Compare, Alloc>::map (InputIterator first, InputIterator last,
 	const key_compare& comp,
-	const allocator_type& alloc) :_root(NULL), _comp(comp), _alloc(alloc)
+	const allocator_type& alloc) :_root(NULL), _comp(comp), _alloc(alloc), _size(0)
 {
 	ft::RBTreeNode<value_type> temp;
 	_nil = n_alloc.allocate(1);

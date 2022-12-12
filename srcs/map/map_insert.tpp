@@ -15,12 +15,12 @@ ft::map<Key, T, Compare, Alloc>::insert (const value_type& val)
 		_root->_parent = _nil;
 		_root->_left = _nil;
 		_root->_right = _nil;
-		ft::pair<iterator, bool> t = ft::make_pair<iterator, bool>(iterator(_root), true);
+		ft::pair<iterator, bool> t = ft::make_pair<iterator, bool>(iterator(_nil, _root, _nil), true);
 		_size = 1;
 		return t;
 	}
 	node_pointer cur = _root;
-	node_pointer parent = nullptr_f;
+	node_pointer parent = cur;
 	while (cur != _nil)
 	{
 		if (_comp(cur->_data.first, val.first))
