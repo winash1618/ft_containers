@@ -116,33 +116,6 @@ namespace ft
 			void			removeYConnectionToDeleteNode(node_pointer y, node_pointer delete_node);
 			void			changeY2Root(node_pointer y, node_pointer delete_node);
 			void			balanceTreeAfterDelete(node_pointer x, node_pointer w);
-			// void			map_display()
-			// {
-			// 	iter = begin();
-			// 	while (iter != end())
-			// 	{
-			// 		std::cout << iter->first << " " << iter->second << std::endl;
-			// 		iter++;
-			// 	}
-			// 	std::cout << "map_display" << std::endl;
-			// 	std::cout << "_root->_data.first = " << _root->_data.first << ", color = " << _root->_color << std::endl;
-			// 	std::cout << "_root->_right->_data.first = " << _root->_right->_data.first << ", color = " << _root->_right->_color << std::endl;
-			// 	std::cout << "_root->_left->_data.first = " << _root->_left->_data.first << ", color = " << _root->_left->_color << std::endl;
-			// 	std::cout << "_root->_right->_right->_data.first = " << _root->_right->_right->_data.first << ", color = " << _root->_right->_right->_color << std::endl;
-			// 	std::cout << "_root->_right->_left->_data.first = " << _root->_right->_left->_data.first << ", color = " << _root->_right->_left->_color << std::endl;
-			// 	std::cout << "_root->_left->_right->_data.first = " << _root->_left->_right->_data.first << ", color = " << _root->_left->_right->_color << std::endl;
-			// 	std::cout << "_root->_left->_left->_data.first = " << _root->_left->_left->_data.first << ", color = " << _root->_left->_left->_color << std::endl;
-			// 	std::cout << "_root->_right->_right->_left->_data.first = " << _root->_right->_right->_right->_data.first << ", color = " << _root->_right->_right->_right->_color << std::endl;
-			// 	std::cout << "_root->_right->_right->_right->_data.first = " << _root->_right->_right->_left->_data.first << ", color = " << _root->_right->_right->_left->_color << std::endl;
-			// 	std::cout << "_root->_right->_left->_left->_data.first = " << _root->_right->_left->_left->_data.first << ", color = " << _root->_right->_left->_left->_color << std::endl;
-			// 	std::cout << "_root->_right->_left->_right->_data.first = " << _root->_right->_left->_right->_data.first << ", color = " << _root->_right->_left->_right->_color << std::endl;
-			// 	std::cout << "_root->_left->_right->_left->_data.first = " << _root->_left->_right->_left->_data.first << ", color = " << _root->_left->_right->_left->_color << std::endl;
-			// 	std::cout << "_root->_left->_right->_right->_data.first = " << _root->_left->_right->_right->_data.first << ", color = " << _root->_left->_right->_right->_color << std::endl;
-			// 	std::cout << "_root->_left->_left->_left->_data.first = " << _root->_left->_left->_left->_data.first << ", color = " << _root->_left->_left->_left->_color << std::endl;
-			// 	std::cout << "_root->_left->_left->_right->_data.first = " << _root->_left->_left->_right->_data.first << ", color = " << _root->_left->_left->_right->_color << std::endl;
-				
-			// 	std::cout << "End map_display" << std::endl;
-			// }
 		};
 		template <class Key, class T, class Compare, class Alloc>
 		inline bool operator== ( const map<Key,T,Compare,Alloc>& lhs,
@@ -168,7 +141,7 @@ namespace ft
 	#include "./../srcs/map/map_capacity.tpp"
 	#include "./../srcs/map/map_element_access.tpp"
 	#include "./../srcs/map/map_erase.tpp"
-	#include "./../srcs/map/map_remove_utils.tpp"
+	#include "./../srcs/map/map_erase_utils.tpp"
 	#include "./../srcs/map/map_insert.tpp"
 	#include "./../srcs/map/map_utils.tpp"
 	#include "./../srcs/map/map_swap.tpp"

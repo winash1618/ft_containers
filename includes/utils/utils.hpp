@@ -34,6 +34,17 @@ namespace ft
 	tree_min(_NodePtr current_node, _NodePtr nil)
 	{
 		// std::cout << "tree_min" << current_node->_data.first << std::endl;
+		// try
+		// {
+		// 	if (current_node != nil)
+		// 		throw std::exception();
+		// }
+		// catch(const std::exception& e)
+		// {
+		// 	std::cerr << e.what() << '\n';
+		// 	exit(1);
+		// }
+		
 		while (current_node->_left != nil)
 		{
 			// std::cout << "current_node: " << current_node << std::endl;

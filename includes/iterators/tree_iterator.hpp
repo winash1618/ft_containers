@@ -47,17 +47,6 @@ namespace ft
 			__tree_iterator& operator++()
 			{
 				__node_pointer current_node = __ptr_;
-				// try
-				// {
-				// 	if (current_node == NULL || current_node == __end_)
-				// 		throw std::out_of_range("map::at:  key not found");
-				// }
-				// catch(const std::exception& e)
-				// {
-				// 	std::cerr << e.what() << '\n';
-				// 	exit(1);
-				// }
-				
 				if (current_node == NULL || current_node == __end_)
 					__ptr_ = __nil_;
 				else if (current_node->_right != __nil_)
@@ -85,18 +74,6 @@ namespace ft
 					return *this;
 				}
 				__node_pointer current_node = __ptr_;
-				// try
-				// {
-				// 	// std::cout << "current_node: " << current_node->_data.first << std::endl;
-				// 	if (current_node == NULL)
-				// 		throw std::out_of_range("out of range iterator");
-				// }
-				// catch(const std::exception& e)
-				// {
-				// 	std::cerr << e.what() << '\n';
-				// 	exit(1);
-				// }
-				
 				if (current_node == __nil_)
 					__ptr_ = __nil_;
 				else if (current_node->_left != __nil_)
@@ -104,7 +81,7 @@ namespace ft
 				else
 				{
 					while (tree_is_left_child(current_node, __nil_))
-					current_node = current_node->_parent;
+						current_node = current_node->_parent;
 					__ptr_ =  current_node->_parent;
 				}
 				return *this;
