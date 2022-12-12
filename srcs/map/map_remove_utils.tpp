@@ -90,6 +90,9 @@ template <class Key, class T, class Compare, class Alloc>
 void
 ft::map<Key, T, Compare, Alloc>::balanceTreeAfterDelete(typename ft::map<Key, T, Compare, Alloc>::node_pointer x, typename ft::map<Key, T, Compare, Alloc>::node_pointer w)
 {
+	// std::cout << "balanceTreeAfterDelete" << std::endl;
+	// std::cout << "x: " << x->_data.first << std::endl;
+	// std::cout << "w: " << w->_data.first << std::endl;
 	while (true)
 	{
 		if (!tree_is_left_child(w, _nil))
