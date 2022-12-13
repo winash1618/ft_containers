@@ -30,7 +30,6 @@ ft::set<T, Compare, Alloc>::end()
 	{
 		right = right->_right;
 	}
-	// std::cout << "right: " << right->_data << std::endl;
 	return iterator(right, _nil, _nil);
 }
 

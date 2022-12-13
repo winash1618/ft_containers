@@ -24,22 +24,11 @@ ft::map<Key, T, Compare, Alloc>::end()
 {
 	node_pointer right = _root;
 	
-	// try
-	// {
-	// 	if (right == NULL)
-	// 		throw std::exception(std::range_error("end: root is nil"));
-	// }
-	// catch(const std::exception& e)
-	// {
-	// 	std::cerr << e.what() << '\n';
-	// 	exit(1);
-	// }
 	if (right == NULL)
 		return iterator(_nil, _nil, _nil);
 	
 	while (right != _nil && right->_right != _nil)
 	{
-		// std::cout << "right: " << right->_data.first << std::endl;
 		right = right->_right;
 	}
 	return iterator(right, _nil, _nil);
@@ -50,16 +39,6 @@ typename ft::map<Key, T, Compare, Alloc>::const_iterator
 ft::map<Key, T, Compare, Alloc>::end() const
 {
 	node_pointer right = _root;
-	// try
-	// {
-	// 	if (right->_data.first)
-	// 		throw std::exception(std::range_error("end: root is nil"));
-	// }
-	// catch(const std::exception& e)
-	// {
-	// 	std::cerr << e.what() << '\n';
-	// 	exit(1);
-	// }
 	if (right == NULL)
 		return const_iterator(_nil, _nil, _nil);
 	while (right != _nil && right->_right != _nil)

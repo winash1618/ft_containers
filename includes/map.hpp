@@ -31,11 +31,12 @@ namespace ft
 				friend class map;
 				protected:
 					key_compare comp;
-
 					value_compare(key_compare c) : comp(c) {}
 				public:
 					bool operator()(const value_type& __x, const value_type& __y) const
-						{return comp(__x.first, __y.first);}
+					{
+						return comp(__x.first, __y.first);
+					}
 			};
 		private:
 			typedef ft::RBTreeNode<value_type>												Node;

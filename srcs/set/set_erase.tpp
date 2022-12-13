@@ -38,23 +38,12 @@ template < class T, class Compare, class Alloc>
 void
 ft::set<T, Compare, Alloc>::erase(typename ft::set<T, Compare, Alloc>::iterator first, typename ft::set<T, Compare, Alloc>::iterator last)
 {
-	std::vector <node_pointer> __vec;
-	iterator __it = first;
-	while (__it != last)
+	while (first != last)
 	{
-		__vec.push_back(__it.__ptr_);
-		__it++;
+		iterator temp = first;
+		first++;
+		erase(temp);
 	}
-	for (size_t i = 0; i < __vec.size(); i++)
-	{
-		erase(__vec[i]);
-	}
-	// while (first != last)
-	// {
-	// 	iterator temp = first;
-	// 	first++;
-	// 	erase(temp);
-	// }
 }
 
 template <class T, class Compare, class Alloc>
