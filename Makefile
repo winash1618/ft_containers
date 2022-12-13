@@ -1,14 +1,14 @@
 # SRC = v_erase_test.cpp
-SRC = m_construct_test.cpp m_at_test.cpp m_begin_test.cpp m_clear_test.cpp \
-		m_count_test.cpp m_empty_test.cpp m_end_test.cpp m_equal_range_test.cpp \
-		m_erase_test.cpp m_find_test.cpp m_get_allocator_test.cpp m_insert_test.cpp \
-		m_key_comp_test.cpp m_lower_bound_test.cpp m_max_size_test.cpp \
-		m_operator[]_test.cpp m_operator=_test.cpp m_rbegin_test.cpp \
-		m_rend_test.cpp m_size_test.cpp m_swap_test.cpp m_upper_bound_test.cpp \
-		m_value_comp_test.cpp m_relational_operators_test.cpp \
-		m_non_member_swap_test.cpp
+SRC = v_erase_test.cpp v_popback_test.cpp v_sizecap_test.cpp \
+		v_insert_test.cpp v_swap_test.cpp v_empty_test.cpp \
+		v_construct_test.cpp v_pushback_test.cpp v_relation_test.cpp \
+		v_nonswap_test.cpp v_bracket_test.cpp v_assignment_test.cpp \
+		v_rbegin_test.cpp v_rend_test.cpp v_reserve_test.cpp \
+		v_resize_test.cpp v_size_test.cpp v_at_test.cpp \
+		v_getalloc_test.cpp v_front_test.cpp v_clear_test.cpp \
+		v_begin_test.cpp v_assign_test.cpp v_end_test.cpp
 
-SRC_DIR = tests/map_tests/
+SRC_DIR = tests/vec_tests/
 
 EXE = $(SRC:.cpp=)
 
