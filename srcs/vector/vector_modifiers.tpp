@@ -20,12 +20,14 @@ ft::vector<Tp, Allocator>::assign
 	typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type*)
 {
 	ft::check_valid(first, last);
+	clear();
 	size_type size = 0;
 	for (InputIterator it = first; it != last; it++)
 	{
 		++size;
 	}
-	allocate(size);
+	// allocate(size);
+	reserve(size);
 	_size = 0;
 	for (size_type index = 0; index < size; ++index)
 	{
@@ -50,7 +52,9 @@ ft::vector<Tp, Allocator>::assign
 	const typename ft::vector<Tp, Allocator>::value_type& val
 )
 {
-	allocate(n);
+	clear();
+	reserve(n);
+	// allocate(n);
 	_size = 0;
 	for (size_type index = 0; index < n; ++index)
 	{
@@ -105,22 +109,16 @@ ft::vector<Tp, Allocator>::insert
 	const typename ft::vector<Tp, Allocator>::value_type& val
 )
 {
-	if (_size + 1 <= _cap)
+	size_type i = position - begin();
+	if (_size == 0)
 	{
-		_alloc.construct(_vec + _size, val);
-		// _cap = _size + 1;
+		_vec = _alloc.allocate(1);
+		_alloc.construct(_vec, val);
 		_size++;
-		for (iterator it = position; it < end(); it++)
-		{
-			value_type temp1 = back();
-			*(end() - 1) = *it;
-			*it = temp1;
-		}
 	}
-	else
+	else if (_size >= _cap)
 	{
-		size_type i = position - begin();
-		temp = t_alloc.allocate(_size * 2, 0);
+		temp = t_alloc.allocate(_size * 2);
 		for (size_type index1 = 0; index1 < _size; ++index1)
 			t_alloc.construct(temp + index1, _vec[index1]);
 		t_alloc.construct(temp + _size, val);
@@ -139,6 +137,20 @@ ft::vector<Tp, Allocator>::insert
 			*it = temp1;
 		}
 	}
+	else
+	{
+		position = begin() + i;
+		size_type index = _size;
+		while (index > i)
+		{
+			
+			*(begin() + index) = *(begin() + index  - 1);
+			index--;
+		}
+		*(begin() + i) = val;
+		_size++;
+	}
+
 	return (position);
 }
 
@@ -229,12 +241,12 @@ ft::vector<Tp, Allocator>::insert
 	// iterator iter = static_cast<iterator>(first);
 	if (_size + size > _cap)
 	{
-		temp = t_alloc.allocate(recommend(_size + size), 0);
+		temp = t_alloc.allocate(recommend(_size + size));
 		t_cap = recommend(_size + size);
 	}
 	else
 	{
-		temp = t_alloc.allocate(_cap, 0);
+		temp = t_alloc.allocate(_cap);
 		t_cap = _cap;
 	}
 	size_type index = 0;
