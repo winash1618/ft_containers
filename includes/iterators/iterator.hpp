@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 10:50:33 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/12 13:32:58 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/13 19:09:32 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ namespace ft
 			template<class X>
 			iterator(const iterator<X>& u):__i(u.base()) {}
 			reference operator*() const {return *__i;}
-			pointer  operator->() const {return (pointer)std::addressof(*__i);}
+			pointer  operator->() const {return (pointer)std::__addressof(*__i);}
 			iterator& operator++() {++__i; return *this;}
 			iterator  operator++(int) {iterator __tmp(*this); ++(*this); return __tmp;}
 			iterator& operator--() {--__i; return *this;}

@@ -29,11 +29,14 @@ namespace ft
 			set_iterator(__node_pointer end, __node_pointer ptr, __node_pointer nil):__ptr_(ptr), __end_(end), __nil_(nil) {}
 			reference operator*() const
 			{
-
+				if (__ptr_ == NULL)
+					return __nil_->_data;
 				return __ptr_->_data;
 			}
 			pointer operator->() const
 			{
+				if (__ptr_ == NULL)
+					return &__nil_->_data;
 				return &__ptr_->_data;
 			}
 

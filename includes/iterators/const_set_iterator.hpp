@@ -40,11 +40,14 @@ namespace ft
 			}
 			reference operator*() const
 			{
+				if (__ptr_ == NULL)
+					return __nil_->_data;
 				return __ptr_->_data;
 			}
 			pointer operator->() const
 			{
-				
+				if (__ptr_ == NULL)
+					return &__nil_->_data;
 				return &__ptr_->_data;
 			}
 
