@@ -8,7 +8,7 @@ ft::map<Key, T, Compare, Alloc>::erase(typename ft::map<Key, T, Compare, Alloc>:
 	node_pointer __node;
 
 	__node = const_cast<node_pointer>(position.__ptr_);
-	if (__node == _nil || _root == _nil || _root == NULL)
+	if (__node == _nil || __node == NULL || _root == _nil || _root == NULL)
 		return ;
 	n_alloc.destroy(__node);
 		
