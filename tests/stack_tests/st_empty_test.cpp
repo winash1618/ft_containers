@@ -1,4 +1,15 @@
-// stack::empty
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   st_empty_test.cpp                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/14 07:50:16 by mkaruvan          #+#    #+#             */
+/*   Updated: 2022/12/14 07:50:17 by mkaruvan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <iostream>       // std::cout
 #include <stack>          // std::stack
 #include <vector>         // std::vector

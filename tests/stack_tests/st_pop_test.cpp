@@ -1,4 +1,15 @@
-// stack::push/pop
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   st_pop_test.cpp                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/14 07:50:22 by mkaruvan          #+#    #+#             */
+/*   Updated: 2022/12/14 07:50:23 by mkaruvan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <iostream>       // std::cout
 #include <stack>          // std::stack
 #include <vector>         // std::vector

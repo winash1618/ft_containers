@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    make_map                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/12/14 07:58:10 by mkaruvan          #+#    #+#              #
+#    Updated: 2022/12/14 07:58:17 by mkaruvan         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 # SRC = v_erase_test.cpp
 SRC = m_construct_test.cpp m_at_test.cpp m_begin_test.cpp m_clear_test.cpp \
 		m_count_test.cpp m_empty_test.cpp m_end_test.cpp m_equal_range_test.cpp \

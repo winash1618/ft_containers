@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   set_rotate_utils.tpp                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/14 07:42:09 by mkaruvan          #+#    #+#             */
+/*   Updated: 2022/12/14 07:42:10 by mkaruvan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SET_ROTATE_UTILS_TPP
 # define SET_ROTATE_UTILS_TPP
 template <class T, class Compare, class Alloc>
