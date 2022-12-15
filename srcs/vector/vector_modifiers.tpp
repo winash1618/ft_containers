@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 07:43:05 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/14 07:43:06 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/15 19:19:46 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ ft::vector<Tp, Allocator>::assign
 		++size;
 	}
 	// allocate(size);
+	// std::cout << "size: " << size << std::endl;
 	reserve(size);
 	_size = 0;
 	for (size_type index = 0; index < size; ++index)
@@ -64,6 +65,16 @@ ft::vector<Tp, Allocator>::assign
 	const typename ft::vector<Tp, Allocator>::value_type& val
 )
 {
+	// try
+	// {
+	// 	if (_size == 0)
+	// 		throw std::out_of_range("vector::assign: vector is empty");
+	// }
+	// catch (const std::exception& e)
+	// {
+	// 	std::cerr << e.what() << '\n';
+	// 	exit(1);
+	// }
 	clear();
 	reserve(n);
 	// allocate(n);
@@ -368,7 +379,8 @@ template<class Tp, class Allocator>
 void
 ft::vector<Tp, Allocator>::clear()
 {
-	destruct(_size);
+	if (_size > 0)
+		destruct(_size);
 }
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 07:43:14 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/14 07:43:15 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/15 18:07:43 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ void ft::vector<Tp, Allocator>::copy(const ft::vector<Tp, Allocator>& other)
 		uninitialized_alloc_copy(other);
 	}
 	else
-		_vec = nullptr_f;
+		_vec = NULL;
 }
 
 /**

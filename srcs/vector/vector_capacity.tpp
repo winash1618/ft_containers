@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 07:42:45 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/14 07:42:46 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/15 19:04:58 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,6 @@ ft::vector<Tp, Allocator>::resize
 {
 	if (n > max_size())
 		throw std::length_error("vector");
-	// if (n < _size)
-	// {
-	// 	for(size_type index = n; index < _size; index++)
-	// 		_alloc.destroy(_vec + index);
-	// 	_size = n;
-	// }
-	// else if (n >= _size && n < _cap )
-	// {
-	// 	
-	// }
 	else if (n > _size)
 	{
 		if (n > max_size())
@@ -87,12 +77,14 @@ ft::vector<Tp, Allocator>::resize
 		_cap = recommend(n);
 		_size = n;
 	}
-	for(size_type index = _size; index < n; index++)
-			_alloc.construct(_vec + index, val);
-	for(size_type index = n; index < _size; index++)
-			_alloc.destroy(_vec + index);
-	_size = n;
-	// 	_size = n;
+	else
+	{
+		for(size_type index = _size; index < n; index++)
+				_alloc.construct(_vec + index, val);
+		for(size_type index = n; index < _size; index++)
+				_alloc.destroy(_vec + index);
+		_size = n;
+	}
 }
 
 /**
@@ -144,7 +136,8 @@ ft::vector<Tp, Allocator>::reserve(typename ft::vector<Tp, Allocator>::size_type
 			t_alloc.construct(t_vec + _index, _vec[_index]);
 		for (_index = 0; _index < _size; ++_index)
 			_alloc.destroy(_vec + _index);
-		_alloc.deallocate(_vec, _cap);
+		if (_cap)
+			_alloc.deallocate(_vec, _cap);
 		_alloc = t_alloc;
 		_vec = t_vec;
 		_cap = n;

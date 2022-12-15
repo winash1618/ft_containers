@@ -1,42 +1,68 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
+#    make_vector                                        :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/07/14 12:12:46 by mkaruvan          #+#    #+#              #
-#    Updated: 2022/12/14 07:39:38 by mkaruvan         ###   ########.fr        #
+#    Created: 2022/12/14 07:58:54 by mkaruvan          #+#    #+#              #
+#    Updated: 2022/12/14 07:58:55 by mkaruvan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = main.cpp
+# SRC = v_erase_test.cpp
+SRC = v_erase_test.cpp v_popback_test.cpp v_sizecap_test.cpp \
+		v_insert_test.cpp v_swap_test.cpp v_empty_test.cpp \
+		v_construct_test.cpp v_pushback_test.cpp v_relation_test.cpp \
+		v_nonswap_test.cpp v_bracket_test.cpp v_assignment_test.cpp \
+		v_rbegin_test.cpp v_rend_test.cpp v_reserve_test.cpp \
+		v_resize_test.cpp v_size_test.cpp v_at_test.cpp \
+		v_getalloc_test.cpp v_front_test.cpp v_clear_test.cpp \
+		v_begin_test.cpp v_assign_test.cpp v_end_test.cpp
 
-OBJ = $(SRC:.cpp=.o)
+SRC_DIR = tests/vec_tests/
+
+EXE = $(SRC:.cpp=)
+
+DXE1 = exe_ft
+
+DXE2 = exe_std
 
 INC = includes
 
+OBJ_DIR = objs
+
+FT = ft_
+
+STD = std_
+
 CC = c++
 
-RM = rm -f
+RM = rm -rf
 
-CFLAGS = -Wall -Wextra -Werror -std=c++98
+CFLAGS = -Wall -Wextra -Werror -std=c++98 -g
 
-NAME = main
+all: $(FT) $(STD)
 
-%.o : %.cpp
-			$(CC) $(CFLAGS) -I$(INC) -c $< -o $@
-
-all: $(NAME)
-
-$(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) $(OBJ) -o $@
+$(FT): 
+	mkdir -p objs exe_ft
+	for d in $(EXE); do \
+		$(CC) $(CFLAGS) -I$(INC) -D CT=ft -c $(SRC_DIR)$$d.cpp -o $(OBJ_DIR)/$(@)$$d.o; \
+		$(CC) $(CFLAGS) $(OBJ_DIR)/$(FT)$$d.o -o $(DXE1)/$(@)$$d; \
+    done
+	
+$(STD): 
+	mkdir -p objs exe_std
+	for d in $(EXE); do \
+		$(CC) $(CFLAGS) -I$(INC) -D CT=std -c $(SRC_DIR)$$d.cpp -o $(OBJ_DIR)/$@$$d.o; \
+		$(CC) $(CFLAGS) $(OBJ_DIR)/$(STD)$$d.o -o $(DXE2)/$(@)$$d; \
+	done
 
 clean:
-	@$(RM) $(OBJ)
+	@$(RM) $(OBJ_DIR)
 
 fclean: clean
-	@$(RM) $(NAME) 
+	@$(RM) $(DXE1) $(DXE2)
 
 re: fclean all
 

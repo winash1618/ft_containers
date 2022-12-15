@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 07:42:54 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/14 07:42:55 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/15 18:30:25 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ template<class Tp, class Allocator>
 typename ft::vector<Tp, Allocator>::reference
 ft::vector<Tp, Allocator>::operator[](typename ft::vector<Tp, Allocator>::size_type index)
 {
-	assert(index < size() && "Index out of range1");
 	return _vec[index]; 
 }
 
@@ -41,7 +40,6 @@ template<class Tp, class Allocator>
 typename ft::vector<Tp, Allocator>::const_reference
 ft::vector<Tp, Allocator>::operator[](typename ft::vector<Tp, Allocator>::size_type index) const
 {
-	assert(index < size() && "Index out of range2");
 	return _vec[index]; 
 }
 
@@ -89,7 +87,6 @@ template<class Tp, class Allocator>
 typename ft::vector<Tp, Allocator>::reference
 ft::vector<Tp, Allocator>::front()
 {
-	assert(!empty() && "front() called for empty vector");
 	return *this->begin();
 }
 
@@ -104,7 +101,6 @@ template<class Tp, class Allocator>
 typename ft::vector<Tp, Allocator>::const_reference
 ft::vector<Tp, Allocator>::front() const
 {
-	assert(!empty() && "front() called for empty vector");
 	return *this->begin();
 }
 
@@ -119,7 +115,6 @@ template<class Tp, class Allocator>
 typename ft::vector<Tp, Allocator>::reference
 ft::vector<Tp, Allocator>::back()
 {
-	assert(!empty() && "back() called for empty vector");
 	return *(_vec + size() - 1);
 }
 
@@ -134,7 +129,6 @@ template<class Tp, class Allocator>
 typename ft::vector<Tp, Allocator>::const_reference
 ft::vector<Tp, Allocator>::back() const
 {
-	assert(!empty() && "back() called for empty vector");
 	return *(_vec + size() - 1);
 }
 

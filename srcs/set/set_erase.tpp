@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 07:41:35 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/14 07:41:36 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/15 18:07:12 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,6 @@ ft::set<T, Compare, Alloc>::clear()
 {
 	destroy(_root);
 	_size = 0;
-	_root = nullptr_f;
+	_root = NULL;
 }
 #endif

@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 07:54:34 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/14 07:54:48 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/15 18:13:39 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,39 +15,20 @@
 #include <vector>
 #include <map>
 #include <utility>
-
+#include <climits>
 
 int main ()
 {
 	
-	CT::vector<int> const myvector(5, 42);
+	CT::vector<int>  myvector(5, 42);
 
 
-  set some initial content:
   for (int i=1;i<10;i++) myvector.push_back(i);
-std::cout << '\n';
-  	std::cout << "size: " << (int) myvector.size() << '\n';
-  std::cout << "capacity: " << (int) myvector.capacity() << '\n';
   myvector.resize(5);
-  std::cout << '\n';
-  	std::cout << "size: " << (int) myvector.size() << '\n';
-  std::cout << "capacity: " << (int) myvector.capacity() << '\n';
   myvector.resize(8,100);
-  std::cout << '\n';
-  	std::cout << "size: " << (int) myvector.size() << '\n';
-  std::cout << "capacity: " << (int) myvector.capacity() << '\n';
   myvector.resize(12);
-  std::cout << '\n';
-  	std::cout << "size: " << (int) myvector.size() << '\n';
-  std::cout << "capacity: " << (int) myvector.capacity() << '\n';
   myvector.resize(SCHAR_MAX);
-std::cout << '\n';
-  	std::cout << "size: " << (int) myvector.size() << '\n';
-  std::cout << "capacity: " << (int) myvector.capacity() << '\n';
   myvector.resize(SHRT_MAX);
-std::cout << '\n';
-  	std::cout << "size: " << (int) myvector.size() << '\n';
-  std::cout << "capacity: " << (int) myvector.capacity() << '\n';
   std::cout << "myvector contains:";
   for (size_t i=0;i<myvector.size();i++)
     std::cout << ' ' << myvector[i];

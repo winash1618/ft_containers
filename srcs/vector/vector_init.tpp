@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 13:31:35 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/13 18:54:08 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/15 18:09:42 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ template<class Tp, class Allocator>
 ft::vector<Tp, Allocator>::vector
 (
 	const typename ft::vector<Tp, Allocator>::allocator_type& alloc
-) : _vec(ft::nullptr_f), _alloc(alloc), _cap(0), _size(0)
+) : _vec(NULL), _alloc(alloc), _cap(0), _size(0)
 {
 }
 
@@ -78,7 +78,6 @@ ft::vector<Tp, Allocator>::vector
 	}
 	_vec = _alloc.allocate(_size);
 	_cap = _size;
-	
 	for (size_type index = 0; index < _size; ++index)
 	{
 		_alloc.construct(_vec + index, *(first++));
@@ -129,7 +128,6 @@ ft::vector<Tp, Allocator>::operator=(const ft::vector<Tp, Allocator>& x)
 		return *this;
 	}
 	destruct(size());
-	
 	if (x._vec)
 	{
 		this->_alloc = x.get_allocator();
@@ -141,7 +139,8 @@ ft::vector<Tp, Allocator>::operator=(const ft::vector<Tp, Allocator>& x)
 	}
 	else
 	{
-		_vec = nullptr_f;
+		deallocate(_cap);
+		_vec = NULL;
 		_size = 0;
 	}
 	return *this;
