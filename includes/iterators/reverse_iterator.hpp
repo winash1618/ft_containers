@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:27:34 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/11/26 14:59:36 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/15 18:32:44 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,6 @@
 
 namespace ft
 {
-	const
-	class nullptr_t
-	{
-		public:
-		template<class T>
-		operator T*() const
-		{
-			return 0;
-		}
-		template<class C, class T>
-		operator T C::*() const
-		{
-			return 0;
-		}
-		private:
-		void operator&() const;
-	} nullptr_f = {};
 	template <class Iterator>
 	class reverse_const_iterator
 	{
@@ -202,8 +185,6 @@ namespace ft
 			{
 				return *(*this + n);
 			}
-			// bool operator==(const reverse_iterator& rhs) const {return _iter==rhs._iter;}
-			// 	bool operator!=(const reverse_iterator& rhs) const {return _iter!=rhs._iter;}
 	};
 	
 	template <class _Iter1, class _Iter2>

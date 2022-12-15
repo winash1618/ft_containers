@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 07:56:37 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/14 07:56:37 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/15 18:06:31 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ namespace ft
 	{
 		public:
 			typedef Alloc																allocator_type;
-			// typedef typename allocator_type::value_type 								value_type;
-			typedef _V							 								value_type;
+			typedef _V							 										value_type;
 			typedef ft::RBTreeNode<value_type>											Node;
 			typedef Node																node_pointer;
 			typedef typename allocator_type::template rebind<node_pointer>::other		__node_allocator;
@@ -112,9 +111,9 @@ namespace ft
 				return __t;
 			}
 			friend bool operator==(const __const_set_iterator& __x, const __const_set_iterator& __y)
-				{return __x.__ptr_ == __y.__ptr_;}
+			{return __x.__ptr_ == __y.__ptr_;}
 			friend bool operator!=(const __const_set_iterator& __x, const __const_set_iterator& __y)
-				{return !(__x == __y);}
+			{return !(__x == __y);}
 	};
 }
 #endif
