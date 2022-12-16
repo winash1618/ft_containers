@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 07:42:45 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/15 19:04:58 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/16 19:28:24 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,10 @@ ft::vector<Tp, Allocator>::resize
 			t_alloc.construct(temp + index, _vec[index]);
 		for (size_type index = _size; index < n; ++index)
 			t_alloc.construct(temp + index, val);
-		for (size_type index = 0; index < _size; ++index)
-			_alloc.destroy(_vec + index);
-		_alloc.deallocate(_vec, _cap);
+		destruct_and_deallocate(_cap, _size);
+		// for (size_type index = 0; index < _size; ++index)
+		// 	_alloc.destroy(_vec + index);
+		// _alloc.deallocate(_vec, _cap);
 		_alloc = t_alloc;
 		_vec = temp;
 		_cap = recommend(n);

@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 10:50:33 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/16 07:23:57 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/16 20:03:53 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,12 @@ namespace ft
 	bool
 	operator==(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter2>& y) 
 	{
-		
 		return x.base() == y.base();
 	}
 	template <class _Iter1, class _Iter2>
 	bool
 	operator!=(const ft::iterator<_Iter1>& x, const ft::iterator<_Iter2>& y) 
 	{
-		
 		return !(x == y);
 	}
 	template <class _Iter1, class _Iter2>
