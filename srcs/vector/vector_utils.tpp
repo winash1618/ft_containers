@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 07:43:14 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/15 18:07:43 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/16 15:30:43 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void ft::vector<Tp, Allocator>::allocate(typename ft::vector<Tp, Allocator>::siz
 {
 	if (capacity > max_size())
 		throw std::length_error("new size to allocate exceeds max_size()");
+	if (capacity == 0)
+		return;
 	_cap = capacity;
 	_vec = _alloc.allocate(capacity, 0);
 }
@@ -72,7 +74,8 @@ void ft::vector<Tp, Allocator>::allocate(typename ft::vector<Tp, Allocator>::siz
 template<class Tp, class Allocator>
 void ft::vector<Tp, Allocator>::deallocate(std::size_t capacity)
 {
-	_alloc.deallocate(_vec, capacity);
+	if (capacity)
+		_alloc.deallocate(_vec, capacity);
 	_cap = 0;
 	_size = 0;
 }
@@ -155,7 +158,7 @@ void ft::vector<Tp, Allocator>::allocate_and_copy_construct(std::size_t capacity
  * @param size 
  */
 template<class Tp, class Allocator>
-void ft::vector<Tp, Allocator>::deallocate_and_destruct(std::size_t capacity, std::size_t size)
+void ft::vector<Tp, Allocator>::destruct_and_deallocate(std::size_t capacity, std::size_t size)
 {
 	destruct(size);
 	deallocate(capacity);

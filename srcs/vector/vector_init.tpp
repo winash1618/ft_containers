@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 13:31:35 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/15 18:09:42 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/16 16:50:18 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,9 @@ ft::vector<Tp, Allocator>::vector
 	const typename ft::vector<Tp, Allocator>::allocator_type& alloc
 ) : _alloc(alloc), _cap(0)
 {
-	allocate(len);
-	construct_at_end(len, val);
+
+		allocate(len);
+		construct_at_end(len, val);
 }
 
 /**
@@ -80,7 +81,8 @@ ft::vector<Tp, Allocator>::vector
 	_cap = _size;
 	for (size_type index = 0; index < _size; ++index)
 	{
-		_alloc.construct(_vec + index, *(first++));
+		_alloc.construct(_vec + index, *first);
+		++first;
 	}
 }
 
@@ -108,7 +110,7 @@ ft::vector<Tp, Allocator>::vector (const ft::vector<Tp, Allocator>& x) :  _cap(0
 template<class Tp, class Allocator>
 ft::vector<Tp, Allocator>::~vector()
 {
-	deallocate_and_destruct(_cap, _size);
+	destruct_and_deallocate(_cap, _size);
 }
 
 /**

@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 07:57:15 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/14 07:57:16 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/15 19:51:21 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,23 +45,8 @@ namespace ft
 	_NodePtr
 	tree_min(_NodePtr current_node, _NodePtr nil)
 	{
-		// std::cout << "tree_min" << current_node->_data.first << std::endl;
-		// try
-		// {
-		// 	if (current_node != nil)
-		// 		throw std::exception();
-		// }
-		// catch(const std::exception& e)
-		// {
-		// 	std::cerr << e.what() << '\n';
-		// 	exit(1);
-		// }
-		
 		while (current_node->_left != nil)
-		{
-			// std::cout << "current_node: " << current_node << std::endl;
 			current_node = current_node->_left;
-		}
 		return current_node;
 	}
 
@@ -74,31 +59,5 @@ namespace ft
 			current_node = current_node->_right;
 		return current_node;
 	}
-
-	// template <class _NodePtr>
-	// _NodePtr
-	// tree_next(_NodePtr current_node)
-	// {
-	// 	if (current_node->_right != nil)
-	// 		return tree_min(current_node->_right);
-	// 	while (!tree_is_left_child(current_node) && current_node->_parent)
-	// 	{
-	// 		current_node = current_node->_parent;
-	// 	}
-	// 	return current_node->_parent;
-	// }
-
-	// template <class _NodePtr>
-	// _NodePtr
-	// tree_prev(_NodePtr current_node)
-	// {
-	// 	if (current_node == nil)
-	// 		return  nil;
-	// 	if (current_node->_left != nil)
-	// 		return tree_max(current_node->_left);
-	// 	while (tree_is_left_child(current_node))
-	// 		current_node = current_node->_parent;
-	// 	return current_node->_parent;
-	// }
 }
 #endif

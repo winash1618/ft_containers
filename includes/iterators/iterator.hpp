@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 10:50:33 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/15 18:06:17 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/16 07:23:57 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,11 +151,5 @@ namespace ft
 		n -= x;
 		return n;
 	}
-
-
-
-
-
-
 }
 #endif

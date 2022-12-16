@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/06 16:58:10 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/15 18:30:35 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/16 17:53:31 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ namespace ft
 			void									construct_at_end(size_type size, const value_type& value);
 			void									destruct(std::size_t size);
 			void									allocate_and_copy_construct(std::size_t capacity, std::size_t size, const value_type& value = value_type());
-			void									deallocate_and_destruct(std::size_t capacity, std::size_t size);
+			void									destruct_and_deallocate(std::size_t capacity, std::size_t size);
 			void									uninitialized_alloc_copy(const vector& other);
 			void									copy(const vector& other);
 			size_type								recommend(size_type new_size) const;

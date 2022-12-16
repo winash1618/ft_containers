@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 07:43:05 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/15 19:19:46 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/16 17:37:04 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,12 @@ ft::vector<Tp, Allocator>::assign
 	{
 		++size;
 	}
-	// allocate(size);
-	// std::cout << "size: " << size << std::endl;
 	reserve(size);
 	_size = 0;
 	for (size_type index = 0; index < size; ++index)
 	{
-		_alloc.construct(_vec + index, *(first++));
+		_alloc.construct(_vec + index, *first);
+		++first;
 		++_size;
 	}
 }
@@ -65,19 +64,8 @@ ft::vector<Tp, Allocator>::assign
 	const typename ft::vector<Tp, Allocator>::value_type& val
 )
 {
-	// try
-	// {
-	// 	if (_size == 0)
-	// 		throw std::out_of_range("vector::assign: vector is empty");
-	// }
-	// catch (const std::exception& e)
-	// {
-	// 	std::cerr << e.what() << '\n';
-	// 	exit(1);
-	// }
 	clear();
 	reserve(n);
-	// allocate(n);
 	_size = 0;
 	for (size_type index = 0; index < n; ++index)
 	{
@@ -132,23 +120,26 @@ ft::vector<Tp, Allocator>::insert
 	const typename ft::vector<Tp, Allocator>::value_type& val
 )
 {
+	Allocator p_alloc;
 	size_type i = position - begin();
-	if (_size == 0)
+	if (_cap == 0)
 	{
 		_vec = _alloc.allocate(1);
 		_alloc.construct(_vec, val);
+		_cap = 1;
 		_size++;
+		position = begin() + i;
 	}
-	else if (_size >= _cap)
+	else if (_size == _cap)
 	{
-		temp = t_alloc.allocate(_size * 2);
+		temp = p_alloc.allocate(_size * 2);
 		for (size_type index1 = 0; index1 < _size; ++index1)
-			t_alloc.construct(temp + index1, _vec[index1]);
-		t_alloc.construct(temp + _size, val);
+			p_alloc.construct(temp + index1, _vec[index1]);
+		p_alloc.construct(temp + _size, val);
 		for (size_type index1 = 0; index1 < _size; ++index1)
-			_alloc.destroy(_vec + index1);
+				_alloc.destroy(_vec + index1);
 		_alloc.deallocate(_vec, _cap);
-		_alloc = t_alloc;
+		_alloc = p_alloc;
 		_vec = temp;
 		_cap = _size * 2;
 		_size++;
@@ -162,16 +153,15 @@ ft::vector<Tp, Allocator>::insert
 	}
 	else
 	{
-		position = begin() + i;
-		size_type index = _size;
-		while (index > i)
-		{
-			
-			*(begin() + index) = *(begin() + index  - 1);
-			index--;
-		}
-		*(begin() + i) = val;
+		_alloc.construct(_vec + _size, val);
 		_size++;
+		position = begin() + i;
+		for (iterator it = position; it < end(); it++)
+		{
+			value_type temp1 = back();
+			*(end() - 1) = *it;
+			*it = temp1;
+		}
 	}
 
 	return (position);
@@ -307,9 +297,9 @@ template<class Tp, class Allocator>
 typename ft::vector<Tp, Allocator>::iterator
 ft::vector<Tp, Allocator>::erase(typename ft::vector<Tp, Allocator>::iterator position)
 {
-	_alloc.destroy(_vec + (position - begin()));
 	for(size_type index = position - begin(); index < _size - 1; index++)
-		_alloc.construct(_vec + index, *(_vec + index + 1));
+		*(_vec + index) = *(_vec + index + 1);
+	_alloc.destroy(_vec + _size - 1);
 	_size--;
 	return (position);
 }
@@ -322,39 +312,52 @@ ft::vector<Tp, Allocator>::erase
 	typename ft::vector<Tp, Allocator>::iterator last
 )
 {
-	size_type siz = first - begin();
-	size_type len = end() - begin();
-	if (len > 0)
-	{
+	// size_type siz = first - begin();
+	// size_type len = end() - begin();
+	// if (len > 0)
+	// {
+		// size_type index = 0;
+		// iterator t_end = end();
+		// for (iterator it = first; it != last; it++)
+		// {
+		// 	_alloc.destroy(_vec + siz + index);
+		// 	index++;
+		// 	_size--;
+		// }
+		// index = 0;
+		// for (iterator it = first; it != last; it++)
+		// {
+		// 	if (last + index == t_end)
+		// 		break;
+		// 	_alloc.construct(_vec  + siz + index, *(last + index));
+		// 	_alloc.destroy(_vec + siz + index);
+		// 	index++;
+		// }
+		// if (last + index != t_end)
+		// {
+		// 	while (index < len)
+		// 	{
+		// 		if (last + index == t_end)
+		// 		break;
+		// 		_alloc.construct(_vec  + siz + index, *(last + index));
+		// 		_alloc.destroy(_vec + siz + index);
+		// 		index++;
+		// 	}
+		// }
 		size_type index = 0;
-		iterator t_end = end();
-		for (iterator it = first; it != last; it++)
+		for (iterator it = first; first != end(); it++)
 		{
-			_alloc.destroy(_vec + siz + index);
+			*(it) = *(last + index);
 			index++;
+		}
+		index = last - first;
+		while (index > 0)
+		{
+			_alloc.destroy(_vec + _size - 1);
 			_size--;
+			index--;
 		}
-		index = 0;
-		for (iterator it = first; it != last; it++)
-		{
-			if (last + index == t_end)
-				break;
-			_alloc.construct(_vec  + siz + index, *(last + index));
-			_alloc.destroy(_vec + siz + index);
-			index++;
-		}
-		if (last + index != t_end)
-		{
-			while (index < len)
-			{
-				if (last + index == t_end)
-				break;
-				_alloc.construct(_vec  + siz + index, *(last + index));
-				_alloc.destroy(_vec + siz + index);
-				index++;
-			}
-		}
-	}
+	// }
 	return first;
 }
 
