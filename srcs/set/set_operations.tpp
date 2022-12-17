@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 07:42:04 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/14 07:42:05 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/17 08:00:20 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ ft::set<T, Compare, Alloc>::lower_bound(const typename ft::set<T, Compare, Alloc
 {
 	node_pointer __root = _root;
 	node_pointer __result = _nil;
-
+	if (__root == NULL)
+		return (iterator(_nil, _nil, _nil));
 	while (__root != _nil)
 	{
 		if (!_comp(__root->_data, k))
@@ -88,6 +89,8 @@ ft::set<T, Compare, Alloc>::upper_bound(const typename ft::set<T, Compare, Alloc
 {
 	node_pointer __root = _root;
 	node_pointer __result = _nil;
+	if (__root == NULL)
+		return (iterator(_nil, _nil, _nil));
 	while (__root != _nil)
 	{
 		if (_comp( k, __root->_data))
@@ -109,6 +112,8 @@ ft::set<T, Compare, Alloc>::lower_bound(const typename ft::set<T, Compare, Alloc
 {
 	node_pointer __root = _root;
 	node_pointer __result = _nil;
+	if (__root == NULL)
+		return (const_iterator(_nil, _nil, _nil));
 	while (__root != _nil)
 	{
 		if (!_comp(__root->_data, k))
@@ -130,6 +135,8 @@ ft::set<T, Compare, Alloc>::upper_bound(const typename ft::set<T, Compare, Alloc
 {
 	node_pointer __root = _root;
 	node_pointer __result = _nil;
+	if (__root == NULL)
+		return (const_iterator(_nil, _nil, _nil));
 	while (__root != _nil)
 	{
 		if (_comp( k, __root->_data))

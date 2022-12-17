@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 07:40:59 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/14 07:41:00 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/17 07:55:50 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ ft::map<Key, T, Compare, Alloc>::lower_bound(const typename ft::map<Key, T, Comp
 {
 	node_pointer __root = _root;
 	node_pointer __result = _nil;
+	if (_root == NULL)
+		return (iterator (_nil, _nil, _nil));
 
 	while (__root != _nil)
 	{
@@ -88,6 +90,9 @@ ft::map<Key, T, Compare, Alloc>::upper_bound(const typename ft::map<Key, T, Comp
 {
 	node_pointer __root = _root;
 	node_pointer __result = _nil;
+	
+	if (_root == NULL)
+		return (iterator (_nil, _nil, _nil));
 	while (__root != _nil)
 	{
 		if (_comp( k, __root->_data.first))
@@ -109,6 +114,8 @@ ft::map<Key, T, Compare, Alloc>::lower_bound(const typename ft::map<Key, T, Comp
 {
 	node_pointer __root = _root;
 	node_pointer __result = _nil;
+	if (_root == NULL)
+		return (const_iterator (_nil, _nil, _nil));
 	while (__root != _nil)
 	{
 		if (!_comp(__root->_data.first, k))
@@ -130,6 +137,8 @@ ft::map<Key, T, Compare, Alloc>::upper_bound(const typename ft::map<Key, T, Comp
 {
 	node_pointer __root = _root;
 	node_pointer __result = _nil;
+	if (_root == NULL)
+		return (const_iterator (_nil, _nil, _nil));
 	while (__root != _nil)
 	{
 		if (_comp( k, __root->_data.first))

@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 07:40:17 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/14 07:40:18 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/17 07:28:14 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,11 @@ template <class Key, class T, class Compare, class Alloc>
 const typename ft::map<Key, T, Compare, Alloc>::mapped_type&
 ft::map<Key, T, Compare, Alloc>::at(const typename ft::map<Key, T, Compare, Alloc>::key_type& k) const
 {
-	return at(k);
+	node_pointer __nd;
+	__nd = const_cast<node_pointer>(find(k).__ptr_);
+	if (__nd == _nil)
+		throw std::out_of_range("map::at:  key not found");
+	return (__nd->_data.second);
 }
 
 template <class Key, class T, class Compare, class Alloc>
