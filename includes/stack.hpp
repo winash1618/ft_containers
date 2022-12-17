@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 07:57:40 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/14 07:57:41 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/17 19:15:01 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ namespace ft
 		public:
 			typedef typename Container::value_type		value_type;
 			typedef typename Container::size_type		size_type;
+			typedef typename Container::reference		reference;
+			typedef typename Container::const_reference	const_reference;
 			typedef Container							container_type;
 		protected:
 			Container c;
