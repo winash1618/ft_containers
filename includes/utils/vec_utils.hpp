@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 07:57:20 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/14 07:57:21 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/18 08:20:26 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,11 @@ namespace ft
 		typedef T value_type;
 		typedef integral_constant type;
 		operator value_type() const { return value; }
-		value_type operator()() const { return value; } //since c++14
+		value_type operator()() const { return value; }
 	};
 
 	typedef integral_constant<bool, true> true_type1;
+
 	typedef integral_constant<bool, false> false_type1;
 
 	template <class T>
@@ -79,28 +80,36 @@ namespace ft
 	struct enable_if {};
 
 	template<class T>
-	struct enable_if<true, T> {typedef T type;};
+	struct enable_if<true, T>
+	{
+		typedef T type;
+	};
 
 	/* True type and False type*/
-	struct true_type {
+	struct true_type
+	{
 		static const bool value = true;
 	};
 
-	struct false_type {
+	struct false_type
+	{
 		static const bool value = false;
 	};
 
 	template<typename T>
-	int is_int() {
-	return false;
+	int is_int()
+	{
+		return false;
 	}
 
 	template<>
-	int is_int<int>() {
-	return true;
+	int is_int<int>()
+	{
+		return true;
 	}
 
 	// https://stackoverflow.com/questions/4307271/how-to-check-that-the-passed-iterator-is-a-random-access-iterator
+
 	template <class _RandIter>
 	void
 	__check_valid(_RandIter first, _RandIter last, std::random_access_iterator_tag)
@@ -108,6 +117,7 @@ namespace ft
 		if (first > last )
 					throw std::length_error("vector");
 	}
+
 	template <class _RandIter>
 	void
 	__check_valid(_RandIter first, _RandIter last, std::input_iterator_tag)
@@ -115,6 +125,7 @@ namespace ft
 		(void)first;
 		(void)last;
 	}
+
 	template <class _RandIter>
 	void
 	__check_valid(_RandIter first, _RandIter last, std::output_iterator_tag)
@@ -122,6 +133,7 @@ namespace ft
 		(void)first;
 		(void)last;
 	}
+
 	template <class _RandIter>
 	void
 	__check_valid(_RandIter first, _RandIter last, std::forward_iterator_tag)
@@ -129,6 +141,7 @@ namespace ft
 		(void)first;
 		(void)last;
 	}
+
 	template <class _RandIter>
 	void
 	__check_valid(_RandIter first, _RandIter last, std::bidirectional_iterator_tag)
@@ -137,6 +150,7 @@ namespace ft
 		(void)last;
 
 	}
+
 	template <class _RandIter>
 	void
 	__check_valid(_RandIter first, _RandIter last, ft::random_access_iterator_tag)
@@ -144,6 +158,7 @@ namespace ft
 		if (first > last )
 					throw std::length_error("vector");
 	}
+
 	template <class _RandIter>
 	void
 	__check_valid(_RandIter first, _RandIter last, ft::input_iterator_tag)
@@ -151,6 +166,7 @@ namespace ft
 		(void)first;
 		(void)last;
 	}
+
 	template <class _RandIter>
 	void
 	__check_valid(_RandIter first, _RandIter last, ft::output_iterator_tag)
@@ -158,6 +174,7 @@ namespace ft
 		(void)first;
 		(void)last;
 	}
+
 	template <class _RandIter>
 	void
 	__check_valid(_RandIter first, _RandIter last, ft::forward_iterator_tag)
@@ -165,14 +182,15 @@ namespace ft
 		(void)first;
 		(void)last;
 	}
+
 	template <class _RandIter>
 	void
 	__check_valid(_RandIter first, _RandIter last, ft::bidirectional_iterator_tag)
 	{
 		(void)first;
 		(void)last;
-
 	}
+
 	template <class InputIter>
 	void
 	check_valid(InputIter first, InputIter last)
