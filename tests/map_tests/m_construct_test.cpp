@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 07:43:47 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/14 07:43:48 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/18 10:25:11 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int main ()
 itlow=first.lower_bound ('b');  // itlow points to b
   itup=first.upper_bound ('d');   // itup points to e (not d!)
 std::cout << itlow->first <<std::endl;
-//   first.erase(itlow,itup);        // erases [itlow,itup)
+  first.erase(itlow,itup);        // erases [itlow,itup)
 
   // print content:
   for (CT::map<char,int>::iterator it=first.begin(); it!=first.end(); ++it)

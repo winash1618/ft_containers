@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 07:48:22 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/14 07:48:23 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/18 10:34:37 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,65 +17,26 @@
 
 int main ()
 {
-  CT::set<int> myset;
-  CT::set<int>::iterator it;
-//   CT::set<int>::iterator ite;
+	CT::set<int> myset;
+	CT::set<int>::iterator it;
+	for (int i=1; i<10; i++) myset.insert(i*10);  // 10 20 30 40 50 60 70 80 90
 
-  // insert some values:
-  for (int i=1; i<10; i++) myset.insert(i*10);  // 10 20 30 40 50 60 70 80 90
+	it = myset.begin();
+	
+	++it;                                         // "it" points now to 20
 
-  it = myset.begin();
-  ++it;                                         // "it" points now to 20
+	myset.erase (it);
 
-  myset.erase (it);
+	myset.erase (40);
 
-  myset.erase (40);
+	it = myset.find (60);
+	
+	myset.erase (it, myset.end());
 
-  it = myset.find (60);
-//   try
-//   {
-// 	std::cout << "myset contains:";
-// 	std::cout << ' ' << *it;
-// 	std::cout << '\n';
-//   }
-//   catch(const std::exception& e)
-//   {
-// 	std::cerr << e.what() << '\n';
-//   }
-//   ite = myset.end();
-//   std::cout << "myset contains:";
-// std::cout << ' ' << *it << ' ' << *ite << '\n';
-// 	ite = it;
-// 	myset.erase (it);
-// 	std::cout << *ite++ << std::endl;
-// 	it = ite;
-// 	ite++;
-// 	std::cout << *it << std::endl;
-// 	myset.erase (it);
-// 	it = ite;
-// 	ite++;
-// 	std::cout << *it << std::endl;
-// 	myset.erase (it);
-// 	it = ite;
-// 	ite++;
-// 	std::cout << *it << std::endl;
-// 	myset.erase (it);
-// 	it = ite;
-// 	ite++;
-	// std::cout << *it << std::endl;
-	// myset.erase (it);
-	// it++;
-	// myset.erase (it);
-	// it++;
-	// myset.erase (it);
-	// for (; it!=myset.end(); ++it)
-    // std::cout << ' ' << *it;
-  myset.erase (it, myset.end());
+	std::cout << "myset contains:";
+	for (it=myset.begin(); it!=myset.end(); ++it)
+		std::cout << ' ' << *it;
+	std::cout << '\n';
 
-  std::cout << "myset contains:";
-  for (it=myset.begin(); it!=myset.end(); ++it)
-    std::cout << ' ' << *it;
-  std::cout << '\n';
-
-  return 0;
+	return 0;
 }

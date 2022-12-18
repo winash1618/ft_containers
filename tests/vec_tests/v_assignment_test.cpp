@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 07:50:50 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/14 07:51:39 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/18 10:00:47 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int main ()
   foo = CT::vector<int>();
 
   std::cout << "size of foo: " << (int) foo.size() << '\n';
-  std::cout << "capacity of foo: " << (int) foo.capacity() << '\n';
+  std::cout << "capacity of foo: " << (foo.capacity() >= foo.size())  << '\n';
 std::cout << "size of bar: " << (int) bar.size() << '\n';
-  std::cout << "capacity of bar: " << (int) bar.capacity() << '\n';
+  std::cout << "capacity of bar: " << (foo.capacity() >= foo.size())  << '\n';
   return 0;
 }
