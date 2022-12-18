@@ -6,16 +6,13 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 07:57:40 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/17 19:15:01 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/18 07:42:02 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STACK_HPP
 # define STACK_HPP
-
-// #include <stack>
-#include "vector.hpp"
-
+# include "vector.hpp"
 namespace ft
 {
 	template<class T, class Container = ft::vector<T> >
@@ -27,11 +24,14 @@ namespace ft
 			typedef typename Container::reference		reference;
 			typedef typename Container::const_reference	const_reference;
 			typedef Container							container_type;
+
 		protected:
 			Container c;
+
 		public:
 			explicit stack(const container_type& ctnr = container_type());
 			~stack();
+
 			bool										empty() const;
 			size_type									size() const;
 			value_type&									top();
