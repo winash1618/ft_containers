@@ -6,13 +6,15 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 07:59:09 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/14 07:59:10 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/18 10:14:26 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <deque>
+#include <sys/time.h>
 #if 0 //CREATE A REAL STL EXAMPLE
 	#include <map>
 	#include <stack>
@@ -57,6 +59,9 @@ public:
 };
 
 int main(int argc, char** argv) {
+	timeval exec_time;
+	gettimeofday(&exec_time, NULL);
+	double start = 1.0e6 * exec_time.tv_sec + exec_time.tv_usec;
 	if (argc != 2)
 	{
 		std::cerr << "Usage: ./test seed" << std::endl;
@@ -124,5 +129,8 @@ int main(int argc, char** argv) {
 		std::cout << *it;
 	}
 	std::cout << std::endl;
+	gettimeofday(&exec_time, NULL);
+	double end = 1.0e6 * exec_time.tv_sec + exec_time.tv_usec;
+	std::cout << std::fixed << std::setprecision(3) << (end - start) / 1000 << " ms" << std::endl;
 	return (0);
 }

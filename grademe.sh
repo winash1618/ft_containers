@@ -1,6 +1,6 @@
 #!/bin/bash
 PS3='Please enter your choice: '
-options=("vector" "stack" "map" "set" "quit")
+options=("vector" "stack" "map" "set" "speed" "quit")
 select opt in "${options[@]}"
 do
     case $opt in
@@ -211,11 +211,59 @@ do
 			echo -e "${CYAN}*********************************************${DEFAULT}"
 			echo -e "${CYAN}*********** ${YELLOW}Set Tests Ends${CYAN} ***************${DEFAULT}"
 			echo -e "${CYAN}*********************************************${DEFAULT}"
-            ;;
-        "quit")
-            break
-            ;;
-        *) echo "invalid option $REPLY";;
-    esac
+			;;
+		"speed")
+			echo "you chose speed test"
+			cat ./Makefiles/make_speed > Makefile
+			make re
+			DEFAULT='\033[0m'
+			RED='\033[1;31m'
+			GREEN='\033[1;32m'
+			YELLOW='\033[0;33m'
+			CYAN='\033[0;36m'
+			echo -e "${YELLOW}Vector: ${DEFAULT}"
+			echo -en "${CYAN}ft time: ${DEFAULT}"
+			./exe_ft/ft_vector_speed_test > 1.txt
+			sleep 0.5
+			echo "$(<1.txt)"
+			echo -en "${CYAN}std time: ${DEFAULT}"
+			./exe_std/std_vector_speed_test > 2.txt
+			sleep 0.5
+			echo "$(<2.txt)"
+			echo -e "${YELLOW}Stack: ${DEFAULT}"
+			echo -en "${CYAN}ft time: ${DEFAULT}"
+			./exe_ft/ft_stack_speed_test > 1.txt
+			sleep 0.5
+			echo "$(<1.txt)"
+			echo -en "${CYAN}std time: ${DEFAULT}"
+			./exe_std/std_stack_speed_test > 2.txt
+			sleep 0.5
+			echo "$(<2.txt)"
+			echo -e "${YELLOW}Map: ${DEFAULT}"
+			echo -en "${CYAN}ft time: ${DEFAULT}"
+			./exe_ft/ft_map_speed_test > 1.txt
+			sleep 0.5
+			echo "$(<1.txt)"
+			echo -en "${CYAN}std time: ${DEFAULT}"
+			./exe_std/std_map_speed_test > 2.txt
+			sleep 0.5
+			echo "$(<2.txt)"
+			echo -e "${YELLOW}Set: ${DEFAULT}"
+			echo -en "${CYAN}ft time: ${DEFAULT}"
+			./exe_ft/ft_set_speed_test > 1.txt
+			sleep 0.5
+			echo "$(<1.txt)"
+			echo -en "${CYAN}std time: ${DEFAULT}"
+			./exe_std/std_set_speed_test > 2.txt
+			sleep 0.5
+			echo "$(<2.txt)"
+			rm -f 1.txt 2.txt
+			;;
+		"quit")
+			break
+			;;
+		*) echo "invalid option $REPLY"
+		;;
+	esac
 done
 
