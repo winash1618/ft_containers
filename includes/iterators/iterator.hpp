@@ -6,13 +6,14 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 10:50:33 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/17 20:10:12 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/18 08:13:13 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ITERATOR_HPP
 # define ITERATOR_HPP
-#include "iterator_traits.hpp"
+# include "iterator_traits.hpp"
+
 namespace ft
 {
 	template<class _Iter>
@@ -25,14 +26,17 @@ namespace ft
 			typedef typename ft::iterator_traits<iterator_type>::difference_type	difference_type;
 			typedef typename ft::iterator_traits<iterator_type>::pointer			pointer;
 			typedef typename ft::iterator_traits<iterator_type>::reference			reference;
+
 		private:
 			iterator_type															__i;
+
 		public:
 			iterator();
 			iterator(iterator_type iter);
 			iterator(const iterator& x);
 			template<class X>
 			iterator(const iterator<X>& u);
+			~iterator();
 
 			reference																operator*() const;
 			pointer																	operator->() const;

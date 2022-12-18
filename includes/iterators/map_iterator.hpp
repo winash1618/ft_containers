@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tree_iterator.hpp                                  :+:      :+:    :+:   */
+/*   map_iterator.hpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 07:57:06 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/17 20:16:08 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/18 08:58:18 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TREE_ITERATOR_HPP
 # define TREE_ITERATOR_HPP
+# include "iterator_traits.hpp"
+# include "reverse_iterator.hpp"
+# include "../utils/utils.hpp"
 
-#include "iterator_traits.hpp"
-#include "reverse_iterator.hpp"
-#include "../utils/utils.hpp"
 namespace ft
 {
 	template <class _V, class Alloc>
@@ -38,6 +38,7 @@ namespace ft
 			__node_pointer																__nil_;
 
 			__tree_iterator();
+			~__tree_iterator();
 			__tree_iterator(__node_pointer ptr);
 			__tree_iterator(__node_pointer end, __node_pointer ptr);
 			__tree_iterator(__node_pointer end, __node_pointer ptr, __node_pointer nil);
@@ -48,6 +49,11 @@ namespace ft
 			__tree_iterator																operator++(int);
 			__tree_iterator&															operator--();
 			__tree_iterator																operator--(int);
+
+			template <class _V1, class Alloc1>
+			friend bool operator==(const ft::__tree_iterator<_V1, Alloc1>& __x, const ft::__tree_iterator<_V1, Alloc1>& __y);
+			template <class _V1, class Alloc1>
+			friend bool operator!=(const ft::__tree_iterator<_V1, Alloc1>& __x, const ft::__tree_iterator<_V1, Alloc1>& __y);
 	};
 
 	template <class _V, class Alloc>
@@ -65,13 +71,14 @@ namespace ft
 			typedef typename allocator_type::template rebind<node_pointer>::other		__node_allocator;
 			typedef typename __node_allocator::pointer									_NodePtr;
 			typedef _NodePtr															__node_pointer;
+			typedef ft::__tree_iterator<_V, allocator_type> 							iterator;
+			iterator																	__iter;
 			__node_pointer																__ptr_;
 			__node_pointer																__end_;
 			__node_pointer																__nil_;
-			typedef ft::__tree_iterator<_V, allocator_type> 							iterator;
-			iterator																	__iter;
 
 			__const_tree_iterator();
+			~__const_tree_iterator();
 			__const_tree_iterator(__node_pointer ptr);
 			__const_tree_iterator(__node_pointer end, __node_pointer ptr);
 			__const_tree_iterator(__node_pointer end, __node_pointer ptr, __node_pointer nil);
@@ -83,11 +90,14 @@ namespace ft
 			__const_tree_iterator														operator++(int);
 			__const_tree_iterator&														operator--();
 			__const_tree_iterator														operator--(int);
+
+			template <class _V1, class Alloc1>
+			friend bool operator==(const ft::__const_tree_iterator<_V1, Alloc1>& __x, const ft::__const_tree_iterator<_V1, Alloc1>& __y);
+			template <class _V1, class Alloc1>
+			friend bool operator!=(const ft::__const_tree_iterator<_V1, Alloc1>& __x, const ft::__const_tree_iterator<_V1, Alloc1>& __y);
 	};
 	template <class _V1, class Alloc1>
 	bool operator==(const ft::__tree_iterator<_V1, Alloc1>& __x, const ft::__tree_iterator<_V1, Alloc1>& __y);
-	template <class _V1, class Alloc1>
-	bool operator!=(const ft::__tree_iterator<_V1, Alloc1>& __x, const ft::__tree_iterator<_V1, Alloc1>& __y);
 	template <class _V1, class Alloc1>
 	bool operator==(const ft::__const_tree_iterator<_V1, Alloc1>& __x, const ft::__const_tree_iterator<_V1, Alloc1>& __y);
 	template <class _V1, class Alloc1>
@@ -95,12 +105,16 @@ namespace ft
 	template <class _V1, class Alloc1>
 	bool operator==(const ft::__const_tree_iterator<_V1, Alloc1>& __x, const ft::__tree_iterator<_V1, Alloc1>& __y);
 	template <class _V1, class Alloc1>
+	bool operator!=(const ft::__tree_iterator<_V1, Alloc1>& __x, const ft::__tree_iterator<_V1, Alloc1>& __y);
+	template <class _V1, class Alloc1>
 	bool operator!=(const __const_tree_iterator<_V1, Alloc1>& __x, const __tree_iterator<_V1, Alloc1>& __y);
 	template <class _V1, class Alloc1>
 	bool operator!=(const __tree_iterator<_V1, Alloc1>& __x, const __tree_iterator<_V1, Alloc1>& __y);
 	template <class _V1, class Alloc1>
 	bool operator!=(const ft::__const_tree_iterator<_V1, Alloc1>& __x, const ft::__const_tree_iterator<_V1, Alloc1>& __y);
+
 	#include "./../../srcs/extras/tree_iterator.tpp"
 	#include "./../../srcs/extras/const_tree_iterator.tpp"
+	#include "./../../srcs/extras/map_iter_non_members.tpp"
 }
 #endif
