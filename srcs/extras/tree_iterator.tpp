@@ -1,24 +1,20 @@
 #ifndef TREE_ITERATOR_TPP
 # define TREE_ITERATOR_TPP
-template <class _V, class Alloc>
-ft::__tree_iterator<_V, Alloc>::__tree_iterator()
-{
-}
 
 template <class _V, class Alloc>
-ft::__tree_iterator<_V, Alloc>::__tree_iterator(__node_pointer ptr): __ptr_(ptr)
-{
-}
+ft::__tree_iterator<_V, Alloc>::__tree_iterator() {}
 
 template <class _V, class Alloc>
-ft::__tree_iterator<_V, Alloc>::__tree_iterator(__node_pointer end, __node_pointer ptr):__ptr_(ptr), __end_(end)
-{
-}
+ft::__tree_iterator<_V, Alloc>::~__tree_iterator() {}
 
 template <class _V, class Alloc>
-ft::__tree_iterator<_V, Alloc>::__tree_iterator(__node_pointer end, __node_pointer ptr, __node_pointer nil):__ptr_(ptr), __end_(end), __nil_(nil)
-{
-}
+ft::__tree_iterator<_V, Alloc>::__tree_iterator(__node_pointer ptr): __ptr_(ptr) {}
+
+template <class _V, class Alloc>
+ft::__tree_iterator<_V, Alloc>::__tree_iterator(__node_pointer end, __node_pointer ptr):__ptr_(ptr), __end_(end) {}
+
+template <class _V, class Alloc>
+ft::__tree_iterator<_V, Alloc>::__tree_iterator(__node_pointer end, __node_pointer ptr, __node_pointer nil):__ptr_(ptr), __end_(end), __nil_(nil) {}
 
 template <class _V, class Alloc>
 typename ft::__tree_iterator<_V, Alloc>::reference
@@ -95,17 +91,5 @@ ft::__tree_iterator<_V, Alloc>::operator--(int)
 	__tree_iterator __t(*this);
 	--(*this); 
 	return __t;
-}
-
-template <class _V, class Alloc>
-bool operator==(const ft::__tree_iterator<_V, Alloc>& __x, const ft::__tree_iterator<_V, Alloc>& __y)
-{
-	return __x.__ptr_ == __y.__ptr_;
-}
-
-template <class _V, class Alloc>
-bool operator!=(const ft::__tree_iterator<_V, Alloc>& __x, const ft::__tree_iterator<_V, Alloc>& __y)
-{
-	return !(__x == __y);
 }
 #endif

@@ -1,9 +1,11 @@
 #ifndef SET_ITERATOR_TPP
 # define SET_ITERATOR_TPP
+
 template <class _V, class Alloc>
-ft::set_iterator<_V, Alloc>::set_iterator()
-{
-}
+ft::set_iterator<_V, Alloc>::set_iterator() {}
+
+template <class _V, class Alloc>
+ft::set_iterator<_V, Alloc>::~set_iterator() {}
 
 template <class _V, class Alloc>
 ft::set_iterator<_V, Alloc>::set_iterator(__node_pointer ptr): __ptr_(ptr)
@@ -95,17 +97,5 @@ ft::set_iterator<_V, Alloc>::operator--(int)
 	set_iterator __t(*this);
 	--(*this); 
 	return __t;
-}
-
-template <class _V, class Alloc>
-bool operator==(const ft::set_iterator<_V, Alloc>& __x, const ft::set_iterator<_V, Alloc>& __y)
-{
-	return __x.__ptr_ == __y.__ptr_;
-}
-
-template <class _V, class Alloc>
-bool operator!=(const ft::set_iterator<_V, Alloc>& __x, const ft::set_iterator<_V, Alloc>& __y)
-{
-	return !(__x == __y);
 }
 #endif

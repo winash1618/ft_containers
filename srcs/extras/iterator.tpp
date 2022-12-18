@@ -5,6 +5,9 @@ template<class _Iter>
 ft::iterator<_Iter>::iterator() {}
 
 template<class _Iter>
+ft::iterator<_Iter>::~iterator() {}
+
+template<class _Iter>
 ft::iterator<_Iter>::iterator(typename ft::iterator<_Iter>::iterator_type iter) : __i( iter ) {}
 
 template<class _Iter>

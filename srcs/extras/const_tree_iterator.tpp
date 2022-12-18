@@ -2,28 +2,19 @@
 # define CONST_TREE_ITERATOR_TPP
 
 template <class _V, class Alloc>
-ft::__const_tree_iterator<_V, Alloc>::__const_tree_iterator()
-{
-
-}
+ft::__const_tree_iterator<_V, Alloc>::__const_tree_iterator() {}
 
 template <class _V, class Alloc>
-ft::__const_tree_iterator<_V, Alloc>::__const_tree_iterator(__node_pointer ptr): __ptr_(ptr)
-{
-
-}
+ft::__const_tree_iterator<_V, Alloc>::~__const_tree_iterator() {}
 
 template <class _V, class Alloc>
-ft::__const_tree_iterator<_V, Alloc>::__const_tree_iterator(__node_pointer end, __node_pointer ptr):__ptr_(ptr), __end_(end)
-{
-
-}
+ft::__const_tree_iterator<_V, Alloc>::__const_tree_iterator(__node_pointer ptr): __ptr_(ptr) {}
 
 template <class _V, class Alloc>
-ft::__const_tree_iterator<_V, Alloc>::__const_tree_iterator(__node_pointer end, __node_pointer ptr, __node_pointer nil):__ptr_(ptr), __end_(end), __nil_(nil)
-{
+ft::__const_tree_iterator<_V, Alloc>::__const_tree_iterator(__node_pointer end, __node_pointer ptr):__ptr_(ptr), __end_(end) {}
 
-}
+template <class _V, class Alloc>
+ft::__const_tree_iterator<_V, Alloc>::__const_tree_iterator(__node_pointer end, __node_pointer ptr, __node_pointer nil):__ptr_(ptr), __end_(end), __nil_(nil) {}
 
 template <class _V, class Alloc>
 ft::__const_tree_iterator<_V, Alloc>::__const_tree_iterator(iterator  iter):__iter(iter)
@@ -108,39 +99,5 @@ ft::__const_tree_iterator<_V, Alloc>::operator--(int)
 	__const_tree_iterator __t(*this);
 	--(*this); 
 	return __t;
-}
-
-template <class _V1, class Alloc1>
-bool operator==(const ft::__const_tree_iterator<_V1, Alloc1>& __x, const ft::__const_tree_iterator<_V1, Alloc1>& __y)
-{
-	return __x.__ptr_ == __y.__ptr_;
-}
-
-template <class _V1, class Alloc1>
-bool operator!=(const ft::__const_tree_iterator<_V1, Alloc1>& __x, const ft::__const_tree_iterator<_V1, Alloc1>& __y)
-{
-	return !(__x == __y);
-}
-template <class _V1, class Alloc1>
-bool operator==(const ft::__tree_iterator<_V1, Alloc1>& __x, const ft::__const_tree_iterator<_V1, Alloc1>& __y)
-{
-	return __x.__ptr_ == __y.__ptr_;
-}
-
-template <class _V1, class Alloc1>
-bool operator!=(const ft::__tree_iterator<_V1, Alloc1>& __x, const ft::__const_tree_iterator<_V1, Alloc1>& __y)
-{
-	return !(__x == __y);
-}
-template <class _V1, class Alloc1>
-bool operator==(const ft::__const_tree_iterator<_V1, Alloc1>& __x, const ft::__tree_iterator<_V1, Alloc1>& __y)
-{
-	return __x.__ptr_ == __y.__ptr_;
-}
-
-template <class _V1, class Alloc1>
-bool operator!=(const ft::__const_tree_iterator<_V1, Alloc1>& __x, const ft::__tree_iterator<_V1, Alloc1>& __y)
-{
-	return !(__x == __y);
 }
 #endif

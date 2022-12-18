@@ -5,6 +5,9 @@ template <class Iterator>
 ft::reverse_iterator<Iterator>::reverse_iterator(): _iter(), current(){}
 
 template <class Iterator>
+ft::reverse_iterator<Iterator>::~reverse_iterator(){}
+
+template <class Iterator>
 ft::reverse_iterator<Iterator>::reverse_iterator(Iterator x) : _iter(x), current(x) {}
 
 template <class Iterator>

@@ -1,10 +1,11 @@
 #ifndef CONST_SET_ITERATOR_TPP
 # define CONST_SET_ITERATOR_TPP
-template <class _V, class Alloc>
-ft::__const_set_iterator<_V, Alloc>::__const_set_iterator()
-{
 
-}
+template <class _V, class Alloc>
+ft::__const_set_iterator<_V, Alloc>::__const_set_iterator() {}
+
+template <class _V, class Alloc>
+ft::__const_set_iterator<_V, Alloc>::~__const_set_iterator() {}
 
 template <class _V, class Alloc>
 ft::__const_set_iterator<_V, Alloc>::__const_set_iterator(__node_pointer ptr): __ptr_(ptr)
@@ -107,39 +108,5 @@ ft::__const_set_iterator<_V, Alloc>::operator--(int)
 	__const_set_iterator __t(*this);
 	--(*this); 
 	return __t;
-}
-
-template <class _V1, class Alloc1>
-bool operator==(const ft::__const_set_iterator<_V1, Alloc1>& __x, const ft::__const_set_iterator<_V1, Alloc1>& __y)
-{
-	return __x.__ptr_ == __y.__ptr_;
-}
-
-template <class _V1, class Alloc1>
-bool operator!=(const ft::__const_set_iterator<_V1, Alloc1>& __x, const ft::__const_set_iterator<_V1, Alloc1>& __y)
-{
-	return !(__x == __y);
-}
-template <class _V1, class Alloc1>
-bool operator==(const ft::set_iterator<_V1, Alloc1>& __x, const ft::__const_set_iterator<_V1, Alloc1>& __y)
-{
-	return __x.__ptr_ == __y.__ptr_;
-}
-
-template <class _V1, class Alloc1>
-bool operator!=(const ft::set_iterator<_V1, Alloc1>& __x, const ft::__const_set_iterator<_V1, Alloc1>& __y)
-{
-	return !(__x == __y);
-}
-template <class _V1, class Alloc1>
-bool operator==(const ft::__const_set_iterator<_V1, Alloc1>& __x, const ft::set_iterator<_V1, Alloc1>& __y)
-{
-	return __x.__ptr_ == __y.__ptr_;
-}
-
-template <class _V1, class Alloc1>
-bool operator!=(const ft::__const_set_iterator<_V1, Alloc1>& __x, const ft::set_iterator<_V1, Alloc1>& __y)
-{
-	return !(__x == __y);
 }
 #endif
