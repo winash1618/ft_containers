@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 07:43:05 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/16 19:23:46 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/16 20:30:50 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,11 @@ ft::vector<Tp, Allocator>::assign
 	ft::check_valid(first, last);
 	clear();
 	size_type size = 0;
-	for (InputIterator it = first; it != last; it++)
-	{
-		++size;
-	}
+	for (InputIterator it = first; it != last; it++, ++size);
 	reserve(size);
 	_size = 0;
-	for (size_type index = 0; index < size; ++index)
-	{
+	for (size_type index = 0; index < size; ++index, ++first, ++_size)
 		_alloc.construct(_vec + index, *first);
-		++first;
-		++_size;
-	}
 }
 
 /**
@@ -67,11 +60,8 @@ ft::vector<Tp, Allocator>::assign
 	clear();
 	reserve(n);
 	_size = 0;
-	for (size_type index = 0; index < n; ++index)
-	{
+	for (size_type index = 0; index < n; ++index, ++_size)
 		_alloc.construct(_vec + index, val);
-		++_size;
-	}
 }
 
 /**
@@ -216,9 +206,6 @@ ft::vector<Tp, Allocator>::insert
 		index++;
 	}
 	destruct_and_deallocate(_cap, _size);
-	// for (size_type index1 = 0; index1 < _size; ++index1)
-	// 	_alloc.destroy(_vec + index1);
-	// _alloc.deallocate(_vec, _cap);
 	t_size = t_size + index;
 	_alloc = t_alloc;
 	_vec = temp;
@@ -256,10 +243,6 @@ ft::vector<Tp, Allocator>::insert
 	{
 		++size;
 	}
-	// std::cout << "size = " << size << std::endl;
-	// std::cout << "_size = " << _size << std::endl;
-	// std::cout << "_cap = " << _cap << std::endl;
-	// iterator iter = static_cast<iterator>(first);
 	if (_size + size > _cap)
 	{
 		temp = t_alloc.allocate(recommend(_size + size));

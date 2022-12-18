@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/12 13:31:35 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/16 16:50:18 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/16 20:11:35 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,7 @@ ft::vector<Tp, Allocator>::vector
 {
 	ft::check_valid(first, last);
 	for (InputIterator it = first; it != last; it++)
-	{
 		++_size;
-	}
 	_vec = _alloc.allocate(_size);
 	_cap = _size;
 	for (size_type index = 0; index < _size; ++index)
@@ -126,17 +124,13 @@ ft::vector<Tp, Allocator>&
 ft::vector<Tp, Allocator>::operator=(const ft::vector<Tp, Allocator>& x)
 {
 	if (this == &x) 
-	{
 		return *this;
-	}
 	destruct(size());
 	if (x._vec)
 	{
 		this->_alloc = x.get_allocator();
 		if (x.size() > this->capacity())
-		{
 			reallocate(this->capacity(), x.size());
-		}
 		uninitialized_alloc_copy(x);
 	}
 	else
