@@ -6,27 +6,21 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 07:40:41 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/14 07:40:42 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/18 09:50:58 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAP_INSERT_TPP
 # define MAP_INSERT_TPP
 
- 
 template <class Key, class T, class Compare, class Alloc>
 ft::pair<typename ft::map<Key, T, Compare, Alloc>::iterator, bool>
 ft::map<Key, T, Compare, Alloc>::insert (const value_type& val)
 {
 	if (_root == NULL)
 	{
-		_root = n_alloc.allocate(1);
-		ft::RBTreeNode<value_type> temp(val);
-		n_alloc.construct(_root, temp);
+		_root = mapAllocate(val, _nil);
 		_root->_color = BLACK;
-		_root->_parent = _nil;
-		_root->_left = _nil;
-		_root->_right = _nil;
 		ft::pair<iterator, bool> t = ft::make_pair<iterator, bool>(iterator(_nil, _root, _nil), true);
 		_size = 1;
 		return t;
@@ -46,84 +40,16 @@ ft::map<Key, T, Compare, Alloc>::insert (const value_type& val)
 			cur = cur->_left;
 		}
 		else
-		{
 			return ft::make_pair(iterator(_nil, cur, _nil), false);
-		}
 	}
-	cur = n_alloc.allocate(1);
-	ft::RBTreeNode<value_type> temp(val);
-	n_alloc.construct(cur, temp);
-	cur->_parent = parent;
-	cur->_left = _nil;
-	cur->_right = _nil;
+	cur = mapAllocate(val, parent);
 	node_pointer newnode = cur;
 	newnode->_color = RED;
 	if (_comp(parent->_data.first, val.first))
 		parent->_right = newnode;
 	else
 		parent->_left = newnode;
-	while (parent != _nil && parent->_color == RED)
-	{
-		Node* grandParent = parent->_parent;
-		if (grandParent->_left == parent)
-		{
-			Node* uncle = grandParent->_right;
-			if (uncle != _nil && uncle->_color == RED)
-			{
-				parent->_color = BLACK;
-				uncle->_color = BLACK;
-				grandParent->_color = RED;
-				cur = grandParent;
-				parent = cur->_parent;
-			}
-			else
-			{
-				if (parent->_left == cur)
-				{
-					RotateR(grandParent);
-					parent->_color = BLACK;
-					grandParent->_color = RED;
-				}
-				else
-				{
-					RotateL(parent);
-					RotateR(grandParent);
-					grandParent->_color = RED;
-					cur->_color = BLACK;
-				}
-				break;
-			}
-		}
-		else
-		{
-			node_pointer uncle = grandParent->_left;
-			if (uncle != _nil && uncle->_color == RED)
-			{
-				uncle->_color = BLACK;
-				parent->_color = BLACK;
-				grandParent->_color = RED;
-				cur = grandParent;
-				parent = cur->_parent;
-			}
-			else
-			{
-				if (parent->_right == cur)
-				{
-					RotateL(grandParent);
-					parent->_color = BLACK;
-					grandParent->_color = RED;
-				}
-				else
-				{
-					RotateR(parent);
-					RotateL(grandParent);
-					cur->_color = BLACK;
-					grandParent->_color = RED;
-				}
-				break;
-			}
-		}
-	}
+	balanceTreeAfterInsert(newnode, parent);
 	_size++;
 	_root->_color = BLACK;
 	return ft::make_pair(iterator(_nil, newnode, _nil), true);
