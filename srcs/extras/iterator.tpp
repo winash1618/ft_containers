@@ -14,6 +14,15 @@ template<class _Iter>
 ft::iterator<_Iter>::iterator(const ft::iterator<_Iter>& x) : __i(x.base()) {}
 
 template<class _Iter>
+ft::iterator<_Iter>&
+ft::iterator<_Iter>::operator=(const ft::iterator<_Iter>& x)
+{
+	if (this != &x)
+		__i = x.base();
+	return *this;
+}
+
+template<class _Iter>
 template<class X>
 ft::iterator<_Iter>::iterator(const iterator<X>& u):__i(u.base()) {}
 
