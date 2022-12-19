@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/11 10:50:33 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/18 08:13:13 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/19 07:19:22 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ namespace ft
 			template<class X>
 			iterator(const iterator<X>& u);
 			~iterator();
+
+			iterator&															operator=(const iterator& __u);
 
 			reference																operator*() const;
 			pointer																	operator->() const;

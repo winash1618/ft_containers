@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 13:27:34 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/18 08:21:31 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/18 21:56:23 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ namespace ft
 			reverse_const_iterator(const reverse_const_iterator& x);
 
 			reverse_const_iterator&													operator=(const reverse_const_iterator<Iterator>& __u);
+
 			Iterator																base() const;
 			reference																operator*() const;
 			pointer																	operator->() const;
@@ -98,6 +99,7 @@ namespace ft
 			reverse_iterator(const reverse_iterator& x);
 
 			reverse_iterator&															operator=(const reverse_iterator<Iterator>& __u);
+
 			Iterator																	base() const;
 			reference																	operator*() const;
 			pointer																		operator->() const;

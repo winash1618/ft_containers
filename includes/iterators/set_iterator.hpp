@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 07:57:00 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/18 08:58:32 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/19 07:45:04 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,12 @@ namespace ft
 
 			set_iterator();
 			~set_iterator();
+			set_iterator(const set_iterator& __x);
 			set_iterator(__node_pointer ptr);
 			set_iterator(__node_pointer end, __node_pointer ptr);
 			set_iterator(__node_pointer end, __node_pointer ptr, __node_pointer nil);
+
+			set_iterator&																operator=(const set_iterator& __x);
 
 			reference																	operator*() const;
 			pointer																		operator->() const;
@@ -78,10 +81,13 @@ namespace ft
 
 			__const_set_iterator();
 			~__const_set_iterator();
+			__const_set_iterator(const __const_set_iterator& x);
 			__const_set_iterator(__node_pointer ptr);
 			__const_set_iterator(__node_pointer end, __node_pointer ptr);
 			__const_set_iterator(__node_pointer end, __node_pointer ptr, __node_pointer nil);
 			__const_set_iterator(iterator  iter);
+
+			__const_set_iterator&														operator=(const __const_set_iterator& x);
 
 			reference																	operator*() const;
 			pointer																		operator->() const;

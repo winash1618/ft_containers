@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 07:57:06 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/18 08:58:18 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/18 21:53:23 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,12 @@ namespace ft
 
 			__tree_iterator();
 			~__tree_iterator();
+			__tree_iterator(const __tree_iterator& x);
 			__tree_iterator(__node_pointer ptr);
 			__tree_iterator(__node_pointer end, __node_pointer ptr);
 			__tree_iterator(__node_pointer end, __node_pointer ptr, __node_pointer nil);
+
+			__tree_iterator&															operator=(const __tree_iterator& x);
 
 			reference																	operator*() const;
 			pointer																		operator->() const;
@@ -79,10 +82,13 @@ namespace ft
 
 			__const_tree_iterator();
 			~__const_tree_iterator();
+			__const_tree_iterator(const __const_tree_iterator& x);
 			__const_tree_iterator(__node_pointer ptr);
 			__const_tree_iterator(__node_pointer end, __node_pointer ptr);
 			__const_tree_iterator(__node_pointer end, __node_pointer ptr, __node_pointer nil);
 			__const_tree_iterator(iterator  iter);
+
+			__const_tree_iterator&														operator=(const __const_tree_iterator& x);
 
 			reference																	operator*() const;
 			pointer																		operator->() const;
