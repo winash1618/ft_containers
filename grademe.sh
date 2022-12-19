@@ -221,6 +221,7 @@ do
 			GREEN='\033[1;32m'
 			YELLOW='\033[0;33m'
 			CYAN='\033[0;36m'
+			echo -e "${YELLOW}---------------------------${DEFAULT}"
 			echo -e "${YELLOW}Vector: ${DEFAULT}"
 			echo -en "${CYAN}ft time: ${DEFAULT}"
 			./exe_ft/ft_vector_speed_test > 1.txt
@@ -230,6 +231,7 @@ do
 			./exe_std/std_vector_speed_test > 2.txt
 			sleep 0.5
 			echo "$(<2.txt)"
+			echo -e "${YELLOW}---------------------------${DEFAULT}"
 			echo -e "${YELLOW}Stack: ${DEFAULT}"
 			echo -en "${CYAN}ft time: ${DEFAULT}"
 			./exe_ft/ft_stack_speed_test > 1.txt
@@ -239,6 +241,7 @@ do
 			./exe_std/std_stack_speed_test > 2.txt
 			sleep 0.5
 			echo "$(<2.txt)"
+			echo -e "${YELLOW}---------------------------${DEFAULT}"
 			echo -e "${YELLOW}Map: ${DEFAULT}"
 			echo -en "${CYAN}ft time: ${DEFAULT}"
 			./exe_ft/ft_map_speed_test > 1.txt
@@ -248,6 +251,7 @@ do
 			./exe_std/std_map_speed_test > 2.txt
 			sleep 0.5
 			echo "$(<2.txt)"
+			echo -e "${YELLOW}---------------------------${DEFAULT}"
 			echo -e "${YELLOW}Set: ${DEFAULT}"
 			echo -en "${CYAN}ft time: ${DEFAULT}"
 			./exe_ft/ft_set_speed_test > 1.txt
@@ -257,6 +261,7 @@ do
 			./exe_std/std_set_speed_test > 2.txt
 			sleep 0.5
 			echo "$(<2.txt)"
+			echo -e "${YELLOW}---------------------------${DEFAULT}"
 			rm -f 1.txt 2.txt
 			;;
 		"quit")
