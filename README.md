@@ -1,8 +1,7 @@
 # ft_containers
 In this project, you will implement a few container types of the C++ standard template library.
-- Actual Status : 
-- Result        :
-- Obsetvations  : I think this is the project I'm most proud of.
+- Actual Status : Finished
+- Result        : 125
 
 [![forthebadge](https://forthebadge.com/images/badges/made-with-c-plus-plus.svg)](https://forthebadge.com)
 ## Project Description:
