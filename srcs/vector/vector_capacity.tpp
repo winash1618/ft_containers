@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 07:42:45 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/16 20:06:33 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/20 20:10:06 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,10 @@ ft::vector<Tp, Allocator>::resize
 )
 {
 	if (n > max_size())
-		throw std::length_error("vector");
-	else if (n > _size)
-	{
-		if (n > max_size())
 			throw std::length_error("Capacity allocated exceeds max_size()");
-		temp = t_alloc.allocate(n);
+	else if (n > _cap)
+	{
+		temp = t_alloc.allocate(recommend(n));
 		for (size_type index = 0; index < _size; ++index)
 			t_alloc.construct(temp + index, _vec[index]);
 		for (size_type index = _size; index < n; ++index)

@@ -6,7 +6,7 @@
 /*   By: mkaruvan <mkaruvan@student.42abudhabi.ae>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 07:43:05 by mkaruvan          #+#    #+#             */
-/*   Updated: 2022/12/16 20:30:50 by mkaruvan         ###   ########.fr       */
+/*   Updated: 2022/12/20 19:25:51 by mkaruvan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,9 +275,6 @@ ft::vector<Tp, Allocator>::insert
 		index++;
 	}
 	destruct_and_deallocate(_cap, _size);
-	// for (size_type index1 = 0; index1 < _size; ++index1)
-	// 	_alloc.destroy(_vec + index1);
-	// _alloc.deallocate(_vec, _cap);
 	t_size = t_size + index;
 	_alloc = t_alloc;
 	_vec = temp;
